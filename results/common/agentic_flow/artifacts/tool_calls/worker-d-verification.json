@@ -1,0 +1,13 @@
+{
+  "id": "tool-worker-d-verification",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 -m py_compile scripts/run_experiment.py scripts/run_suite.py scripts/run_killcheck.py && python3 scripts/run_suite.py --killcheck --dry-run && python3 scripts/run_killcheck.py --dry-run",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/run_experiment.py", "scripts/run_suite.py", "scripts/run_killcheck.py"],
+  "outputs": ["results/common/experiments", "results/common/agentic_flow/artifacts/verification/worker-d-verification.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-d-verification.md",
+  "backfilled_from": "results/common/agentic_flow/artifacts/worker_outputs/worker-d.md"
+}

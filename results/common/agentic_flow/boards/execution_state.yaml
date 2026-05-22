@@ -14,7 +14,7 @@ phase_status:
   phase_7_analyzer_and_search: scaffolded
   phase_8_mismatch_and_quality_gate: scaffolded
   phase_10_llvm_worktree_helper: dry_run_helper_scaffolded
-  humanize2_capture: preliminary_tree_created
+  humanize2_capture: workers_a_to_e_backfilled_f3_complete
 gates:
   synthetic_calibration:
     status: closed

@@ -27,6 +27,9 @@ templates:
   - id: round-0-worker-split
     primitive: h2-template
     path: artifacts/prompts/round-0-worker-split.md
+  - id: worker-f3-review-fix
+    primitive: h2-template
+    path: artifacts/prompts/worker-f3-review-fix.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -44,6 +47,70 @@ boards:
     primitive: h2-board
     path: boards/inference_state.yaml
 artifacts:
+  - id: worker-a-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-a.md
+  - id: worker-a-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-a.md
+  - id: worker-a-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-a-verification.md
+  - id: worker-a-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-a-verification.json
+  - id: worker-b-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-b.md
+  - id: worker-b-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-b.md
+  - id: worker-b-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-b-verification.md
+  - id: worker-b-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-b-verification.json
+  - id: worker-c-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-c.md
+  - id: worker-c-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-c.md
+  - id: worker-c-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-c-verification.md
+  - id: worker-c-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-c-verification.json
+  - id: worker-d-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-d.md
+  - id: worker-d-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-d.md
+  - id: worker-d-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-d-verification.md
+  - id: worker-d-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-d-verification.json
   - id: worker-e-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -64,10 +131,41 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.decision.v1
     path: artifacts/decisions/round-0-worker-split.md
+  - id: worker-f3-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-f3.md
+  - id: worker-f3-red-checks
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-f3-red-checks.md
+  - id: worker-f3-red-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-f3-red-checks.json
+  - id: worker-f3-final-checks
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-f3-final-checks.md
+  - id: worker-f3-final-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-f3-final-checks.json
+  - id: worker-f3-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-f3.md
+  - id: simulator-candidate-comparison
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: ../../../docs/simulator-candidate-comparison.md
 events:
   - type: profile.mode.selected
   - type: worker.dispatched
   - type: worker.completed
+  - type: worker.capture.backfilled
+  - type: bitlesson.selector.skipped
+  - type: simulator.candidate.stub.recorded
   - type: synthetic.golden.mismatch
   - type: synthetic.golden.match
   - type: real_platform.confidence.stop

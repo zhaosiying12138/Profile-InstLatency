@@ -1,0 +1,12 @@
+{
+  "id": "tool-worker-f3-final-checks",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 -m py_compile scripts/check_env.py && python3 scripts/check_env.py && python3 scripts/check_env.py --allow-dry-run-missing-tools && python3 scripts/check_env.py --command dry_run && python3 <temporary missing-tools module check> && grep -RInF 'Only `check_env.py` exists in Phase 0' README.md results/common/agentic_flow/replay.md docs && python3 -m json.tool <tool-call json files> && python3 <events.jsonl parse check>",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/check_env.py", "config/paths.yaml", "README.md", "results/common/agentic_flow/replay.md", "results/common/agentic_flow/events.jsonl"],
+  "outputs": ["results/common/agentic_flow/artifacts/verification/worker-f3-final-checks.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-f3-final-checks.md"
+}

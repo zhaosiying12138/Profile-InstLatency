@@ -1,0 +1,13 @@
+{
+  "id": "tool-worker-b-verification",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 scripts/llvm_sched_extract.py --output results/common/llvm_field_map.yaml && python3 -m py_compile scripts/llvm_sched_extract.py",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/llvm_sched_extract.py"],
+  "outputs": ["results/common/llvm_field_map.yaml", "results/common/agentic_flow/artifacts/verification/worker-b-verification.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-b-verification.md",
+  "backfilled_from": "results/common/agentic_flow/artifacts/worker_outputs/worker-b.md"
+}

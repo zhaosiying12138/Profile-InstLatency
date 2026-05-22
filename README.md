@@ -1,6 +1,6 @@
 # RVV Instruction Latency Profiling
 
-This repository is the bootstrap workspace for profiling selected non-memory RVV instruction timing and preserving results in a shape that can later inform an LLVM RISC-V schedule model. Phase 0 sets up the repository-local configuration and environment check; later phases add LLVM field extraction, gem5 kill-checks, experiment generation, analysis, and export.
+This repository is the bootstrap workspace for profiling selected non-memory RVV instruction timing and preserving results in a shape that can later inform an LLVM RISC-V schedule model. The current checkout contains environment gating, LLVM field extraction, assembly-generation scaffolds, dry-run runner traces, analysis/search scaffolds, calibration gates, and Humanize2 replay artifacts.
 
 ## Setup
 
@@ -12,37 +12,56 @@ This repository is the bootstrap workspace for profiling selected non-memory RVV
 python3 scripts/check_env.py
 ```
 
-The script uses only the Python standard library. It prints a JSON report to stdout and exits non-zero only for bootstrap blockers such as a missing config file, an invalid mode, or an unsupported Python runtime. External tool paths are reported as present, missing, or unspecified so Phase 0 can land before every toolchain component is installed.
+The script uses only the Python standard library. It prints a JSON report to stdout. The default `plan` command is strict: it requires `llvm_checkout`, `gem5_checkout`, `gem5_build`, `assembler`, `linker`, and `output_root` to resolve on this machine.
+
+For scaffold-only or dry-run work, the missing-tool policy must be explicit:
+
+```bash
+python3 scripts/check_env.py --allow-dry-run-missing-tools
+python3 scripts/check_env.py --command dry_run
+```
+
+Those commands validate dry-run readiness only. They do not prove real platform profiling readiness.
 
 ## One-Command Overview
 
-Current Phase 0 smoke check:
+Current strict environment gate:
 
 ```bash
 python3 scripts/check_env.py
 ```
 
-The eventual empty-context handoff from `docs/plan.md` is:
+Current synthetic/scaffold replay path:
+
+```bash
+python3 scripts/check_env.py
+python3 scripts/gen_asm.py suite --manifest-only
+python3 scripts/run_suite.py --killcheck --dry-run
+python3 scripts/analyze.py --all --dry-run
+python3 scripts/search_model.py --profile results/common --format markdown
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration
+python3 scripts/prepare_llvm_yushuxin_worktree.py --tag llvmorg-22.1.3 --cpu YuShuXin
+```
+
+The non-dry-run platform path is not accepted by dry-run artifacts. It must wait for real gem5 marker/timing integration and kill-check evidence before these commands can be treated as platform profiling:
 
 ```bash
 python3 scripts/check_env.py
 python3 scripts/run_suite.py --killcheck
 python3 scripts/run_suite.py --all
 python3 scripts/analyze.py --all
-python3 scripts/export_llvm_draft.py
+python3 scripts/search_model.py --profile results --format markdown
 ```
-
-Only `check_env.py` exists in Phase 0.
 
 ## Modes
 
 `mode: synthetic_calibration`
 
-Use this for the synthetic gem5/cmodel calibration loop. It is allowed to compare inferred values against configured ground truth because the purpose is to debug the workflow, experiment templates, schemas, and inference logic.
+Use this for the synthetic calibration loop. It is allowed to compare inferred values against configured ground truth because the purpose is to debug the workflow, experiment templates, schemas, and inference logic. Dry-run traces and synthetic calibration gates are scaffold evidence, not real platform evidence.
 
 `mode: real_platform_profile`
 
-Use this for real platform profiling. This mode must not use predicted-equals-real as a loop condition. Completion is based on coverage, repeatability, confidence, documented assumptions, and explicit human approval before any LLVM implementation phase.
+Use this for real platform profiling. This mode must not use predicted-equals-real as a loop condition. Completion is based on real simulator or platform traces, coverage, repeatability, confidence, documented assumptions, and explicit human approval before any LLVM implementation phase.
 
 ## Configuration
 
@@ -53,10 +72,12 @@ Important keys:
 - `mode`: `synthetic_calibration` or `real_platform_profile`.
 - `llvm_checkout`: LLVM checkout used as a read-only schedule-model reference.
 - `gem5_checkout`: gem5 source checkout used for RVV MinorCPU work.
-- `gem5_build`: optional built gem5 executable such as `build/RISCV/gem5.opt`.
-- `assembler`: optional RISC-V assembler path.
-- `linker`: optional RISC-V linker path.
+- `gem5_build`: built gem5 executable such as `build/RISCV/gem5.opt`; required by the default strict gate.
+- `assembler`: RISC-V assembler path; required by the default strict gate.
+- `linker`: RISC-V linker path; required by the default strict gate.
 - `output_root`: repository-local result root, normally `results`.
+
+If gem5 RVV stability cannot be proven in the current round, record simulator evidence and fallback candidates in `docs/simulator-candidate-comparison.md`.
 
 ## RLCR And Humanize2 Notes
 

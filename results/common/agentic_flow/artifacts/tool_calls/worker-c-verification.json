@@ -1,0 +1,13 @@
+{
+  "id": "tool-worker-c-verification",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 scripts/gen_asm.py --help && python3 scripts/gen_asm.py suite --manifest-only && python3 -m py_compile scripts/gen_asm.py",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/gen_asm.py", "templates/rvv_program.s.tpl"],
+  "outputs": ["experiments/generated/suite_manifest.yaml", "results/common/agentic_flow/artifacts/verification/worker-c-verification.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-c-verification.md",
+  "backfilled_from": "results/common/agentic_flow/artifacts/worker_outputs/worker-c.md"
+}

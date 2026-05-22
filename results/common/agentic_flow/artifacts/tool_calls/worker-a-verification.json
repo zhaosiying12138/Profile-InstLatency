@@ -1,0 +1,13 @@
+{
+  "id": "tool-worker-a-verification",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 scripts/check_env.py && python3 -m py_compile scripts/check_env.py",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/check_env.py", "config/paths.yaml"],
+  "outputs": ["results/common/agentic_flow/artifacts/verification/worker-a-verification.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-a-verification.md",
+  "backfilled_from": "results/common/agentic_flow/artifacts/worker_outputs/worker-a.md"
+}
