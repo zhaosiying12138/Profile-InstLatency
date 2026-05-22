@@ -1,0 +1,12 @@
+{
+  "id": "tool-worker-e-red-checks",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration; python3 scripts/prepare_llvm_yushuxin_worktree.py --help; python3 scripts/analyze.py --all; python3 scripts/search_model.py --help",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["docs/plan.md"],
+  "outputs": ["results/common/agentic_flow/artifacts/verification/worker-e-red-checks.md"],
+  "exit_code": 2,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-e-red-checks.md"
+}

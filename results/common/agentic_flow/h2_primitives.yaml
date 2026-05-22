@@ -1,0 +1,90 @@
+schema_version: 1
+workflow:
+  id: rvv-profile-workflow
+  source_plan: docs/plan.md
+  round: 0
+manifest:
+  capabilities:
+    agent_tools: [codex]
+    scripts:
+      - check_env
+      - run_killcheck
+      - run_suite
+      - analyze
+      - search_model
+      - check_calibration_gate
+      - prepare_llvm_yushuxin_worktree
+    artifact_schemas:
+      - rvv.prompt.v1
+      - rvv.toolCall.v1
+      - rvv.workerContract.v1
+      - rvv.workerOutput.v1
+      - rvv.decision.v1
+      - rvv.verification.v1
+    human_input: true
+    view: true
+templates:
+  - id: round-0-worker-split
+    primitive: h2-template
+    path: artifacts/prompts/round-0-worker-split.md
+boards:
+  - id: goal-tracker
+    primitive: h2-board
+    path: boards/goal_tracker.yaml
+  - id: execution-state
+    primitive: h2-board
+    path: boards/execution_state.yaml
+  - id: simulator-selection
+    primitive: h2-board
+    path: boards/simulator_selection.yaml
+  - id: experiment-matrix
+    primitive: h2-board
+    path: boards/experiment_matrix.yaml
+  - id: inference-state
+    primitive: h2-board
+    path: boards/inference_state.yaml
+artifacts:
+  - id: worker-e-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-e.md
+  - id: worker-e-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-e.md
+  - id: worker-e-red-checks
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-e-red-checks.md
+  - id: round-0-worker-split-decision
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: artifacts/decisions/round-0-worker-split.md
+events:
+  - type: profile.mode.selected
+  - type: worker.dispatched
+  - type: worker.completed
+  - type: synthetic.golden.mismatch
+  - type: synthetic.golden.match
+  - type: real_platform.confidence.stop
+  - type: llvm.yushuxin.worktree.created
+flow_nodes:
+  - id: env-check
+    primitive: h2-check
+    uses: check_env
+  - id: worker-parallel-round-0
+    primitive: h2-parallel
+    workers: [A, B, C, D, E, F, G, H]
+  - id: analyze-and-search
+    primitive: h2-transform
+    uses: [analyze, search_model]
+  - id: synthetic-calibration-gate
+    primitive: h2-check
+    uses: check_calibration_gate
+    mode: synthetic_calibration
+  - id: real-platform-confidence-gate
+    primitive: h2-human
+    mode: real_platform_profile
+  - id: llvm-worktree-helper
+    primitive: h2-check
+    uses: prepare_llvm_yushuxin_worktree

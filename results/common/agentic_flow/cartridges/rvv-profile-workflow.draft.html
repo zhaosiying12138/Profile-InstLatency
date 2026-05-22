@@ -1,0 +1,49 @@
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.1.0" schema="humanize2.workflow.html.v1">
+  <h2-manifest>
+    <h2-capability name="agent" tools="codex"></h2-capability>
+    <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerOutput.v1,rvv.verification.v1"></h2-capability>
+    <h2-capability name="script" allow="check_env,run_killcheck,run_suite,analyze,search_model,check_calibration_gate,prepare_llvm_yushuxin_worktree"></h2-capability>
+    <h2-capability name="human-input"></h2-capability>
+    <h2-capability name="view"></h2-capability>
+  </h2-manifest>
+  <h2-state>
+    <h2-board id="goal-tracker" schema="rvv.goalTracker.v1"></h2-board>
+    <h2-board id="execution-state" schema="rvv.executionState.v1"></h2-board>
+    <h2-board id="simulator-selection" schema="rvv.simulatorSelection.v1"></h2-board>
+    <h2-board id="experiment-matrix" schema="rvv.experimentMatrix.v1"></h2-board>
+    <h2-board id="inference-state" schema="rvv.inferenceState.v1"></h2-board>
+  </h2-state>
+  <h2-template id="round-0-worker-split" type="prompt">
+    Dispatch disjoint RLCR workers A through H according to docs/plan.md. Workers must not edit RLCR state or docs/plan.md.
+  </h2-template>
+  <h2-template id="worker-e-prompt" type="prompt">
+    Implement analyzer, deterministic parameter-search placeholder, calibration gate, dry-run LLVM worktree helper, preliminary reports, and capture scaffold.
+  </h2-template>
+  <h2-flow>
+    <h2-check id="env-check" uses="check_env"></h2-check>
+    <h2-parallel id="round-0-workers">
+      <h2-agent id="worker-a" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="llvm-extractor" timeout="45m"></h2-agent>
+      <h2-agent id="worker-b" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="killcheck" timeout="45m"></h2-agent>
+      <h2-agent id="worker-c" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="timestamp" timeout="45m"></h2-agent>
+      <h2-agent id="worker-d" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="asm-generator" timeout="45m"></h2-agent>
+      <h2-agent id="worker-e" role="worker" tool="codex" prompt="#worker-e-prompt" short-name="analysis-gate" timeout="45m"></h2-agent>
+      <h2-agent id="worker-f" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="schema-report" timeout="45m"></h2-agent>
+      <h2-agent id="worker-g" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="h2-capture" timeout="45m"></h2-agent>
+      <h2-agent id="worker-h" role="worker" tool="codex" prompt="#round-0-worker-split" short-name="llvm-yushuxin" timeout="45m"></h2-agent>
+    </h2-parallel>
+    <h2-agent id="analyze-results" role="worker" tool="codex" prompt="#worker-e-prompt" short-name="analyze" timeout="30m">
+      <h2-expect artifact="analysis-report" schema="rvv.verification.v1"></h2-expect>
+    </h2-agent>
+    <h2-check id="synthetic-calibration-gate" uses="check_calibration_gate" mode="synthetic_calibration"></h2-check>
+    <h2-branch id="llvm-route" on="synthetic-calibration-gate.status">
+      <h2-case value="pass" goto="prepare-llvm-worktree"></h2-case>
+      <h2-default goto="calibration-repair-loop"></h2-default>
+    </h2-branch>
+    <h2-loop id="calibration-repair-loop" until="synthetic-calibration-gate.status == pass">
+      <h2-agent id="repair-analysis" role="worker" tool="codex" prompt="#worker-e-prompt" short-name="repair-analysis" timeout="30m"></h2-agent>
+    </h2-loop>
+    <h2-check id="prepare-llvm-worktree" uses="prepare_llvm_yushuxin_worktree"></h2-check>
+    <h2-human id="real-platform-approval" prompt="Approve LLVM implementation from real platform confidence report before continuing."></h2-human>
+    <h2-end id="complete"></h2-end>
+  </h2-flow>
+</h2-workflow>

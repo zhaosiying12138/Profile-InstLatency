@@ -1,0 +1,24 @@
+schema_version: 1
+round: 0
+source_plan: docs/plan.md
+ultimate_goal: profile selected non-memory RVV instruction timing and preserve LLVM schedule-model evidence
+lesson_ids: NONE
+acceptance_focus:
+  - AC-9 analysis uses rule inference plus parameter search consistency checks
+  - AC-10 synthetic configured values are compared against inferred values and mismatches are reported
+  - AC-12 Humanize2-style workflow capture is recorded under results/common/agentic_flow
+  - AC-13 replay is possible without the original chat transcript
+  - AC-15 LLVM implementation waits for synthetic calibration gate
+  - AC-16 real platform flow does not use golden equality
+  - AC-17 LLVM worktree is isolated and tag-verified
+worker_split:
+  A: LLVM read-only extractor and mapping docs
+  B: gem5 RVV kill-check assembly and runner
+  C: timestamp marker implementation and trace schema
+  D: assembly generator and template metadata
+  E: analyzer, fitting, parameter search, calibration gate, LLVM helper, capture scaffold
+  F: results schema validation and report generation
+  G: Humanize2 primitive capture, cartridge draft, and replay documentation
+  H: gated LLVM 22.1.3 YuShuXin schedule-model implementation and tests
+active_worker: E
+status: preliminary_worker_scaffold

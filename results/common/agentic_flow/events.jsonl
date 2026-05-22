@@ -1,0 +1,9 @@
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"profile.mode.selected","data":{"mode":"synthetic_calibration","also_supported":"real_platform_profile","source":"docs/plan.md"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"A","task":"LLVM read-only extractor and mapping docs"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"B","task":"gem5 RVV kill-check assembly and runner"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"C","task":"timestamp marker implementation and trace schema"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"D","task":"assembly generator and template metadata"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"E","task":"analyzer, search, calibration gate, LLVM helper, and capture scaffold","contract":"artifacts/worker_contracts/worker-e.md"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"F","task":"results schema validation and report generation"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"G","task":"Humanize2 primitive capture, cartridge draft, and replay documentation"}}
+{"time":"2026-05-23T01:15:03+08:00","round":0,"type":"worker.dispatched","data":{"worker":"H","task":"gated LLVM 22.1.3 YuShuXin schedule-model implementation and LLVM tests"}}

@@ -1,0 +1,44 @@
+schema_version: 1
+sew: 32
+lmul_values: [m1, m2, m4]
+templates:
+  - T00_BASELINE_MARKER
+  - T01_DECODE_EXEC_KILLCHECK
+  - T10_INDEPENDENT_STREAM_THROUGHPUT
+  - T11_SELF_RAW_CHAIN
+  - T12_CONSUMER_RAW_GAP
+  - T20_PAIRWISE_PIPE_CLASSIFICATION
+  - T21_PAIR_WITH_SCALAR
+  - T30_LMUL_SCALING
+  - T40_COMMON_VLSU_LOAD_HIT
+instructions:
+  - id: vadd_vv
+    asm: vadd.vv
+    sched_write: WriteVIALUV
+  - id: vsll_vv
+    asm: vsll.vv
+    sched_write: WriteVShiftV
+  - id: vmul_vv
+    asm: vmul.vv
+    sched_write: WriteVIMulV
+  - id: vdivu_vv
+    asm: vdivu.vv
+    sched_write: WriteVIDivV
+  - id: vmseq_vv
+    asm: vmseq.vv
+    sched_write: WriteVICmpV
+  - id: vcpop_m
+    asm: vcpop.m
+    sched_write: WriteVMPopV
+  - id: viota_m
+    asm: viota.m
+    sched_write: WriteVIotaV
+  - id: vslideup_vx
+    asm: vslideup.vx
+    sched_write: WriteVSlideUpX
+  - id: vrgather_vv
+    asm: vrgather.vv
+    sched_write: WriteVRGatherVV
+  - id: vredsum_vs
+    asm: vredsum.vs
+    sched_write: WriteVIRedV_From

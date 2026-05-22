@@ -1,0 +1,16 @@
+schema_version: 1
+baseline: gem5_minorcpu
+status: selected_by_plan_pending_killcheck
+candidates:
+  - name: gem5_minorcpu
+    role: first baseline
+    reason: RVV-capable simulator with in-order MinorCPU timing hooks
+  - name: spike_plus_timing_wrapper
+    role: fallback candidate
+    reason: compare if gem5 RVV kill-check fails
+  - name: additional_rvv_simulator
+    role: fallback candidate
+    reason: required by simulator-candidate comparison path
+killcheck_gate:
+  status: not_run
+  expected_artifact: results/common/experiments/T01_DECODE_EXEC_KILLCHECK-*/

@@ -1,0 +1,20 @@
+schema_version: 1
+status: preliminary
+analysis_inputs:
+  trace_glob: results/**/experiments/**/trace.json
+  marker_pairs: [t0_t1, before_after, start_end, begin_end]
+parameter_search:
+  implemented: placeholder
+  formula: base_plus_lmul_times_k
+  confidence_policy: no unsupported certainty
+calibration_gates:
+  synthetic_calibration:
+    report: results/common/mismatch_report.md
+    pass_condition: gate_status_pass_and_claimed_mismatches_none
+  real_platform_profile:
+    report: results/common/experiment_quality.md
+    pass_condition: coverage_stability_confidence_assumptions_and_human_approval
+llvm_worktree_helper:
+  script: scripts/prepare_llvm_yushuxin_worktree.py
+  default: dry_run
+  required_tag: llvmorg-22.1.3

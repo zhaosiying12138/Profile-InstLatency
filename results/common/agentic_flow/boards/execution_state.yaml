@@ -1,0 +1,24 @@
+schema_version: 1
+round: 0
+active_mode: synthetic_calibration
+supported_modes:
+  - synthetic_calibration
+  - real_platform_profile
+cwd: /home/zhaosiying/codebase/compiler/profile_inst_latency
+rlcr_state_policy:
+  worker_may_edit_humanize: false
+  worker_may_run_gate: false
+  worker_may_edit_plan: false
+lesson_ids: NONE
+phase_status:
+  phase_7_analyzer_and_search: scaffolded
+  phase_8_mismatch_and_quality_gate: scaffolded
+  phase_10_llvm_worktree_helper: dry_run_helper_scaffolded
+  humanize2_capture: preliminary_tree_created
+gates:
+  synthetic_calibration:
+    status: closed
+    reason: no synthetic traces or inferred claimed fields yet
+  real_platform_profile:
+    status: closed
+    reason: no real platform coverage, stability, or confidence evidence yet
