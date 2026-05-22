@@ -1,0 +1,735 @@
+schema_version: 1
+generated_by: 'scripts/llvm_sched_extract.py'
+llvm_root: '/home/zhaosiying/codebase/compiler/llvm-project-21'
+read_files:
+  - 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+  - 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+  - 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+  - 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+missing_files: []
+processor_fields_to_profile:
+  - name: 'issue_width'
+    llvm_source: 'MCSchedModel::IssueWidth'
+    profile_action: 'common_processor_measurement'
+    reason: 'hard limit on same-cycle scheduled micro-ops'
+  - name: 'micro_op_buffer_size'
+    llvm_source: 'MCSchedModel::MicroOpBufferSize'
+    profile_action: 'common_processor_assumption'
+    reason: '0 or 1 models in-order scheduling; greater than 1 means out-of-order'
+instructions:
+  vadd_vv:
+    asm_mnemonic: 'vadd.vv'
+    sched_write_family: 'WriteVIALUV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1135
+          text: 'defm VADD_V : VALU_IV_V_X_I<"vadd", 0b000000>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 597
+          statement: 'SchedBinaryMC<"WriteVIALUV", "ReadVIALUV", "ReadVIALUV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2682
+          statement: 'SchedBinary<"WriteVIALUV", "ReadVIALUV", "ReadVIALUV", mx, forcePassthruRead=true>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2811
+          statement: 'SchedBinary<"WriteVIALUV", "ReadVIALUV", "ReadVIALUV", m.MX, forcePassthruRead=true>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 350
+          text: 'defm "" : LMULSchedWrites<"WriteVIALUV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 848
+          text: 'defm "" : LMULWriteRes<"WriteVIALUV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 421
+          resources:
+            - 'SiFiveP800VectorArith'
+          latency_expr: '2'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVIALUV",   [SiFiveP800VectorArith], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vsll_vv:
+    asm_mnemonic: 'vsll.vv'
+    sched_write_family: 'WriteVShiftV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1205
+          text: 'defm VSLL_V : VSHT_IV_V_X_I<"vsll", 0b100101>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 903
+          statement: 'SchedBinaryMC<"WriteVShiftV", "ReadVShiftV", "ReadVShiftV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2654
+          statement: 'SchedBinary<"WriteVShiftV", "ReadVShiftV", "ReadVShiftV", mx, forcePassthruRead=true>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 367
+          text: 'defm "" : LMULSchedWrites<"WriteVShiftV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 861
+          text: 'defm "" : LMULWriteRes<"WriteVShiftV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 442
+          resources:
+            - 'SiFiveP800VectorArith'
+          latency_expr: '6'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVShiftV",   [SiFiveP800VectorArith], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vmul_vv:
+    asm_mnemonic: 'vmul.vv'
+    sched_write_family: 'WriteVIMulV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1297
+          text: 'defm VMUL_V : VMUL_MV_V_X<"vmul", 0b100101>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 956
+          statement: 'SchedBinaryMC<"WriteVIMulV", "ReadVIMulV", "ReadVIMulV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2742
+          statement: 'SchedBinary<"WriteVIMulV", "ReadVIMulV", "ReadVIMulV", mx>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 382
+          text: 'defm "" : LMULSchedWrites<"WriteVIMulV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 872
+          text: 'defm "" : LMULWriteRes<"WriteVIMulV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 447
+          resources:
+            - 'SiFiveP800VectorArith'
+          latency_expr: '6'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVIMulV",    [SiFiveP800VectorArith], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vdivu_vv:
+    asm_mnemonic: 'vdivu.vv'
+    sched_write_family: 'WriteVIDivV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: true
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1303
+          text: 'defm VDIVU_V : VDIV_MV_V_X<"vdivu", 0b100000>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 970
+          statement: 'SchedBinaryMC<"WriteVIDivV", "ReadVIDivV", "ReadVIDivV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2754
+          statement: 'SchedBinary<"WriteVIDivV", "ReadVIDivV", "ReadVIDivV", mx, e>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 385
+          text: 'defm "" : LMULSEWSchedWrites<"WriteVIDivV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 874
+          text: 'defm "" : LMULSEWWriteRes<"WriteVIDivV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 478
+          resources:
+            - 'SiFiveP800VEXQ1'
+            - 'SiFiveP800VDiv'
+          latency_expr: 'DivLatency'
+          release_at_cycles_expr: '[LMulLat, DivLatency]'
+          text: 'defm "" : LMULSEWWriteResMXSEW<"WriteVIDivV", [SiFiveP800VEXQ1, SiFiveP800VDiv], mx, sew, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vmseq_vv:
+    asm_mnemonic: 'vmseq.vv'
+    sched_write_family: 'WriteVICmpV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1226
+          text: 'defm VMSEQ_V : VCMP_IV_V_X_I<"vmseq", 0b011000>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 928
+          statement: 'SchedBinaryMC<"WriteVICmpV", "ReadVICmpV", "ReadVICmpV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 3356
+          statement: 'SchedBinary<"WriteVICmpV", "ReadVICmpV", "ReadVICmpV", mx>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 3368
+          statement: 'SchedBinary<"WriteVICmpV", "ReadVICmpV", "ReadVICmpV", mx>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 375
+          text: 'defm "" : LMULSchedWrites<"WriteVICmpV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 867
+          text: 'defm "" : LMULWriteRes<"WriteVICmpV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 431
+          resources:
+            - 'SiFiveP800VectorArith'
+          latency_expr: '2'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVICmpV",   [SiFiveP800VectorArith], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vcpop_m:
+    asm_mnemonic: 'vcpop.m'
+    sched_write_family: 'WriteVMPopV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1630
+          text: 'def VCPOP_M : RVInstV<0b010000, 0b10000, OPMVV, (outs GPR:$vd),'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1632
+          text: '"vcpop.m", "$vd, $vs2$vm">,'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1643
+          text: 'def : MnemonicAlias<"vpopc.m", "vcpop.m">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 7289
+          text: '// 15.2. Vector count population in mask vcpop.m'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1633
+          statement: 'SchedUnaryMC<"WriteVMPopV", "ReadVMPopV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 1970
+          statement: 'SchedBinary<"WriteVMPopV", "ReadVMPopV", "ReadVMPopV", mx>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 1973
+          statement: 'SchedBinary<"WriteVMPopV", "ReadVMPopV", "ReadVMPopV", mx>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 500
+          text: 'defm "" : LMULSchedWrites<"WriteVMPopV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 951
+          text: 'defm "" : LMULWriteRes<"WriteVMPopV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 684
+          resources:
+            - 'SiFiveP800VEXQ0'
+          latency_expr: '2'
+          release_at_cycles_expr: '[1]'
+          text: 'defm "" : LMULWriteResMX<"WriteVMPopV", [SiFiveP800VEXQ0], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  viota_m:
+    asm_mnemonic: 'viota.m'
+    sched_write_family: 'WriteVIotaV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1656
+          text: 'defm VIOTA_M : VIOTA_MV_V<"viota.m", 0b010100, 0b10000>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 898
+          statement: 'SchedUnaryMC<"WriteVIotaV", "ReadVIotaV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2036
+          statement: 'SchedUnary<"WriteVIotaV", "ReadVIotaV", mx, forcePassthruRead=true>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2040
+          statement: 'SchedUnary<"WriteVIotaV", "ReadVIotaV", mx, forcePassthruRead=true>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 508
+          text: 'defm "" : LMULSchedWrites<"WriteVIotaV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 954
+          text: 'defm "" : LMULWriteRes<"WriteVIotaV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 690
+          resources:
+            - 'SiFiveP800VEXQ0'
+          latency_expr: '2'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVIotaV", [SiFiveP800VEXQ0], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vslideup_vx:
+    asm_mnemonic: 'vslideup.vx'
+    sched_write_family: 'WriteVSlideUpX'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: false
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1703
+          text: 'defm VSLIDEUP_V : VSLD_IV_X_I<"vslideup", 0b001110, /*slidesUp=*/true>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1023
+          statement: 'defvar WriteSlideX = !if(slidesUp, "WriteVSlideUpX", "WriteVSlideDownX");'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 3285
+          statement: 'defvar WriteSlideX = !if(slidesUp, "WriteVSlideUpX", "WriteVSlideDownX");'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 520
+          text: 'defm "" : LMULSchedWrites<"WriteVSlideUpX">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 962
+          text: 'defm "" : LMULWriteRes<"WriteVSlideUpX", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 711
+          resources:
+            - 'SiFiveP800VEXQ0'
+          latency_expr: '2'
+          release_at_cycles_expr: '[1]'
+          text: 'defm "" : LMULWriteResMX<"WriteVSlideUpX",   [SiFiveP800VEXQ0], mx, IsWorstCase>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 723
+          resources:
+            - 'SiFiveP800VEXQ1'
+          latency_expr: '!add(4, LMulLat)'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULWriteResMX<"WriteVSlideUpX",   [SiFiveP800VEXQ1], mx, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vrgather_vv:
+    asm_mnemonic: 'vrgather.vv'
+    sched_write_family: 'WriteVRGatherVV'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: true
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1723
+          text: 'defm VRGATHER_V : VGTR_IV_V_X_I<"vrgather", 0b001100>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1042
+          statement: 'SchedBinaryMC<"WriteVRGatherVV", "ReadVRGatherVV_data", "ReadVRGatherVV_index">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 2629
+          statement: 'SchedBinary<"WriteVRGatherVV", "ReadVRGatherVV_data", "ReadVRGatherVV_index", mx, e, forcePassthruRead=true>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 526
+          text: 'defm "" : LMULSEWSchedWrites<"WriteVRGatherVV">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 967
+          text: 'defm "" : LMULSEWWriteRes<"WriteVRGatherVV", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 749
+          resources:
+            - 'SiFiveP800VEXQ1'
+          latency_expr: '3'
+          release_at_cycles_expr: '[1]'
+          text: 'defm "" : LMULSEWWriteResMXSEW<"WriteVRGatherVV", [SiFiveP800VEXQ1], mx, sew, IsWorstCase>;'
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 770
+          resources:
+            - 'SiFiveP800VEXQ1'
+          latency_expr: '6'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULSEWWriteResMXSEW<"WriteVRGatherVV", [SiFiveP800VEXQ1], mx, sew, IsWorstCase>;'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
+  vredsum_vs:
+    asm_mnemonic: 'vredsum.vs'
+    sched_write_family: 'WriteVIRedV_From'
+    discovery_status: 'found'
+    profile_variant_space:
+      selected_sew: 32
+      selected_lmul:
+        - 'm1'
+        - 'm2'
+        - 'm4'
+      lmul_dependent_family: true
+      sew_dependent_family: true
+    source_evidence:
+      instruction_definitions:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 1549
+          text: 'defm VREDSUM  : VRED_MV_V<"vredsum", 0b000000>;'
+      sched_family_uses:
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoV.td'
+          line: 847
+          statement: 'SchedReductionMC<"WriteVIRedV_From", "ReadVIRedV", "ReadVIRedV0">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVInstrInfoVPseudos.td'
+          line: 3412
+          statement: 'SchedReduction<"WriteVIRedV_From", "ReadVIRedV", mx, e>;'
+      schedule_declarations:
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 484
+          text: 'defm "" : LMULSEWSchedWrites<"WriteVIRedV_From">;'
+        - file: 'llvm/lib/Target/RISCV/RISCVScheduleV.td'
+          line: 940
+          text: 'defm "" : LMULSEWWriteRes<"WriteVIRedV_From", []>;'
+      sifive_p800_write_res_examples:
+        - file: 'llvm/lib/Target/RISCV/RISCVSchedSiFiveP800.td'
+          line: 632
+          resources:
+            - 'SiFiveP800VEXQ1'
+          latency_expr: '!add(2, !mul(2, LMulLat))'
+          release_at_cycles_expr: '[LMulLat]'
+          text: 'defm "" : LMULSEWWriteResMXSEW<"WriteVIRedV_From", [SiFiveP800VEXQ1],'
+    llvm_fields_to_profile:
+      - name: 'proc_resources'
+        llvm_source: 'ProcResource or ProcResGroup used by WriteRes/SchedWriteRes'
+        profile_action: 'infer'
+        reason: 'identifies which execution pipe or resource group the write occupies'
+      - name: 'latency'
+        llvm_source: 'Latency'
+        profile_action: 'infer'
+        reason: 'models producer-to-consumer readiness for dependent scheduling'
+      - name: 'release_at_cycles'
+        llvm_source: 'ReleaseAtCycles'
+        profile_action: 'infer'
+        reason: 'models resource occupancy and independent-stream throughput'
+      - name: 'acquire_at_cycles'
+        llvm_source: 'AcquireAtCycles'
+        profile_action: 'assume_default_empty_then_confirm_if_needed'
+        reason: 'only needed if resource acquisition is delayed relative to issue'
+      - name: 'num_micro_ops'
+        llvm_source: 'NumMicroOps'
+        profile_action: 'assume_one_then_probe'
+        reason: 'feeds IssueWidth pressure and scalar-pairing behavior'
+      - name: 'single_issue'
+        llvm_source: 'SingleIssue, BeginGroup, EndGroup'
+        profile_action: 'assume_false_then_probe'
+        reason: 'captures instructions that must occupy a dispatch group alone'
+      - name: 'read_advance'
+        llvm_source: 'ReadAdvance or SchedReadAdvance'
+        profile_action: 'infer_only_for_consumer_specific_bypass'
+        reason: 'adjusts latency for particular producer and consumer read pairs'
