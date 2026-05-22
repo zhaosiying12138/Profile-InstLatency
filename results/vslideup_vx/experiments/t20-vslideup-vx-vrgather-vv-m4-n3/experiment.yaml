@@ -1,0 +1,83 @@
+schema_version: 1
+experiment_id: t20-vslideup-vx-vrgather-vv-m4-n3
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vslideup_vx
+instruction_id: vslideup_vx
+lmul: m4
+sew: 32
+markers: [start, end]
+experiment:
+  id: t20-vslideup-vx-vrgather-vv-m4-n3
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+    -
+      label: end
+parameters:
+  sew: 32
+  lmul: m4
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vslideup_vx, --lmul, m4, --other-instr, vrgather_vv, --output-root, experiments/generated, --experiment-id, t20-vslideup-vx-vrgather-vv-m4-n3]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vslideup_vx --lmul m4 --other-instr vrgather_vv --output-root experiments/generated --experiment-id t20-vslideup-vx-vrgather-vv-m4-n3
+instruction:
+  id: vslideup_vx
+  asm: vslideup.vx
+  llvm_sched_write: WriteVSlideUpX
+  result_kind: vector
+  chainable: true
+  notes: Vector slide-up with a scalar offset operand.
+pair_instruction:
+  id: vrgather_vv
+  asm: vrgather.vv
+  llvm_sched_write: WriteVRGatherVV
+  result_kind: vector
+  chainable: true
+  notes: Vector gather using vector indices.
+body:
+  iterations: 3
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vslideup_vx
+      destination: v8
+    -
+      index: 0
+      side: B
+      instruction: vrgather_vv
+      destination: v12
+    -
+      index: 1
+      side: A
+      instruction: vslideup_vx
+      destination: v16
+    -
+      index: 1
+      side: B
+      instruction: vrgather_vv
+      destination: v20
+    -
+      index: 2
+      side: A
+      instruction: vslideup_vx
+      destination: v24
+    -
+      index: 2
+      side: B
+      instruction: vrgather_vv
+      destination: v28
+  register_reuse: false
+  iteration_note: reduced from 4 because LMUL m4 exposes only six independent output groups

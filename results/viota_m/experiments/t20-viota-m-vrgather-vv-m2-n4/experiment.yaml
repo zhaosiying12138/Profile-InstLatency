@@ -1,0 +1,92 @@
+schema_version: 1
+experiment_id: t20-viota-m-vrgather-vv-m2-n4
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: viota_m
+instruction_id: viota_m
+lmul: m2
+sew: 32
+markers: [start, end]
+experiment:
+  id: t20-viota-m-vrgather-vv-m2-n4
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+    -
+      label: end
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, viota_m, --lmul, m2, --other-instr, vrgather_vv, --output-root, experiments/generated, --experiment-id, t20-viota-m-vrgather-vv-m2-n4]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr viota_m --lmul m2 --other-instr vrgather_vv --output-root experiments/generated --experiment-id t20-viota-m-vrgather-vv-m2-n4
+instruction:
+  id: viota_m
+  asm: viota.m
+  llvm_sched_write: WriteVIotaV
+  result_kind: vector
+  chainable: false
+  notes: Mask-to-vector prefix index operation.
+pair_instruction:
+  id: vrgather_vv
+  asm: vrgather.vv
+  llvm_sched_write: WriteVRGatherVV
+  result_kind: vector
+  chainable: true
+  notes: Vector gather using vector indices.
+body:
+  iterations: 4
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: viota_m
+      destination: v4
+    -
+      index: 0
+      side: B
+      instruction: vrgather_vv
+      destination: v6
+    -
+      index: 1
+      side: A
+      instruction: viota_m
+      destination: v8
+    -
+      index: 1
+      side: B
+      instruction: vrgather_vv
+      destination: v10
+    -
+      index: 2
+      side: A
+      instruction: viota_m
+      destination: v12
+    -
+      index: 2
+      side: B
+      instruction: vrgather_vv
+      destination: v14
+    -
+      index: 3
+      side: A
+      instruction: viota_m
+      destination: v16
+    -
+      index: 3
+      side: B
+      instruction: vrgather_vv
+      destination: v18
+  register_reuse: false

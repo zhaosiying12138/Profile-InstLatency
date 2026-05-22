@@ -1,0 +1,92 @@
+schema_version: 1
+experiment_id: t20-vadd-vv-vslideup-vx-m2-n4
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vadd_vv
+instruction_id: vadd_vv
+lmul: m2
+sew: 32
+markers: [start, end]
+experiment:
+  id: t20-vadd-vv-vslideup-vx-m2-n4
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+    -
+      label: end
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vadd_vv, --lmul, m2, --other-instr, vslideup_vx, --output-root, experiments/generated, --experiment-id, t20-vadd-vv-vslideup-vx-m2-n4]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vadd_vv --lmul m2 --other-instr vslideup_vx --output-root experiments/generated --experiment-id t20-vadd-vv-vslideup-vx-m2-n4
+instruction:
+  id: vadd_vv
+  asm: vadd.vv
+  llvm_sched_write: WriteVIALUV
+  result_kind: vector
+  chainable: true
+  notes: Simple vector integer ALU operation.
+pair_instruction:
+  id: vslideup_vx
+  asm: vslideup.vx
+  llvm_sched_write: WriteVSlideUpX
+  result_kind: vector
+  chainable: true
+  notes: Vector slide-up with a scalar offset operand.
+body:
+  iterations: 4
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vadd_vv
+      destination: v4
+    -
+      index: 0
+      side: B
+      instruction: vslideup_vx
+      destination: v6
+    -
+      index: 1
+      side: A
+      instruction: vadd_vv
+      destination: v8
+    -
+      index: 1
+      side: B
+      instruction: vslideup_vx
+      destination: v10
+    -
+      index: 2
+      side: A
+      instruction: vadd_vv
+      destination: v12
+    -
+      index: 2
+      side: B
+      instruction: vslideup_vx
+      destination: v14
+    -
+      index: 3
+      side: A
+      instruction: vadd_vv
+      destination: v16
+    -
+      index: 3
+      side: B
+      instruction: vslideup_vx
+      destination: v18
+  register_reuse: false

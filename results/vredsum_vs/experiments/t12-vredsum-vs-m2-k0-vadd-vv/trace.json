@@ -1,0 +1,45 @@
+{
+  "backend": "synthetic_cmodel",
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t12-vredsum-vs-m2-k0-vadd-vv",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1012,
+      "experiment_id": "t12-vredsum-vs-m2-k0-vadd-vv",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t12-vredsum-vs-m2-k0-vadd-vv",
+  "instruction_id": "vredsum_vs",
+  "lmul": "m2",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "result_group": "vredsum_vs",
+  "scaffold": false,
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 6,
+      "latency_lmul_k": 3,
+      "pipe": "pipe1",
+      "release_base": 1,
+      "release_lmul_k": 1
+    },
+    "instruction_id": "vredsum_vs",
+    "latency_cycles": 12,
+    "lmul": "m2",
+    "measured_delta_cycles": 12,
+    "pipe": "pipe1",
+    "release_cycles": 3,
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T12_CONSUMER_RAW_GAP"
+}

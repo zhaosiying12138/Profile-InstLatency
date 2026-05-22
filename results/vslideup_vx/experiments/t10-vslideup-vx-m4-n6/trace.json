@@ -1,0 +1,45 @@
+{
+  "backend": "synthetic_cmodel",
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t10-vslideup-vx-m4-n6",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1006,
+      "experiment_id": "t10-vslideup-vx-m4-n6",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t10-vslideup-vx-m4-n6",
+  "instruction_id": "vslideup_vx",
+  "lmul": "m4",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "result_group": "vslideup_vx",
+  "scaffold": false,
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 3,
+      "latency_lmul_k": 1,
+      "pipe": "pipe0",
+      "release_base": 1,
+      "release_lmul_k": 0
+    },
+    "instruction_id": "vslideup_vx",
+    "latency_cycles": 7,
+    "lmul": "m4",
+    "measured_delta_cycles": 6,
+    "pipe": "pipe0",
+    "release_cycles": 1,
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+}

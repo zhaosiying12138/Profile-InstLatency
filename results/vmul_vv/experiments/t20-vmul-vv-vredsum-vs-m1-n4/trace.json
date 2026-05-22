@@ -1,0 +1,45 @@
+{
+  "backend": "synthetic_cmodel",
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t20-vmul-vv-vredsum-vs-m1-n4",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1008,
+      "experiment_id": "t20-vmul-vv-vredsum-vs-m1-n4",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t20-vmul-vv-vredsum-vs-m1-n4",
+  "instruction_id": "vmul_vv",
+  "lmul": "m1",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "result_group": "vmul_vv",
+  "scaffold": false,
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 5,
+      "latency_lmul_k": 1,
+      "pipe": "any",
+      "release_base": 1,
+      "release_lmul_k": 1
+    },
+    "instruction_id": "vmul_vv",
+    "latency_cycles": 6,
+    "lmul": "m1",
+    "measured_delta_cycles": 8,
+    "pipe": "any",
+    "release_cycles": 2,
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+}
