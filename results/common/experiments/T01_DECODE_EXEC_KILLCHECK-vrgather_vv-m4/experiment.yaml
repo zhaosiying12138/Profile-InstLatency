@@ -1,0 +1,16 @@
+schema_version: 1
+experiment_id: T01_DECODE_EXEC_KILLCHECK-vrgather_vv-m4
+template_id: T01_DECODE_EXEC_KILLCHECK
+result_group: common
+instruction:
+  id: vrgather_vv
+  asm: vrgather.vv
+  llvm_sched_write: WriteVRGatherVV
+  sew: 32
+lmul: m4
+markers: [before, after, program_end]
+expected:
+  assemble: true
+  execute: true
+  markers_present: [before, after]
+  program_end: true

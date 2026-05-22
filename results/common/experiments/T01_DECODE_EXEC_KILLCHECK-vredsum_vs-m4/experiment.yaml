@@ -1,0 +1,16 @@
+schema_version: 1
+experiment_id: T01_DECODE_EXEC_KILLCHECK-vredsum_vs-m4
+template_id: T01_DECODE_EXEC_KILLCHECK
+result_group: common
+instruction:
+  id: vredsum_vs
+  asm: vredsum.vs
+  llvm_sched_write: WriteVIRedV_From
+  sew: 32
+lmul: m4
+markers: [before, after, program_end]
+expected:
+  assemble: true
+  execute: true
+  markers_present: [before, after]
+  program_end: true

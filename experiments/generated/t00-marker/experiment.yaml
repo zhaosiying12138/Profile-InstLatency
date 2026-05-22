@@ -1,0 +1,38 @@
+schema_version: 1
+experiment:
+  id: "t00-marker"
+  template_id: "T00_BASELINE_MARKER"
+  purpose: "Confirm marker read baseline and zero-cost timestamp semantics."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "t0"
+    -
+      label: "t1"
+parameters:
+  sew: 32
+  lmul: null
+  vl_register: "x5"
+  vl_value: null
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T00_BASELINE_MARKER"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t00-marker"
+    command: "python3 scripts/gen_asm.py one --template T00_BASELINE_MARKER --output-root experiments/generated --experiment-id t00-marker"
+body:
+  {}

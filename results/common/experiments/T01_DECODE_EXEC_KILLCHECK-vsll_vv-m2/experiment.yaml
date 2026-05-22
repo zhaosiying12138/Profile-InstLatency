@@ -1,0 +1,16 @@
+schema_version: 1
+experiment_id: T01_DECODE_EXEC_KILLCHECK-vsll_vv-m2
+template_id: T01_DECODE_EXEC_KILLCHECK
+result_group: common
+instruction:
+  id: vsll_vv
+  asm: vsll.vv
+  llvm_sched_write: WriteVShiftV
+  sew: 32
+lmul: m2
+markers: [before, after, program_end]
+expected:
+  assemble: true
+  execute: true
+  markers_present: [before, after]
+  program_end: true

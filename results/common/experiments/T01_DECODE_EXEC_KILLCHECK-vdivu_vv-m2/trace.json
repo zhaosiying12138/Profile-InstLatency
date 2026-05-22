@@ -1,0 +1,36 @@
+{
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "T01_DECODE_EXEC_KILLCHECK-vdivu_vv-m2",
+      "marker": "before",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1024,
+      "experiment_id": "T01_DECODE_EXEC_KILLCHECK-vdivu_vv-m2",
+      "marker": "after",
+      "pc": "0x80000004"
+    },
+    {
+      "cycle": 1024,
+      "experiment_id": "T01_DECODE_EXEC_KILLCHECK-vdivu_vv-m2",
+      "marker": "program_end",
+      "pc": "0x80000008"
+    }
+  ],
+  "experiment_id": "T01_DECODE_EXEC_KILLCHECK-vdivu_vv-m2",
+  "marker_baseline_cycles": 0,
+  "mode": "dry_run",
+  "schema_version": 1,
+  "synthetic": {
+    "instruction_id": "vdivu_vv",
+    "latency_cycles": 24,
+    "lmul": "m2",
+    "measured_delta_cycles": 24,
+    "pipe": "pipe1",
+    "release_cycles": 8,
+    "timing_model": "config/rvv_timing_model.yaml"
+  },
+  "template_id": "T01_DECODE_EXEC_KILLCHECK"
+}
