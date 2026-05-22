@@ -1,4 +1,14 @@
 schema_version: 1
+experiment_id: "t01-vadd-vv-m1"
+template_id: "T01_DECODE_EXEC_KILLCHECK"
+result_group: "common"
+instruction_id: "vadd_vv"
+lmul: "m1"
+sew: 32
+markers:
+  - "before"
+  - "after"
+  - "program_end"
 experiment:
   id: "t01-vadd-vv-m1"
   template_id: "T01_DECODE_EXEC_KILLCHECK"
@@ -11,6 +21,8 @@ experiment:
       label: "before"
     -
       label: "after"
+    -
+      label: "program_end"
 parameters:
   sew: 32
   lmul: "m1"

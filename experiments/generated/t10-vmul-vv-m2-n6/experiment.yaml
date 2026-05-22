@@ -1,0 +1,90 @@
+schema_version: 1
+experiment_id: "t10-vmul-vv-m2-n6"
+template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+result_group: "vmul_vv"
+instruction_id: "vmul_vv"
+lmul: "m2"
+sew: 32
+markers:
+  - "start"
+  - "end"
+experiment:
+  id: "t10-vmul-vv-m2-n6"
+  template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+  purpose: "Measure independent stream throughput for resource occupancy."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+    -
+      label: "end"
+parameters:
+  sew: 32
+  lmul: "m2"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      - "--instr"
+      - "vmul_vv"
+      - "--lmul"
+      - "m2"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t10-vmul-vv-m2-n6"
+    command: "python3 scripts/gen_asm.py one --template T10_INDEPENDENT_STREAM_THROUGHPUT --instr vmul_vv --lmul m2 --output-root experiments/generated --experiment-id t10-vmul-vv-m2-n6"
+instruction:
+  id: "vmul_vv"
+  asm: "vmul.vv"
+  llvm_sched_write: "WriteVIMulV"
+  result_kind: "vector"
+  chainable: true
+  notes: "Vector integer multiply."
+body:
+  iterations: 6
+  instances:
+    -
+      index: 0
+      destination: "v4"
+      source_a: "v0"
+      source_b: "v2"
+    -
+      index: 1
+      destination: "v6"
+      source_a: "v0"
+      source_b: "v2"
+    -
+      index: 2
+      destination: "v8"
+      source_a: "v0"
+      source_b: "v2"
+    -
+      index: 3
+      destination: "v10"
+      source_a: "v0"
+      source_b: "v2"
+    -
+      index: 4
+      destination: "v12"
+      source_a: "v0"
+      source_b: "v2"
+    -
+      index: 5
+      destination: "v14"
+      source_a: "v0"
+      source_b: "v2"
+  register_reuse: false

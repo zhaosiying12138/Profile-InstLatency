@@ -6,148 +6,88 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+from typing import Any
 
 from run_experiment import (
-    INSTRUCTION_SET,
     ExperimentError,
+    load_structured_file,
     run_experiment_dir,
-    run_experiment_from_metadata,
 )
 
 
-LMULS = ("m1", "m2", "m4")
+KILLCHECK_TEMPLATE = "T01_DECODE_EXEC_KILLCHECK"
 
 
-def killcheck_metadata(instruction_id: str, lmul: str) -> dict[str, object]:
-    info = INSTRUCTION_SET[instruction_id]
-    return {
-        "schema_version": 1,
-        "experiment_id": f"T01_DECODE_EXEC_KILLCHECK-{instruction_id}-{lmul}",
-        "template_id": "T01_DECODE_EXEC_KILLCHECK",
-        "result_group": "common",
-        "instruction": {
-            "id": instruction_id,
-            "asm": info["asm"],
-            "llvm_sched_write": info["sched_write"],
-            "sew": 32,
-        },
-        "lmul": lmul,
-        "markers": ["before", "after", "program_end"],
-        "expected": {
-            "assemble": True,
-            "execute": True,
-            "markers_present": ["before", "after"],
-            "program_end": True,
-        },
-    }
-
-
-def baseline_marker_metadata() -> dict[str, object]:
-    return {
-        "schema_version": 1,
-        "experiment_id": "T00_BASELINE_MARKER-common",
-        "template_id": "T00_BASELINE_MARKER",
-        "result_group": "common",
-        "instruction_id": "vadd_vv",
-        "lmul": "m1",
-        "markers": ["t0", "t1"],
-        "expected": {"marker_delta_cycles": 0},
-    }
-
-
-def instruction_template_metadata(
-    template_id: str, instruction_id: str, lmul: str, *, result_group: str | None = None
-) -> dict[str, object]:
-    info = INSTRUCTION_SET[instruction_id]
-    short_template = template_id.split("_", 1)[0]
-    return {
-        "schema_version": 1,
-        "experiment_id": f"{short_template}-{instruction_id}-{lmul}",
-        "template_id": template_id,
-        "result_group": result_group or instruction_id,
-        "instruction": {
-            "id": instruction_id,
-            "asm": info["asm"],
-            "llvm_sched_write": info["sched_write"],
-            "sew": 32,
-        },
-        "lmul": lmul,
-        "markers": ["start", "end"],
-    }
-
-
-def common_load_metadata() -> dict[str, object]:
-    return {
-        "schema_version": 1,
-        "experiment_id": "T40_COMMON_VLSU_LOAD_HIT-m1",
-        "template_id": "T40_COMMON_VLSU_LOAD_HIT",
-        "result_group": "common",
-        "instruction_id": "vadd_vv",
-        "lmul": "m1",
-        "markers": ["start", "end"],
-        "status": "scaffold_only",
-    }
-
-
-def generated_source_for(metadata: dict[str, object], generated_root: Path) -> Path | None:
-    experiment_id = str(metadata["experiment_id"])
-    candidate = generated_root / experiment_id
-    if (candidate / "experiment.yaml").exists():
-        return candidate
-    return None
-
-
-def run_metadata_or_generated(
-    metadata: dict[str, object],
-    *,
-    args: argparse.Namespace,
-) -> Path:
-    source_dir = generated_source_for(metadata, args.generated_root)
-    if source_dir:
-        return run_experiment_dir(
-            source_dir,
-            dry_run=args.dry_run,
-            results_root=args.results_root,
-            timing_model_path=args.timing_model,
+def load_manifest_entries(generated_root: Path) -> list[dict[str, Any]]:
+    manifest_path = generated_root / "suite_manifest.yaml"
+    if not manifest_path.exists():
+        raise ExperimentError(
+            f"missing generated suite manifest: {manifest_path}; "
+            "run `python3 scripts/gen_asm.py suite` first"
         )
-    return run_experiment_from_metadata(
-        metadata,
-        dry_run=args.dry_run,
-        results_root=args.results_root,
-        timing_model_path=args.timing_model,
+    manifest = load_structured_file(manifest_path)
+    if not isinstance(manifest, dict):
+        raise ExperimentError(f"suite manifest must be a mapping: {manifest_path}")
+    entries = manifest.get("experiments")
+    if not isinstance(entries, list):
+        raise ExperimentError(f"suite manifest missing experiments list: {manifest_path}")
+    normalized: list[dict[str, Any]] = []
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise ExperimentError(f"suite manifest contains a non-mapping entry: {entry!r}")
+        if not entry.get("id"):
+            raise ExperimentError(f"suite manifest entry missing id: {entry!r}")
+        if not entry.get("template_id"):
+            raise ExperimentError(f"suite manifest entry missing template_id: {entry!r}")
+        normalized.append(entry)
+    return normalized
+
+
+def selected_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
+    entries = load_manifest_entries(args.generated_root)
+    if args.killcheck:
+        entries = [entry for entry in entries if entry.get("template_id") == KILLCHECK_TEMPLATE]
+    if not entries:
+        raise ExperimentError("selected suite is empty")
+    return entries
+
+
+def generated_source_for(entry: dict[str, Any], generated_root: Path) -> Path:
+    experiment_id = str(entry["id"])
+    source_dir = generated_root / experiment_id
+    metadata_path = source_dir / "experiment.yaml"
+    assembly_path = source_dir / "test.s"
+    if metadata_path.exists() and assembly_path.exists():
+        return source_dir
+    raise ExperimentError(
+        f"generated source for {experiment_id!r} is incomplete under {source_dir}; "
+        "run `python3 scripts/gen_asm.py suite` to materialize the full suite"
     )
 
 
-def build_killcheck_suite() -> list[dict[str, object]]:
-    return [
-        killcheck_metadata(instruction_id, lmul)
-        for instruction_id in INSTRUCTION_SET
-        for lmul in LMULS
-    ]
-
-
-def build_all_suite() -> list[dict[str, object]]:
-    suite: list[dict[str, object]] = [baseline_marker_metadata()]
-    suite.extend(build_killcheck_suite())
-    for instruction_id in INSTRUCTION_SET:
-        for lmul in LMULS:
-            suite.append(
-                instruction_template_metadata(
-                    "T10_INDEPENDENT_STREAM_THROUGHPUT", instruction_id, lmul
-                )
-            )
-            suite.append(instruction_template_metadata("T11_SELF_RAW_CHAIN", instruction_id, lmul))
-            suite.append(instruction_template_metadata("T30_LMUL_SCALING", instruction_id, lmul))
-    suite.append(common_load_metadata())
-    return suite
+def run_generated_entry(entry: dict[str, Any], args: argparse.Namespace) -> Path:
+    source_dir = generated_source_for(entry, args.generated_root)
+    return run_experiment_dir(
+        source_dir,
+        dry_run=args.dry_run,
+        results_root=args.results_root,
+        timing_model_path=args.timing_model,
+        mode=args.mode,
+    )
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     suite = parser.add_mutually_exclusive_group(required=True)
-    suite.add_argument("--killcheck", action="store_true", help="run only T01 kill-checks")
-    suite.add_argument("--all", action="store_true", help="run common and instruction suites")
-    parser.add_argument("--dry-run", action="store_true", help="write deterministic synthetic traces")
+    suite.add_argument("--killcheck", action="store_true", help="run only generated T01 kill-checks")
+    suite.add_argument("--all", action="store_true", help="run every generated experiment")
+    parser.add_argument("--dry-run", action="store_true", help="write labeled scaffold traces")
+    parser.add_argument(
+        "--mode",
+        choices=("synthetic_calibration", "real_platform_profile"),
+        default="synthetic_calibration",
+        help="execution mode; synthetic_calibration uses the stdlib synthetic cmodel",
+    )
     parser.add_argument(
         "--generated-root",
         type=Path,
@@ -164,7 +104,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--timing-model",
         type=Path,
         default=Path("config/rvv_timing_model.yaml"),
-        help="RVV timing model used for dry-run synthetic traces",
+        help="RVV timing model used for synthetic traces",
     )
     return parser
 
@@ -172,11 +112,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = build_arg_parser()
     args = parser.parse_args(argv)
-    suite = build_killcheck_suite() if args.killcheck else build_all_suite()
     outputs: list[Path] = []
     try:
-        for metadata in suite:
-            outputs.append(run_metadata_or_generated(metadata, args=args))
+        for entry in selected_entries(args):
+            outputs.append(run_generated_entry(entry, args))
     except ExperimentError as error:
         print(f"error: {error}", file=sys.stderr)
         return 2

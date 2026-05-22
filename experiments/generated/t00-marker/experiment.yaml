@@ -1,4 +1,13 @@
 schema_version: 1
+experiment_id: "t00-marker"
+template_id: "T00_BASELINE_MARKER"
+result_group: "common"
+instruction_id: null
+lmul: null
+sew: 32
+markers:
+  - "t0"
+  - "t1"
 experiment:
   id: "t00-marker"
   template_id: "T00_BASELINE_MARKER"

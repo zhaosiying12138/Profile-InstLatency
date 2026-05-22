@@ -159,6 +159,8 @@ def _parse_yaml_block(lines: list[tuple[int, str]], index: int, indent: int) -> 
         return {}, index
     if lines[index][0] < indent:
         return {}, index
+    if lines[index][0] == indent and lines[index][1] in {"{}", "[]"}:
+        return _parse_scalar(lines[index][1]), index + 1
     if _sequence_item_text(lines[index][1]) is not None:
         items: list[Any] = []
         while index < len(lines):
@@ -315,24 +317,107 @@ def load_experiment_metadata(source_dir: Path) -> tuple[dict[str, Any], str]:
     data = load_structured_file(metadata_path)
     if not isinstance(data, dict):
         raise ExperimentError(f"experiment metadata must be a mapping: {metadata_path}")
-    return data, raw_text
+    return normalize_experiment_metadata(data), raw_text
+
+
+def metadata_template_id(metadata: dict[str, Any]) -> str:
+    value = metadata.get("template_id")
+    if value:
+        return str(value)
+    experiment = metadata.get("experiment")
+    if isinstance(experiment, dict) and experiment.get("template_id"):
+        return str(experiment["template_id"])
+    raise ExperimentError("experiment metadata missing template_id")
+
+
+def metadata_experiment_id(metadata: dict[str, Any]) -> str:
+    value = metadata.get("experiment_id") or metadata.get("id")
+    if value:
+        return str(value)
+    experiment = metadata.get("experiment")
+    if isinstance(experiment, dict) and experiment.get("id"):
+        return str(experiment["id"])
+    raise ExperimentError("experiment metadata missing experiment_id")
+
+
+def _raw_marker_labels(metadata: dict[str, Any]) -> list[str]:
+    raw_markers = metadata.get("markers") or metadata.get("marker_labels")
+    if raw_markers is None:
+        experiment = metadata.get("experiment")
+        if isinstance(experiment, dict):
+            raw_markers = experiment.get("markers")
+    labels: list[str] = []
+    if isinstance(raw_markers, list):
+        for item in raw_markers:
+            if isinstance(item, dict):
+                value = item.get("label") or item.get("marker") or item.get("name")
+                if value is not None:
+                    labels.append(str(value))
+            elif item is not None:
+                labels.append(str(item))
+    elif isinstance(raw_markers, str):
+        labels = [part.strip() for part in raw_markers.split(",") if part.strip()]
+    return labels
+
+
+def normalize_experiment_metadata(metadata: dict[str, Any]) -> dict[str, Any]:
+    template = metadata_template_id(metadata)
+    exp_id = metadata_experiment_id(metadata)
+    instruction = metadata.get("instruction")
+    instruction_id = metadata.get("instruction_id")
+    if not instruction_id and isinstance(instruction, dict):
+        instruction_id = instruction.get("id")
+    parameters = metadata.get("parameters")
+    lmul = metadata.get("lmul")
+    if lmul is None and isinstance(parameters, dict):
+        lmul = parameters.get("lmul")
+    sew = metadata.get("sew")
+    if sew is None and isinstance(parameters, dict):
+        sew = parameters.get("sew")
+    markers = _raw_marker_labels(metadata) or default_markers(template)
+    group = metadata.get("result_group")
+    if not group:
+        group = "common" if template in COMMON_TEMPLATES else instruction_id or "common"
+
+    normalized: dict[str, Any] = {
+        "schema_version": metadata.get("schema_version", 1),
+        "experiment_id": exp_id,
+        "template_id": template,
+        "result_group": str(group),
+        "instruction_id": str(instruction_id) if instruction_id else None,
+        "lmul": str(lmul) if lmul else None,
+        "sew": sew,
+        "markers": markers,
+    }
+    for key, value in metadata.items():
+        if key not in normalized:
+            normalized[key] = value
+    return normalized
 
 
 def get_instruction_id(metadata: dict[str, Any]) -> str | None:
+    value = metadata.get("instruction_id")
+    if value:
+        return str(value)
     instruction = metadata.get("instruction")
     if isinstance(instruction, dict):
         value = instruction.get("id")
         if value:
             return str(value)
-    value = metadata.get("instruction_id")
-    return str(value) if value else None
+    return None
 
 
 def get_lmul(metadata: dict[str, Any]) -> str:
+    value = metadata.get("lmul")
+    if value:
+        return str(value)
+    parameters = metadata.get("parameters")
+    if isinstance(parameters, dict) and parameters.get("lmul"):
+        return str(parameters["lmul"])
     instruction = metadata.get("instruction")
     if isinstance(instruction, dict) and instruction.get("lmul"):
         return str(instruction["lmul"])
-    return str(metadata.get("lmul") or "m1")
+    return "m1"
 
 
 def default_markers(template_id: str) -> list[str]:
@@ -344,26 +429,17 @@ def default_markers(template_id: str) -> list[str]:
 
 
 def marker_labels(metadata: dict[str, Any]) -> list[str]:
-    raw_markers = metadata.get("markers") or metadata.get("marker_labels")
-    labels: list[str] = []
-    if isinstance(raw_markers, list):
-        for item in raw_markers:
-            if isinstance(item, dict) and item.get("marker"):
-                labels.append(str(item["marker"]))
-            elif item is not None:
-                labels.append(str(item))
-    elif isinstance(raw_markers, str):
-        labels = [part.strip() for part in raw_markers.split(",") if part.strip()]
+    labels = _raw_marker_labels(metadata)
     if labels:
         return labels
-    return default_markers(str(metadata.get("template_id") or "UNKNOWN"))
+    return default_markers(metadata_template_id(metadata))
 
 
 def result_group(metadata: dict[str, Any]) -> str:
     explicit = metadata.get("result_group")
     if explicit:
         return str(explicit)
-    template_id = str(metadata.get("template_id") or "")
+    template_id = metadata_template_id(metadata)
     if template_id in COMMON_TEMPLATES:
         return "common"
     instruction_id = get_instruction_id(metadata)
@@ -371,54 +447,73 @@ def result_group(metadata: dict[str, Any]) -> str:
 
 
 def experiment_id(metadata: dict[str, Any]) -> str:
-    value = metadata.get("experiment_id") or metadata.get("id")
-    if not value:
-        raise ExperimentError("experiment metadata missing experiment_id")
-    return str(value)
+    return metadata_experiment_id(metadata)
+
+
+def body_value(metadata: dict[str, Any], key: str, default: Any = None) -> Any:
+    body = metadata.get("body")
+    if isinstance(body, dict) and key in body:
+        return body[key]
+    return metadata.get(key, default)
 
 
 def _instruction_timing(
     metadata: dict[str, Any], timing_model: dict[str, Any]
-) -> tuple[int, int, dict[str, Any]]:
+) -> tuple[int, int, dict[str, Any], bool]:
     instruction_id = get_instruction_id(metadata)
     lmul = get_lmul(metadata)
     factor = LMUL_FACTORS.get(lmul)
     if factor is None:
         raise ExperimentError(f"unsupported LMUL {lmul!r}; expected one of {sorted(LMUL_FACTORS)}")
     params = {}
+    found = False
     if instruction_id:
         raw = timing_model.get("instructions", {}).get(instruction_id, {})
         if isinstance(raw, dict):
             params = raw
+            found = bool(raw)
     latency = int(params.get("latency_base", 1)) + int(params.get("latency_lmul_k", 0)) * factor
     release = int(params.get("release_base", 1)) + int(params.get("release_lmul_k", 0)) * factor
-    return latency, release, params
+    return latency, release, params, found
 
 
 def synthetic_delta_cycles(metadata: dict[str, Any], timing_model: dict[str, Any]) -> int:
-    template_id = str(metadata.get("template_id") or "")
-    latency, release, _ = _instruction_timing(metadata, timing_model)
+    template_id = metadata_template_id(metadata)
+    latency, release, _, _ = _instruction_timing(metadata, timing_model)
     if template_id == "T00_BASELINE_MARKER":
         return 0
     if template_id == "T01_DECODE_EXEC_KILLCHECK":
         return max(1, latency)
     if template_id == "T10_INDEPENDENT_STREAM_THROUGHPUT":
-        return int(metadata.get("stream_length") or 6) * max(1, release)
+        return int(body_value(metadata, "iterations", body_value(metadata, "stream_length", 6))) * max(1, release)
     if template_id == "T11_SELF_RAW_CHAIN":
-        return int(metadata.get("chain_length") or 6) * max(1, latency)
+        return int(body_value(metadata, "iterations", body_value(metadata, "chain_length", 6))) * max(1, latency)
     if template_id == "T12_CONSUMER_RAW_GAP":
-        return max(1, latency) + int(metadata.get("filler_count") or 0)
+        return max(1, latency) + int(body_value(metadata, "filler_count", 0) or 0)
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
-        return int(metadata.get("pair_count") or 4) * max(1, release)
+        return int(body_value(metadata, "iterations", body_value(metadata, "pair_count", 4))) * max(1, release)
     if template_id == "T21_PAIR_WITH_SCALAR":
-        return int(metadata.get("pair_count") or 4) * max(1, release)
+        return int(body_value(metadata, "iterations", body_value(metadata, "pair_count", 4))) * max(1, release)
     if template_id == "T30_LMUL_SCALING":
-        return int(metadata.get("sample_count") or 6) * max(1, latency)
+        scaling = metadata.get("scaling")
+        shape = scaling.get("shape") if isinstance(scaling, dict) else None
+        if shape == "T10_INDEPENDENT_STREAM_THROUGHPUT":
+            return int(body_value(metadata, "iterations", body_value(metadata, "sample_count", 6))) * max(1, release)
+        if shape == "T12_CONSUMER_RAW_GAP":
+            return max(1, latency) + int(body_value(metadata, "filler_count", 0) or 0)
+        return int(body_value(metadata, "iterations", body_value(metadata, "sample_count", 6))) * max(1, latency)
+    if template_id == "T40_COMMON_VLSU_LOAD_HIT":
+        return max(1, latency + release)
     return max(1, latency)
 
 
 def build_synthetic_trace(
-    metadata: dict[str, Any], timing_model: dict[str, Any], timing_model_path: Path
+    metadata: dict[str, Any],
+    timing_model: dict[str, Any],
+    timing_model_path: Path,
+    *,
+    mode: str,
+    dry_run: bool,
 ) -> dict[str, Any]:
     labels = marker_labels(metadata)
     delta = synthetic_delta_cycles(metadata, timing_model)
@@ -445,20 +540,36 @@ def build_synthetic_trace(
             }
         )
 
-    latency, release, params = _instruction_timing(metadata, timing_model)
+    latency, release, params, found = _instruction_timing(metadata, timing_model)
+    backend = "synthetic_cmodel"
     return {
         "schema_version": 1,
         "experiment_id": exp_id,
-        "template_id": metadata.get("template_id"),
-        "mode": "dry_run",
+        "template_id": metadata_template_id(metadata),
+        "result_group": result_group(metadata),
+        "instruction_id": get_instruction_id(metadata),
+        "lmul": get_lmul(metadata),
+        "mode": "dry_run" if dry_run else mode,
+        "backend": backend,
+        "scaffold": bool(dry_run),
         "marker_baseline_cycles": 0,
         "synthetic": {
+            "backend": backend,
             "timing_model": str(timing_model_path),
+            "timing_model_mode": timing_model.get("mode"),
             "instruction_id": get_instruction_id(metadata),
             "lmul": get_lmul(metadata),
+            "timing_model_entry_found": found,
             "pipe": params.get("pipe"),
             "latency_cycles": latency,
             "release_cycles": release,
+            "configured": {
+                "pipe": params.get("pipe"),
+                "latency_base": params.get("latency_base"),
+                "latency_lmul_k": params.get("latency_lmul_k"),
+                "release_base": params.get("release_base"),
+                "release_lmul_k": params.get("release_lmul_k"),
+            },
             "measured_delta_cycles": delta,
         },
         "entries": entries,
@@ -485,14 +596,11 @@ def placeholder_assembly(metadata: dict[str, Any]) -> str:
 def write_result_files(
     metadata: dict[str, Any],
     output_dir: Path,
-    metadata_text: str | None,
     source_dir: Path | None,
     trace: dict[str, Any],
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
-    if metadata_text is None:
-        metadata_text = dump_simple_yaml(metadata) + "\n"
-    (output_dir / "experiment.yaml").write_text(metadata_text, encoding="utf-8")
+    (output_dir / "experiment.yaml").write_text(dump_simple_yaml(metadata) + "\n", encoding="utf-8")
 
     source_test = source_dir / "test.s" if source_dir else None
     if source_test and source_test.exists():
@@ -511,25 +619,34 @@ def run_experiment_from_metadata(
     dry_run: bool,
     results_root: Path,
     timing_model_path: Path,
+    mode: str = "synthetic_calibration",
     source_dir: Path | None = None,
-    metadata_text: str | None = None,
 ) -> Path:
+    metadata = normalize_experiment_metadata(metadata)
     exp_id = experiment_id(metadata)
     timing_model = load_timing_model(timing_model_path)
     group = result_group(metadata)
     output_dir = results_root / group / "experiments" / exp_id
-    if not dry_run:
+    if mode == "real_platform_profile":
         raise ExperimentError(
-            "gem5 execution is not wired yet; rerun with --dry-run until the simulator "
-            "marker and timing patches are available"
+            "real_platform_profile requires a real simulator or hardware backend; "
+            "no real backend is wired in scripts/run_experiment.py yet"
         )
-    trace = build_synthetic_trace(metadata, timing_model, timing_model_path)
-    write_result_files(metadata, output_dir, metadata_text, source_dir, trace)
+    if mode != "synthetic_calibration":
+        raise ExperimentError(f"unsupported mode {mode!r}")
+    trace = build_synthetic_trace(
+        metadata,
+        timing_model,
+        timing_model_path,
+        mode=mode,
+        dry_run=dry_run,
+    )
+    write_result_files(metadata, output_dir, source_dir, trace)
     return output_dir
 
 
 def run_experiment_dir(
-    source_dir: Path, *, dry_run: bool, results_root: Path, timing_model_path: Path
+    source_dir: Path, *, dry_run: bool, results_root: Path, timing_model_path: Path, mode: str = "synthetic_calibration"
 ) -> Path:
     metadata, metadata_text = load_experiment_metadata(source_dir)
     return run_experiment_from_metadata(
@@ -537,8 +654,8 @@ def run_experiment_dir(
         dry_run=dry_run,
         results_root=results_root,
         timing_model_path=timing_model_path,
+        mode=mode,
         source_dir=source_dir,
-        metadata_text=metadata_text,
     )
 
 
@@ -549,6 +666,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Experiment id under experiments/generated/ or a directory containing experiment.yaml",
     )
     parser.add_argument("--dry-run", action="store_true", help="write a deterministic synthetic trace")
+    parser.add_argument(
+        "--mode",
+        choices=("synthetic_calibration", "real_platform_profile"),
+        default="synthetic_calibration",
+        help="execution mode; synthetic_calibration uses the stdlib synthetic cmodel",
+    )
     parser.add_argument(
         "--generated-root",
         type=Path,
@@ -580,6 +703,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
             results_root=args.results_root,
             timing_model_path=args.timing_model,
+            mode=args.mode,
         )
     except ExperimentError as error:
         print(f"error: {error}", file=sys.stderr)

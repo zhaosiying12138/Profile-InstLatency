@@ -1,0 +1,100 @@
+schema_version: 1
+experiment_id: "t20-vcpop-m-viota-m-m4-n3"
+template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+result_group: "vcpop_m"
+instruction_id: "vcpop_m"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+experiment:
+  id: "t20-vcpop-m-viota-m-m4-n3"
+  template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  purpose: "Classify pairwise RVV pipe affinity."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+    -
+      label: "end"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 1
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      - "--instr"
+      - "vcpop_m"
+      - "--lmul"
+      - "m4"
+      - "--other-instr"
+      - "viota_m"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t20-vcpop-m-viota-m-m4-n3"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vcpop_m --lmul m4 --other-instr viota_m --output-root experiments/generated --experiment-id t20-vcpop-m-viota-m-m4-n3"
+instruction:
+  id: "vcpop_m"
+  asm: "vcpop.m"
+  llvm_sched_write: "WriteVMPopV"
+  result_kind: "scalar"
+  chainable: false
+  notes: "Mask population count producing a scalar integer result."
+pair_instruction:
+  id: "viota_m"
+  asm: "viota.m"
+  llvm_sched_write: "WriteVIotaV"
+  result_kind: "vector"
+  chainable: false
+  notes: "Mask-to-vector prefix index operation."
+body:
+  iterations: 3
+  instances:
+    -
+      index: 0
+      side: "A"
+      instruction: "vcpop_m"
+      destination: "x10"
+    -
+      index: 0
+      side: "B"
+      instruction: "viota_m"
+      destination: "v12"
+    -
+      index: 1
+      side: "A"
+      instruction: "vcpop_m"
+      destination: "x12"
+    -
+      index: 1
+      side: "B"
+      instruction: "viota_m"
+      destination: "v20"
+    -
+      index: 2
+      side: "A"
+      instruction: "vcpop_m"
+      destination: "x14"
+    -
+      index: 2
+      side: "B"
+      instruction: "viota_m"
+      destination: "v28"
+  register_reuse: false
+  iteration_note: "reduced from 4 because LMUL m4 exposes only six independent output groups"

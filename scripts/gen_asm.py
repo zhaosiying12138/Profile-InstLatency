@@ -41,6 +41,7 @@ TEMPLATE_IDS = (
     "T20_PAIRWISE_PIPE_CLASSIFICATION",
     "T21_PAIR_WITH_SCALAR",
     "T30_LMUL_SCALING",
+    "T40_COMMON_VLSU_LOAD_HIT",
 )
 
 T30_SHAPES = (
@@ -58,6 +59,13 @@ TEMPLATE_PURPOSES = {
     "T20_PAIRWISE_PIPE_CLASSIFICATION": "Classify pairwise RVV pipe affinity.",
     "T21_PAIR_WITH_SCALAR": "Probe scalar pairing, single-issue, and multi-uop behavior.",
     "T30_LMUL_SCALING": "Reuse timing shapes across LMUL values for scaling fits.",
+    "T40_COMMON_VLSU_LOAD_HIT": "Record a common vector load-hit timing reference.",
+}
+
+COMMON_RESULT_TEMPLATES = {
+    "T00_BASELINE_MARKER",
+    "T01_DECODE_EXEC_KILLCHECK",
+    "T40_COMMON_VLSU_LOAD_HIT",
 }
 
 
@@ -415,8 +423,17 @@ def base_metadata(
     lmul: str | None,
 ) -> dict[str, Any]:
     argv = command_argv(args, experiment_id)
+    instruction_id = getattr(args, "instr", None)
+    result_group = "common" if template_id in COMMON_RESULT_TEMPLATES else instruction_id or "common"
     return {
         "schema_version": 1,
+        "experiment_id": experiment_id,
+        "template_id": template_id,
+        "result_group": result_group,
+        "instruction_id": instruction_id,
+        "lmul": lmul,
+        "sew": SEW,
+        "markers": markers,
         "experiment": {
             "id": experiment_id,
             "template_id": template_id,
@@ -481,6 +498,8 @@ def make_experiment_id(args: argparse.Namespace) -> str:
     parts = [short_template(template_id)]
     if template_id == "T00_BASELINE_MARKER":
         parts.append("marker")
+    elif template_id == "T40_COMMON_VLSU_LOAD_HIT":
+        parts.extend(["common-vlsu-load-hit", args.lmul or "m1"])
     elif template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         other = args.other_instr or default_other_instr(args.instr)
         parts.extend([args.instr, other, args.lmul])
@@ -530,8 +549,9 @@ def body_t01(spec: InstructionSpec, lmul: str) -> tuple[list[str], list[str], di
         "TIMESTAMP_MARK before",
         emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"),
         "TIMESTAMP_MARK after",
+        "TIMESTAMP_MARK program_end",
     ]
-    return ["before", "after"], lines, {"destination": dest, "source_a": src_a, "source_b": src_b}
+    return ["before", "after", "program_end"], lines, {"destination": dest, "source_a": src_a, "source_b": src_b}
 
 
 def body_t10(
@@ -683,10 +703,35 @@ def body_t21(
     return ["start", "end"], lines, {"iterations": iterations, "instances": instances, "register_reuse": reused}
 
 
+def body_t40(lmul: str) -> tuple[list[str], list[str], dict[str, Any]]:
+    lines = [
+        "# Common load-hit reference: warm an aligned vector load, then time",
+        "# a repeated load plus dependent vector consumer.",
+        "la x8, __rvv_load_hit_data",
+        "vle32.v v2, (x8)",
+        "TIMESTAMP_MARK start",
+        "vle32.v v3, (x8)",
+        "vadd.vv v4, v3, v2",
+        "TIMESTAMP_MARK end",
+    ]
+    return ["start", "end"], lines, {
+        "load_width_bits": SEW,
+        "load_register": "v3",
+        "consumer": "vadd_vv",
+        "consumer_destination": "v4",
+        "address_register": "x8",
+        "data_label": "__rvv_load_hit_data",
+        "cache_state": "synthetic_load_hit",
+    }
+
+
 def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[str, Any]]:
     template_id = args.template
     if template_id == "T00_BASELINE_MARKER":
         return body_t00()
+    if template_id == "T40_COMMON_VLSU_LOAD_HIT":
+        validate_lmul(args.lmul)
+        return body_t40(args.lmul)
 
     spec = require_instruction(args.instr)
     validate_lmul(args.lmul)
@@ -763,6 +808,22 @@ def render_assembly(
         marker_summary=marker_summary,
         setup_block=setup_block(lmul),
         body_block=body,
+        data_block=data_block_for_template(template_id),
+    )
+
+
+def data_block_for_template(template_id: str) -> str:
+    if template_id != "T40_COMMON_VLSU_LOAD_HIT":
+        return ""
+    values = ", ".join(str(index + 1) for index in range(VL_VALUE))
+    return "\n".join(
+        [
+            "",
+            "    .section .data",
+            "    .balign 64",
+            "__rvv_load_hit_data:",
+            f"    .word {values}",
+        ]
     )
 
 
@@ -799,9 +860,10 @@ def build_metadata(
 def generate_one(args: argparse.Namespace) -> dict[str, Path]:
     if args.template not in TEMPLATE_IDS:
         raise SystemExit(f"unknown template id {args.template!r}; valid ids: {', '.join(TEMPLATE_IDS)}")
-    if args.template != "T00_BASELINE_MARKER":
+    if args.template not in {"T00_BASELINE_MARKER", "T40_COMMON_VLSU_LOAD_HIT"}:
         if not args.instr:
             raise SystemExit(f"{args.template} requires --instr")
+    if args.template != "T00_BASELINE_MARKER":
         if not args.lmul:
             raise SystemExit(f"{args.template} requires --lmul")
     if args.template == "T30_LMUL_SCALING" and args.shape not in T30_SHAPES:
@@ -829,7 +891,7 @@ def generate_one(args: argparse.Namespace) -> dict[str, Path]:
     experiment_dir.mkdir(parents=True, exist_ok=True)
     asm_path = experiment_dir / "test.s"
     yaml_path = experiment_dir / "experiment.yaml"
-    asm_path.write_text(assembly, encoding="utf-8")
+    asm_path.write_text(assembly.rstrip() + "\n", encoding="utf-8")
     write_yaml(yaml_path, metadata)
     return {"experiment_dir": experiment_dir, "assembly": asm_path, "metadata": yaml_path}
 
@@ -852,10 +914,12 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             experiment_id=None,
         )
         experiment_id = make_experiment_id(ns)
+        result_group = "common" if template in COMMON_RESULT_TEMPLATES else instr or "common"
         entries.append(
             {
                 "id": experiment_id,
                 "template_id": template,
+                "result_group": result_group,
                 "instruction_id": instr,
                 "lmul": lmul,
                 "argv": command_argv(ns, experiment_id),
@@ -863,6 +927,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
         )
 
     add("T00_BASELINE_MARKER")
+    add("T40_COMMON_VLSU_LOAD_HIT", lmul="m1")
     for instr in INSTRUCTION_IDS:
         for lmul in LMUL_FACTORS:
             add("T01_DECODE_EXEC_KILLCHECK", instr, lmul)

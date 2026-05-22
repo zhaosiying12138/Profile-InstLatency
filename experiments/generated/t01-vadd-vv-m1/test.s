@@ -2,7 +2,7 @@
 # experiment_id: t01-vadd-vv-m1
 # template_id: T01_DECODE_EXEC_KILLCHECK
 # vector_shape: e32,m1
-# markers: before, after
+# markers: before, after, program_end
 #
 # TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
 # intended experiment shape and are not required to assemble before the marker
@@ -73,6 +73,7 @@ _start:
     TIMESTAMP_MARK before
     vadd.vv v2, v0, v1
     TIMESTAMP_MARK after
+    TIMESTAMP_MARK program_end
 
     # Terminate through the conventional Linux exit syscall when a runner
     # chooses to assemble this after marker lowering is implemented.

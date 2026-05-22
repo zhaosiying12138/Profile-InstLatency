@@ -2,7 +2,7 @@ schema_version: 1
 suite:
   id: "rvv-profile-generated-suite"
   description: "Deterministic manifest for Phase 2-5 RVV assembly experiments."
-  entry_count: 376
+  entry_count: 377
   instruction_ids:
     - "vadd_vv"
     - "vsll_vv"
@@ -22,11 +22,12 @@ suite:
 generation:
   generator: "scripts/gen_asm.py"
   generator_version: 1
-  manifest_only: true
+  manifest_only: false
 experiments:
   -
     id: "t00-marker"
     template_id: "T00_BASELINE_MARKER"
+    result_group: "common"
     instruction_id: null
     lmul: null
     argv:
@@ -40,8 +41,27 @@ experiments:
       - "--experiment-id"
       - "t00-marker"
   -
+    id: "t40-common-vlsu-load-hit-m1"
+    template_id: "T40_COMMON_VLSU_LOAD_HIT"
+    result_group: "common"
+    instruction_id: null
+    lmul: "m1"
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T40_COMMON_VLSU_LOAD_HIT"
+      - "--lmul"
+      - "m1"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t40-common-vlsu-load-hit-m1"
+  -
     id: "t01-vadd-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -61,6 +81,7 @@ experiments:
   -
     id: "t10-vadd-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -80,6 +101,7 @@ experiments:
   -
     id: "t11-vadd-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -99,6 +121,7 @@ experiments:
   -
     id: "t12-vadd-vv-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -122,6 +145,7 @@ experiments:
   -
     id: "t21-vadd-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -141,6 +165,7 @@ experiments:
   -
     id: "t30-vadd-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -166,6 +191,7 @@ experiments:
   -
     id: "t30-vadd-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -191,6 +217,7 @@ experiments:
   -
     id: "t30-vadd-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -216,6 +243,7 @@ experiments:
   -
     id: "t01-vadd-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -235,6 +263,7 @@ experiments:
   -
     id: "t10-vadd-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -254,6 +283,7 @@ experiments:
   -
     id: "t11-vadd-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -273,6 +303,7 @@ experiments:
   -
     id: "t12-vadd-vv-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -296,6 +327,7 @@ experiments:
   -
     id: "t21-vadd-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -315,6 +347,7 @@ experiments:
   -
     id: "t30-vadd-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -340,6 +373,7 @@ experiments:
   -
     id: "t30-vadd-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -365,6 +399,7 @@ experiments:
   -
     id: "t30-vadd-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -390,6 +425,7 @@ experiments:
   -
     id: "t01-vadd-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -409,6 +445,7 @@ experiments:
   -
     id: "t10-vadd-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -428,6 +465,7 @@ experiments:
   -
     id: "t11-vadd-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -447,6 +485,7 @@ experiments:
   -
     id: "t12-vadd-vv-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -470,6 +509,7 @@ experiments:
   -
     id: "t21-vadd-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -489,6 +529,7 @@ experiments:
   -
     id: "t30-vadd-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -514,6 +555,7 @@ experiments:
   -
     id: "t30-vadd-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -539,6 +581,7 @@ experiments:
   -
     id: "t30-vadd-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -564,6 +607,7 @@ experiments:
   -
     id: "t01-vsll-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -583,6 +627,7 @@ experiments:
   -
     id: "t10-vsll-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -602,6 +647,7 @@ experiments:
   -
     id: "t11-vsll-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -621,6 +667,7 @@ experiments:
   -
     id: "t12-vsll-vv-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -644,6 +691,7 @@ experiments:
   -
     id: "t21-vsll-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -663,6 +711,7 @@ experiments:
   -
     id: "t30-vsll-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -688,6 +737,7 @@ experiments:
   -
     id: "t30-vsll-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -713,6 +763,7 @@ experiments:
   -
     id: "t30-vsll-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -738,6 +789,7 @@ experiments:
   -
     id: "t01-vsll-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -757,6 +809,7 @@ experiments:
   -
     id: "t10-vsll-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -776,6 +829,7 @@ experiments:
   -
     id: "t11-vsll-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -795,6 +849,7 @@ experiments:
   -
     id: "t12-vsll-vv-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -818,6 +873,7 @@ experiments:
   -
     id: "t21-vsll-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -837,6 +893,7 @@ experiments:
   -
     id: "t30-vsll-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -862,6 +919,7 @@ experiments:
   -
     id: "t30-vsll-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -887,6 +945,7 @@ experiments:
   -
     id: "t30-vsll-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -912,6 +971,7 @@ experiments:
   -
     id: "t01-vsll-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -931,6 +991,7 @@ experiments:
   -
     id: "t10-vsll-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -950,6 +1011,7 @@ experiments:
   -
     id: "t11-vsll-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -969,6 +1031,7 @@ experiments:
   -
     id: "t12-vsll-vv-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -992,6 +1055,7 @@ experiments:
   -
     id: "t21-vsll-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -1011,6 +1075,7 @@ experiments:
   -
     id: "t30-vsll-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -1036,6 +1101,7 @@ experiments:
   -
     id: "t30-vsll-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -1061,6 +1127,7 @@ experiments:
   -
     id: "t30-vsll-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -1086,6 +1153,7 @@ experiments:
   -
     id: "t01-vmul-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1105,6 +1173,7 @@ experiments:
   -
     id: "t10-vmul-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1124,6 +1193,7 @@ experiments:
   -
     id: "t11-vmul-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1143,6 +1213,7 @@ experiments:
   -
     id: "t12-vmul-vv-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1166,6 +1237,7 @@ experiments:
   -
     id: "t21-vmul-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1185,6 +1257,7 @@ experiments:
   -
     id: "t30-vmul-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1210,6 +1283,7 @@ experiments:
   -
     id: "t30-vmul-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1235,6 +1309,7 @@ experiments:
   -
     id: "t30-vmul-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -1260,6 +1335,7 @@ experiments:
   -
     id: "t01-vmul-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1279,6 +1355,7 @@ experiments:
   -
     id: "t10-vmul-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1298,6 +1375,7 @@ experiments:
   -
     id: "t11-vmul-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1317,6 +1395,7 @@ experiments:
   -
     id: "t12-vmul-vv-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1340,6 +1419,7 @@ experiments:
   -
     id: "t21-vmul-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1359,6 +1439,7 @@ experiments:
   -
     id: "t30-vmul-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1384,6 +1465,7 @@ experiments:
   -
     id: "t30-vmul-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1409,6 +1491,7 @@ experiments:
   -
     id: "t30-vmul-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -1434,6 +1517,7 @@ experiments:
   -
     id: "t01-vmul-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1453,6 +1537,7 @@ experiments:
   -
     id: "t10-vmul-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1472,6 +1557,7 @@ experiments:
   -
     id: "t11-vmul-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1491,6 +1577,7 @@ experiments:
   -
     id: "t12-vmul-vv-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1514,6 +1601,7 @@ experiments:
   -
     id: "t21-vmul-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1533,6 +1621,7 @@ experiments:
   -
     id: "t30-vmul-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1558,6 +1647,7 @@ experiments:
   -
     id: "t30-vmul-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1583,6 +1673,7 @@ experiments:
   -
     id: "t30-vmul-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -1608,6 +1699,7 @@ experiments:
   -
     id: "t01-vdivu-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1627,6 +1719,7 @@ experiments:
   -
     id: "t10-vdivu-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1646,6 +1739,7 @@ experiments:
   -
     id: "t11-vdivu-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1665,6 +1759,7 @@ experiments:
   -
     id: "t12-vdivu-vv-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1688,6 +1783,7 @@ experiments:
   -
     id: "t21-vdivu-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1707,6 +1803,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1732,6 +1829,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1757,6 +1855,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -1782,6 +1881,7 @@ experiments:
   -
     id: "t01-vdivu-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1801,6 +1901,7 @@ experiments:
   -
     id: "t10-vdivu-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1820,6 +1921,7 @@ experiments:
   -
     id: "t11-vdivu-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1839,6 +1941,7 @@ experiments:
   -
     id: "t12-vdivu-vv-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1862,6 +1965,7 @@ experiments:
   -
     id: "t21-vdivu-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1881,6 +1985,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1906,6 +2011,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1931,6 +2037,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -1956,6 +2063,7 @@ experiments:
   -
     id: "t01-vdivu-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -1975,6 +2083,7 @@ experiments:
   -
     id: "t10-vdivu-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -1994,6 +2103,7 @@ experiments:
   -
     id: "t11-vdivu-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2013,6 +2123,7 @@ experiments:
   -
     id: "t12-vdivu-vv-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2036,6 +2147,7 @@ experiments:
   -
     id: "t21-vdivu-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2055,6 +2167,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2080,6 +2193,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2105,6 +2219,7 @@ experiments:
   -
     id: "t30-vdivu-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -2130,6 +2245,7 @@ experiments:
   -
     id: "t01-vmseq-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2149,6 +2265,7 @@ experiments:
   -
     id: "t10-vmseq-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2168,6 +2285,7 @@ experiments:
   -
     id: "t11-vmseq-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2187,6 +2305,7 @@ experiments:
   -
     id: "t12-vmseq-vv-m1-k0-vcpop-m"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2210,6 +2329,7 @@ experiments:
   -
     id: "t21-vmseq-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2229,6 +2349,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2254,6 +2375,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2279,6 +2401,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -2304,6 +2427,7 @@ experiments:
   -
     id: "t01-vmseq-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2323,6 +2447,7 @@ experiments:
   -
     id: "t10-vmseq-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2342,6 +2467,7 @@ experiments:
   -
     id: "t11-vmseq-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2361,6 +2487,7 @@ experiments:
   -
     id: "t12-vmseq-vv-m2-k0-vcpop-m"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2384,6 +2511,7 @@ experiments:
   -
     id: "t21-vmseq-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2403,6 +2531,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2428,6 +2557,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2453,6 +2583,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -2478,6 +2609,7 @@ experiments:
   -
     id: "t01-vmseq-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2497,6 +2629,7 @@ experiments:
   -
     id: "t10-vmseq-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2516,6 +2649,7 @@ experiments:
   -
     id: "t11-vmseq-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2535,6 +2669,7 @@ experiments:
   -
     id: "t12-vmseq-vv-m4-k0-vcpop-m"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2558,6 +2693,7 @@ experiments:
   -
     id: "t21-vmseq-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2577,6 +2713,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2602,6 +2739,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2627,6 +2765,7 @@ experiments:
   -
     id: "t30-vmseq-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -2652,6 +2791,7 @@ experiments:
   -
     id: "t01-vcpop-m-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2671,6 +2811,7 @@ experiments:
   -
     id: "t10-vcpop-m-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2690,6 +2831,7 @@ experiments:
   -
     id: "t11-vcpop-m-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2709,6 +2851,7 @@ experiments:
   -
     id: "t12-vcpop-m-m1-k0-scalar-add"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2732,6 +2875,7 @@ experiments:
   -
     id: "t21-vcpop-m-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2751,6 +2895,7 @@ experiments:
   -
     id: "t30-vcpop-m-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2776,6 +2921,7 @@ experiments:
   -
     id: "t30-vcpop-m-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2801,6 +2947,7 @@ experiments:
   -
     id: "t30-vcpop-m-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -2826,6 +2973,7 @@ experiments:
   -
     id: "t01-vcpop-m-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2845,6 +2993,7 @@ experiments:
   -
     id: "t10-vcpop-m-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2864,6 +3013,7 @@ experiments:
   -
     id: "t11-vcpop-m-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2883,6 +3033,7 @@ experiments:
   -
     id: "t12-vcpop-m-m2-k0-scalar-add"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2906,6 +3057,7 @@ experiments:
   -
     id: "t21-vcpop-m-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2925,6 +3077,7 @@ experiments:
   -
     id: "t30-vcpop-m-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2950,6 +3103,7 @@ experiments:
   -
     id: "t30-vcpop-m-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -2975,6 +3129,7 @@ experiments:
   -
     id: "t30-vcpop-m-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -3000,6 +3155,7 @@ experiments:
   -
     id: "t01-vcpop-m-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3019,6 +3175,7 @@ experiments:
   -
     id: "t10-vcpop-m-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3038,6 +3195,7 @@ experiments:
   -
     id: "t11-vcpop-m-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3057,6 +3215,7 @@ experiments:
   -
     id: "t12-vcpop-m-m4-k0-scalar-add"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3080,6 +3239,7 @@ experiments:
   -
     id: "t21-vcpop-m-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3099,6 +3259,7 @@ experiments:
   -
     id: "t30-vcpop-m-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3124,6 +3285,7 @@ experiments:
   -
     id: "t30-vcpop-m-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3149,6 +3311,7 @@ experiments:
   -
     id: "t30-vcpop-m-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -3174,6 +3337,7 @@ experiments:
   -
     id: "t01-viota-m-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3193,6 +3357,7 @@ experiments:
   -
     id: "t10-viota-m-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3212,6 +3377,7 @@ experiments:
   -
     id: "t11-viota-m-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3231,6 +3397,7 @@ experiments:
   -
     id: "t12-viota-m-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3254,6 +3421,7 @@ experiments:
   -
     id: "t21-viota-m-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3273,6 +3441,7 @@ experiments:
   -
     id: "t30-viota-m-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3298,6 +3467,7 @@ experiments:
   -
     id: "t30-viota-m-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3323,6 +3493,7 @@ experiments:
   -
     id: "t30-viota-m-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -3348,6 +3519,7 @@ experiments:
   -
     id: "t01-viota-m-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3367,6 +3539,7 @@ experiments:
   -
     id: "t10-viota-m-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3386,6 +3559,7 @@ experiments:
   -
     id: "t11-viota-m-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3405,6 +3579,7 @@ experiments:
   -
     id: "t12-viota-m-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3428,6 +3603,7 @@ experiments:
   -
     id: "t21-viota-m-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3447,6 +3623,7 @@ experiments:
   -
     id: "t30-viota-m-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3472,6 +3649,7 @@ experiments:
   -
     id: "t30-viota-m-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3497,6 +3675,7 @@ experiments:
   -
     id: "t30-viota-m-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -3522,6 +3701,7 @@ experiments:
   -
     id: "t01-viota-m-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3541,6 +3721,7 @@ experiments:
   -
     id: "t10-viota-m-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3560,6 +3741,7 @@ experiments:
   -
     id: "t11-viota-m-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3579,6 +3761,7 @@ experiments:
   -
     id: "t12-viota-m-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3602,6 +3785,7 @@ experiments:
   -
     id: "t21-viota-m-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3621,6 +3805,7 @@ experiments:
   -
     id: "t30-viota-m-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3646,6 +3831,7 @@ experiments:
   -
     id: "t30-viota-m-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3671,6 +3857,7 @@ experiments:
   -
     id: "t30-viota-m-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -3696,6 +3883,7 @@ experiments:
   -
     id: "t01-vslideup-vx-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3715,6 +3903,7 @@ experiments:
   -
     id: "t10-vslideup-vx-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3734,6 +3923,7 @@ experiments:
   -
     id: "t11-vslideup-vx-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3753,6 +3943,7 @@ experiments:
   -
     id: "t12-vslideup-vx-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3776,6 +3967,7 @@ experiments:
   -
     id: "t21-vslideup-vx-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3795,6 +3987,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3820,6 +4013,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3845,6 +4039,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -3870,6 +4065,7 @@ experiments:
   -
     id: "t01-vslideup-vx-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3889,6 +4085,7 @@ experiments:
   -
     id: "t10-vslideup-vx-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3908,6 +4105,7 @@ experiments:
   -
     id: "t11-vslideup-vx-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3927,6 +4125,7 @@ experiments:
   -
     id: "t12-vslideup-vx-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3950,6 +4149,7 @@ experiments:
   -
     id: "t21-vslideup-vx-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3969,6 +4169,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -3994,6 +4195,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -4019,6 +4221,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -4044,6 +4247,7 @@ experiments:
   -
     id: "t01-vslideup-vx-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4063,6 +4267,7 @@ experiments:
   -
     id: "t10-vslideup-vx-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4082,6 +4287,7 @@ experiments:
   -
     id: "t11-vslideup-vx-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4101,6 +4307,7 @@ experiments:
   -
     id: "t12-vslideup-vx-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4124,6 +4331,7 @@ experiments:
   -
     id: "t21-vslideup-vx-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4143,6 +4351,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4168,6 +4377,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4193,6 +4403,7 @@ experiments:
   -
     id: "t30-vslideup-vx-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -4218,6 +4429,7 @@ experiments:
   -
     id: "t01-vrgather-vv-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4237,6 +4449,7 @@ experiments:
   -
     id: "t10-vrgather-vv-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4256,6 +4469,7 @@ experiments:
   -
     id: "t11-vrgather-vv-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4275,6 +4489,7 @@ experiments:
   -
     id: "t12-vrgather-vv-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4298,6 +4513,7 @@ experiments:
   -
     id: "t21-vrgather-vv-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4317,6 +4533,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4342,6 +4559,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4367,6 +4585,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -4392,6 +4611,7 @@ experiments:
   -
     id: "t01-vrgather-vv-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4411,6 +4631,7 @@ experiments:
   -
     id: "t10-vrgather-vv-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4430,6 +4651,7 @@ experiments:
   -
     id: "t11-vrgather-vv-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4449,6 +4671,7 @@ experiments:
   -
     id: "t12-vrgather-vv-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4472,6 +4695,7 @@ experiments:
   -
     id: "t21-vrgather-vv-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4491,6 +4715,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4516,6 +4741,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4541,6 +4767,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -4566,6 +4793,7 @@ experiments:
   -
     id: "t01-vrgather-vv-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4585,6 +4813,7 @@ experiments:
   -
     id: "t10-vrgather-vv-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4604,6 +4833,7 @@ experiments:
   -
     id: "t11-vrgather-vv-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4623,6 +4853,7 @@ experiments:
   -
     id: "t12-vrgather-vv-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4646,6 +4877,7 @@ experiments:
   -
     id: "t21-vrgather-vv-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4665,6 +4897,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4690,6 +4923,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4715,6 +4949,7 @@ experiments:
   -
     id: "t30-vrgather-vv-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
@@ -4740,6 +4975,7 @@ experiments:
   -
     id: "t01-vredsum-vs-m1"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4759,6 +4995,7 @@ experiments:
   -
     id: "t10-vredsum-vs-m1-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4778,6 +5015,7 @@ experiments:
   -
     id: "t11-vredsum-vs-m1-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4797,6 +5035,7 @@ experiments:
   -
     id: "t12-vredsum-vs-m1-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4820,6 +5059,7 @@ experiments:
   -
     id: "t21-vredsum-vs-m1-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4839,6 +5079,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t10-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4864,6 +5105,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t11-m1-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4889,6 +5131,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t12-m1-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m1"
     argv:
@@ -4914,6 +5157,7 @@ experiments:
   -
     id: "t01-vredsum-vs-m2"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -4933,6 +5177,7 @@ experiments:
   -
     id: "t10-vredsum-vs-m2-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -4952,6 +5197,7 @@ experiments:
   -
     id: "t11-vredsum-vs-m2-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -4971,6 +5217,7 @@ experiments:
   -
     id: "t12-vredsum-vs-m2-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -4994,6 +5241,7 @@ experiments:
   -
     id: "t21-vredsum-vs-m2-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -5013,6 +5261,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t10-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -5038,6 +5287,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t11-m2-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -5063,6 +5313,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t12-m2-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m2"
     argv:
@@ -5088,6 +5339,7 @@ experiments:
   -
     id: "t01-vredsum-vs-m4"
     template_id: "T01_DECODE_EXEC_KILLCHECK"
+    result_group: "common"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5107,6 +5359,7 @@ experiments:
   -
     id: "t10-vredsum-vs-m4-n6"
     template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5126,6 +5379,7 @@ experiments:
   -
     id: "t11-vredsum-vs-m4-n6"
     template_id: "T11_SELF_RAW_CHAIN"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5145,6 +5399,7 @@ experiments:
   -
     id: "t12-vredsum-vs-m4-k0-vadd-vv"
     template_id: "T12_CONSUMER_RAW_GAP"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5168,6 +5423,7 @@ experiments:
   -
     id: "t21-vredsum-vs-m4-n4"
     template_id: "T21_PAIR_WITH_SCALAR"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5187,6 +5443,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t10-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5212,6 +5469,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t11-m4-n6"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5237,6 +5495,7 @@ experiments:
   -
     id: "t30-vredsum-vs-t12-m4-k0"
     template_id: "T30_LMUL_SCALING"
+    result_group: "vredsum_vs"
     instruction_id: "vredsum_vs"
     lmul: "m4"
     argv:
@@ -5262,6 +5521,7 @@ experiments:
   -
     id: "t20-vadd-vv-vsll-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5283,6 +5543,7 @@ experiments:
   -
     id: "t20-vadd-vv-vsll-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5304,6 +5565,7 @@ experiments:
   -
     id: "t20-vadd-vv-vsll-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5325,6 +5587,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmul-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5346,6 +5609,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmul-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5367,6 +5631,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmul-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5388,6 +5653,7 @@ experiments:
   -
     id: "t20-vadd-vv-vdivu-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5409,6 +5675,7 @@ experiments:
   -
     id: "t20-vadd-vv-vdivu-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5430,6 +5697,7 @@ experiments:
   -
     id: "t20-vadd-vv-vdivu-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5451,6 +5719,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmseq-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5472,6 +5741,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmseq-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5493,6 +5763,7 @@ experiments:
   -
     id: "t20-vadd-vv-vmseq-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5514,6 +5785,7 @@ experiments:
   -
     id: "t20-vadd-vv-vcpop-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5535,6 +5807,7 @@ experiments:
   -
     id: "t20-vadd-vv-vcpop-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5556,6 +5829,7 @@ experiments:
   -
     id: "t20-vadd-vv-vcpop-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5577,6 +5851,7 @@ experiments:
   -
     id: "t20-vadd-vv-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5598,6 +5873,7 @@ experiments:
   -
     id: "t20-vadd-vv-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5619,6 +5895,7 @@ experiments:
   -
     id: "t20-vadd-vv-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5640,6 +5917,7 @@ experiments:
   -
     id: "t20-vadd-vv-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5661,6 +5939,7 @@ experiments:
   -
     id: "t20-vadd-vv-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5682,6 +5961,7 @@ experiments:
   -
     id: "t20-vadd-vv-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5703,6 +5983,7 @@ experiments:
   -
     id: "t20-vadd-vv-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5724,6 +6005,7 @@ experiments:
   -
     id: "t20-vadd-vv-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5745,6 +6027,7 @@ experiments:
   -
     id: "t20-vadd-vv-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5766,6 +6049,7 @@ experiments:
   -
     id: "t20-vadd-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m1"
     argv:
@@ -5787,6 +6071,7 @@ experiments:
   -
     id: "t20-vadd-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m2"
     argv:
@@ -5808,6 +6093,7 @@ experiments:
   -
     id: "t20-vadd-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vadd_vv"
     instruction_id: "vadd_vv"
     lmul: "m4"
     argv:
@@ -5829,6 +6115,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmul-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -5850,6 +6137,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmul-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -5871,6 +6159,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmul-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -5892,6 +6181,7 @@ experiments:
   -
     id: "t20-vsll-vv-vdivu-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -5913,6 +6203,7 @@ experiments:
   -
     id: "t20-vsll-vv-vdivu-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -5934,6 +6225,7 @@ experiments:
   -
     id: "t20-vsll-vv-vdivu-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -5955,6 +6247,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmseq-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -5976,6 +6269,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmseq-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -5997,6 +6291,7 @@ experiments:
   -
     id: "t20-vsll-vv-vmseq-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6018,6 +6313,7 @@ experiments:
   -
     id: "t20-vsll-vv-vcpop-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -6039,6 +6335,7 @@ experiments:
   -
     id: "t20-vsll-vv-vcpop-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -6060,6 +6357,7 @@ experiments:
   -
     id: "t20-vsll-vv-vcpop-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6081,6 +6379,7 @@ experiments:
   -
     id: "t20-vsll-vv-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -6102,6 +6401,7 @@ experiments:
   -
     id: "t20-vsll-vv-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -6123,6 +6423,7 @@ experiments:
   -
     id: "t20-vsll-vv-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6144,6 +6445,7 @@ experiments:
   -
     id: "t20-vsll-vv-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -6165,6 +6467,7 @@ experiments:
   -
     id: "t20-vsll-vv-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -6186,6 +6489,7 @@ experiments:
   -
     id: "t20-vsll-vv-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6207,6 +6511,7 @@ experiments:
   -
     id: "t20-vsll-vv-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -6228,6 +6533,7 @@ experiments:
   -
     id: "t20-vsll-vv-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -6249,6 +6555,7 @@ experiments:
   -
     id: "t20-vsll-vv-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6270,6 +6577,7 @@ experiments:
   -
     id: "t20-vsll-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m1"
     argv:
@@ -6291,6 +6599,7 @@ experiments:
   -
     id: "t20-vsll-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m2"
     argv:
@@ -6312,6 +6621,7 @@ experiments:
   -
     id: "t20-vsll-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vsll_vv"
     instruction_id: "vsll_vv"
     lmul: "m4"
     argv:
@@ -6333,6 +6643,7 @@ experiments:
   -
     id: "t20-vmul-vv-vdivu-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6354,6 +6665,7 @@ experiments:
   -
     id: "t20-vmul-vv-vdivu-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6375,6 +6687,7 @@ experiments:
   -
     id: "t20-vmul-vv-vdivu-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6396,6 +6709,7 @@ experiments:
   -
     id: "t20-vmul-vv-vmseq-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6417,6 +6731,7 @@ experiments:
   -
     id: "t20-vmul-vv-vmseq-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6438,6 +6753,7 @@ experiments:
   -
     id: "t20-vmul-vv-vmseq-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6459,6 +6775,7 @@ experiments:
   -
     id: "t20-vmul-vv-vcpop-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6480,6 +6797,7 @@ experiments:
   -
     id: "t20-vmul-vv-vcpop-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6501,6 +6819,7 @@ experiments:
   -
     id: "t20-vmul-vv-vcpop-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6522,6 +6841,7 @@ experiments:
   -
     id: "t20-vmul-vv-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6543,6 +6863,7 @@ experiments:
   -
     id: "t20-vmul-vv-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6564,6 +6885,7 @@ experiments:
   -
     id: "t20-vmul-vv-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6585,6 +6907,7 @@ experiments:
   -
     id: "t20-vmul-vv-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6606,6 +6929,7 @@ experiments:
   -
     id: "t20-vmul-vv-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6627,6 +6951,7 @@ experiments:
   -
     id: "t20-vmul-vv-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6648,6 +6973,7 @@ experiments:
   -
     id: "t20-vmul-vv-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6669,6 +6995,7 @@ experiments:
   -
     id: "t20-vmul-vv-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6690,6 +7017,7 @@ experiments:
   -
     id: "t20-vmul-vv-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6711,6 +7039,7 @@ experiments:
   -
     id: "t20-vmul-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m1"
     argv:
@@ -6732,6 +7061,7 @@ experiments:
   -
     id: "t20-vmul-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m2"
     argv:
@@ -6753,6 +7083,7 @@ experiments:
   -
     id: "t20-vmul-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmul_vv"
     instruction_id: "vmul_vv"
     lmul: "m4"
     argv:
@@ -6774,6 +7105,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vmseq-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -6795,6 +7127,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vmseq-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -6816,6 +7149,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vmseq-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -6837,6 +7171,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vcpop-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -6858,6 +7193,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vcpop-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -6879,6 +7215,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vcpop-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -6900,6 +7237,7 @@ experiments:
   -
     id: "t20-vdivu-vv-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -6921,6 +7259,7 @@ experiments:
   -
     id: "t20-vdivu-vv-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -6942,6 +7281,7 @@ experiments:
   -
     id: "t20-vdivu-vv-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -6963,6 +7303,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -6984,6 +7325,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -7005,6 +7347,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -7026,6 +7369,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -7047,6 +7391,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -7068,6 +7413,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -7089,6 +7435,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m1"
     argv:
@@ -7110,6 +7457,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m2"
     argv:
@@ -7131,6 +7479,7 @@ experiments:
   -
     id: "t20-vdivu-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vdivu_vv"
     instruction_id: "vdivu_vv"
     lmul: "m4"
     argv:
@@ -7152,6 +7501,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vcpop-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -7173,6 +7523,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vcpop-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -7194,6 +7545,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vcpop-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -7215,6 +7567,7 @@ experiments:
   -
     id: "t20-vmseq-vv-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -7236,6 +7589,7 @@ experiments:
   -
     id: "t20-vmseq-vv-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -7257,6 +7611,7 @@ experiments:
   -
     id: "t20-vmseq-vv-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -7278,6 +7633,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -7299,6 +7655,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -7320,6 +7677,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -7341,6 +7699,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -7362,6 +7721,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -7383,6 +7743,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -7404,6 +7765,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m1"
     argv:
@@ -7425,6 +7787,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m2"
     argv:
@@ -7446,6 +7809,7 @@ experiments:
   -
     id: "t20-vmseq-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vmseq_vv"
     instruction_id: "vmseq_vv"
     lmul: "m4"
     argv:
@@ -7467,6 +7831,7 @@ experiments:
   -
     id: "t20-vcpop-m-viota-m-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -7488,6 +7853,7 @@ experiments:
   -
     id: "t20-vcpop-m-viota-m-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -7509,6 +7875,7 @@ experiments:
   -
     id: "t20-vcpop-m-viota-m-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -7530,6 +7897,7 @@ experiments:
   -
     id: "t20-vcpop-m-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -7551,6 +7919,7 @@ experiments:
   -
     id: "t20-vcpop-m-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -7572,6 +7941,7 @@ experiments:
   -
     id: "t20-vcpop-m-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -7593,6 +7963,7 @@ experiments:
   -
     id: "t20-vcpop-m-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -7614,6 +7985,7 @@ experiments:
   -
     id: "t20-vcpop-m-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -7635,6 +8007,7 @@ experiments:
   -
     id: "t20-vcpop-m-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -7656,6 +8029,7 @@ experiments:
   -
     id: "t20-vcpop-m-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m1"
     argv:
@@ -7677,6 +8051,7 @@ experiments:
   -
     id: "t20-vcpop-m-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m2"
     argv:
@@ -7698,6 +8073,7 @@ experiments:
   -
     id: "t20-vcpop-m-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vcpop_m"
     instruction_id: "vcpop_m"
     lmul: "m4"
     argv:
@@ -7719,6 +8095,7 @@ experiments:
   -
     id: "t20-viota-m-vslideup-vx-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -7740,6 +8117,7 @@ experiments:
   -
     id: "t20-viota-m-vslideup-vx-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -7761,6 +8139,7 @@ experiments:
   -
     id: "t20-viota-m-vslideup-vx-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -7782,6 +8161,7 @@ experiments:
   -
     id: "t20-viota-m-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -7803,6 +8183,7 @@ experiments:
   -
     id: "t20-viota-m-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -7824,6 +8205,7 @@ experiments:
   -
     id: "t20-viota-m-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -7845,6 +8227,7 @@ experiments:
   -
     id: "t20-viota-m-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m1"
     argv:
@@ -7866,6 +8249,7 @@ experiments:
   -
     id: "t20-viota-m-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m2"
     argv:
@@ -7887,6 +8271,7 @@ experiments:
   -
     id: "t20-viota-m-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "viota_m"
     instruction_id: "viota_m"
     lmul: "m4"
     argv:
@@ -7908,6 +8293,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vrgather-vv-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -7929,6 +8315,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vrgather-vv-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -7950,6 +8337,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vrgather-vv-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -7971,6 +8359,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m1"
     argv:
@@ -7992,6 +8381,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m2"
     argv:
@@ -8013,6 +8403,7 @@ experiments:
   -
     id: "t20-vslideup-vx-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vslideup_vx"
     instruction_id: "vslideup_vx"
     lmul: "m4"
     argv:
@@ -8034,6 +8425,7 @@ experiments:
   -
     id: "t20-vrgather-vv-vredsum-vs-m1-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m1"
     argv:
@@ -8055,6 +8447,7 @@ experiments:
   -
     id: "t20-vrgather-vv-vredsum-vs-m2-n4"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m2"
     argv:
@@ -8076,6 +8469,7 @@ experiments:
   -
     id: "t20-vrgather-vv-vredsum-vs-m4-n3"
     template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+    result_group: "vrgather_vv"
     instruction_id: "vrgather_vv"
     lmul: "m4"
     argv:
