@@ -1,6 +1,6 @@
 schema_version: 1
 baseline: gem5_minorcpu
-status: selected_by_plan_pending_killcheck
+status: selected_t01_killcheck_passed
 candidates:
   - name: gem5_minorcpu
     role: first baseline
@@ -12,5 +12,10 @@ candidates:
     role: fallback candidate
     reason: required by simulator-candidate comparison path
 killcheck_gate:
-  status: not_run
-  expected_artifact: results/common/experiments/T01_DECODE_EXEC_KILLCHECK-*/
+  status: pass
+  command: python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results
+  expected_artifact: results/common/experiments/t01-*/
+  coverage: 10 instructions x 3 LMUL values
+full_timing_gate:
+  status: not_ready
+  reason: T10/T11/T12/T20/T30 still need real repeated gem5 or hardware measurements before real-platform approval

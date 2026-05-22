@@ -18,8 +18,8 @@ Verification:
 - `python3 -m py_compile scripts/run_experiment.py scripts/run_suite.py scripts/run_killcheck.py`
 - `python3 scripts/run_suite.py --killcheck --dry-run`
 - `python3 scripts/run_killcheck.py --dry-run`
-- `python3 -m json.tool results/common/experiments/T01_DECODE_EXEC_KILLCHECK-vadd_vv-m1/trace.json`
-- `python3 scripts/run_experiment.py results/common/experiments/T01_DECODE_EXEC_KILLCHECK-vadd_vv-m1 --dry-run --results-root /tmp/profile-inst-latency-runner-check`
+- `python3 -m json.tool results/common/experiments/t01-vadd-vv-m1/trace.json`
+- `python3 scripts/run_experiment.py experiments/generated/t01-vadd-vv-m1 --dry-run --results-root /tmp/profile-inst-latency-runner-check`
 - `python3 scripts/run_suite.py --all --dry-run --results-root /tmp/profile-inst-latency-suite-all-check`
 
 Risks:

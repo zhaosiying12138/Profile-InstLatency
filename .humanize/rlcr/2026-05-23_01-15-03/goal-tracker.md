@@ -49,7 +49,7 @@ Source plan: docs/plan.md
 ## MUTABLE SECTION
 <!-- Update each round with justification for changes -->
 
-### Plan Version: 1 (Updated: Round 0)
+### Plan Version: 2 (Updated: Round 1)
 
 #### Plan Evolution Log
 <!-- Document any changes to the plan with justification -->
@@ -57,6 +57,8 @@ Source plan: docs/plan.md
 |-------|--------|--------|--------------|
 | 0 | Initial plan | - | - |
 | 0 | Completed synthetic profiling workflow, replay capture, and gated LLVM 22.1.3 YuShuXin implementation. | Round 0 review required replacing scaffold-only artifacts with runnable generation, analysis, calibration, and LLVM evidence. | AC-1 through AC-17 verified for the synthetic calibration path; real-platform path remains gated by confidence and human approval. |
+| 0-review | Completion claim rejected by Codex review. | Fresh review found the kill-check and all suite traces are synthetic cmodel outputs, generated assembly still contains assembler-illegal `TIMESTAMP_MARK` pseudo-ops, analyzer/search copy configured synthetic metadata rather than inferring from raw marker evidence, and Humanize2 state is stale. | AC-3, AC-6, AC-9, AC-10, AC-12, AC-13, AC-14, AC-15, AC-16, and AC-17 remain blocked or invalidly gated. |
+| 1 | Review findings corrected and rerun end-to-end. | Marker pseudo-ops are lowered to assembler-legal zero-cost labels; gem5 MinorCPU T01 kill-check passes; analyzer infers claimed fields from raw marker deltas; synthetic gate passes; LLVM mca checks now cover all 30 profiled rows. | AC-1 through AC-17 are verified for the synthetic calibration branch; AC-16 remains the required gate for future real-platform expansion. |
 
 #### Active Tasks
 <!-- Map each task to its target Acceptance Criterion and routing tag -->
@@ -64,13 +66,13 @@ Source plan: docs/plan.md
 |------|-----------|--------|-----|-------|-------|
 | T0 Repository and toolchain bootstrap | AC-1, AC-3 | completed | coding | claude | Environment gate and path config verified with `python3 scripts/check_env.py`. |
 | T1 LLVM read-only schedule field extractor | AC-2, AC-4, AC-8 | completed | coding | claude | LLVM field map, schedule family mapping, and 10-instruction schema recorded under `results/common/`. |
-| T2 gem5 RVV kill-check and fallback comparison path | AC-3, AC-4, AC-5 | completed | coding | claude | Kill-check path verified through `python3 scripts/run_suite.py --killcheck`; fallback path preserved in plan/replay. |
-| T3 Zero-cost timestamp marker and trace schema | AC-6 | completed | coding | claude | Trace schema records zero-cost marker semantics; dry-run and suite traces verified. |
-| T4 Synthetic two-pipe timing model and assembly generator | AC-3, AC-5, AC-7 | completed | coding | claude | Generated 377 experiments covering 10 instructions and e32/m1,m2,m4 matrix. |
-| T5 Runner, analyzer, parameter search, and mismatch gate | AC-7, AC-8, AC-9, AC-10, AC-14, AC-16 | completed | coding | claude | Full suite, analyzer, parameter search, synthetic PASS gate, and real-platform FAIL gate verified. |
-| T6 Humanize2 primitive capture and replay cartridge | AC-11, AC-12, AC-13 | completed | coding | claude | Replay, cartridge, worker outputs, and LLVM evidence are recorded under `results/common/agentic_flow/`. |
-| T7 LLVM 22.1.3 YuShuXin schedule-model implementation | AC-15, AC-17 | completed | coding | claude | LLVM worktree commit `16b310c4d2525d193352b729e3e1a84164886cb7`; `llvm-mca` and `llc` focused tests passed. |
-| T8 LLVM model draft export and mapping evidence | AC-8, AC-10, AC-15 | completed | coding | claude | `scripts/export_llvm_draft.py` and LLVM implementation evidence recorded. |
+| T2 gem5 RVV kill-check and fallback comparison path | AC-3, AC-4, AC-5 | completed | coding | claude | `python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results` passed for 10 instructions x 3 LMUL; fallback doc updated. |
+| T3 Zero-cost timestamp marker and trace schema | AC-6 | completed | coding | claude | `TIMESTAMP_MARK` is lowered to zero-cost labels; gem5 traces recover marker cycles from symbol PCs and Exec logs. |
+| T4 Synthetic two-pipe timing model and assembly generator | AC-3, AC-5, AC-7 | completed | coding | claude | Suite regenerated with 3221 experiments including multiple T10/T11 stream lengths and T12 K=0..40 sweeps. |
+| T5 Runner, analyzer, parameter search, and mismatch gate | AC-7, AC-8, AC-9, AC-10, AC-14, AC-16 | completed | coding | claude | Analyzer claims latency/release/resource fields from raw marker deltas; synthetic gate passes; real gate fails closed without human approval. |
+| T6 Humanize2 primitive capture and replay cartridge | AC-11, AC-12, AC-13 | completed | coding | claude | Boards, events, replay notes, cartridge, tool-call artifacts, and coordinator Round 1 output updated under `results/common/agentic_flow/`. |
+| T7 LLVM 22.1.3 YuShuXin schedule-model implementation | AC-15, AC-17 | completed | coding | claude | LLVM worktree has schedule-model commit plus strengthened mca test commit; focused mca/codegen tests pass. |
+| T8 LLVM model draft export and mapping evidence | AC-8, AC-10, AC-15 | completed | coding | claude | Profiles, mismatch report, search output, and LLVM evidence are regenerated after non-circular synthetic calibration. |
 
 ### Completed and Verified
 <!-- Only move tasks here after Codex verification -->
@@ -78,13 +80,13 @@ Source plan: docs/plan.md
 |----|------|-----------------|----------------|----------|
 | AC-1, AC-3 | T0 Repository and toolchain bootstrap | 0 | 0 | `python3 scripts/check_env.py` passed; config paths verified. |
 | AC-2, AC-4, AC-8 | T1 LLVM schedule field extraction | 0 | 0 | `results/common/llvm_field_map.yaml`, 10 instruction profile folders, and LLVM source references recorded. |
-| AC-3, AC-4, AC-5 | T2 RVV kill-check path | 0 | 0 | `python3 scripts/run_suite.py --killcheck --results-root /tmp/profile-inst-latency-final-killcheck` wrote 30 traces. |
-| AC-6 | T3 Timestamp marker schema | 0 | 0 | `python3 scripts/run_experiment.py experiments/generated/t01-vadd-vv-m1 --dry-run --results-root /tmp/profile-inst-latency-final-one-dry` passed. |
-| AC-3, AC-5, AC-7 | T4 Synthetic timing model and assembly generation | 0 | 0 | `python3 scripts/gen_asm.py suite` generated 377 experiments; `python3 scripts/run_suite.py --all --results-root /tmp/profile-inst-latency-final-all` wrote 377 traces. |
-| AC-7, AC-8, AC-9, AC-10, AC-14, AC-16 | T5 Analyzer, search, and gates | 0 | 0 | `python3 scripts/analyze.py --all --root /tmp/profile-inst-latency-final-all --aggregate /tmp/profile-inst-latency-final-quality.md`; `python3 scripts/search_model.py --profile results --format json`; synthetic gate PASS; real-platform gate FAIL as expected. |
-| AC-11, AC-12, AC-13 | T6 Humanize2 replay capture | 0 | 0 | `results/common/agentic_flow/replay.md`, cartridge, artifacts, worker outputs, and this tracker updated. |
-| AC-15, AC-17 | T7 LLVM YuShuXin implementation | 0 | 0 | LLVM commit `16b310c4d2525d193352b729e3e1a84164886cb7`; `ninja -C /tmp/yushuxin-llvm-build llc llvm-mca FileCheck`; focused `llvm-mca` and `llc -verify-machineinstrs` tests passed. |
-| AC-8, AC-10, AC-15 | T8 LLVM model draft export | 0 | 0 | `results/common/llvm_model_draft.td`, `results/common/llvm_yushuxin_implementation.md`, and profile YAML evidence recorded. |
+| AC-3, AC-4, AC-5 | T2 gem5 RVV kill-check | 1 | 1 | 30 `results/common/experiments/t01-*/trace.json` files with `backend: gem5_minor` and `mode: real_platform_profile`. |
+| AC-6 | T3 zero-cost marker path | 1 | 1 | Adjacent marker baseline and generated marker metadata use zero-cost label markers; `TIMESTAMP_MARK` no longer appears in generated assembly. |
+| AC-5, AC-7, AC-9 | T4 experiment matrix | 1 | 1 | `python3 scripts/gen_asm.py suite --output-root experiments/generated` produced 3221 suite entries. |
+| AC-7, AC-8, AC-9, AC-10, AC-14, AC-16 | T5 analyzer/search/gates | 1 | 1 | `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md` passed; real-platform gate failed closed as expected. |
+| AC-11, AC-12, AC-13 | T6 Humanize2 capture | 1 | 1 | `results/common/agentic_flow/replay.md`, boards, events, cartridge, and coordinator verification artifacts updated. |
+| AC-15, AC-17 | T7 LLVM YuShuXin implementation | 1 | 1 | LLVM commits `16b310c4d252` and `13a8f69179f0`; focused llvm-mca and llc FileCheck commands passed. |
+| AC-8, AC-10, AC-15 | T8 LLVM mapping evidence | 1 | 1 | `results/common/llvm_yushuxin_implementation.md`, profiles, and mismatch report regenerated from corrected inference. |
 
 ### Explicitly Deferred
 <!-- Items here require strong justification -->
@@ -95,4 +97,4 @@ Source plan: docs/plan.md
 <!-- Issues discovered during implementation -->
 | Issue | Discovered Round | Blocking AC | Resolution Path |
 |-------|-----------------|-------------|-----------------|
-| None open after Round 0 fixes. | Round 0 | - | Synthetic calibration path passes; real-platform profiling remains intentionally gated by confidence and explicit human approval rather than golden equality. |
+| Full real-platform timing suite is not complete; only T01 gem5 kill-check has real coverage. | Round 1 | AC-16 future expansion | Keep `real_platform_profile` gate NOT_READY until T10/T11/T12/T20/T30 have repeated real traces, confidence review, and human approval. |

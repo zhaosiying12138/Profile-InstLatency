@@ -1,29 +1,50 @@
 schema_version: 1
-mode: synthetic_scaffold
+mode: synthetic_calibration_with_gem5_killcheck
 processor:
   issue_width:
-    value: null
-    evidence: []
+    value: 2
+    source: prior_from_task_statement
+    evidence:
+      - docs/plan.md
   micro_op_buffer_size:
     value: 0
-    evidence: []
+    source: prior_from_task_statement
+    evidence:
+      - docs/plan.md
+  out_of_order:
+    value: false
+    source: prior_from_task_statement
+  rob_entries:
+    value: 0
+    source: prior_from_task_statement
   rvv_pipelines:
     count:
       value: 2
-      evidence: []
+      source: prior_from_task_statement
     resources:
-      - name: VPipe0
+      - name: YuShuXinVPipe0
         kind: proc_resource
-      - name: VPipe1
+      - name: YuShuXinVPipe1
         kind: proc_resource
+      - name: YuShuXinAnyVPipe
+        kind: proc_resource_group
+        members: [YuShuXinVPipe0, YuShuXinVPipe1]
   timestamp_model:
-    kind: zero_cost_marker
+    kind: zero_cost_label_marker
     occupies_issue_slot: false
     cycles: 0
+    evidence:
+      - results/common/experiments/t00-marker/trace.json
+      - scripts/run_experiment.py
 common_measurements:
-  load_hit_latency:
-    value: null
-    status: deferred_to_common_experiment
+  selected_instruction_decode_execute:
+    value: passed
+    backend: gem5_minor
+    coverage: 10 instructions x 3 LMUL values
+    evidence:
+      - results/common/experiments/t01-vadd-vv-m1/trace.json
+      - results/common/experiment_quality.md
   scalar_issue_baseline:
     value: null
-    evidence: []
+    status: not_claimed
+    reason: current claimed LLVM-facing fields do not require scalar issue calibration

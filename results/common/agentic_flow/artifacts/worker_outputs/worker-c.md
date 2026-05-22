@@ -23,7 +23,7 @@ Implemented Phase 2-5 assembly experiment generation scaffolding inside the assi
 - Supported template IDs: `T00_BASELINE_MARKER`, `T01_DECODE_EXEC_KILLCHECK`, `T10_INDEPENDENT_STREAM_THROUGHPUT`, `T11_SELF_RAW_CHAIN`, `T12_CONSUMER_RAW_GAP`, `T20_PAIRWISE_PIPE_CLASSIFICATION`, `T21_PAIR_WITH_SCALAR`, `T30_LMUL_SCALING`.
 - Supported instruction IDs: `vadd_vv`, `vsll_vv`, `vmul_vv`, `vdivu_vv`, `vmseq_vv`, `vcpop_m`, `viota_m`, `vslideup_vx`, `vrgather_vv`, `vredsum_vs`.
 - Supported vector shape is fixed `e32` with LMUL values `m1`, `m2`, and `m4`.
-- Generated assembly uses runner-facing `TIMESTAMP_MARK <label>` pseudo lines and does not require a real assembler for generation tests.
+- Generated assembly now lowers marker points to zero-cost labels before assembly; marker intent is carried in experiment metadata.
 - Metadata records marker labels, parameters, instruction metadata, and a reproduction command.
 - Suite manifest generation is available with `python3 scripts/gen_asm.py suite --manifest-only`.
 
@@ -54,6 +54,6 @@ Implemented Phase 2-5 assembly experiment generation scaffolding inside the assi
 
 ## Risks
 
-- `TIMESTAMP_MARK` is intentionally a pseudo line; generated assembly remains runner/scaffolding input until marker lowering or simulator support exists.
+- Marker pseudo operations are internal generator metadata only; generated assembly is assembler-facing input after marker lowering.
 - `T11_SELF_RAW_CHAIN` marks non-chainable instructions in metadata and comments; true dependency probes for those instructions should use `T12_CONSUMER_RAW_GAP`.
 - For high LMUL pairwise tests, the generator caps default pair iterations where unique destination groups are limited by the RVV register file.

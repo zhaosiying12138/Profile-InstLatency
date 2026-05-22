@@ -1,5 +1,6 @@
 {
   "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
   "entries": [
     {
       "cycle": 1000,
@@ -8,19 +9,29 @@
       "pc": "0x80000000"
     },
     {
-      "cycle": 1004,
+      "cycle": 1008,
       "experiment_id": "t20-vadd-vv-vredsum-vs-m1-n4",
       "marker": "end",
       "pc": "0x80000004"
     }
   ],
   "experiment_id": "t20-vadd-vv-vredsum-vs-m1-n4",
+  "inference_source": "raw_marker_cycles",
   "instruction_id": "vadd_vv",
   "lmul": "m1",
   "marker_baseline_cycles": 0,
   "mode": "synthetic_calibration",
+  "observation": {
+    "filler_count": null,
+    "instruction_id": "vadd_vv",
+    "iterations": 4,
+    "lmul": "m1",
+    "pair_instruction_id": "vredsum_vs",
+    "primary_delta_cycles": 8,
+    "source": "synthetic_cmodel_raw_marker_cycles",
+    "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  },
   "result_group": "vadd_vv",
-  "scaffold": false,
   "schema_version": 1,
   "synthetic": {
     "backend": "synthetic_cmodel",
@@ -34,12 +45,18 @@
     "instruction_id": "vadd_vv",
     "latency_cycles": 2,
     "lmul": "m1",
-    "measured_delta_cycles": 4,
+    "measured_delta_cycles": 8,
     "pipe": "any",
     "release_cycles": 1,
+    "role": "ground_truth_for_post_inference_mismatch_only",
     "timing_model": "config/rvv_timing_model.yaml",
     "timing_model_entry_found": true,
     "timing_model_mode": "synthetic_ground_truth"
   },
-  "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION",
+  "timestamp_model": {
+    "cycles": 0,
+    "kind": "zero_cost_marker",
+    "occupies_issue_slot": false
+  }
 }

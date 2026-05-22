@@ -6,6 +6,21 @@ instruction_id: viota_m
 lmul: m4
 sew: 32
 markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t30_viota_m_t10_m4_n6_start
+    local_label: .Lrvv_profile_marker_t30_viota_m_t10_m4_n6_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t30_viota_m_t10_m4_n6_end
+    local_label: .Lrvv_profile_marker_t30_viota_m_t10_m4_n6_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
 experiment:
   id: t30-viota-m-t10-m4-n6
   template_id: T30_LMUL_SCALING
@@ -16,8 +31,18 @@ experiment:
   markers:
     -
       label: start
+      symbol: __rvv_profile_marker_t30_viota_m_t10_m4_n6_start
+      local_label: .Lrvv_profile_marker_t30_viota_m_t10_m4_n6_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
     -
       label: end
+      symbol: __rvv_profile_marker_t30_viota_m_t10_m4_n6_end
+      local_label: .Lrvv_profile_marker_t30_viota_m_t10_m4_n6_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
 parameters:
   sew: 32
   lmul: m4
@@ -25,13 +50,13 @@ parameters:
   vl_value: 64
 generation:
   generator: scripts/gen_asm.py
-  generator_version: 1
+  generator_version: 2
   stdlib_only: true
   deterministic: true
   template_file: templates/rvv_program.s.tpl
   reproduce:
-    argv: [python3, scripts/gen_asm.py, one, --template, T30_LMUL_SCALING, --instr, viota_m, --lmul, m4, --consumer, vadd_vv, --shape, T10_INDEPENDENT_STREAM_THROUGHPUT, --filler-count, 0, --output-root, experiments/generated, --experiment-id, t30-viota-m-t10-m4-n6]
-    command: python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr viota_m --lmul m4 --consumer vadd_vv --shape T10_INDEPENDENT_STREAM_THROUGHPUT --filler-count 0 --output-root experiments/generated --experiment-id t30-viota-m-t10-m4-n6
+    argv: [python3, scripts/gen_asm.py, one, --template, T30_LMUL_SCALING, --instr, viota_m, --lmul, m4, --shape, T10_INDEPENDENT_STREAM_THROUGHPUT, --iterations, 6, --output-root, experiments/generated, --experiment-id, t30-viota-m-t10-m4-n6]
+    command: python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr viota_m --lmul m4 --shape T10_INDEPENDENT_STREAM_THROUGHPUT --iterations 6 --output-root experiments/generated --experiment-id t30-viota-m-t10-m4-n6
 instruction:
   id: viota_m
   asm: viota.m
@@ -41,6 +66,8 @@ instruction:
   notes: Mask-to-vector prefix index operation.
 scaling:
   shape: T10_INDEPENDENT_STREAM_THROUGHPUT
+  shape_parameters:
+    iterations: 6
   fit_form: base_plus_lmul_times_k
   suite_values: [m1, m2, m4]
 body:

@@ -15,7 +15,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = REPO_ROOT / "config" / "paths.yaml"
 VALID_MODES = {"synthetic_calibration", "real_platform_profile"}
-VALID_COMMANDS = {"plan", "dry_run", "scaffold"}
+VALID_COMMANDS = {"plan", "dry_run"}
 MIN_PYTHON = (3, 9)
 EXPECTED_KEYS = (
     "mode",
@@ -48,14 +48,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="plan",
         help=(
             "Workflow command to validate. The default 'plan' path requires real "
-            "gem5/toolchain paths; 'dry_run' and 'scaffold' relax those tools."
+            "gem5/toolchain paths; 'dry_run' relaxes those tools."
         ),
     )
     parser.add_argument(
         "--allow-dry-run-missing-tools",
         action="store_true",
         help=(
-            "Allow gem5/toolchain paths to be absent for dry-run or scaffold-only "
+            "Allow gem5/toolchain paths to be absent for dry-run "
             "work. This does not validate real platform profiling readiness."
         ),
     )
@@ -63,7 +63,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def required_keys_for(command: str, allow_dry_run_missing_tools: bool) -> set[str]:
-    if command in {"dry_run", "scaffold"} or allow_dry_run_missing_tools:
+    if command == "dry_run" or allow_dry_run_missing_tools:
         return set(DRY_RUN_REQUIRED_KEYS)
     return set(PLAN_REQUIRED_KEYS)
 
@@ -236,7 +236,7 @@ def status_error(
     dry_run_hint = ""
     if name in DRY_RUN_OPTIONAL_KEYS and command == "plan" and not allow_dry_run_missing_tools:
         dry_run_hint = (
-            "; for scaffold-only checks rerun with --allow-dry-run-missing-tools "
+            "; for dry-run checks rerun with --allow-dry-run-missing-tools "
             "or --command dry_run"
         )
     config_hint = f"set {name} in config/paths.yaml"

@@ -1,12 +1,11 @@
-# Generated RVV experiment scaffold.
+# Generated RVV profiling experiment.
 # experiment_id: t21-viota-m-m2-n4
 # template_id: T21_PAIR_WITH_SCALAR
 # vector_shape: e32,m2
-# markers: start, end
+# markers: start=__rvv_profile_marker_t21_viota_m_m2_n4_start, end=__rvv_profile_marker_t21_viota_m_m2_n4_end
 #
-# TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
-# intended experiment shape and are not required to assemble before the marker
-# path exists.
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
 
     .section .text
     .globl _start
@@ -54,7 +53,10 @@ _start:
     vmseq.vi v0, v0, 1
 
     # Scalar pairing probe. Each vector instruction is followed by an add.
-    TIMESTAMP_MARK start
+    # marker start: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t21_viota_m_m2_n4_start
+    __rvv_profile_marker_t21_viota_m_m2_n4_start:
+    .Lrvv_profile_marker_t21_viota_m_m2_n4_start:
     viota.m v4, v0
     add x20, x21, x22
     viota.m v6, v0
@@ -63,10 +65,13 @@ _start:
     add x26, x27, x28
     viota.m v10, v0
     add x29, x30, x31
-    TIMESTAMP_MARK end
+    # marker end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t21_viota_m_m2_n4_end
+    __rvv_profile_marker_t21_viota_m_m2_n4_end:
+    .Lrvv_profile_marker_t21_viota_m_m2_n4_end:
 
-    # Terminate through the conventional Linux exit syscall when a runner
-    # chooses to assemble this after marker lowering is implemented.
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
     li a0, 0
     li a7, 93
     ecall

@@ -6,6 +6,21 @@ instruction_id: vslideup_vx
 lmul: m2
 sew: 32
 markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t30_vslideup_vx_t11_m2_n6_start
+    local_label: .Lrvv_profile_marker_t30_vslideup_vx_t11_m2_n6_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t30_vslideup_vx_t11_m2_n6_end
+    local_label: .Lrvv_profile_marker_t30_vslideup_vx_t11_m2_n6_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
 experiment:
   id: t30-vslideup-vx-t11-m2-n6
   template_id: T30_LMUL_SCALING
@@ -16,8 +31,18 @@ experiment:
   markers:
     -
       label: start
+      symbol: __rvv_profile_marker_t30_vslideup_vx_t11_m2_n6_start
+      local_label: .Lrvv_profile_marker_t30_vslideup_vx_t11_m2_n6_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
     -
       label: end
+      symbol: __rvv_profile_marker_t30_vslideup_vx_t11_m2_n6_end
+      local_label: .Lrvv_profile_marker_t30_vslideup_vx_t11_m2_n6_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
 parameters:
   sew: 32
   lmul: m2
@@ -25,29 +50,31 @@ parameters:
   vl_value: 64
 generation:
   generator: scripts/gen_asm.py
-  generator_version: 1
+  generator_version: 2
   stdlib_only: true
   deterministic: true
   template_file: templates/rvv_program.s.tpl
   reproduce:
-    argv: [python3, scripts/gen_asm.py, one, --template, T30_LMUL_SCALING, --instr, vslideup_vx, --lmul, m2, --consumer, vadd_vv, --shape, T11_SELF_RAW_CHAIN, --filler-count, 0, --output-root, experiments/generated, --experiment-id, t30-vslideup-vx-t11-m2-n6]
-    command: python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr vslideup_vx --lmul m2 --consumer vadd_vv --shape T11_SELF_RAW_CHAIN --filler-count 0 --output-root experiments/generated --experiment-id t30-vslideup-vx-t11-m2-n6
+    argv: [python3, scripts/gen_asm.py, one, --template, T30_LMUL_SCALING, --instr, vslideup_vx, --lmul, m2, --shape, T11_SELF_RAW_CHAIN, --iterations, 6, --output-root, experiments/generated, --experiment-id, t30-vslideup-vx-t11-m2-n6]
+    command: python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr vslideup_vx --lmul m2 --shape T11_SELF_RAW_CHAIN --iterations 6 --output-root experiments/generated --experiment-id t30-vslideup-vx-t11-m2-n6
 instruction:
   id: vslideup_vx
   asm: vslideup.vx
   llvm_sched_write: WriteVSlideUpX
   result_kind: vector
-  chainable: true
-  notes: Vector slide-up with a scalar offset operand.
+  chainable: false
+  notes: Vector slide-up with a scalar offset operand; assembler forbids destination/source overlap.
 scaling:
   shape: T11_SELF_RAW_CHAIN
+  shape_parameters:
+    iterations: 6
   fit_form: base_plus_lmul_times_k
   suite_values: [m1, m2, m4]
 body:
   iterations: 6
   destination: v4
-  chainable: true
-  dependency_note: direct self RAW chain
+  chainable: false
+  dependency_note: not directly self-chainable; prefer T12
   instances:
     -
       index: 0
@@ -57,26 +84,26 @@ body:
     -
       index: 1
       destination: v4
-      source_a: v4
+      source_a: v0
       source_b: v2
     -
       index: 2
       destination: v4
-      source_a: v4
+      source_a: v0
       source_b: v2
     -
       index: 3
       destination: v4
-      source_a: v4
+      source_a: v0
       source_b: v2
     -
       index: 4
       destination: v4
-      source_a: v4
+      source_a: v0
       source_b: v2
     -
       index: 5
       destination: v4
-      source_a: v4
+      source_a: v0
       source_b: v2
   scaling_shape: T11_SELF_RAW_CHAIN

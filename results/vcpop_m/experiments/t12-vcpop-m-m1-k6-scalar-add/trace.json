@@ -1,0 +1,62 @@
+{
+  "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t12-vcpop-m-m1-k6-scalar-add",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1010,
+      "experiment_id": "t12-vcpop-m-m1-k6-scalar-add",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t12-vcpop-m-m1-k6-scalar-add",
+  "inference_source": "raw_marker_cycles",
+  "instruction_id": "vcpop_m",
+  "lmul": "m1",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "observation": {
+    "filler_count": 6,
+    "instruction_id": "vcpop_m",
+    "iterations": null,
+    "lmul": "m1",
+    "pair_instruction_id": null,
+    "primary_delta_cycles": 10,
+    "source": "synthetic_cmodel_raw_marker_cycles",
+    "template_id": "T12_CONSUMER_RAW_GAP"
+  },
+  "result_group": "vcpop_m",
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 3,
+      "latency_lmul_k": 1,
+      "pipe": "pipe0",
+      "release_base": 1,
+      "release_lmul_k": 0
+    },
+    "instruction_id": "vcpop_m",
+    "latency_cycles": 4,
+    "lmul": "m1",
+    "measured_delta_cycles": 10,
+    "pipe": "pipe0",
+    "release_cycles": 1,
+    "role": "ground_truth_for_post_inference_mismatch_only",
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T12_CONSUMER_RAW_GAP",
+  "timestamp_model": {
+    "cycles": 0,
+    "kind": "zero_cost_marker",
+    "occupies_issue_slot": false
+  }
+}

@@ -1,6 +1,6 @@
 # RVV Instruction Latency Profiling
 
-This repository is the bootstrap workspace for profiling selected non-memory RVV instruction timing and preserving results in a shape that can later inform an LLVM RISC-V schedule model. The current checkout contains environment gating, LLVM field extraction, assembly-generation scaffolds, dry-run runner traces, analysis/search scaffolds, calibration gates, and Humanize2 replay artifacts.
+This repository profiles selected non-memory RVV instruction timing and preserves results in a shape that can later inform an LLVM RISC-V schedule model. The current checkout contains environment gating, LLVM field extraction, deterministic assembly generation, synthetic and gem5 runners, analysis/search, calibration gates, Humanize2 replay artifacts, and LLVM YuShuXin implementation evidence.
 
 ## Setup
 
@@ -14,7 +14,7 @@ python3 scripts/check_env.py
 
 The script uses only the Python standard library. It prints a JSON report to stdout. The default `plan` command is strict: it requires `llvm_checkout`, `gem5_checkout`, `gem5_build`, `assembler`, `linker`, and `output_root` to resolve on this machine.
 
-For scaffold-only or dry-run work, the missing-tool policy must be explicit:
+For dry-run work, the missing-tool policy must be explicit:
 
 ```bash
 python3 scripts/check_env.py --allow-dry-run-missing-tools
@@ -31,19 +31,20 @@ Current strict environment gate:
 python3 scripts/check_env.py
 ```
 
-Current synthetic/scaffold replay path:
+Current synthetic calibration plus gem5 kill-check replay path:
 
 ```bash
 python3 scripts/check_env.py
 python3 scripts/gen_asm.py suite --manifest-only
-python3 scripts/run_suite.py --killcheck --dry-run
-python3 scripts/analyze.py --all --dry-run
-python3 scripts/search_model.py --profile results/common --format markdown
+python3 scripts/run_suite.py --all --backend synthetic_cmodel --results-root results
+python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results
+python3 scripts/analyze.py --all --root results
+python3 scripts/search_model.py --profile results --format markdown
 python3 scripts/check_calibration_gate.py --mode synthetic_calibration
 python3 scripts/prepare_llvm_yushuxin_worktree.py --tag llvmorg-22.1.3 --cpu YuShuXin
 ```
 
-The non-dry-run platform path is not accepted by dry-run artifacts. It must wait for real gem5 marker/timing integration and kill-check evidence before these commands can be treated as platform profiling:
+The full real-platform path is not accepted by the synthetic calibration gate. It must wait for real gem5 or hardware coverage of the latency/resource templates, repeated measurements, confidence review, and human approval:
 
 ```bash
 python3 scripts/check_env.py
@@ -57,7 +58,7 @@ python3 scripts/search_model.py --profile results --format markdown
 
 `mode: synthetic_calibration`
 
-Use this for the synthetic calibration loop. It is allowed to compare inferred values against configured ground truth because the purpose is to debug the workflow, experiment templates, schemas, and inference logic. Dry-run traces and synthetic calibration gates are scaffold evidence, not real platform evidence.
+Use this for the synthetic calibration loop. It is allowed to compare inferred values against configured ground truth because the purpose is to debug the workflow, experiment templates, schemas, and inference logic. Synthetic traces and synthetic calibration gates are workflow calibration evidence, not full real-platform evidence.
 
 `mode: real_platform_profile`
 

@@ -8,6 +8,21 @@ sew: 32
 markers:
   - "t0"
   - "t1"
+marker_metadata:
+  -
+    label: "t0"
+    symbol: "__rvv_profile_marker_t00_marker_t0"
+    local_label: ".Lrvv_profile_marker_t00_marker_t0"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "t1"
+    symbol: "__rvv_profile_marker_t00_marker_t1"
+    local_label: ".Lrvv_profile_marker_t00_marker_t1"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
 experiment:
   id: "t00-marker"
   template_id: "T00_BASELINE_MARKER"
@@ -18,8 +33,18 @@ experiment:
   markers:
     -
       label: "t0"
+      symbol: "__rvv_profile_marker_t00_marker_t0"
+      local_label: ".Lrvv_profile_marker_t00_marker_t0"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
     -
       label: "t1"
+      symbol: "__rvv_profile_marker_t00_marker_t1"
+      local_label: ".Lrvv_profile_marker_t00_marker_t1"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
 parameters:
   sew: 32
   lmul: null
@@ -27,7 +52,7 @@ parameters:
   vl_value: null
 generation:
   generator: "scripts/gen_asm.py"
-  generator_version: 1
+  generator_version: 2
   stdlib_only: true
   deterministic: true
   template_file: "templates/rvv_program.s.tpl"

@@ -11,14 +11,16 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 phase_status:
-  phase_7_analyzer_and_search: scaffolded
-  phase_8_mismatch_and_quality_gate: scaffolded
-  phase_10_llvm_worktree_helper: dry_run_helper_scaffolded
-  humanize2_capture: workers_a_to_e_backfilled_f3_complete
+  phase_7_analyzer_and_search: implemented_and_verified
+  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_closed
+  phase_10_llvm_worktree_helper: executed_after_synthetic_gate
+  humanize2_capture: final_round_capture_recorded
 gates:
   synthetic_calibration:
-    status: closed
-    reason: no synthetic traces or inferred claimed fields yet
+    status: pass
+    report: results/common/mismatch_report.md
+    reason: claimed raw-marker-inferred fields match config/rvv_timing_model.yaml
   real_platform_profile:
-    status: closed
-    reason: no real platform coverage, stability, or confidence evidence yet
+    status: not_ready
+    report: results/common/experiment_quality.md
+    reason: gem5 evidence covers T01 kill-check only; full timing coverage, repeatability, and human approval are absent

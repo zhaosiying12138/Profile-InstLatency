@@ -12,7 +12,9 @@ Status: analyzed synthetic trace evidence.
 - Marker count: 2
 - Primary corrected delta: 20 cycles
 
-## Synthetic Metadata
+## Synthetic Reference Metadata
+
+Synthetic values are reference-only and are not used as LLVM-facing claims.
 
 | Field | Value |
 | --- | --- |
@@ -30,4 +32,4 @@ Status: analyzed synthetic trace evidence.
 
 ## LLVM-Facing Claims
 
-For synthetic calibration, configured latency, release, and pipe come from `t21-vsll-vv-m4-n4` at `results/vsll_vv/experiments/t21-vsll-vv-m4-n4/trace.json`.
+LLVM-facing timing fields are claimable only through raw marker-delta inference across the relevant template family. Synthetic metadata is reference-only.

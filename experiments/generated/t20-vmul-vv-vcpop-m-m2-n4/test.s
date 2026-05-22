@@ -1,12 +1,11 @@
-# Generated RVV experiment scaffold.
+# Generated RVV profiling experiment.
 # experiment_id: t20-vmul-vv-vcpop-m-m2-n4
 # template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
 # vector_shape: e32,m2
-# markers: start, end
+# markers: start=__rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start, end=__rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end
 #
-# TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
-# intended experiment shape and are not required to assemble before the marker
-# path exists.
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
 
     .section .text
     .globl _start
@@ -54,7 +53,10 @@ _start:
     vmseq.vi v0, v0, 1
 
     # Pairwise pipe classification. A and B share read-only sources.
-    TIMESTAMP_MARK start
+    # marker start: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start
+    __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start:
+    .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start:
     vmul.vv v4, v0, v2
     vcpop.m x11, v0
     vmul.vv v8, v0, v2
@@ -63,10 +65,13 @@ _start:
     vcpop.m x15, v0
     vmul.vv v16, v0, v2
     vcpop.m x17, v0
-    TIMESTAMP_MARK end
+    # marker end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end
+    __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end:
+    .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end:
 
-    # Terminate through the conventional Linux exit syscall when a runner
-    # chooses to assemble this after marker lowering is implemented.
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
     li a0, 0
     li a7, 93
     ecall

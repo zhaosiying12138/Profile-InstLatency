@@ -6,6 +6,21 @@ instruction_id: vsll_vv
 lmul: m4
 sew: 32
 markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_start
+    local_label: .Lrvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_end
+    local_label: .Lrvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
 experiment:
   id: t20-vsll-vv-vslideup-vx-m4-n3
   template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
@@ -16,8 +31,18 @@ experiment:
   markers:
     -
       label: start
+      symbol: __rvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_start
+      local_label: .Lrvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
     -
       label: end
+      symbol: __rvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_end
+      local_label: .Lrvv_profile_marker_t20_vsll_vv_vslideup_vx_m4_n3_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
 parameters:
   sew: 32
   lmul: m4
@@ -25,7 +50,7 @@ parameters:
   vl_value: 64
 generation:
   generator: scripts/gen_asm.py
-  generator_version: 1
+  generator_version: 2
   stdlib_only: true
   deterministic: true
   template_file: templates/rvv_program.s.tpl
@@ -44,8 +69,8 @@ pair_instruction:
   asm: vslideup.vx
   llvm_sched_write: WriteVSlideUpX
   result_kind: vector
-  chainable: true
-  notes: Vector slide-up with a scalar offset operand.
+  chainable: false
+  notes: Vector slide-up with a scalar offset operand; assembler forbids destination/source overlap.
 body:
   iterations: 3
   instances:

@@ -1,12 +1,11 @@
-# Generated RVV experiment scaffold.
+# Generated RVV profiling experiment.
 # experiment_id: t30-vrgather-vv-t12-m4-k0
 # template_id: T30_LMUL_SCALING
 # vector_shape: e32,m4
-# markers: start, end
+# markers: start=__rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_start, end=__rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_end
 #
-# TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
-# intended experiment shape and are not required to assemble before the marker
-# path exists.
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
 
     .section .text
     .globl _start
@@ -46,13 +45,19 @@ _start:
     vmseq.vi v0, v0, 1
 
     # Producer-consumer gap probe. Fillers are independent of the producer result.
-    TIMESTAMP_MARK start
+    # marker start: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_start
+    __rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_start:
+    .Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k0_start:
     vrgather.vv v8, v0, v4
     vadd.vv v12, v8, v4
-    TIMESTAMP_MARK end
+    # marker end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_end
+    __rvv_profile_marker_t30_vrgather_vv_t12_m4_k0_end:
+    .Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k0_end:
 
-    # Terminate through the conventional Linux exit syscall when a runner
-    # chooses to assemble this after marker lowering is implemented.
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
     li a0, 0
     li a7, 93
     ecall

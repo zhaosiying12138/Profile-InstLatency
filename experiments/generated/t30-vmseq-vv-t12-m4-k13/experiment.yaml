@@ -1,0 +1,103 @@
+schema_version: 1
+experiment_id: "t30-vmseq-vv-t12-m4-k13"
+template_id: "T30_LMUL_SCALING"
+result_group: "vmseq_vv"
+instruction_id: "vmseq_vv"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t30_vmseq_vv_t12_m4_k13_start"
+    local_label: ".Lrvv_profile_marker_t30_vmseq_vv_t12_m4_k13_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t30_vmseq_vv_t12_m4_k13_end"
+    local_label: ".Lrvv_profile_marker_t30_vmseq_vv_t12_m4_k13_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t30-vmseq-vv-t12-m4-k13"
+  template_id: "T30_LMUL_SCALING"
+  purpose: "Reuse timing shapes across LMUL values for scaling fits."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t30_vmseq_vv_t12_m4_k13_start"
+      local_label: ".Lrvv_profile_marker_t30_vmseq_vv_t12_m4_k13_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t30_vmseq_vv_t12_m4_k13_end"
+      local_label: ".Lrvv_profile_marker_t30_vmseq_vv_t12_m4_k13_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T30_LMUL_SCALING"
+      - "--instr"
+      - "vmseq_vv"
+      - "--lmul"
+      - "m4"
+      - "--consumer"
+      - "vcpop_m"
+      - "--shape"
+      - "T12_CONSUMER_RAW_GAP"
+      - "--filler-count"
+      - "13"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t30-vmseq-vv-t12-m4-k13"
+    command: "python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr vmseq_vv --lmul m4 --consumer vcpop_m --shape T12_CONSUMER_RAW_GAP --filler-count 13 --output-root experiments/generated --experiment-id t30-vmseq-vv-t12-m4-k13"
+instruction:
+  id: "vmseq_vv"
+  asm: "vmseq.vv"
+  llvm_sched_write: "WriteVICmpV"
+  result_kind: "mask"
+  chainable: false
+  notes: "Vector compare producing a mask result."
+scaling:
+  shape: "T12_CONSUMER_RAW_GAP"
+  shape_parameters:
+    filler_count: 13
+    consumer: "vcpop_m"
+  fit_form: "base_plus_lmul_times_k"
+  suite_values:
+    - "m1"
+    - "m2"
+    - "m4"
+body:
+  filler_count: 13
+  producer_destination: "v8"
+  consumer: "vcpop_m"
+  consumer_destination: "x11"
+  scaling_shape: "T12_CONSUMER_RAW_GAP"

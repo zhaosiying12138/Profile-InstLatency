@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Generate deterministic RVV assembly experiment scaffolding.
+"""Generate deterministic, assembler-legal RVV profiling experiments.
 
-The generated programs intentionally include ``TIMESTAMP_MARK <label>`` pseudo
-lines. They are consumed by the future runner/simulator layer and are not
-expected to assemble before that layer exists.
+Body builders use ``TIMESTAMP_MARK <label>`` as an internal marker notation.
+Rendering lowers each marker to zero-cost labels at the next-instruction PC and
+records the marker symbols in experiment metadata.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from typing import Any, Iterable
 
 SEW = 32
 VL_VALUE = 64
-GENERATOR_VERSION = 1
+GENERATOR_VERSION = 2
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_ROOT = Path("experiments/generated")
@@ -30,6 +30,10 @@ LMUL_FACTORS = {
     "m2": 2,
     "m4": 4,
 }
+
+BASE_STREAM_ITERATIONS = (2, 4, 6)
+EXTENDED_STREAM_ITERATIONS = (8, 12)
+T12_FILLER_COUNTS = tuple(range(41))
 
 
 TEMPLATE_IDS = (
@@ -141,16 +145,16 @@ INSTRUCTIONS = {
         "vslideup.vx",
         "WriteVSlideUpX",
         "vector",
-        True,
-        "Vector slide-up with a scalar offset operand.",
+        False,
+        "Vector slide-up with a scalar offset operand; assembler forbids destination/source overlap.",
     ),
     "vrgather_vv": InstructionSpec(
         "vrgather_vv",
         "vrgather.vv",
         "WriteVRGatherVV",
         "vector",
-        True,
-        "Vector gather using vector indices.",
+        False,
+        "Vector gather using vector indices; assembler forbids destination/source overlap.",
     ),
     "vredsum_vs": InstructionSpec(
         "vredsum_vs",
@@ -226,6 +230,65 @@ def write_yaml(path: Path, value: Any) -> None:
 
 def sanitize_part(part: str) -> str:
     return part.replace("_", "-").replace(".", "-").lower()
+
+
+def sanitize_symbol_part(part: str) -> str:
+    sanitized = "".join(char if char.isalnum() else "_" for char in part)
+    sanitized = sanitized.strip("_")
+    return sanitized or "marker"
+
+
+def marker_symbol(experiment_id: str, label: str) -> str:
+    exp = sanitize_symbol_part(experiment_id)
+    marker = sanitize_symbol_part(label)
+    return f"__rvv_profile_marker_{exp}_{marker}"
+
+
+def marker_local_label(experiment_id: str, label: str) -> str:
+    exp = sanitize_symbol_part(experiment_id)
+    marker = sanitize_symbol_part(label)
+    return f".Lrvv_profile_marker_{exp}_{marker}"
+
+
+def marker_metadata(experiment_id: str, label: str) -> dict[str, Any]:
+    return {
+        "label": label,
+        "symbol": marker_symbol(experiment_id, label),
+        "local_label": marker_local_label(experiment_id, label),
+        "zero_cost": True,
+        "occupies_issue_slot": False,
+        "pc_anchor": "next_instruction",
+    }
+
+
+def marker_metadata_entries(experiment_id: str, markers: Iterable[str]) -> list[dict[str, Any]]:
+    return [marker_metadata(experiment_id, marker) for marker in markers]
+
+
+def marker_label_from_line(line: str) -> str | None:
+    parts = line.strip().split()
+    if len(parts) == 2 and parts[0] == "TIMESTAMP_MARK":
+        return parts[1]
+    return None
+
+
+def lower_marker_lines(body_lines: Iterable[str], experiment_id: str) -> list[str]:
+    lowered: list[str] = []
+    for line in body_lines:
+        label = marker_label_from_line(line)
+        if label is None:
+            lowered.append(line)
+            continue
+        meta = marker_metadata(experiment_id, label)
+        lowered.extend(
+            [
+                f"# marker {label}: zero-cost timestamp point at the next instruction PC.",
+                f".globl {meta['symbol']}",
+                f"{meta['symbol']}:",
+                f"{meta['local_label']}:",
+            ]
+        )
+    return lowered
 
 
 def short_template(template_id: str) -> str:
@@ -425,6 +488,7 @@ def base_metadata(
     argv = command_argv(args, experiment_id)
     instruction_id = getattr(args, "instr", None)
     result_group = "common" if template_id in COMMON_RESULT_TEMPLATES else instruction_id or "common"
+    marker_entries = marker_metadata_entries(experiment_id, markers)
     return {
         "schema_version": 1,
         "experiment_id": experiment_id,
@@ -434,6 +498,7 @@ def base_metadata(
         "lmul": lmul,
         "sew": SEW,
         "markers": markers,
+        "marker_metadata": marker_entries,
         "experiment": {
             "id": experiment_id,
             "template_id": template_id,
@@ -442,7 +507,7 @@ def base_metadata(
                 "assembly": "test.s",
                 "metadata": "experiment.yaml",
             },
-            "markers": [{"label": marker} for marker in markers],
+            "markers": marker_entries,
         },
         "parameters": {
             "sew": SEW,
@@ -491,6 +556,27 @@ def default_iterations(template_id: str, lmul: str, requested: int | None) -> tu
     if template_id == "T21_PAIR_WITH_SCALAR":
         return 4, None
     return 6, None
+
+
+def supports_stream_iterations(template_id: str, instr: str, lmul: str, iterations: int) -> bool:
+    spec = require_instruction(instr)
+    if template_id == "T11_SELF_RAW_CHAIN":
+        return True
+    if template_id != "T10_INDEPENDENT_STREAM_THROUGHPUT":
+        raise AssertionError(f"unhandled stream template {template_id}")
+    if spec.result_kind == "scalar":
+        return True
+    return iterations <= len(output_groups(lmul))
+
+
+def suite_stream_iterations(template_id: str, instr: str, lmul: str) -> tuple[int, ...]:
+    values = list(BASE_STREAM_ITERATIONS)
+    values.extend(
+        iterations
+        for iterations in EXTENDED_STREAM_ITERATIONS
+        if supports_stream_iterations(template_id, instr, lmul, iterations)
+    )
+    return tuple(values)
 
 
 def make_experiment_id(args: argparse.Namespace) -> str:
@@ -798,8 +884,11 @@ def render_assembly(
     template_path: Path,
 ) -> str:
     template = Template(template_path.read_text(encoding="utf-8"))
-    body = indent_lines(body_lines)
-    marker_summary = ", ".join(markers)
+    lowered_body_lines = lower_marker_lines(body_lines, experiment_id)
+    body = indent_lines(lowered_body_lines)
+    marker_summary = ", ".join(
+        f"{entry['label']}={entry['symbol']}" for entry in marker_metadata_entries(experiment_id, markers)
+    )
     return template.safe_substitute(
         experiment_id=experiment_id,
         template_id=template_id,
@@ -848,8 +937,16 @@ def build_metadata(
         other = args.other_instr or default_other_instr(args.instr)
         meta["pair_instruction"] = metadata_instruction(require_instruction(other))
     if args.template == "T30_LMUL_SCALING":
+        shape_parameters: dict[str, Any] = {}
+        if args.shape in {"T10_INDEPENDENT_STREAM_THROUGHPUT", "T11_SELF_RAW_CHAIN"}:
+            iterations, _ = default_iterations(args.shape, args.lmul, args.iterations)
+            shape_parameters["iterations"] = iterations
+        elif args.shape == "T12_CONSUMER_RAW_GAP":
+            shape_parameters["filler_count"] = args.filler_count if args.filler_count is not None else 0
+            shape_parameters["consumer"] = args.consumer or default_consumer(args.instr)
         meta["scaling"] = {
             "shape": args.shape,
+            "shape_parameters": shape_parameters,
             "fit_form": "base_plus_lmul_times_k",
             "suite_values": list(LMUL_FACTORS),
         }
@@ -898,6 +995,7 @@ def generate_one(args: argparse.Namespace) -> dict[str, Path]:
 
 def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
 
     def add(template: str, instr: str | None = None, lmul: str | None = None, **extra: Any) -> None:
         ns = argparse.Namespace(
@@ -914,29 +1012,49 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             experiment_id=None,
         )
         experiment_id = make_experiment_id(ns)
+        if experiment_id in seen_ids:
+            raise SystemExit(f"duplicate generated experiment id: {experiment_id}")
+        seen_ids.add(experiment_id)
         result_group = "common" if template in COMMON_RESULT_TEMPLATES else instr or "common"
-        entries.append(
-            {
-                "id": experiment_id,
-                "template_id": template,
-                "result_group": result_group,
-                "instruction_id": instr,
-                "lmul": lmul,
-                "argv": command_argv(ns, experiment_id),
-            }
-        )
+        entry = {
+            "id": experiment_id,
+            "template_id": template,
+            "result_group": result_group,
+            "instruction_id": instr,
+            "lmul": lmul,
+            "argv": command_argv(ns, experiment_id),
+        }
+        for key in ("other_instr", "consumer", "shape", "iterations", "filler_count"):
+            value = getattr(ns, key)
+            if value is not None:
+                entry[key] = value
+        entries.append(entry)
 
     add("T00_BASELINE_MARKER")
     add("T40_COMMON_VLSU_LOAD_HIT", lmul="m1")
     for instr in INSTRUCTION_IDS:
         for lmul in LMUL_FACTORS:
             add("T01_DECODE_EXEC_KILLCHECK", instr, lmul)
-            add("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul)
-            add("T11_SELF_RAW_CHAIN", instr, lmul)
-            add("T12_CONSUMER_RAW_GAP", instr, lmul, filler_count=0, consumer=default_consumer(instr))
+            for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
+                add("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul, iterations=iterations)
+            for iterations in suite_stream_iterations("T11_SELF_RAW_CHAIN", instr, lmul):
+                add("T11_SELF_RAW_CHAIN", instr, lmul, iterations=iterations)
+            for filler_count in T12_FILLER_COUNTS:
+                add("T12_CONSUMER_RAW_GAP", instr, lmul, filler_count=filler_count, consumer=default_consumer(instr))
             add("T21_PAIR_WITH_SCALAR", instr, lmul)
-            for shape in T30_SHAPES:
-                add("T30_LMUL_SCALING", instr, lmul, shape=shape, filler_count=0, consumer=default_consumer(instr))
+            for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
+                add("T30_LMUL_SCALING", instr, lmul, shape="T10_INDEPENDENT_STREAM_THROUGHPUT", iterations=iterations)
+            for iterations in suite_stream_iterations("T11_SELF_RAW_CHAIN", instr, lmul):
+                add("T30_LMUL_SCALING", instr, lmul, shape="T11_SELF_RAW_CHAIN", iterations=iterations)
+            for filler_count in T12_FILLER_COUNTS:
+                add(
+                    "T30_LMUL_SCALING",
+                    instr,
+                    lmul,
+                    shape="T12_CONSUMER_RAW_GAP",
+                    filler_count=filler_count,
+                    consumer=default_consumer(instr),
+                )
 
     ids = list(INSTRUCTION_IDS)
     for left_index, left in enumerate(ids):
@@ -1005,7 +1123,7 @@ def build_parser() -> argparse.ArgumentParser:
     python3 scripts/gen_asm.py suite --manifest-only
 """
     parser = argparse.ArgumentParser(
-        description="Generate deterministic RVV assembly experiment scaffolding.",
+        description="Generate deterministic RVV assembly profiling experiments.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=examples,
     )

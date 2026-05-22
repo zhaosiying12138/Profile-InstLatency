@@ -1,0 +1,29 @@
+{
+  "id": "tool-coordinator-r1",
+  "round": 1,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "commands": [
+    "python3 -m py_compile scripts/check_env.py scripts/gen_asm.py scripts/run_experiment.py scripts/run_suite.py scripts/analyze.py scripts/search_model.py scripts/check_calibration_gate.py",
+    "python3 scripts/check_env.py",
+    "python3 scripts/gen_asm.py suite --output-root experiments/generated",
+    "python3 scripts/run_suite.py --all --backend synthetic_cmodel --results-root results",
+    "python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results",
+    "python3 scripts/analyze.py --all --root results",
+    "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+    "python3 scripts/search_model.py --profile results --output results/common/search_model_summary.md --format markdown",
+    "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results # expected failure until human-approved full real profile",
+    "(cd /home/zhaosiying/codebase/compiler/llvm-project-22.1.3-yushuxin-sched-model && /tmp/yushuxin-llvm-build/bin/llvm-mca -mtriple=riscv64 -mcpu=YuShuXin -mattr=+v,+zvl128b -iterations=1 -instruction-tables=full < llvm/test/tools/llvm-mca/RISCV/YuShuXin/rvv-e32-profiled.s | /tmp/yushuxin-llvm-build/bin/FileCheck llvm/test/tools/llvm-mca/RISCV/YuShuXin/rvv-e32-profiled.s)",
+    "(cd /home/zhaosiying/codebase/compiler/llvm-project-22.1.3-yushuxin-sched-model && sed 's/iXLen/i64/g' llvm/test/CodeGen/RISCV/yushuxin-rvv-codegen.ll | /tmp/yushuxin-llvm-build/bin/llc -mtriple=riscv64 -mcpu=YuShuXin -mattr=+v,+zvl128b -verify-machineinstrs | /tmp/yushuxin-llvm-build/bin/FileCheck llvm/test/CodeGen/RISCV/yushuxin-rvv-codegen.ll)",
+    "python3 -m json.tool results/common/agentic_flow/artifacts/tool_calls/coordinator-r1.json >/dev/null",
+    "git diff --check"
+  ],
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "outputs": [
+    "results/common/mismatch_report.md",
+    "results/common/experiment_quality.md",
+    "results/common/agentic_flow/artifacts/verification/coordinator-r1.md"
+  ],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/coordinator-r1.md"
+}

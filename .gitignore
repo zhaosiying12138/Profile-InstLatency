@@ -2,3 +2,5 @@
 .humanize*
 __pycache__/
 *.py[cod]
+results/**/build/
+results/**/gem5/

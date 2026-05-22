@@ -159,6 +159,18 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.decision.v1
     path: ../../../docs/simulator-candidate-comparison.md
+  - id: coordinator-r1-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/coordinator-r1.md
+  - id: coordinator-r1-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/coordinator-r1.md
+  - id: coordinator-r1-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/coordinator-r1.json
 events:
   - type: profile.mode.selected
   - type: worker.dispatched
@@ -166,6 +178,11 @@ events:
   - type: worker.capture.backfilled
   - type: bitlesson.selector.skipped
   - type: simulator.candidate.stub.recorded
+  - type: analyzer.fixed
+  - type: suite.completed
+  - type: gate.synthetic_calibration
+  - type: gate.real_platform_profile
+  - type: llvm.yushuxin.evidence.recorded
   - type: synthetic.golden.mismatch
   - type: synthetic.golden.match
   - type: real_platform.confidence.stop

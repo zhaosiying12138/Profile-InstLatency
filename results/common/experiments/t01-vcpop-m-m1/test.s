@@ -1,12 +1,11 @@
-# Generated RVV experiment scaffold.
+# Generated RVV profiling experiment.
 # experiment_id: t01-vcpop-m-m1
 # template_id: T01_DECODE_EXEC_KILLCHECK
 # vector_shape: e32,m1
-# markers: before, after, program_end
+# markers: before=__rvv_profile_marker_t01_vcpop_m_m1_before, after=__rvv_profile_marker_t01_vcpop_m_m1_after, program_end=__rvv_profile_marker_t01_vcpop_m_m1_program_end
 #
-# TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
-# intended experiment shape and are not required to assemble before the marker
-# path exists.
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
 
     .section .text
     .globl _start
@@ -70,13 +69,22 @@ _start:
     vmseq.vi v0, v0, 1
 
     # Kill-check body: one instruction under test between markers.
-    TIMESTAMP_MARK before
+    # marker before: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t01_vcpop_m_m1_before
+    __rvv_profile_marker_t01_vcpop_m_m1_before:
+    .Lrvv_profile_marker_t01_vcpop_m_m1_before:
     vcpop.m x10, v0
-    TIMESTAMP_MARK after
-    TIMESTAMP_MARK program_end
+    # marker after: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t01_vcpop_m_m1_after
+    __rvv_profile_marker_t01_vcpop_m_m1_after:
+    .Lrvv_profile_marker_t01_vcpop_m_m1_after:
+    # marker program_end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t01_vcpop_m_m1_program_end
+    __rvv_profile_marker_t01_vcpop_m_m1_program_end:
+    .Lrvv_profile_marker_t01_vcpop_m_m1_program_end:
 
-    # Terminate through the conventional Linux exit syscall when a runner
-    # chooses to assemble this after marker lowering is implemented.
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
     li a0, 0
     li a7, 93
     ecall

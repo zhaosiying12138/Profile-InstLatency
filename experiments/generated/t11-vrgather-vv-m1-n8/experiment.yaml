@@ -1,0 +1,129 @@
+schema_version: 1
+experiment_id: "t11-vrgather-vv-m1-n8"
+template_id: "T11_SELF_RAW_CHAIN"
+result_group: "vrgather_vv"
+instruction_id: "vrgather_vv"
+lmul: "m1"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t11_vrgather_vv_m1_n8_start"
+    local_label: ".Lrvv_profile_marker_t11_vrgather_vv_m1_n8_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t11_vrgather_vv_m1_n8_end"
+    local_label: ".Lrvv_profile_marker_t11_vrgather_vv_m1_n8_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t11-vrgather-vv-m1-n8"
+  template_id: "T11_SELF_RAW_CHAIN"
+  purpose: "Measure observable self RAW latency for chainable result paths."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t11_vrgather_vv_m1_n8_start"
+      local_label: ".Lrvv_profile_marker_t11_vrgather_vv_m1_n8_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t11_vrgather_vv_m1_n8_end"
+      local_label: ".Lrvv_profile_marker_t11_vrgather_vv_m1_n8_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m1"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T11_SELF_RAW_CHAIN"
+      - "--instr"
+      - "vrgather_vv"
+      - "--lmul"
+      - "m1"
+      - "--iterations"
+      - "8"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t11-vrgather-vv-m1-n8"
+    command: "python3 scripts/gen_asm.py one --template T11_SELF_RAW_CHAIN --instr vrgather_vv --lmul m1 --iterations 8 --output-root experiments/generated --experiment-id t11-vrgather-vv-m1-n8"
+instruction:
+  id: "vrgather_vv"
+  asm: "vrgather.vv"
+  llvm_sched_write: "WriteVRGatherVV"
+  result_kind: "vector"
+  chainable: false
+  notes: "Vector gather using vector indices; assembler forbids destination/source overlap."
+body:
+  iterations: 8
+  destination: "v2"
+  chainable: false
+  dependency_note: "not directly self-chainable; prefer T12"
+  instances:
+    -
+      index: 0
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 1
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 2
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 3
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 4
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 5
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 6
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"
+    -
+      index: 7
+      destination: "v2"
+      source_a: "v0"
+      source_b: "v1"

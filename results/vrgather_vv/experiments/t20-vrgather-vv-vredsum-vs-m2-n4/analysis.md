@@ -10,9 +10,11 @@ Status: analyzed synthetic trace evidence.
 - LMUL: `m2`
 - Marker baseline cycles: 0
 - Marker count: 2
-- Primary corrected delta: 12 cycles
+- Primary corrected delta: 24 cycles
 
-## Synthetic Metadata
+## Synthetic Reference Metadata
+
+Synthetic values are reference-only and are not used as LLVM-facing claims.
 
 | Field | Value |
 | --- | --- |
@@ -20,14 +22,14 @@ Status: analyzed synthetic trace evidence.
 | `pipe` | `pipe1` |
 | `latency_cycles` | `9` |
 | `release_cycles` | `3` |
-| `measured_delta_cycles` | `12` |
+| `measured_delta_cycles` | `24` |
 
 ## Marker Deltas
 
 | From | To | Corrected delta cycles |
 | --- | --- | ---: |
-| `start` | `end` | 12 |
+| `start` | `end` | 24 |
 
 ## LLVM-Facing Claims
 
-For synthetic calibration, configured latency, release, and pipe come from `t20-vrgather-vv-vredsum-vs-m2-n4` at `results/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m2-n4/trace.json`.
+LLVM-facing timing fields are claimable only through raw marker-delta inference across the relevant template family. Synthetic metadata is reference-only.

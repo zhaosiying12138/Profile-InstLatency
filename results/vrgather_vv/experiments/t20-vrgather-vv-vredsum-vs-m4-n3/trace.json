@@ -1,5 +1,6 @@
 {
   "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
   "entries": [
     {
       "cycle": 1000,
@@ -8,19 +9,29 @@
       "pc": "0x80000000"
     },
     {
-      "cycle": 1015,
+      "cycle": 1030,
       "experiment_id": "t20-vrgather-vv-vredsum-vs-m4-n3",
       "marker": "end",
       "pc": "0x80000004"
     }
   ],
   "experiment_id": "t20-vrgather-vv-vredsum-vs-m4-n3",
+  "inference_source": "raw_marker_cycles",
   "instruction_id": "vrgather_vv",
   "lmul": "m4",
   "marker_baseline_cycles": 0,
   "mode": "synthetic_calibration",
+  "observation": {
+    "filler_count": null,
+    "instruction_id": "vrgather_vv",
+    "iterations": 3,
+    "lmul": "m4",
+    "pair_instruction_id": "vredsum_vs",
+    "primary_delta_cycles": 30,
+    "source": "synthetic_cmodel_raw_marker_cycles",
+    "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  },
   "result_group": "vrgather_vv",
-  "scaffold": false,
   "schema_version": 1,
   "synthetic": {
     "backend": "synthetic_cmodel",
@@ -34,12 +45,18 @@
     "instruction_id": "vrgather_vv",
     "latency_cycles": 13,
     "lmul": "m4",
-    "measured_delta_cycles": 15,
+    "measured_delta_cycles": 30,
     "pipe": "pipe1",
     "release_cycles": 5,
+    "role": "ground_truth_for_post_inference_mismatch_only",
     "timing_model": "config/rvv_timing_model.yaml",
     "timing_model_entry_found": true,
     "timing_model_mode": "synthetic_ground_truth"
   },
-  "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION",
+  "timestamp_model": {
+    "cycles": 0,
+    "kind": "zero_cost_marker",
+    "occupies_issue_slot": false
+  }
 }

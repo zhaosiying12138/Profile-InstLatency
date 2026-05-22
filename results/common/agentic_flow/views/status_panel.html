@@ -10,12 +10,14 @@
   code { background: #f6f8fa; padding: 0.1rem 0.25rem; }
 </style>
 <h1>RVV Profile Workflow Status</h1>
-<p>Round 0 preliminary capture. Active worker: <code>E</code>.</p>
+<p>Round 1 capture. Active worker: <code>none</code>.</p>
 <table>
   <tr><th>Area</th><th>Status</th></tr>
-  <tr><td>Phase 7 analyzer/search</td><td>Scaffolded</td></tr>
-  <tr><td>Phase 8 calibration gate</td><td>Scaffolded, closed until evidence exists</td></tr>
-  <tr><td>Phase 10 LLVM helper</td><td>Dry-run helper scaffolded</td></tr>
-  <tr><td>Humanize2 capture</td><td>Initial boards, events, replay, and cartridge created</td></tr>
+  <tr><td>Phase 7 analyzer/search</td><td>Implemented; synthetic profile formulas and resources inferred from raw marker deltas</td></tr>
+  <tr><td>Phase 8 synthetic calibration gate</td><td>PASS; claimed mismatches: none</td></tr>
+  <tr><td>gem5 kill-check</td><td>PASS for 10 instructions x 3 LMUL values under MinorCPU</td></tr>
+  <tr><td>real-platform gate</td><td>NOT_READY; full timing coverage, repeatability, and human approval still required</td></tr>
+  <tr><td>LLVM YuShuXin evidence</td><td>Recorded in <code>results/common/llvm_yushuxin_implementation.md</code></td></tr>
+  <tr><td>Humanize2 capture</td><td>Replay, boards, events, worker records, and coordinator final check recorded</td></tr>
 </table>
 </html>

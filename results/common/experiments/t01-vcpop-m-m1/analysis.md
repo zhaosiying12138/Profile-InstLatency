@@ -5,29 +5,19 @@ Status: analyzed synthetic trace evidence.
 - Trace: `results/common/experiments/t01-vcpop-m-m1/trace.json`
 - Experiment ID: `t01-vcpop-m-m1`
 - Template ID: `T01_DECODE_EXEC_KILLCHECK`
-- Mode: `synthetic_calibration`
+- Mode: `real_platform_profile`
 - Instruction: `vcpop_m`
 - LMUL: `m1`
 - Marker baseline cycles: 0
 - Marker count: 3
-- Primary corrected delta: 4 cycles
-
-## Synthetic Metadata
-
-| Field | Value |
-| --- | --- |
-| `timing_model` | `config/rvv_timing_model.yaml` |
-| `pipe` | `pipe0` |
-| `latency_cycles` | `4` |
-| `release_cycles` | `1` |
-| `measured_delta_cycles` | `4` |
+- Primary corrected delta: 0 cycles
 
 ## Marker Deltas
 
 | From | To | Corrected delta cycles |
 | --- | --- | ---: |
-| `before` | `after` | 4 |
+| `before` | `after` | 0 |
 
 ## LLVM-Facing Claims
 
-For synthetic calibration, configured latency, release, and pipe come from `t01-vcpop-m-m1` at `results/common/experiments/t01-vcpop-m-m1/trace.json`.
+LLVM-facing timing fields are claimable only through raw marker-delta inference across the relevant template family. Synthetic metadata is reference-only.

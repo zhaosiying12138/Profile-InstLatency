@@ -1,12 +1,11 @@
-# Generated RVV experiment scaffold.
+# Generated RVV profiling experiment.
 # experiment_id: t11-vmseq-vv-m2-n6
 # template_id: T11_SELF_RAW_CHAIN
 # vector_shape: e32,m2
-# markers: start, end
+# markers: start=__rvv_profile_marker_t11_vmseq_vv_m2_n6_start, end=__rvv_profile_marker_t11_vmseq_vv_m2_n6_end
 #
-# TIMESTAMP_MARK is a runner/simulator pseudo line. These files document the
-# intended experiment shape and are not required to assemble before the marker
-# path exists.
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
 
     .section .text
     .globl _start
@@ -55,17 +54,23 @@ _start:
 
     # Self RAW chain. Non-chainable instructions are emitted as a
     # documented placeholder; use T12 for their true dependency probe.
-    TIMESTAMP_MARK start
+    # marker start: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t11_vmseq_vv_m2_n6_start
+    __rvv_profile_marker_t11_vmseq_vv_m2_n6_start:
+    .Lrvv_profile_marker_t11_vmseq_vv_m2_n6_start:
     vmseq.vv v4, v0, v2
     vmseq.vv v4, v0, v2
     vmseq.vv v4, v0, v2
     vmseq.vv v4, v0, v2
     vmseq.vv v4, v0, v2
     vmseq.vv v4, v0, v2
-    TIMESTAMP_MARK end
+    # marker end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t11_vmseq_vv_m2_n6_end
+    __rvv_profile_marker_t11_vmseq_vv_m2_n6_end:
+    .Lrvv_profile_marker_t11_vmseq_vv_m2_n6_end:
 
-    # Terminate through the conventional Linux exit syscall when a runner
-    # chooses to assemble this after marker lowering is implemented.
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
     li a0, 0
     li a7, 93
     ecall

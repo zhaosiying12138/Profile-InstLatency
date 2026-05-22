@@ -1,0 +1,103 @@
+schema_version: 1
+experiment_id: "t30-vrgather-vv-t12-m4-k39"
+template_id: "T30_LMUL_SCALING"
+result_group: "vrgather_vv"
+instruction_id: "vrgather_vv"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t30_vrgather_vv_t12_m4_k39_start"
+    local_label: ".Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k39_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t30_vrgather_vv_t12_m4_k39_end"
+    local_label: ".Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k39_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t30-vrgather-vv-t12-m4-k39"
+  template_id: "T30_LMUL_SCALING"
+  purpose: "Reuse timing shapes across LMUL values for scaling fits."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t30_vrgather_vv_t12_m4_k39_start"
+      local_label: ".Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k39_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t30_vrgather_vv_t12_m4_k39_end"
+      local_label: ".Lrvv_profile_marker_t30_vrgather_vv_t12_m4_k39_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T30_LMUL_SCALING"
+      - "--instr"
+      - "vrgather_vv"
+      - "--lmul"
+      - "m4"
+      - "--consumer"
+      - "vadd_vv"
+      - "--shape"
+      - "T12_CONSUMER_RAW_GAP"
+      - "--filler-count"
+      - "39"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t30-vrgather-vv-t12-m4-k39"
+    command: "python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr vrgather_vv --lmul m4 --consumer vadd_vv --shape T12_CONSUMER_RAW_GAP --filler-count 39 --output-root experiments/generated --experiment-id t30-vrgather-vv-t12-m4-k39"
+instruction:
+  id: "vrgather_vv"
+  asm: "vrgather.vv"
+  llvm_sched_write: "WriteVRGatherVV"
+  result_kind: "vector"
+  chainable: false
+  notes: "Vector gather using vector indices; assembler forbids destination/source overlap."
+scaling:
+  shape: "T12_CONSUMER_RAW_GAP"
+  shape_parameters:
+    filler_count: 39
+    consumer: "vadd_vv"
+  fit_form: "base_plus_lmul_times_k"
+  suite_values:
+    - "m1"
+    - "m2"
+    - "m4"
+body:
+  filler_count: 39
+  producer_destination: "v8"
+  consumer: "vadd_vv"
+  consumer_destination: "v12"
+  scaling_shape: "T12_CONSUMER_RAW_GAP"

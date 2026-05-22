@@ -10,7 +10,9 @@ The runner writes one normalized `trace.json` per experiment under
   "schema_version": 1,
   "experiment_id": "T10-vadd_vv-m1",
   "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT",
-  "mode": "dry_run",
+  "mode": "synthetic_calibration",
+  "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
   "marker_baseline_cycles": 0,
   "synthetic": {
     "timing_model": "config/rvv_timing_model.yaml",
@@ -37,15 +39,19 @@ Required top-level fields:
 - `schema_version`: integer schema version. The initial version is `1`.
 - `experiment_id`: stable ID matching the surrounding result directory.
 - `template_id`: experiment template ID from `docs/plan.md`.
-- `mode`: `dry_run` for deterministic synthetic traces, or `gem5` once real
-  simulator collection is wired.
+- `mode`: `synthetic_calibration` for deterministic synthetic cmodel traces,
+  or `real_platform_profile` for gem5/hardware traces.
+- `backend`: concrete execution backend, for example `synthetic_cmodel` or
+  `gem5_minor`.
+- `dry_run_trace`: true only when the runner was asked to produce a
+  non-executed placeholder trace.
 - `marker_baseline_cycles`: constant adjacent-marker delta to subtract before
-  analysis. It is `0` for the dry-run scaffold.
+  analysis. It is `0` for the current zero-cost label marker implementation.
 - `entries`: ordered marker entries emitted by the runner.
 
-The `synthetic` object is required only for `mode: dry_run`. It records the
-configured ground truth used to produce the synthetic delta so later analyzer
-work can compare inferred values against `config/rvv_timing_model.yaml`.
+The `synthetic` object is required only for `backend: synthetic_cmodel`. It
+records configured ground truth as post-inference calibration reference; the
+analyzer must not use it as the source for LLVM-facing claims.
 
 ## Marker Entry
 
@@ -86,18 +92,18 @@ a fixed non-zero marker delta, the runner must record that value in
 `marker_baseline_cycles`, and analyzer code must subtract it before fitting
 latency or release formulas.
 
-## Dry-Run Mode
+## Synthetic Calibration Mode
 
-Dry-run mode exists so Phase 7 analyzer work can proceed before gem5 has the RVV
-timing and marker patches.
+Synthetic calibration exists so analyzer, template, and gate logic can be
+debugged against a known cmodel before the full gem5 or hardware timing suite is
+available.
 
-The dry-run runner:
+The synthetic cmodel runner:
 
 - consumes `experiments/generated/<id>/experiment.yaml` and `test.s` when they
   exist;
-- falls back to suite-generated metadata for `run_suite.py --killcheck`;
 - writes deterministic marker cycles from `config/rvv_timing_model.yaml`;
-- preserves copied or placeholder `test.s` next to the trace.
+- preserves copied `test.s` next to the trace.
 
-Dry-run traces are synthetic evidence only. They must not be treated as measured
-gem5 results.
+Synthetic traces are calibration evidence only. They must not be treated as
+measured gem5 or hardware timing results.

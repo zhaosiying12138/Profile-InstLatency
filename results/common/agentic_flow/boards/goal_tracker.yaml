@@ -22,4 +22,4 @@ worker_split:
   G: Humanize2 primitive capture, cartridge draft, and replay documentation
   H: gated LLVM 22.1.3 YuShuXin schedule-model implementation and tests
 active_worker: null
-status: review_fix_complete
+status: synthetic_calibration_passed_llvm_evidence_recorded_real_platform_not_ready

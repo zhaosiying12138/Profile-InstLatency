@@ -1,0 +1,110 @@
+schema_version: 1
+experiment_id: t10-vmseq-vv-m2-n8
+template_id: T10_INDEPENDENT_STREAM_THROUGHPUT
+result_group: vmseq_vv
+instruction_id: vmseq_vv
+lmul: m2
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t10_vmseq_vv_m2_n8_start
+    local_label: .Lrvv_profile_marker_t10_vmseq_vv_m2_n8_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t10_vmseq_vv_m2_n8_end
+    local_label: .Lrvv_profile_marker_t10_vmseq_vv_m2_n8_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t10-vmseq-vv-m2-n8
+  template_id: T10_INDEPENDENT_STREAM_THROUGHPUT
+  purpose: Measure independent stream throughput for resource occupancy.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t10_vmseq_vv_m2_n8_start
+      local_label: .Lrvv_profile_marker_t10_vmseq_vv_m2_n8_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t10_vmseq_vv_m2_n8_end
+      local_label: .Lrvv_profile_marker_t10_vmseq_vv_m2_n8_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T10_INDEPENDENT_STREAM_THROUGHPUT, --instr, vmseq_vv, --lmul, m2, --iterations, 8, --output-root, experiments/generated, --experiment-id, t10-vmseq-vv-m2-n8]
+    command: python3 scripts/gen_asm.py one --template T10_INDEPENDENT_STREAM_THROUGHPUT --instr vmseq_vv --lmul m2 --iterations 8 --output-root experiments/generated --experiment-id t10-vmseq-vv-m2-n8
+instruction:
+  id: vmseq_vv
+  asm: vmseq.vv
+  llvm_sched_write: WriteVICmpV
+  result_kind: mask
+  chainable: false
+  notes: Vector compare producing a mask result.
+body:
+  iterations: 8
+  instances:
+    -
+      index: 0
+      destination: v4
+      source_a: v0
+      source_b: v2
+    -
+      index: 1
+      destination: v6
+      source_a: v0
+      source_b: v2
+    -
+      index: 2
+      destination: v8
+      source_a: v0
+      source_b: v2
+    -
+      index: 3
+      destination: v10
+      source_a: v0
+      source_b: v2
+    -
+      index: 4
+      destination: v12
+      source_a: v0
+      source_b: v2
+    -
+      index: 5
+      destination: v14
+      source_a: v0
+      source_b: v2
+    -
+      index: 6
+      destination: v16
+      source_a: v0
+      source_b: v2
+    -
+      index: 7
+      destination: v18
+      source_a: v0
+      source_b: v2
+  register_reuse: false

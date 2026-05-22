@@ -5,29 +5,19 @@ Status: analyzed synthetic trace evidence.
 - Trace: `results/common/experiments/t01-viota-m-m1/trace.json`
 - Experiment ID: `t01-viota-m-m1`
 - Template ID: `T01_DECODE_EXEC_KILLCHECK`
-- Mode: `synthetic_calibration`
+- Mode: `real_platform_profile`
 - Instruction: `viota_m`
 - LMUL: `m1`
 - Marker baseline cycles: 0
 - Marker count: 3
-- Primary corrected delta: 6 cycles
-
-## Synthetic Metadata
-
-| Field | Value |
-| --- | --- |
-| `timing_model` | `config/rvv_timing_model.yaml` |
-| `pipe` | `pipe0` |
-| `latency_cycles` | `6` |
-| `release_cycles` | `2` |
-| `measured_delta_cycles` | `6` |
+- Primary corrected delta: 0 cycles
 
 ## Marker Deltas
 
 | From | To | Corrected delta cycles |
 | --- | --- | ---: |
-| `before` | `after` | 6 |
+| `before` | `after` | 0 |
 
 ## LLVM-Facing Claims
 
-For synthetic calibration, configured latency, release, and pipe come from `t01-viota-m-m1` at `results/common/experiments/t01-viota-m-m1/trace.json`.
+LLVM-facing timing fields are claimable only through raw marker-delta inference across the relevant template family. Synthetic metadata is reference-only.

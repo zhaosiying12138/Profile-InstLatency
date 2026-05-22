@@ -1,6 +1,7 @@
 # Humanize2 Replay Notes
 
-Status: preliminary Round 0 capture.
+Status: Round 1 replay record after synthetic calibration passed and the gem5
+T01 kill-check completed.
 
 ## Checkout
 
@@ -32,8 +33,8 @@ python3 scripts/check_env.py
 ```
 
 It requires the configured LLVM checkout, gem5 checkout, gem5 executable,
-assembler, linker, and output root. Dry-run and scaffold replay must opt in to
-relaxed tool checks:
+assembler, linker, and output root. Dry-run replay must opt in to relaxed tool
+checks:
 
 ```bash
 python3 scripts/check_env.py --allow-dry-run-missing-tools
@@ -45,24 +46,25 @@ Relaxed checks do not prove real platform profiling readiness.
 ## Plain-Script Fallback
 
 When Humanize2 hub support is unavailable, replay the workflow with the plain
-scripts in this order as they become available:
+scripts in this order:
 
 ```bash
 python3 scripts/check_env.py
 python3 scripts/gen_asm.py suite --manifest-only
-python3 scripts/run_suite.py --killcheck
-python3 scripts/run_suite.py --all
-python3 scripts/analyze.py --all
+python3 scripts/run_suite.py --all --backend synthetic_cmodel --results-root results
+python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results
+python3 scripts/analyze.py --all --root results
 python3 scripts/search_model.py --profile results
 python3 scripts/check_calibration_gate.py --mode synthetic_calibration
 python3 scripts/prepare_llvm_yushuxin_worktree.py --tag llvmorg-22.1.3 --cpu YuShuXin
 ```
 
-The final LLVM worktree command must remain dry-run unless the synthetic gate
-passes and the coordinator explicitly chooses to execute it.
+The final LLVM worktree command can be executed only after the synthetic gate
+passes. In real-platform mode, do not use the synthetic gate as approval for
+LLVM timing claims.
 
-For scaffold-only replay, add `--dry-run` to `run_suite.py` and do not use the
-result as real platform evidence.
+For dry-run replay, add `--dry-run` to `run_suite.py` and do not use the result
+as real platform evidence.
 
 ## Humanize2 Hub Path
 
@@ -96,5 +98,10 @@ initial persistent state.
   Workers A, B, D, and E. The unsafe external bitlesson selector was not run, so
   no bitlesson entries were added to this replay.
 - `docs/simulator-candidate-comparison.md` records that the local gem5
-  executable is configured but RVV stability is still unproven until non-dry-run
-  kill-check evidence exists.
+  executable is configured and the T01 RVV kill-check passed. Full timing
+  stability is still unproven until repeated real T10/T11/T12/T20/T30 evidence
+  exists.
+- `results/common/mismatch_report.md` is the synthetic calibration gate report;
+  it currently records `Gate status: PASS` and `Claimed mismatches: none`.
+- `results/common/experiment_quality.md` is the real-platform quality report;
+  it remains `NOT_READY` because only the T01 kill-check has real gem5 coverage.

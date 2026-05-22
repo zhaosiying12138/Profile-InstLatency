@@ -4,13 +4,15 @@ Mode: real_platform_profile
 Gate status: NOT_READY
 Human approval status: absent
 
-This report is intentionally separate from synthetic golden matching. The current data set is synthetic dry-run evidence only, so the real-platform gate remains closed.
+This report is intentionally separate from synthetic golden matching. The current data set combines synthetic calibration traces with a gem5 MinorCPU decode/execute kill-check, so the real-platform gate remains closed until the full latency/resource experiment suite has real repeated coverage and human approval.
 
 ## Coverage
 
 Result root: `results`
-Trace files analyzed: 407
-Synthetic traces analyzed: 407
+Trace files analyzed: 3221
+Synthetic traces analyzed: 3191
+Real-platform traces analyzed: 30
+Real-platform template coverage: T01_DECODE_EXEC_KILLCHECK
 Instruction/LMUL pairs covered: 30
 
 | Instruction | Covered LMULs |
@@ -28,17 +30,18 @@ Instruction/LMUL pairs covered: 30
 
 ## Stability
 
-Synthetic primary delta mean: 16.980 cycles.
-No repeated real-platform measurements are available; stability is not established.
+Synthetic primary delta mean: 28.826 cycles.
+No repeated full-suite real-platform measurements are available; stability is not established.
 
 ## Confidence
 
-Confidence for the real-platform profile is insufficient because current evidence is synthetic metadata, not hardware or gem5 timing output.
+Confidence for the real-platform profile is insufficient because gem5 evidence currently covers only the T01 decode/execute kill-check. LLVM-facing latency, release, and pipe-resource claims still come from non-circular synthetic calibration traces.
 
 ## Assumptions
 
 - Synthetic timestamp markers are treated as zero-cost observations after subtracting marker_baseline_cycles.
-- Processor issue width and real resource contention are not approved from this dry-run data.
+- T01 gem5 traces prove the selected RVV instructions assemble, link, decode, and execute under the configured MinorCPU backend.
+- Processor issue width and real resource contention are not approved from this partial real-platform data.
 - Real platform mode must not use golden equality as an exit condition.
 
 ## Human Approval

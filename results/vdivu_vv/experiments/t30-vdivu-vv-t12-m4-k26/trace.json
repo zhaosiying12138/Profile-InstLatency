@@ -1,0 +1,62 @@
+{
+  "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t30-vdivu-vv-t12-m4-k26",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1062,
+      "experiment_id": "t30-vdivu-vv-t12-m4-k26",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t30-vdivu-vv-t12-m4-k26",
+  "inference_source": "raw_marker_cycles",
+  "instruction_id": "vdivu_vv",
+  "lmul": "m4",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "observation": {
+    "filler_count": 26,
+    "instruction_id": "vdivu_vv",
+    "iterations": null,
+    "lmul": "m4",
+    "pair_instruction_id": null,
+    "primary_delta_cycles": 62,
+    "source": "synthetic_cmodel_raw_marker_cycles",
+    "template_id": "T30_LMUL_SCALING"
+  },
+  "result_group": "vdivu_vv",
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 12,
+      "latency_lmul_k": 6,
+      "pipe": "pipe1",
+      "release_base": 4,
+      "release_lmul_k": 2
+    },
+    "instruction_id": "vdivu_vv",
+    "latency_cycles": 36,
+    "lmul": "m4",
+    "measured_delta_cycles": 62,
+    "pipe": "pipe1",
+    "release_cycles": 12,
+    "role": "ground_truth_for_post_inference_mismatch_only",
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T30_LMUL_SCALING",
+  "timestamp_model": {
+    "cycles": 0,
+    "kind": "zero_cost_marker",
+    "occupies_issue_slot": false
+  }
+}

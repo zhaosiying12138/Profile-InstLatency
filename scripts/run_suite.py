@@ -67,12 +67,18 @@ def generated_source_for(entry: dict[str, Any], generated_root: Path) -> Path:
 
 def run_generated_entry(entry: dict[str, Any], args: argparse.Namespace) -> Path:
     source_dir = generated_source_for(entry, args.generated_root)
+    mode = args.mode
+    backend = args.backend
+    if backend == "auto" and args.killcheck and not args.dry_run:
+        mode = "real_platform_profile"
+        backend = "gem5_minor"
     return run_experiment_dir(
         source_dir,
         dry_run=args.dry_run,
         results_root=args.results_root,
         timing_model_path=args.timing_model,
-        mode=args.mode,
+        mode=mode,
+        backend=backend,
     )
 
 
@@ -81,12 +87,21 @@ def build_arg_parser() -> argparse.ArgumentParser:
     suite = parser.add_mutually_exclusive_group(required=True)
     suite.add_argument("--killcheck", action="store_true", help="run only generated T01 kill-checks")
     suite.add_argument("--all", action="store_true", help="run every generated experiment")
-    parser.add_argument("--dry-run", action="store_true", help="write labeled scaffold traces")
+    parser.add_argument("--dry-run", action="store_true", help="write deterministic synthetic trace files")
     parser.add_argument(
         "--mode",
         choices=("synthetic_calibration", "real_platform_profile"),
         default="synthetic_calibration",
-        help="execution mode; synthetic_calibration uses the stdlib synthetic cmodel",
+        help=(
+            "execution mode; synthetic_calibration uses the stdlib synthetic cmodel "
+            "except kill-check auto backend, which runs gem5 MinorCPU"
+        ),
+    )
+    parser.add_argument(
+        "--backend",
+        choices=("auto", "synthetic_cmodel", "gem5_minor"),
+        default="auto",
+        help="execution backend; auto runs gem5 for kill-checks and synthetic cmodel for full calibration",
     )
     parser.add_argument(
         "--generated-root",

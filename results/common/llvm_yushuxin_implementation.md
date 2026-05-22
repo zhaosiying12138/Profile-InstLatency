@@ -5,8 +5,9 @@
 - Path: `/home/zhaosiying/codebase/compiler/llvm-project-22.1.3-yushuxin-sched-model`
 - Branch: `riscv-yushuxin-sched-model`
 - Base tag commit: `llvmorg-22.1.3` / `e9846648fd6183ee6d8cbdb4502213fcf902a211`
-- Implementation commit: `16b310c4d2525d193352b729e3e1a84164886cb7`
-- Commit subject: `RISCV: add YuShuXin RVV schedule model`
+- Implementation commits:
+  - `16b310c4d2525d193352b729e3e1a84164886cb7` / `RISCV: add YuShuXin RVV schedule model`
+  - `13a8f69179f0bb60ff710f03d1032b48ba7389f0` / `RISCV: strengthen YuShuXin RVV mca checks`
 
 ## Changed LLVM Files
 
@@ -15,6 +16,14 @@
 - `llvm/lib/Target/RISCV/RISCVProcessors.td`
 - `llvm/test/tools/llvm-mca/RISCV/YuShuXin/rvv-e32-profiled.s`
 - `llvm/test/CodeGen/RISCV/yushuxin-rvv-codegen.ll`
+
+## Calibration Gate Prerequisite
+
+The LLVM worktree evidence was accepted only after
+`python3 scripts/check_calibration_gate.py --mode synthetic_calibration
+--profile-root results --mismatch-report results/common/mismatch_report.md`
+reported `PASS` with no claimed mismatches. Real Paladin or full gem5 profiling
+must still use the real-platform confidence gate instead of golden equality.
 
 ## Model Summary
 
@@ -42,6 +51,10 @@ All commands ran from the LLVM worktree.
 ```
 
 Result: passed.
+
+The mca test now checks the exact instruction-table rows for all 30 profiled
+RVV instruction/LMUL combinations, including latency, reciprocal throughput,
+and RVV pipe resource/ReleaseAtCycles display.
 
 ```bash
 cmake -G Ninja -S llvm -B /tmp/yushuxin-llvm-build \

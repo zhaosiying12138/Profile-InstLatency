@@ -1,0 +1,62 @@
+{
+  "backend": "synthetic_cmodel",
+  "dry_run_trace": false,
+  "entries": [
+    {
+      "cycle": 1000,
+      "experiment_id": "t30-vrgather-vv-t12-m4-k19",
+      "marker": "start",
+      "pc": "0x80000000"
+    },
+    {
+      "cycle": 1032,
+      "experiment_id": "t30-vrgather-vv-t12-m4-k19",
+      "marker": "end",
+      "pc": "0x80000004"
+    }
+  ],
+  "experiment_id": "t30-vrgather-vv-t12-m4-k19",
+  "inference_source": "raw_marker_cycles",
+  "instruction_id": "vrgather_vv",
+  "lmul": "m4",
+  "marker_baseline_cycles": 0,
+  "mode": "synthetic_calibration",
+  "observation": {
+    "filler_count": 19,
+    "instruction_id": "vrgather_vv",
+    "iterations": null,
+    "lmul": "m4",
+    "pair_instruction_id": null,
+    "primary_delta_cycles": 32,
+    "source": "synthetic_cmodel_raw_marker_cycles",
+    "template_id": "T30_LMUL_SCALING"
+  },
+  "result_group": "vrgather_vv",
+  "schema_version": 1,
+  "synthetic": {
+    "backend": "synthetic_cmodel",
+    "configured": {
+      "latency_base": 5,
+      "latency_lmul_k": 2,
+      "pipe": "pipe1",
+      "release_base": 1,
+      "release_lmul_k": 1
+    },
+    "instruction_id": "vrgather_vv",
+    "latency_cycles": 13,
+    "lmul": "m4",
+    "measured_delta_cycles": 32,
+    "pipe": "pipe1",
+    "release_cycles": 5,
+    "role": "ground_truth_for_post_inference_mismatch_only",
+    "timing_model": "config/rvv_timing_model.yaml",
+    "timing_model_entry_found": true,
+    "timing_model_mode": "synthetic_ground_truth"
+  },
+  "template_id": "T30_LMUL_SCALING",
+  "timestamp_model": {
+    "cycles": 0,
+    "kind": "zero_cost_marker",
+    "occupies_issue_slot": false
+  }
+}
