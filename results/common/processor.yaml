@@ -1,0 +1,29 @@
+schema_version: 1
+mode: synthetic_scaffold
+processor:
+  issue_width:
+    value: null
+    evidence: []
+  micro_op_buffer_size:
+    value: 0
+    evidence: []
+  rvv_pipelines:
+    count:
+      value: 2
+      evidence: []
+    resources:
+      - name: VPipe0
+        kind: proc_resource
+      - name: VPipe1
+        kind: proc_resource
+  timestamp_model:
+    kind: zero_cost_marker
+    occupies_issue_slot: false
+    cycles: 0
+common_measurements:
+  load_hit_latency:
+    value: null
+    status: deferred_to_common_experiment
+  scalar_issue_baseline:
+    value: null
+    evidence: []

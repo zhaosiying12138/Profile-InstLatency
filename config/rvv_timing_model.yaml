@@ -1,0 +1,83 @@
+schema_version: 1
+mode: synthetic_ground_truth
+description: Synthetic two-pipe RVV timing target used by dry-run traces before gem5 patches exist.
+resources:
+  VPipe0:
+    kind: proc_resource
+  VPipe1:
+    kind: proc_resource
+lmul_factors:
+  m1: 1
+  m2: 2
+  m4: 4
+instructions:
+  vadd_vv:
+    asm: vadd.vv
+    pipe: any
+    latency_base: 2
+    latency_lmul_k: 0
+    release_base: 1
+    release_lmul_k: 0
+  vsll_vv:
+    asm: vsll.vv
+    pipe: any
+    latency_base: 3
+    latency_lmul_k: 1
+    release_base: 1
+    release_lmul_k: 1
+  vmul_vv:
+    asm: vmul.vv
+    pipe: any
+    latency_base: 5
+    latency_lmul_k: 1
+    release_base: 1
+    release_lmul_k: 1
+  vdivu_vv:
+    asm: vdivu.vv
+    pipe: pipe1
+    latency_base: 12
+    latency_lmul_k: 6
+    release_base: 4
+    release_lmul_k: 2
+  vmseq_vv:
+    asm: vmseq.vv
+    pipe: any
+    latency_base: 2
+    latency_lmul_k: 0
+    release_base: 1
+    release_lmul_k: 0
+  vcpop_m:
+    asm: vcpop.m
+    pipe: pipe0
+    latency_base: 3
+    latency_lmul_k: 1
+    release_base: 1
+    release_lmul_k: 0
+  viota_m:
+    asm: viota.m
+    pipe: pipe0
+    latency_base: 4
+    latency_lmul_k: 2
+    release_base: 1
+    release_lmul_k: 1
+  vslideup_vx:
+    asm: vslideup.vx
+    pipe: pipe0
+    latency_base: 3
+    latency_lmul_k: 1
+    release_base: 1
+    release_lmul_k: 0
+  vrgather_vv:
+    asm: vrgather.vv
+    pipe: pipe1
+    latency_base: 5
+    latency_lmul_k: 2
+    release_base: 1
+    release_lmul_k: 1
+  vredsum_vs:
+    asm: vredsum.vs
+    pipe: pipe1
+    latency_base: 6
+    latency_lmul_k: 3
+    release_base: 1
+    release_lmul_k: 1
