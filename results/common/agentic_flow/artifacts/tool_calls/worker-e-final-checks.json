@@ -1,0 +1,12 @@
+{
+  "id": "tool-worker-e-final-checks",
+  "round": 0,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "command": "python3 -m py_compile scripts/analyze.py scripts/search_model.py scripts/check_calibration_gate.py scripts/prepare_llvm_yushuxin_worktree.py && python3 scripts/prepare_llvm_yushuxin_worktree.py --help && python3 scripts/prepare_llvm_yushuxin_worktree.py --tag llvmorg-22.1.3 --cpu YuShuXin",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": ["scripts/analyze.py", "scripts/search_model.py", "scripts/check_calibration_gate.py", "scripts/prepare_llvm_yushuxin_worktree.py"],
+  "outputs": ["results/common/agentic_flow/artifacts/verification/worker-e-final-checks.md"],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-e-final-checks.md"
+}

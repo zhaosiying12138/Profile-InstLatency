@@ -56,6 +56,10 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-e-red-checks.md
+  - id: worker-e-final-checks
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-e-final-checks.md
   - id: round-0-worker-split-decision
     primitive: h2-artifact
     schema: rvv.decision.v1
