@@ -1,0 +1,2314 @@
+{
+  "approval": {
+    "approved": false,
+    "artifact_path": null,
+    "artifacts": [],
+    "status": "absent"
+  },
+  "assumptions": {
+    "items": [
+      "Real-platform approval is based on gem5 traces classified by trace JSON mode/backend fields, not by result path.",
+      "Synthetic calibration traces remain reference-only for mismatch reporting and are not counted as real-platform coverage.",
+      "Required real templates are inferred from non-baseline synthetic template inventory because that inventory defines the current latency/resource suite.",
+      "Repeated measurements mean at least two real gem5 traces for the same template/instruction/LMUL/body signature with identical corrected primary deltas.",
+      "Zero-cost timestamp-marker assumptions remain documented in per-trace metadata and are not revalidated by this analyzer."
+    ],
+    "status": "documented"
+  },
+  "classification_basis": {
+    "path_used_for_classification": false,
+    "real": "JSON mode is real-platform or backend contains gem5",
+    "synthetic": "JSON mode/backend contains synthetic"
+  },
+  "confidence": {
+    "failed_gate_checks": [
+      "required_templates_covered_by_real_gem5",
+      "required_template_instruction_lmul_covered_by_real_gem5",
+      "stable_repeats_exist_for_required_groups",
+      "explicit_human_approval"
+    ],
+    "level": "insufficient_real_coverage"
+  },
+  "conflicts": {
+    "items": [],
+    "unresolved_total": 0
+  },
+  "counts": {
+    "by_backend": {
+      "gem5_minor": 30,
+      "synthetic_cmodel": 3191
+    },
+    "by_mode": {
+      "real_platform_profile": 30,
+      "synthetic_calibration": 3191
+    },
+    "real_by_template_instruction_lmul": {
+      "T01_DECODE_EXEC_KILLCHECK": {
+        "vadd_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vcpop_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vdivu_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "viota_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmseq_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmul_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vredsum_vs": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vrgather_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vslideup_vx": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vsll_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        }
+      }
+    },
+    "real_gem5_by_template_instruction_lmul": {
+      "T01_DECODE_EXEC_KILLCHECK": {
+        "vadd_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vcpop_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vdivu_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "viota_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmseq_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmul_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vredsum_vs": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vrgather_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vslideup_vx": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vsll_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        }
+      }
+    },
+    "synthetic_by_template_instruction_lmul": {
+      "T00_BASELINE_MARKER": {
+        "unknown": {
+          "m1": 1
+        }
+      },
+      "T10_INDEPENDENT_STREAM_THROUGHPUT": {
+        "vadd_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vcpop_m": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vdivu_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "viota_m": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vmseq_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vmul_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vredsum_vs": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vrgather_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vslideup_vx": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        },
+        "vsll_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 3
+        }
+      },
+      "T11_SELF_RAW_CHAIN": {
+        "vadd_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vcpop_m": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vdivu_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "viota_m": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vmseq_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vmul_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vredsum_vs": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vrgather_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vslideup_vx": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vsll_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        }
+      },
+      "T12_CONSUMER_RAW_GAP": {
+        "vadd_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vcpop_m": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vdivu_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "viota_m": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vmseq_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vmul_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vredsum_vs": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vrgather_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vslideup_vx": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        },
+        "vsll_vv": {
+          "m1": 41,
+          "m2": 41,
+          "m4": 41
+        }
+      },
+      "T20_PAIRWISE_PIPE_CLASSIFICATION": {
+        "vadd_vv": {
+          "m1": 9,
+          "m2": 9,
+          "m4": 9
+        },
+        "vcpop_m": {
+          "m1": 4,
+          "m2": 4,
+          "m4": 4
+        },
+        "vdivu_vv": {
+          "m1": 6,
+          "m2": 6,
+          "m4": 6
+        },
+        "viota_m": {
+          "m1": 3,
+          "m2": 3,
+          "m4": 3
+        },
+        "vmseq_vv": {
+          "m1": 5,
+          "m2": 5,
+          "m4": 5
+        },
+        "vmul_vv": {
+          "m1": 7,
+          "m2": 7,
+          "m4": 7
+        },
+        "vrgather_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vslideup_vx": {
+          "m1": 2,
+          "m2": 2,
+          "m4": 2
+        },
+        "vsll_vv": {
+          "m1": 8,
+          "m2": 8,
+          "m4": 8
+        }
+      },
+      "T21_PAIR_WITH_SCALAR": {
+        "vadd_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vcpop_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vdivu_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "viota_m": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmseq_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vmul_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vredsum_vs": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vrgather_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vslideup_vx": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        },
+        "vsll_vv": {
+          "m1": 1,
+          "m2": 1,
+          "m4": 1
+        }
+      },
+      "T30_LMUL_SCALING": {
+        "vadd_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vcpop_m": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 51
+        },
+        "vdivu_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "viota_m": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vmseq_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vmul_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vredsum_vs": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vrgather_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vslideup_vx": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        },
+        "vsll_vv": {
+          "m1": 51,
+          "m2": 51,
+          "m4": 49
+        }
+      },
+      "T40_COMMON_VLSU_LOAD_HIT": {
+        "unknown": {
+          "m1": 1
+        }
+      }
+    }
+  },
+  "coverage": {
+    "covered_required_templates": [],
+    "missing_real_template_instruction_lmul": [
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "unknown",
+        "lmul": "m1",
+        "template_id": "T40_COMMON_VLSU_LOAD_HIT"
+      }
+    ],
+    "missing_real_templates": [
+      "T10_INDEPENDENT_STREAM_THROUGHPUT",
+      "T11_SELF_RAW_CHAIN",
+      "T12_CONSUMER_RAW_GAP",
+      "T20_PAIRWISE_PIPE_CLASSIFICATION",
+      "T21_PAIR_WITH_SCALAR",
+      "T30_LMUL_SCALING",
+      "T40_COMMON_VLSU_LOAD_HIT"
+    ],
+    "real_gem5_required_template_instruction_lmul_total": 0,
+    "real_gem5_templates": [
+      "T01_DECODE_EXEC_KILLCHECK"
+    ],
+    "required_template_instruction_lmul_total": 178,
+    "required_template_source": "synthetic_trace_inventory_excluding_T00_BASELINE_MARKER",
+    "required_templates": [
+      "T10_INDEPENDENT_STREAM_THROUGHPUT",
+      "T11_SELF_RAW_CHAIN",
+      "T12_CONSUMER_RAW_GAP",
+      "T20_PAIRWISE_PIPE_CLASSIFICATION",
+      "T21_PAIR_WITH_SCALAR",
+      "T30_LMUL_SCALING",
+      "T40_COMMON_VLSU_LOAD_HIT"
+    ]
+  },
+  "gate": {
+    "checks": {
+      "assumptions_documented": true,
+      "explicit_human_approval": false,
+      "no_unresolved_conflicts": true,
+      "required_template_instruction_lmul_covered_by_real_gem5": false,
+      "required_templates_covered_by_real_gem5": false,
+      "stable_repeats_exist_for_required_groups": false
+    },
+    "status": "NOT_READY"
+  },
+  "inventory_path": "results/common/real_platform_inventory.json",
+  "repeatability": {
+    "groups": [],
+    "missing_stable_repeat_template_instruction_lmul": [
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T11_SELF_RAW_CHAIN"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T12_CONSUMER_RAW_GAP"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T21_PAIR_WITH_SCALAR"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vadd_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vcpop_m",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vdivu_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "viota_m",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmseq_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vmul_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vredsum_vs",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vrgather_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vslideup_vx",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m1",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m2",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "vsll_vv",
+        "lmul": "m4",
+        "template_id": "T30_LMUL_SCALING"
+      },
+      {
+        "instruction_id": "unknown",
+        "lmul": "m1",
+        "template_id": "T40_COMMON_VLSU_LOAD_HIT"
+      }
+    ],
+    "repeat_groups_total": 0,
+    "repeated_trace_total": 0,
+    "stable_repeat_groups": 0,
+    "stable_template_instruction_lmul": [],
+    "unstable_repeat_groups": 0
+  },
+  "result_root": "results",
+  "schema_version": 1,
+  "trace_totals": {
+    "conflict": 0,
+    "real": 30,
+    "real_gem5": 30,
+    "synthetic": 3191,
+    "total": 3221,
+    "unknown": 0
+  }
+}

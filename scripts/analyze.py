@@ -13,9 +13,10 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from statistics import mean
+from statistics import mean, pstdev
 from typing import Any, Iterable
 
 
@@ -35,6 +36,24 @@ PIPE_RESOURCE = {
 }
 PIPE0_CLUSTER_ANCHORS = {"vcpop_m", "viota_m", "vslideup_vx"}
 PIPE1_CLUSTER_ANCHORS = {"vdivu_vv", "vrgather_vv", "vredsum_vs"}
+NON_REQUIRED_REAL_TEMPLATES = {"T00_BASELINE_MARKER"}
+APPROVAL_FILENAMES = {
+    "approval.json",
+    "human_approval.json",
+    "experiment_approval.json",
+    "real_platform_approval.json",
+    "approval.md",
+    "human_approval.md",
+    "experiment_approval.md",
+    "real_platform_approval.md",
+}
+QUALITY_ASSUMPTIONS = (
+    "Real-platform approval is based on gem5 traces classified by trace JSON mode/backend fields, not by result path.",
+    "Synthetic calibration traces remain reference-only for mismatch reporting and are not counted as real-platform coverage.",
+    "Required real templates are inferred from non-baseline synthetic template inventory because that inventory defines the current latency/resource suite.",
+    "Repeated measurements mean at least two real gem5 traces for the same template/instruction/LMUL/body signature with identical corrected primary deltas.",
+    "Zero-cost timestamp-marker assumptions remain documented in per-trace metadata and are not revalidated by this analyzer.",
+)
 
 
 @dataclass(frozen=True)
@@ -51,7 +70,9 @@ class ExperimentAnalysis:
     experiment_path: Path | None
     experiment_id: str
     template_id: str
+    backend: str
     mode: str
+    dry_run_trace: bool
     marker_baseline_cycles: int
     instruction_id: str | None
     asm: str | None
@@ -241,6 +262,14 @@ def int_or_none(value: Any) -> int | None:
     return None
 
 
+def bool_or_false(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "on"}
+    return False
+
+
 def trace_metadata(trace_doc: dict[str, Any]) -> dict[str, Any]:
     metadata = trace_doc.get("metadata")
     synthetic = trace_doc.get("synthetic")
@@ -323,13 +352,17 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
         trace_doc.get("llvm_sched_write"),
     )
     mode = str(first_value(trace_doc.get("mode"), "unknown"))
+    backend = str(first_value(trace_doc.get("backend"), trace_metadata(trace_doc).get("backend"), "unknown"))
+    dry_run_trace = bool_or_false(trace_doc.get("dry_run_trace"))
 
     return ExperimentAnalysis(
         trace_path=trace_path,
         experiment_path=experiment_path if experiment_path.exists() else None,
         experiment_id=experiment_id,
         template_id=template_id,
+        backend=backend,
         mode=mode,
+        dry_run_trace=dry_run_trace,
         marker_baseline_cycles=baseline,
         instruction_id=str(instruction_id) if instruction_id is not None else None,
         asm=str(asm) if asm is not None else None,
@@ -1114,66 +1147,539 @@ def render_experiment_markdown(analysis: ExperimentAnalysis) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_quality_report(analyses: list[ExperimentAnalysis], root: Path) -> str:
-    synthetic_count = sum(1 for item in analyses if item.synthetic)
-    real_count = len(analyses) - synthetic_count
-    covered = sorted({(item.instruction_id, item.lmul) for item in analyses if item.instruction_id and item.lmul})
-    numeric_values = [item.corrected_primary_delta for item in analyses if item.corrected_primary_delta is not None]
-    real_templates = sorted(
+def normalized_id(value: Any) -> str:
+    if value is None or value == "":
+        return "unknown"
+    return str(value)
+
+
+def trace_classification(item: ExperimentAnalysis) -> str:
+    mode = item.mode.lower()
+    backend = item.backend.lower()
+    synthetic_signal = "synthetic" in mode or "synthetic" in backend
+    real_signal = "real_platform" in mode or mode == "real" or mode.startswith("real_") or "gem5" in backend
+    if synthetic_signal and real_signal:
+        return "conflict"
+    if synthetic_signal:
+        return "synthetic"
+    if real_signal:
+        return "real"
+    return "unknown"
+
+
+def is_real_gem5(item: ExperimentAnalysis) -> bool:
+    return trace_classification(item) == "real" and "gem5" in item.backend.lower()
+
+
+def stable_json(value: Any) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), default=str)
+
+
+def group_key_record(item: ExperimentAnalysis) -> dict[str, str]:
+    return {
+        "template_id": normalized_id(item.template_id),
+        "instruction_id": normalized_id(item.instruction_id),
+        "lmul": normalized_id(item.lmul),
+    }
+
+
+def repeat_key_record(item: ExperimentAnalysis) -> dict[str, str]:
+    record = group_key_record(item)
+    record["pair_instruction_id"] = normalized_id(item.pair_instruction_id)
+    record["body_signature"] = stable_json(item.body)
+    return record
+
+
+def group_key_tuple(item: ExperimentAnalysis) -> tuple[str, str, str]:
+    record = group_key_record(item)
+    return (record["template_id"], record["instruction_id"], record["lmul"])
+
+
+def sorted_counter(counter: Counter[str]) -> dict[str, int]:
+    return {key: counter[key] for key in sorted(counter)}
+
+
+def increment_template_instruction_lmul(
+    counts: dict[str, dict[str, dict[str, int]]],
+    item: ExperimentAnalysis,
+) -> None:
+    template_id, instruction_id, lmul = group_key_tuple(item)
+    counts.setdefault(template_id, {}).setdefault(instruction_id, {}).setdefault(lmul, 0)
+    counts[template_id][instruction_id][lmul] += 1
+
+
+def counts_by_template_instruction_lmul(items: Iterable[ExperimentAnalysis]) -> dict[str, dict[str, dict[str, int]]]:
+    counts: dict[str, dict[str, dict[str, int]]] = {}
+    for item in items:
+        increment_template_instruction_lmul(counts, item)
+    return {
+        template: {
+            instruction: dict(sorted(lmuls.items()))
+            for instruction, lmuls in sorted(instructions.items())
+        }
+        for template, instructions in sorted(counts.items())
+    }
+
+
+def group_tuple_to_record(group: tuple[str, str, str]) -> dict[str, str]:
+    template_id, instruction_id, lmul = group
+    return {
+        "template_id": template_id,
+        "instruction_id": instruction_id,
+        "lmul": lmul,
+    }
+
+
+def discover_approval(root: Path) -> dict[str, Any]:
+    candidates = sorted(
+        (
+            path
+            for path in root.rglob("*")
+            if path.is_file() and path.name.lower() in APPROVAL_FILENAMES
+        ),
+        key=lambda path: path.as_posix(),
+    )
+    if not candidates:
+        return {
+            "status": "absent",
+            "approved": False,
+            "artifact_path": None,
+            "artifacts": [],
+        }
+
+    artifacts: list[dict[str, Any]] = []
+    approved = False
+    for path in candidates:
+        artifact: dict[str, Any] = {
+            "path": path.as_posix(),
+            "status": "present_unapproved",
+            "approved": False,
+        }
+        try:
+            if path.suffix.lower() == ".json":
+                data = json.loads(path.read_text(encoding="utf-8"))
+                if isinstance(data, dict):
+                    status_value = str(
+                        first_value(
+                            data.get("status"),
+                            data.get("human_approval_status"),
+                            data.get("approval_status"),
+                            "",
+                        )
+                    ).lower()
+                    bool_value = first_value(data.get("approved"), data.get("human_approved"), data.get("human_approval"))
+                    artifact["approved"] = bool_value is True or status_value in {"approved", "accepted", "pass", "passed"}
+                    artifact["status"] = "approved" if artifact["approved"] else status_value or "present_unapproved"
+            else:
+                text = path.read_text(encoding="utf-8").lower()
+                has_positive = "approved: true" in text or "status: approved" in text or "human approval: approved" in text
+                has_negative = "not approved" in text or "approval: absent" in text or "status: rejected" in text
+                artifact["approved"] = has_positive and not has_negative
+                artifact["status"] = "approved" if artifact["approved"] else "present_unapproved"
+        except (OSError, json.JSONDecodeError) as exc:
+            artifact["status"] = "unreadable"
+            artifact["error"] = str(exc)
+        approved = approved or bool(artifact["approved"])
+        artifacts.append(artifact)
+
+    return {
+        "status": "approved" if approved else "present_unapproved",
+        "approved": approved,
+        "artifact_path": next((entry["path"] for entry in artifacts if entry.get("approved")), artifacts[0]["path"]),
+        "artifacts": artifacts,
+    }
+
+
+def summarize_repeat_groups(real_gem5_items: list[ExperimentAnalysis]) -> dict[str, Any]:
+    groups: dict[str, list[ExperimentAnalysis]] = defaultdict(list)
+    records_by_key: dict[str, dict[str, str]] = {}
+    for item in real_gem5_items:
+        record = repeat_key_record(item)
+        key = stable_json(record)
+        groups[key].append(item)
+        records_by_key[key] = record
+
+    summaries: list[dict[str, Any]] = []
+    stable_group_keys: set[tuple[str, str, str]] = set()
+    for key in sorted(groups):
+        items = groups[key]
+        if len(items) < 2:
+            continue
+        values = [item.corrected_primary_delta for item in items if item.corrected_primary_delta is not None]
+        missing_delta_count = len(items) - len(values)
+        value_summary: dict[str, Any] = {
+            "values": values,
+            "missing_delta_count": missing_delta_count,
+        }
+        if values:
+            value_summary.update(
+                {
+                    "min": min(values),
+                    "max": max(values),
+                    "mean": mean(values),
+                    "spread": max(values) - min(values),
+                    "pstdev": pstdev(values) if len(values) > 1 else 0.0,
+                }
+            )
+        stable = bool(values) and missing_delta_count == 0 and len(set(values)) == 1
+        record = records_by_key[key]
+        if stable:
+            stable_group_keys.add((record["template_id"], record["instruction_id"], record["lmul"]))
+        summaries.append(
+            {
+                "key": record,
+                "trace_count": len(items),
+                "trace_paths": [item.trace_path.as_posix() for item in sorted(items, key=lambda entry: entry.trace_path.as_posix())],
+                "primary_delta_cycles": value_summary,
+                "stable": stable,
+                "status": "stable" if stable else "unstable",
+            }
+        )
+
+    unstable = [group for group in summaries if not group["stable"]]
+    return {
+        "repeat_groups_total": len(summaries),
+        "repeated_trace_total": sum(group["trace_count"] for group in summaries),
+        "stable_repeat_groups": len(summaries) - len(unstable),
+        "unstable_repeat_groups": len(unstable),
+        "stable_template_instruction_lmul": [
+            group_tuple_to_record(group) for group in sorted(stable_group_keys)
+        ],
+        "groups": summaries,
+    }
+
+
+def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> dict[str, Any]:
+    classified: dict[str, list[ExperimentAnalysis]] = {
+        "synthetic": [],
+        "real": [],
+        "unknown": [],
+        "conflict": [],
+    }
+    by_mode: Counter[str] = Counter()
+    by_backend: Counter[str] = Counter()
+    classification_conflicts: list[dict[str, Any]] = []
+
+    for item in analyses:
+        classification = trace_classification(item)
+        classified[classification].append(item)
+        by_mode[normalized_id(item.mode)] += 1
+        by_backend[normalized_id(item.backend)] += 1
+        mode = item.mode.lower()
+        backend = item.backend.lower()
+        if classification == "conflict":
+            classification_conflicts.append(
+                {
+                    "kind": "mode_backend_conflict",
+                    "trace_path": item.trace_path.as_posix(),
+                    "mode": item.mode,
+                    "backend": item.backend,
+                }
+            )
+        if item.dry_run_trace and classification == "real":
+            classification_conflicts.append(
+                {
+                    "kind": "real_trace_marked_dry_run",
+                    "trace_path": item.trace_path.as_posix(),
+                    "mode": item.mode,
+                    "backend": item.backend,
+                }
+            )
+        if "synthetic" in mode and "gem5" in backend:
+            classification_conflicts.append(
+                {
+                    "kind": "synthetic_mode_with_gem5_backend",
+                    "trace_path": item.trace_path.as_posix(),
+                    "mode": item.mode,
+                    "backend": item.backend,
+                }
+            )
+
+    synthetic_items = classified["synthetic"]
+    real_items = classified["real"]
+    real_gem5_items = [item for item in real_items if is_real_gem5(item)]
+    required_templates = sorted(
         {
             item.template_id
-            for item in analyses
-            if not item.synthetic and item.mode == "real_platform_profile"
+            for item in synthetic_items
+            if item.template_id and item.template_id not in NON_REQUIRED_REAL_TEMPLATES
         }
     )
+    required_groups = {
+        group_key_tuple(item)
+        for item in synthetic_items
+        if item.template_id in required_templates
+    }
+    real_gem5_templates = sorted({item.template_id for item in real_gem5_items if item.template_id})
+    real_gem5_groups = {
+        group_key_tuple(item)
+        for item in real_gem5_items
+        if item.template_id in required_templates
+    }
+    missing_templates = sorted(set(required_templates) - set(real_gem5_templates))
+    missing_groups = sorted(required_groups - real_gem5_groups)
+
+    repeatability = summarize_repeat_groups(real_gem5_items)
+    stable_repeat_groups = {
+        (entry["template_id"], entry["instruction_id"], entry["lmul"])
+        for entry in repeatability["stable_template_instruction_lmul"]
+    }
+    missing_repeat_groups = sorted(required_groups - stable_repeat_groups)
+
+    conflicts = list(classification_conflicts)
+    for group in repeatability["groups"]:
+        if not group["stable"]:
+            conflicts.append(
+                {
+                    "kind": "unstable_repeat_delta",
+                    "key": group["key"],
+                    "primary_delta_cycles": group["primary_delta_cycles"],
+                    "trace_paths": group["trace_paths"],
+                }
+            )
+
+    approval = discover_approval(root)
+    gate_checks = {
+        "required_templates_covered_by_real_gem5": bool(required_templates) and not missing_templates,
+        "required_template_instruction_lmul_covered_by_real_gem5": bool(required_groups) and not missing_groups,
+        "stable_repeats_exist_for_required_groups": bool(required_groups) and not missing_repeat_groups,
+        "no_unresolved_conflicts": not conflicts,
+        "assumptions_documented": bool(QUALITY_ASSUMPTIONS),
+        "explicit_human_approval": bool(approval.get("approved")),
+    }
+    failed_checks = [key for key, value in gate_checks.items() if not value]
+    if conflicts:
+        confidence_level = "conflicted"
+    elif missing_templates or missing_groups:
+        confidence_level = "insufficient_real_coverage"
+    elif missing_repeat_groups:
+        confidence_level = "insufficient_repeatability"
+    elif not approval.get("approved"):
+        confidence_level = "awaiting_human_approval"
+    else:
+        confidence_level = "approved_real_platform"
+
+    return {
+        "schema_version": 1,
+        "result_root": root.as_posix(),
+        "classification_basis": {
+            "synthetic": "JSON mode/backend contains synthetic",
+            "real": "JSON mode is real-platform or backend contains gem5",
+            "path_used_for_classification": False,
+        },
+        "trace_totals": {
+            "total": len(analyses),
+            "synthetic": len(classified["synthetic"]),
+            "real": len(classified["real"]),
+            "real_gem5": len(real_gem5_items),
+            "unknown": len(classified["unknown"]),
+            "conflict": len(classified["conflict"]),
+        },
+        "counts": {
+            "by_mode": sorted_counter(by_mode),
+            "by_backend": sorted_counter(by_backend),
+            "synthetic_by_template_instruction_lmul": counts_by_template_instruction_lmul(synthetic_items),
+            "real_by_template_instruction_lmul": counts_by_template_instruction_lmul(real_items),
+            "real_gem5_by_template_instruction_lmul": counts_by_template_instruction_lmul(real_gem5_items),
+        },
+        "coverage": {
+            "required_template_source": "synthetic_trace_inventory_excluding_T00_BASELINE_MARKER",
+            "required_templates": required_templates,
+            "real_gem5_templates": real_gem5_templates,
+            "covered_required_templates": sorted(set(required_templates) & set(real_gem5_templates)),
+            "missing_real_templates": missing_templates,
+            "required_template_instruction_lmul_total": len(required_groups),
+            "real_gem5_required_template_instruction_lmul_total": len(real_gem5_groups & required_groups),
+            "missing_real_template_instruction_lmul": [
+                group_tuple_to_record(group) for group in missing_groups
+            ],
+        },
+        "repeatability": {
+            **repeatability,
+            "missing_stable_repeat_template_instruction_lmul": [
+                group_tuple_to_record(group) for group in missing_repeat_groups
+            ],
+        },
+        "confidence": {
+            "level": confidence_level,
+            "failed_gate_checks": failed_checks,
+        },
+        "assumptions": {
+            "status": "documented" if QUALITY_ASSUMPTIONS else "absent",
+            "items": list(QUALITY_ASSUMPTIONS),
+        },
+        "conflicts": {
+            "unresolved_total": len(conflicts),
+            "items": conflicts,
+        },
+        "approval": approval,
+        "gate": {
+            "status": "PASS" if not failed_checks else "NOT_READY",
+            "checks": gate_checks,
+        },
+    }
+
+
+def group_records_by_template(groups: list[dict[str, str]]) -> list[tuple[str, int]]:
+    counter: Counter[str] = Counter(group["template_id"] for group in groups)
+    return sorted(counter.items())
+
+
+def append_group_table(lines: list[str], groups: list[dict[str, str]]) -> None:
+    if not groups:
+        lines.append("None.")
+        return
+    lines.append("| Template | Instruction | LMUL |")
+    lines.append("| --- | --- | --- |")
+    for group in groups:
+        lines.append(
+            f"| `{group['template_id']}` | `{group['instruction_id']}` | `{group['lmul']}` |"
+        )
+
+
+def render_quality_report(inventory: dict[str, Any]) -> str:
+    trace_totals = inventory["trace_totals"]
+    coverage = inventory["coverage"]
+    repeatability = inventory["repeatability"]
+    conflicts = inventory["conflicts"]
+    approval = inventory["approval"]
+    confidence = inventory["confidence"]
+    gate = inventory["gate"]
+    missing_groups = coverage["missing_real_template_instruction_lmul"]
+    missing_repeat_groups = repeatability["missing_stable_repeat_template_instruction_lmul"]
+
     lines = [
         "# Experiment Quality Report",
         "",
         "Mode: real_platform_profile",
-        "Gate status: NOT_READY",
-        "Human approval status: absent",
+        f"Gate status: {gate['status']}",
+        f"Confidence: {confidence['level']}",
+        f"Human approval status: {approval['status']}",
         "",
-        "This report is intentionally separate from synthetic golden matching. The current data set combines synthetic calibration traces with a gem5 MinorCPU decode/execute kill-check, so the real-platform gate remains closed until the full latency/resource experiment suite has real repeated coverage and human approval.",
+        "This report is generated from trace inventory. Synthetic calibration traces remain separate from real-platform observations and do not count toward the real gate.",
         "",
-        "## Coverage",
-        "",
-        f"Result root: `{root.as_posix()}`",
-        f"Trace files analyzed: {len(analyses)}",
-        f"Synthetic traces analyzed: {synthetic_count}",
-        f"Real-platform traces analyzed: {real_count}",
-        f"Real-platform template coverage: {', '.join(real_templates) if real_templates else 'none'}",
-        f"Instruction/LMUL pairs covered: {len(covered)}",
+        "## Approval Blockers",
         "",
     ]
-    if covered:
-        lines.append("| Instruction | Covered LMULs |")
-        lines.append("| --- | --- |")
-        by_instr: dict[str, list[str]] = {}
-        for instr, lmul in covered:
-            if instr and lmul:
-                by_instr.setdefault(instr, []).append(lmul)
-        for instr in sorted(by_instr):
-            lmuls = ", ".join(lmul for lmul in LMUL_ORDER if lmul in by_instr[instr])
-            lines.append(f"| `{instr}` | `{lmuls}` |")
-    else:
-        lines.append("No real-platform trace coverage is available.")
+    blockers: list[str] = []
+    if coverage["missing_real_templates"]:
+        blockers.append(
+            "Missing real gem5 template coverage: "
+            + ", ".join(f"`{template}`" for template in coverage["missing_real_templates"])
+            + "."
+        )
+    if missing_groups:
+        blockers.append(f"Missing real gem5 template/instruction/LMUL groups: {len(missing_groups)}.")
+    if missing_repeat_groups:
+        blockers.append(f"Missing stable repeated real gem5 measurements: {len(missing_repeat_groups)} groups.")
+    if conflicts["unresolved_total"]:
+        blockers.append(f"Unresolved conflicts: {conflicts['unresolved_total']}.")
+    if not approval.get("approved"):
+        blockers.append("Explicit human approval artifact: absent or not approved.")
+    if not blockers:
+        blockers.append("None; all real-platform gate checks passed.")
+    for blocker in blockers:
+        lines.append(f"- {blocker}")
 
-    lines.extend(["", "## Stability", ""])
-    if numeric_values:
-        lines.append(f"Synthetic primary delta mean: {mean(numeric_values):.3f} cycles.")
-    lines.append("No repeated full-suite real-platform measurements are available; stability is not established.")
+    lines.extend(["", "## Trace Inventory", ""])
+    lines.append(f"Result root: `{inventory['result_root']}`")
+    lines.append(f"Trace files analyzed: {trace_totals['total']}")
+    lines.append(f"Synthetic traces: {trace_totals['synthetic']}")
+    lines.append(f"Real-platform traces: {trace_totals['real']}")
+    lines.append(f"Real gem5 traces: {trace_totals['real_gem5']}")
+    lines.append(f"Unknown/conflicting traces: {trace_totals['unknown']} unknown, {trace_totals['conflict']} conflicting")
+    lines.append("")
+    lines.append("Classification uses JSON `mode` and `backend`; result paths are not used.")
+
+    lines.extend(["", "## Coverage", ""])
+    lines.append(
+        "Required templates are inferred from the non-baseline synthetic latency/resource inventory: "
+        + (", ".join(f"`{template}`" for template in coverage["required_templates"]) if coverage["required_templates"] else "none")
+        + "."
+    )
+    lines.append(
+        "Real gem5 templates covered: "
+        + (", ".join(f"`{template}`" for template in coverage["real_gem5_templates"]) if coverage["real_gem5_templates"] else "none")
+        + "."
+    )
+    lines.append("")
+    lines.append("| Coverage field | Count |")
+    lines.append("| --- | ---: |")
+    lines.append(f"| Required template/instruction/LMUL groups | {coverage['required_template_instruction_lmul_total']} |")
+    lines.append(f"| Covered required real gem5 groups | {coverage['real_gem5_required_template_instruction_lmul_total']} |")
+    lines.append(f"| Missing required real gem5 groups | {len(missing_groups)} |")
+
+    if missing_groups:
+        lines.extend(["", "Missing required real gem5 groups by template:", ""])
+        lines.append("| Template | Missing groups |")
+        lines.append("| --- | ---: |")
+        for template, count in group_records_by_template(missing_groups):
+            lines.append(f"| `{template}` | {count} |")
+        lines.extend(["", "Missing required real gem5 groups:", ""])
+        append_group_table(lines, missing_groups)
+
+    lines.extend(["", "## Repeatability", ""])
+    lines.append(f"Repeat groups found: {repeatability['repeat_groups_total']}")
+    lines.append(f"Stable repeat groups: {repeatability['stable_repeat_groups']}")
+    lines.append(f"Unstable repeat groups: {repeatability['unstable_repeat_groups']}")
+    if repeatability["groups"]:
+        lines.extend(["", "| Template | Instruction | LMUL | Traces | Delta values | Status |"])
+        lines.append("| --- | --- | --- | ---: | --- | --- |")
+        for group in repeatability["groups"]:
+            key = group["key"]
+            values = group["primary_delta_cycles"]["values"]
+            value_text = ", ".join(str(value) for value in values) if values else "none"
+            lines.append(
+                f"| `{key['template_id']}` | `{key['instruction_id']}` | `{key['lmul']}` | "
+                f"{group['trace_count']} | `{value_text}` | {group['status']} |"
+            )
+    else:
+        lines.append("No repeated real gem5 measurements are available.")
+    if missing_repeat_groups:
+        lines.extend(["", "Missing stable repeat groups by template:", ""])
+        lines.append("| Template | Missing groups |")
+        lines.append("| --- | ---: |")
+        for template, count in group_records_by_template(missing_repeat_groups):
+            lines.append(f"| `{template}` | {count} |")
+        lines.extend(["", "Missing stable repeat groups:", ""])
+        append_group_table(lines, missing_repeat_groups)
 
     lines.extend(["", "## Confidence", ""])
-    lines.append("Confidence for the real-platform profile is insufficient because gem5 evidence currently covers only the T01 decode/execute kill-check. LLVM-facing latency, release, and pipe-resource claims still come from non-circular synthetic calibration traces.")
+    lines.append(f"Computed confidence level: `{confidence['level']}`.")
+    if confidence["failed_gate_checks"]:
+        lines.append("Failed gate checks:")
+        for check in confidence["failed_gate_checks"]:
+            lines.append(f"- `{check}`")
+    else:
+        lines.append("No failed gate checks.")
+
+    lines.extend(["", "## Conflicts", ""])
+    if conflicts["items"]:
+        lines.append("| Kind | Detail |")
+        lines.append("| --- | --- |")
+        for conflict in conflicts["items"]:
+            detail = conflict.get("trace_path") or stable_json(conflict.get("key", {}))
+            lines.append(f"| `{conflict['kind']}` | `{detail}` |")
+    else:
+        lines.append("No unresolved conflicts detected in real-platform repeat or mode/backend classification data.")
 
     lines.extend(["", "## Assumptions", ""])
-    lines.append("- Synthetic timestamp markers are treated as zero-cost observations after subtracting marker_baseline_cycles.")
-    lines.append("- T01 gem5 traces prove the selected RVV instructions assemble, link, decode, and execute under the configured MinorCPU backend.")
-    lines.append("- Processor issue width and real resource contention are not approved from this partial real-platform data.")
-    lines.append("- Real platform mode must not use golden equality as an exit condition.")
+    for item in inventory["assumptions"]["items"]:
+        lines.append(f"- {item}")
 
     lines.extend(["", "## Human Approval", ""])
-    lines.append("Human approval is absent. To pass, a future real-platform report must set an explicit approval status after coverage, stability, confidence, assumptions, and conflicts are reviewed.")
+    if approval.get("artifact_path"):
+        lines.append(f"Approval artifact: `{approval['artifact_path']}`")
+        lines.append(f"Approval accepted by gate: {str(bool(approval.get('approved'))).lower()}")
+    else:
+        lines.append("Approval artifact: absent")
+    lines.append("The real gate cannot pass without an explicit approved human approval artifact after this report is reviewed.")
+
+    lines.extend(["", "## Machine-Readable Sidecar", ""])
+    lines.append(
+        f"See `{inventory.get('inventory_path', 'results/common/real_platform_inventory.json')}` "
+        "for the complete computed inventory, including exact missing group lists."
+    )
     return "\n".join(lines) + "\n"
 
 
@@ -1220,7 +1726,7 @@ def render_profile_yaml(profile: dict[str, Any]) -> str:
 def find_traces(root: Path) -> list[Path]:
     if not root.exists():
         return []
-    return sorted(root.glob("**/experiments/**/trace.json"), key=lambda path: path.as_posix())
+    return sorted(root.glob("**/trace.json"), key=lambda path: path.as_posix())
 
 
 def load_timing_config(path: Path) -> dict[str, Any]:
@@ -1243,6 +1749,11 @@ def parse_args() -> argparse.Namespace:
         "--mismatch-report",
         default="results/common/mismatch_report.md",
         help="Synthetic calibration mismatch report path.",
+    )
+    parser.add_argument(
+        "--inventory",
+        default=None,
+        help="Real-platform machine-readable inventory path. Defaults next to --aggregate.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print planned writes without changing files.")
     return parser.parse_args()
@@ -1275,13 +1786,17 @@ def main() -> int:
         )
 
     rows, failures = compare_profiles_to_config(profiles, timing_config)
+    inventory = build_quality_inventory(analyses, root)
+    inventory_path = Path(args.inventory) if args.inventory else Path(args.aggregate).with_name("real_platform_inventory.json")
+    inventory["inventory_path"] = inventory_path.as_posix()
 
     writes: list[tuple[Path, str]] = []
     for item in analyses:
         writes.append((item.trace_path.parent / "analysis.md", render_experiment_markdown(item)))
     for instruction_id, profile in profiles.items():
         writes.append((root / instruction_id / "profile.yaml", render_profile_yaml(profile)))
-    writes.append((Path(args.aggregate), render_quality_report(analyses, root)))
+    writes.append((inventory_path, json.dumps(inventory, indent=2, sort_keys=True) + "\n"))
+    writes.append((Path(args.aggregate), render_quality_report(inventory)))
     writes.append((Path(args.mismatch_report), render_mismatch_report(rows, failures)))
 
     if args.dry_run:
