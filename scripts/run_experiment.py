@@ -581,6 +581,7 @@ def run_gem5_minor_trace(
     metadata: dict[str, Any],
     output_dir: Path,
     source_dir: Path,
+    repeat_index: int | None = None,
 ) -> dict[str, Any]:
     config = load_paths_config()
     gem5 = require_executable(config, "gem5_build")
@@ -628,7 +629,7 @@ def run_gem5_minor_trace(
     if missing:
         raise ExperimentError(f"gem5 trace missing marker observations: {', '.join(missing)}")
 
-    return {
+    trace = {
         "schema_version": 1,
         "experiment_id": experiment_id(metadata),
         "template_id": metadata_template_id(metadata),
@@ -661,6 +662,9 @@ def run_gem5_minor_trace(
         "warnings": warnings,
         "entries": entries,
     }
+    if repeat_index is not None:
+        trace["repeat_index"] = repeat_index
+    return trace
 
 
 def resolve_experiment_dir(experiment: str, generated_root: Path) -> Path:
@@ -914,6 +918,7 @@ def build_synthetic_trace(
     *,
     mode: str,
     dry_run: bool,
+    repeat_index: int | None = None,
 ) -> dict[str, Any]:
     labels = marker_labels(metadata)
     delta = synthetic_delta_cycles(metadata, timing_model)
@@ -952,7 +957,7 @@ def build_synthetic_trace(
         "filler_count": body_value(metadata, "filler_count", None),
         "pair_instruction_id": pair_instruction_id(metadata),
     }
-    return {
+    trace = {
         "schema_version": 1,
         "experiment_id": exp_id,
         "template_id": metadata_template_id(metadata),
@@ -992,6 +997,9 @@ def build_synthetic_trace(
         },
         "entries": entries,
     }
+    if repeat_index is not None:
+        trace["repeat_index"] = repeat_index
+    return trace
 
 
 def placeholder_assembly(metadata: dict[str, Any]) -> str:
@@ -1040,6 +1048,7 @@ def run_experiment_from_metadata(
     mode: str = "synthetic_calibration",
     backend: str = "auto",
     source_dir: Path | None = None,
+    repeat_index: int | None = None,
 ) -> Path:
     metadata = normalize_experiment_metadata(metadata)
     exp_id = experiment_id(metadata)
@@ -1051,7 +1060,12 @@ def run_experiment_from_metadata(
     if backend == "gem5_minor":
         if source_dir is None:
             raise ExperimentError("gem5_minor backend requires a source experiment directory")
-        trace = run_gem5_minor_trace(metadata=metadata, output_dir=output_dir, source_dir=source_dir)
+        trace = run_gem5_minor_trace(
+            metadata=metadata,
+            output_dir=output_dir,
+            source_dir=source_dir,
+            repeat_index=repeat_index,
+        )
         write_result_files(metadata, output_dir, source_dir, trace)
         return output_dir
     if backend != "synthetic_cmodel":
@@ -1066,6 +1080,7 @@ def run_experiment_from_metadata(
         timing_model_path,
         mode=mode,
         dry_run=dry_run,
+        repeat_index=repeat_index,
     )
     write_result_files(metadata, output_dir, source_dir, trace)
     return output_dir
@@ -1079,6 +1094,7 @@ def run_experiment_dir(
     timing_model_path: Path,
     mode: str = "synthetic_calibration",
     backend: str = "auto",
+    repeat_index: int | None = None,
 ) -> Path:
     metadata, metadata_text = load_experiment_metadata(source_dir)
     return run_experiment_from_metadata(
@@ -1089,6 +1105,7 @@ def run_experiment_dir(
         mode=mode,
         backend=backend,
         source_dir=source_dir,
+        repeat_index=repeat_index,
     )
 
 

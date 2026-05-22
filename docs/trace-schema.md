@@ -13,6 +13,7 @@ The runner writes one normalized `trace.json` per experiment under
   "mode": "synthetic_calibration",
   "backend": "synthetic_cmodel",
   "dry_run_trace": false,
+  "repeat_index": 1,
   "marker_baseline_cycles": 0,
   "synthetic": {
     "timing_model": "config/rvv_timing_model.yaml",
@@ -34,7 +35,7 @@ The runner writes one normalized `trace.json` per experiment under
 }
 ```
 
-Required top-level fields:
+Top-level fields:
 
 - `schema_version`: integer schema version. The initial version is `1`.
 - `experiment_id`: stable ID matching the surrounding result directory.
@@ -45,6 +46,9 @@ Required top-level fields:
   `gem5_minor`.
 - `dry_run_trace`: true only when the runner was asked to produce a
   non-executed placeholder trace.
+- `repeat_index`: optional 1-based suite repeat number. It is present when
+  `scripts/run_suite.py --repeat N` is used with `N > 1`; repeat outputs are
+  grouped under `<results-root>/rXX/...`.
 - `marker_baseline_cycles`: constant adjacent-marker delta to subtract before
   analysis. It is `0` for the current zero-cost label marker implementation.
 - `entries`: ordered marker entries emitted by the runner.
@@ -91,6 +95,24 @@ Adjacent markers should produce zero delta. If a future gem5 implementation has
 a fixed non-zero marker delta, the runner must record that value in
 `marker_baseline_cycles`, and analyzer code must subtract it before fitting
 latency or release formulas.
+
+For `backend: gem5_minor`, the current implementation lowers each marker into
+an assembler-visible label at the next instruction PC. The runner links the
+program, resolves marker symbols with `llvm-nm`, scans gem5 MinorCPU `Exec`
+debug logs, and records the first observed cycle for the marker PC. This
+label-PC method does not insert an instruction, so the checked-in T00 marker
+baseline is expected to have `marker_baseline_cycles: 0` when adjacent labels
+resolve to the same executed PC.
+
+Limitations:
+
+- The PC anchor is the first executed instruction at the marker label address;
+  it cannot distinguish two adjacent zero-cost labels that intentionally share
+  one PC except by recording the same cycle for both labels.
+- The cycle conversion assumes the configured 1 GHz gem5 clock and the
+  recorded `gem5.ticks_per_cycle` value.
+- Missing marker PCs are fatal for gem5 traces because they indicate that the
+  linked marker label was not observed in the `Exec` log.
 
 ## Synthetic Calibration Mode
 

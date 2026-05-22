@@ -18,6 +18,13 @@ from run_experiment import (
 KILLCHECK_TEMPLATE = "T01_DECODE_EXEC_KILLCHECK"
 
 
+def positive_int(text: str) -> int:
+    value = int(text, 10)
+    if value < 1:
+        raise argparse.ArgumentTypeError("must be >= 1")
+    return value
+
+
 def load_manifest_entries(generated_root: Path) -> list[dict[str, Any]]:
     manifest_path = generated_root / "suite_manifest.yaml"
     if not manifest_path.exists():
@@ -65,20 +72,29 @@ def generated_source_for(entry: dict[str, Any], generated_root: Path) -> Path:
     )
 
 
-def run_generated_entry(entry: dict[str, Any], args: argparse.Namespace) -> Path:
+def repeat_result_root(base_root: Path, repeat_index: int, repeat_count: int) -> Path:
+    if repeat_count == 1:
+        return base_root
+    width = max(2, len(str(repeat_count)))
+    return base_root / f"r{repeat_index:0{width}d}"
+
+
+def run_generated_entry(entry: dict[str, Any], args: argparse.Namespace, repeat_index: int) -> Path:
     source_dir = generated_source_for(entry, args.generated_root)
     mode = args.mode
     backend = args.backend
     if backend == "auto" and args.killcheck and not args.dry_run:
         mode = "real_platform_profile"
         backend = "gem5_minor"
+    results_root = repeat_result_root(args.results_root, repeat_index, args.repeat)
     return run_experiment_dir(
         source_dir,
         dry_run=args.dry_run,
-        results_root=args.results_root,
+        results_root=results_root,
         timing_model_path=args.timing_model,
         mode=mode,
         backend=backend,
+        repeat_index=repeat_index if args.repeat > 1 else None,
     )
 
 
@@ -121,6 +137,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default=Path("config/rvv_timing_model.yaml"),
         help="RVV timing model used for synthetic traces",
     )
+    parser.add_argument(
+        "--repeat",
+        type=positive_int,
+        default=1,
+        help="number of complete suite repetitions to run; N>1 writes under <results-root>/rXX",
+    )
     return parser
 
 
@@ -129,8 +151,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     outputs: list[Path] = []
     try:
-        for entry in selected_entries(args):
-            outputs.append(run_generated_entry(entry, args))
+        entries = selected_entries(args)
+        for repeat_index in range(1, args.repeat + 1):
+            for entry in entries:
+                outputs.append(run_generated_entry(entry, args, repeat_index))
     except ExperimentError as error:
         print(f"error: {error}", file=sys.stderr)
         return 2

@@ -44,14 +44,15 @@ python3 scripts/check_calibration_gate.py --mode synthetic_calibration
 python3 scripts/prepare_llvm_yushuxin_worktree.py --tag llvmorg-22.1.3 --cpu YuShuXin
 ```
 
-The full real-platform path is not accepted by the synthetic calibration gate. It must wait for real gem5 or hardware coverage of the latency/resource templates, repeated measurements, confidence review, and human approval:
+The full real-platform path is not accepted by the synthetic calibration gate. It must wait for real gem5 or hardware coverage of the latency/resource templates, repeated measurements, confidence review, and human approval. Repeated gem5 measurements use `--repeat N`; for `N > 1`, outputs are written under `<results-root>/rXX/...` and traces include a 1-based `repeat_index`:
 
 ```bash
 python3 scripts/check_env.py
-python3 scripts/run_suite.py --killcheck
-python3 scripts/run_suite.py --all
-python3 scripts/analyze.py --all
-python3 scripts/search_model.py --profile results --format markdown
+python3 scripts/run_suite.py --killcheck --backend gem5_minor --mode real_platform_profile --results-root results_repeat --repeat 2
+python3 scripts/run_suite.py --all --backend gem5_minor --mode real_platform_profile --results-root results_repeat --repeat 2
+python3 scripts/analyze.py --all --root results_repeat/r01
+python3 scripts/analyze.py --all --root results_repeat/r02
+python3 scripts/search_model.py --profile results_repeat/r01 --format markdown
 ```
 
 ## Modes
@@ -63,6 +64,8 @@ Use this for the synthetic calibration loop. It is allowed to compare inferred v
 `mode: real_platform_profile`
 
 Use this for real platform profiling. This mode must not use predicted-equals-real as a loop condition. Completion is based on real simulator or platform traces, coverage, repeatability, confidence, documented assumptions, and explicit human approval before any LLVM implementation phase.
+
+The gem5 MinorCPU runner lowers `TIMESTAMP_MARK <label>` pseudo-lines to zero-cost labels at the next instruction PC. It resolves those label addresses in the linked ELF and reads marker cycles from the first matching PC in gem5 `Exec` logs. T00 is the marker-only baseline for this method; adjacent marker labels should record the same cycle and keep `marker_baseline_cycles: 0`. This method depends on `Exec` logging, the configured 1 GHz gem5 clock, and visible marker PCs in the executed trace.
 
 ## Configuration
 
