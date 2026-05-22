@@ -12,6 +12,8 @@ equality.
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -25,13 +27,52 @@ PIPE_RESOURCE = {
     "pipe1": "YuShuXinVPipe1",
 }
 
-REQUIRED_REAL_TERMS = (
-    "coverage",
-    "stability",
-    "confidence",
-    "assumptions",
-    "human approval",
+REQUIRED_REAL_TEMPLATES = (
+    "T00_BASELINE_MARKER",
+    "T01_DECODE_EXEC_KILLCHECK",
+    "T10_INDEPENDENT_STREAM_THROUGHPUT",
+    "T11_SELF_RAW_CHAIN",
+    "T12_CONSUMER_RAW_GAP",
+    "T20_PAIRWISE_PIPE_CLASSIFICATION",
+    "T21_PAIR_WITH_SCALAR",
+    "T30_LMUL_SCALING",
 )
+DEFERRED_REAL_TEMPLATES = ("T40_COMMON_VLSU_LOAD_HIT",)
+UNKNOWN_CONFIDENCE_VALUES = {
+    "",
+    "unknown",
+    "none",
+    "null",
+    "not_set",
+    "tbd",
+    "todo",
+    "insufficient",
+    "insufficient_raw_marker_evidence",
+    "not_identifiable",
+    "conflict",
+}
+PASS_APPROVAL_VALUES = ("approved", "granted", "yes", "true", "pass")
+
+
+@dataclass(frozen=True)
+class ExpectedExperiment:
+    experiment_id: str
+    template_id: str
+    result_group: str
+    path: Path
+
+
+@dataclass(frozen=True)
+class TraceObservation:
+    experiment_id: str
+    template_id: str
+    result_group: str
+    mode: str
+    backend: str
+    dry_run: bool
+    gem5_returncode: int | None
+    entries_count: int
+    identity: str
 
 
 def parse_scalar(text: str) -> Any:
@@ -115,6 +156,14 @@ def int_or_none(value: Any) -> int | None:
         except ValueError:
             return None
     return None
+
+
+def bool_value(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "yes", "y", "on")
+    return bool(value)
 
 
 def read_text(path: Path) -> str:
@@ -286,32 +335,513 @@ def synthetic_failures(text: str, profile_root: Path, config_path: Path) -> list
     return synthetic_report_failures(text) + synthetic_profile_failures(profile_root, config_path)
 
 
-def has_explicit_human_approval(text: str) -> bool:
-    approved_values = ("approved", "granted", "yes", "true", "pass")
-    for line in text.splitlines():
-        lowered = line.strip().lower()
-        if not lowered.startswith("human approval"):
+def common_result_root(profile_root: Path) -> Path:
+    if profile_root.name == "common":
+        return profile_root
+    candidate = profile_root / "common"
+    if candidate.exists():
+        return candidate
+    return profile_root
+
+
+def selected_result_groups(profile_root: Path) -> set[str]:
+    groups: set[str] = set()
+    if (profile_root / "experiments").exists():
+        groups.add(profile_root.name)
+    if profile_root.exists():
+        for child in profile_root.iterdir():
+            if child.is_dir() and (child / "experiments").exists():
+                groups.add(child.name)
+    return groups
+
+
+def load_expected_experiments(profile_root: Path) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
+    selected_groups = selected_result_groups(profile_root)
+    required: list[ExpectedExperiment] = []
+    deferred: list[ExpectedExperiment] = []
+    for path in sorted(Path("experiments/generated").glob("*/experiment.yaml"), key=lambda item: item.as_posix()):
+        data = parse_yamlish(path)
+        experiment_id = data.get("experiment_id")
+        template_id = data.get("template_id")
+        result_group = data.get("result_group")
+        if not experiment_id or not template_id or not result_group:
             continue
-        if ":" not in lowered:
+        if selected_groups and str(result_group) not in selected_groups:
             continue
-        value = lowered.split(":", 1)[1].strip()
-        if value in approved_values or value.startswith("granted ") or value.startswith("approved "):
+        expected = ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path)
+        if expected.template_id in REQUIRED_REAL_TEMPLATES:
+            required.append(expected)
+        elif expected.template_id in DEFERRED_REAL_TEMPLATES:
+            deferred.append(expected)
+    return required, deferred
+
+
+def infer_result_group(path: Path, profile_root: Path) -> str:
+    try:
+        relative = path.relative_to(profile_root)
+    except ValueError:
+        return ""
+    parts = relative.parts
+    if len(parts) >= 3 and parts[1] == "experiments":
+        return parts[0]
+    if "experiments" in parts:
+        index = parts.index("experiments")
+        if index > 0:
+            return parts[index - 1]
+    return ""
+
+
+def trace_observation_from_data(data: dict[str, Any], identity: str, profile_root: Path) -> TraceObservation | None:
+    experiment_id = data.get("experiment_id") or Path(identity).parent.name
+    template_id = data.get("template_id")
+    if not experiment_id or not template_id:
+        return None
+    result_group = data.get("result_group")
+    if not result_group:
+        result_group = infer_result_group(Path(identity), profile_root)
+    entries = data.get("entries")
+    explicit_entries_count = int_or_none(data.get("entries_count", data.get("entry_count")))
+    gem5 = data.get("gem5")
+    gem5_returncode = int_or_none(gem5.get("returncode")) if isinstance(gem5, dict) else None
+    return TraceObservation(
+        experiment_id=str(experiment_id),
+        template_id=str(template_id),
+        result_group=str(result_group or ""),
+        mode=str(data.get("mode", "")),
+        backend=str(data.get("backend", "")),
+        dry_run=bool_value(data.get("dry_run_trace", False)),
+        gem5_returncode=gem5_returncode,
+        entries_count=len(entries) if isinstance(entries, list) else explicit_entries_count or 0,
+        identity=identity,
+    )
+
+
+def load_trace_observations(profile_root: Path) -> tuple[list[TraceObservation], list[str]]:
+    observations: list[TraceObservation] = []
+    failures: list[str] = []
+    if not profile_root.exists():
+        return observations, [f"profile root does not exist: {profile_root}"]
+    for path in sorted(profile_root.glob("**/trace.json"), key=lambda item: item.as_posix()):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            failures.append(f"{path}: invalid trace JSON: {error}")
+            continue
+        if not isinstance(data, dict):
+            failures.append(f"{path}: trace JSON root is not an object")
+            continue
+        observation = trace_observation_from_data(data, path.as_posix(), profile_root)
+        if observation is not None:
+            observations.append(observation)
+    return observations, failures
+
+
+def find_inventory_path(profile_root: Path) -> Path:
+    return common_result_root(profile_root) / "real_platform_inventory.json"
+
+
+def load_inventory(profile_root: Path) -> tuple[Path, dict[str, Any] | None, list[str]]:
+    path = find_inventory_path(profile_root)
+    if not path.exists():
+        return path, None, []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        return path, None, [f"{path}: invalid real-platform inventory JSON: {error}"]
+    if not isinstance(data, dict):
+        return path, None, [f"{path}: inventory JSON root is not an object"]
+    return path, data, []
+
+
+def walk_dicts(data: Any, prefix: str = "$") -> list[tuple[str, dict[str, Any]]]:
+    found: list[tuple[str, dict[str, Any]]] = []
+    if isinstance(data, dict):
+        found.append((prefix, data))
+        for key, value in data.items():
+            found.extend(walk_dicts(value, f"{prefix}.{key}"))
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            found.extend(walk_dicts(value, f"{prefix}[{index}]"))
+    return found
+
+
+def inventory_observations(inventory: dict[str, Any] | None, profile_root: Path) -> list[TraceObservation]:
+    if not inventory:
+        return []
+    observations: list[TraceObservation] = []
+    for index, (_, item) in enumerate(walk_dicts(inventory)):
+        experiment_id = item.get("experiment_id") or item.get("id")
+        template_id = item.get("template_id")
+        if not experiment_id or not template_id:
+            continue
+        trace_path = item.get("trace_path") or item.get("path")
+        identity = str(trace_path) if trace_path else f"inventory:{index}:{experiment_id}"
+        observation = trace_observation_from_data(
+            {
+                "experiment_id": experiment_id,
+                "template_id": template_id,
+                "result_group": item.get("result_group"),
+                "mode": item.get("mode"),
+                "backend": item.get("backend"),
+                "dry_run_trace": item.get("dry_run_trace", item.get("dry_run", False)),
+                "entries_count": item.get("entries_count", item.get("entry_count")),
+                "entries": item.get("entries", [None] if item.get("has_entries") else []),
+                "gem5": item.get("gem5", {"returncode": item.get("gem5_returncode")}),
+            },
+            identity,
+            profile_root,
+        )
+        if observation is not None:
+            observations.append(observation)
+    return observations
+
+
+def is_real_gem5_observation(observation: TraceObservation) -> bool:
+    backend = observation.backend.lower()
+    return (
+        observation.mode == "real_platform_profile"
+        and not observation.dry_run
+        and ("gem5" in backend or observation.gem5_returncode is not None)
+        and observation.gem5_returncode in (None, 0)
+        and observation.entries_count > 0
+    )
+
+
+def real_observation_counts(observations: list[TraceObservation]) -> dict[str, int]:
+    by_experiment: dict[str, set[str]] = {}
+    for observation in observations:
+        if not is_real_gem5_observation(observation):
+            continue
+        by_experiment.setdefault(observation.experiment_id, set()).add(observation.identity)
+    return {experiment_id: len(identities) for experiment_id, identities in by_experiment.items()}
+
+
+def summarize_expected_missing(label: str, expected: list[ExpectedExperiment], missing: list[ExpectedExperiment]) -> list[str]:
+    if not missing:
+        return []
+    failures = [f"{label}: {len(missing)}/{len(expected)} required experiment groups are missing"]
+    for template_id in REQUIRED_REAL_TEMPLATES:
+        examples = [item.experiment_id for item in missing if item.template_id == template_id]
+        if not examples:
+            continue
+        suffix = ", ".join(examples[:5])
+        if len(examples) > 5:
+            suffix += f", ... (+{len(examples) - 5} more)"
+        failures.append(f"{label}: {template_id} missing {len(examples)}; examples: {suffix}")
+    return failures
+
+
+def truthy_status(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return False
+    lowered = str(value).strip().lower()
+    return lowered in PASS_APPROVAL_VALUES or lowered.startswith("approved ") or lowered.startswith("granted ")
+
+
+def truthy_waiver_status(value: Any) -> bool:
+    if truthy_status(value):
+        return True
+    lowered = str(value).strip().lower() if value is not None else ""
+    return lowered in ("waived", "accepted")
+
+
+def canonical_key(key: Any) -> str:
+    return str(key).strip().lstrip("-").strip()
+
+
+def get_any(data: dict[str, Any], names: set[str]) -> Any:
+    for key, value in data.items():
+        if canonical_key(key) in names:
+            return value
+    return None
+
+
+def find_values_by_key(data: Any, names: set[str]) -> list[Any]:
+    values: list[Any] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if canonical_key(key) in names:
+                values.append(value)
+            values.extend(find_values_by_key(value, names))
+    elif isinstance(data, list):
+        for value in data:
+            values.extend(find_values_by_key(value, names))
+    return values
+
+
+def approval_file(profile_root: Path) -> Path | None:
+    root = common_result_root(profile_root)
+    for name in ("human_approval.json", "human_approval.yaml", "human_approval.yml"):
+        path = root / name
+        if path.exists():
+            return path
+    return None
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def load_approval(profile_root: Path) -> tuple[Path | None, dict[str, Any] | None, list[str]]:
+    path = approval_file(profile_root)
+    if path is None:
+        return None, None, []
+    try:
+        data = parse_yamlish(path)
+    except (OSError, json.JSONDecodeError) as error:
+        return path, None, [f"{path}: invalid human approval file: {error}"]
+    return path, data, []
+
+
+def human_approval_failures(
+    profile_root: Path,
+    inventory_path: Path,
+    inventory: dict[str, Any] | None,
+    total_traces: int,
+    real_traces: int,
+) -> tuple[bool, list[str], dict[str, Any] | None]:
+    path, approval, failures = load_approval(profile_root)
+    if path is None:
+        return False, [f"missing machine-readable human approval file under {common_result_root(profile_root)}"] + failures, None
+    if approval is None:
+        return False, failures, None
+
+    status_values = find_values_by_key(approval, {"approved", "status", "approval_status", "human_approval"})
+    approved = any(truthy_status(value) for value in status_values)
+    if not approved:
+        failures.append(f"{path}: approval status is not approved/granted/pass")
+
+    approver_values = find_values_by_key(approval, {"approved_by", "approver", "reviewer", "human"})
+    if not any(str(value).strip() for value in approver_values if value is not None):
+        failures.append(f"{path}: approval must identify the human approver/reviewer")
+
+    tie_fields = {
+        "inventory_path",
+        "trace_inventory_path",
+        "trace_inventory",
+        "inventory_sha256",
+        "trace_inventory_sha256",
+        "trace_count",
+        "total_trace_count",
+        "real_trace_count",
+        "profile_root",
+    }
+    tie_values = find_values_by_key(approval, tie_fields)
+    if not tie_values:
+        failures.append(f"{path}: approval is not tied to a trace inventory path, hash, count, or profile root")
+
+    path_values = find_values_by_key(approval, {"inventory_path", "trace_inventory_path", "trace_inventory"})
+    if inventory is not None and path_values:
+        accepted = {inventory_path.as_posix(), str(inventory_path), inventory_path.name}
+        if not any(str(value).strip() in accepted or Path(str(value).strip()).name == inventory_path.name for value in path_values):
+            failures.append(f"{path}: approval inventory path does not match {inventory_path}")
+
+    hash_values = find_values_by_key(approval, {"inventory_sha256", "trace_inventory_sha256"})
+    if hash_values:
+        if not inventory_path.exists():
+            failures.append(f"{path}: approval records an inventory hash but {inventory_path} is missing")
+        else:
+            digest = sha256_file(inventory_path)
+            if not any(str(value).strip().lower() == digest for value in hash_values):
+                failures.append(f"{path}: approval inventory sha256 does not match {inventory_path}")
+
+    for value in find_values_by_key(approval, {"trace_count", "total_trace_count"}):
+        expected = int_or_none(value)
+        if expected is not None and expected != total_traces:
+            failures.append(f"{path}: approved trace_count={expected}, scanned trace_count={total_traces}")
+    for value in find_values_by_key(approval, {"real_trace_count"}):
+        expected = int_or_none(value)
+        if expected is not None and expected != real_traces:
+            failures.append(f"{path}: approved real_trace_count={expected}, scanned real_trace_count={real_traces}")
+
+    return not failures, failures, approval
+
+
+def waiver_dicts(data: Any) -> list[dict[str, Any]]:
+    waivers: list[dict[str, Any]] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if "waiver" in canonical_key(key).lower():
+                if isinstance(value, dict):
+                    waivers.append(value)
+                elif isinstance(value, list):
+                    waivers.extend(item for item in value if isinstance(item, dict))
+            waivers.extend(waiver_dicts(value))
+    elif isinstance(data, list):
+        for value in data:
+            waivers.extend(waiver_dicts(value))
+    return waivers
+
+
+def list_values(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(item) for item in value]
+    return [str(value)]
+
+
+def waiver_covers(waiver: dict[str, Any], expected: ExpectedExperiment) -> bool:
+    scope_values = list_values(get_any(waiver, {"scope"})) + list_values(get_any(waiver, {"scopes"}))
+    if any(value.lower() in ("all", "all_required_experiments", "*") for value in scope_values):
+        return True
+    experiment_ids = list_values(get_any(waiver, {"experiment_id"})) + list_values(get_any(waiver, {"experiment_ids"}))
+    if expected.experiment_id in experiment_ids:
+        return True
+    template_ids = list_values(get_any(waiver, {"template_id"})) + list_values(get_any(waiver, {"template_ids"}))
+    result_groups = list_values(get_any(waiver, {"result_group"})) + list_values(get_any(waiver, {"result_groups"}))
+    if expected.template_id in template_ids and (not result_groups or expected.result_group in result_groups):
+        return True
+    return False
+
+
+def has_repeat_waiver(expected: ExpectedExperiment, inventory: dict[str, Any] | None, approval: dict[str, Any] | None) -> bool:
+    for waiver in waiver_dicts(inventory) + waiver_dicts(approval):
+        requirement = " ".join(
+            list_values(get_any(waiver, {"requirement"}))
+            + list_values(get_any(waiver, {"type"}))
+            + list_values(get_any(waiver, {"kind"}))
+        ).lower()
+        if not any(term in requirement for term in ("repeat", "stability", "repeatability")):
+            continue
+        status = get_any(waiver, {"approved", "status", "waived"})
+        if not truthy_waiver_status(status):
+            continue
+        reason = get_any(waiver, {"reason", "justification"})
+        if not str(reason or "").strip():
+            continue
+        if waiver_covers(waiver, expected):
             return True
     return False
 
 
-def real_platform_failures(text: str) -> list[str]:
+def confidence_failures(inventory_path: Path, inventory: dict[str, Any] | None) -> list[str]:
+    if inventory is None:
+        return [f"missing {inventory_path}; cannot verify confidence for real-platform claimed fields"]
+    failures: list[str] = []
+    confidence_records: list[tuple[str, Any]] = []
+    for path, item in walk_dicts(inventory):
+        if item.get("claimed") is False:
+            continue
+        if "confidence" in item:
+            value = item.get("confidence")
+            if isinstance(value, dict):
+                value = value.get("level", value.get("status", value.get("value")))
+            confidence_records.append((path, value))
+    if not confidence_records:
+        return [f"{inventory_path}: no machine-readable confidence entries for claimed real-platform fields"]
+    bad: list[str] = []
+    for path, value in confidence_records:
+        lowered = str(value).strip().lower() if value is not None else ""
+        if (
+            lowered in UNKNOWN_CONFIDENCE_VALUES
+            or lowered.startswith("insufficient")
+            or "unknown" in lowered
+            or "synthetic" in lowered
+        ):
+            bad.append(f"{path}={value}")
+    if bad:
+        failures.append("confidence is unknown/insufficient/synthetic for claimed fields: " + ", ".join(bad[:8]))
+    return failures
+
+
+def conflict_status_failures(inventory_path: Path, inventory: dict[str, Any] | None) -> list[str]:
+    if inventory is None:
+        return [f"missing {inventory_path}; cannot verify that unresolved conflicts are absent"]
+    found_status = False
+    unresolved: list[str] = []
+    for path, item in walk_dicts(inventory):
+        for key, value in item.items():
+            lowered_key = canonical_key(key).lower()
+            if lowered_key in {"unresolved_conflicts", "open_conflicts", "conflicts"}:
+                found_status = True
+                if value in (False, 0, None, [], {}):
+                    continue
+                if isinstance(value, list):
+                    for index, entry in enumerate(value):
+                        if isinstance(entry, dict):
+                            status = str(entry.get("status", entry.get("resolution", ""))).lower()
+                            if status in {"resolved", "closed", "accepted", "waived"}:
+                                continue
+                        unresolved.append(f"{path}.{key}[{index}]")
+                elif isinstance(value, dict):
+                    items = value.get("items")
+                    unresolved_total = int_or_none(
+                        value.get("unresolved_total", value.get("unresolved_count", value.get("open_total")))
+                    )
+                    if items in (None, [], {}) and unresolved_total in (None, 0):
+                        continue
+                    if isinstance(items, list):
+                        for index, entry in enumerate(items):
+                            if isinstance(entry, dict):
+                                status = str(entry.get("status", entry.get("resolution", ""))).lower()
+                                if status in {"resolved", "closed", "accepted", "waived"}:
+                                    continue
+                            unresolved.append(f"{path}.{key}.items[{index}]")
+                        continue
+                    status = str(value.get("status", value.get("resolution", ""))).lower()
+                    if status not in {"resolved", "closed", "accepted", "waived"}:
+                        unresolved.append(f"{path}.{key}")
+                else:
+                    unresolved.append(f"{path}.{key}={value}")
+    if not found_status:
+        return [f"{inventory_path}: no machine-readable conflict status"]
+    if unresolved:
+        return ["unresolved conflicts remain: " + ", ".join(unresolved[:8])]
+    return []
+
+
+def has_documented_assumptions(text: str, inventory: dict[str, Any] | None) -> bool:
+    if inventory is not None:
+        assumptions = find_values_by_key(inventory, {"assumptions", "assumption"})
+        if any(value not in (None, "", [], {}) for value in assumptions):
+            return True
+    lines = text.splitlines()
+    in_section = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.lower().startswith("## assumptions"):
+            in_section = True
+            continue
+        if in_section and stripped.startswith("##"):
+            return False
+        if in_section and stripped and not stripped.startswith("|"):
+            return True
+    return False
+
+
+def t40_deferral_failures(
+    text: str,
+    inventory: dict[str, Any] | None,
+    deferred_expected: list[ExpectedExperiment],
+    real_counts: dict[str, int],
+) -> list[str]:
+    missing = [item for item in deferred_expected if real_counts.get(item.experiment_id, 0) == 0]
+    if not missing:
+        return []
+    evidence_text = text.lower()
+    if inventory is not None:
+        evidence_text += "\n" + json.dumps(inventory, sort_keys=True).lower()
+    documented = "t40" in evidence_text and ("defer" in evidence_text or "common" in evidence_text)
+    if documented:
+        return []
+    examples = ", ".join(item.experiment_id for item in missing[:5])
+    return [f"T40 common/deferred coverage is missing without documented deferral; examples: {examples}"]
+
+
+def real_platform_failures(text: str, profile_root: Path) -> list[str]:
     lowered = text.lower()
     failures: list[str] = []
     if "mode: real_platform_profile" not in lowered:
         failures.append("quality report must declare `mode: real_platform_profile`")
     if not has_pass_status(text):
         failures.append("quality report must contain exact line `Gate status: PASS`")
-    for term in REQUIRED_REAL_TERMS:
-        if term not in lowered:
-            failures.append(f"quality report must discuss `{term}`")
-    if not has_explicit_human_approval(text):
-        failures.append("quality report must contain explicit `Human approval: granted` or equivalent")
     banned_phrases = (
         "predicted equals real",
         "real matches golden",
@@ -322,6 +852,39 @@ def real_platform_failures(text: str) -> list[str]:
     for phrase in banned_phrases:
         if phrase in lowered:
             failures.append(f"real-platform report must not use golden-equality condition `{phrase}`")
+
+    expected, deferred_expected = load_expected_experiments(profile_root)
+    trace_observations, trace_failures = load_trace_observations(profile_root)
+    failures.extend(trace_failures)
+    inventory_path, inventory, inventory_failures = load_inventory(profile_root)
+    failures.extend(inventory_failures)
+    observations = trace_observations + inventory_observations(inventory, profile_root)
+    real_counts = real_observation_counts(observations)
+    real_trace_count = sum(1 for observation in trace_observations if is_real_gem5_observation(observation))
+
+    if not expected:
+        failures.append("no required generated experiments found for selected suite")
+    else:
+        missing_coverage = [item for item in expected if real_counts.get(item.experiment_id, 0) == 0]
+        failures.extend(summarize_expected_missing("real gem5 coverage", expected, missing_coverage))
+
+        approval_valid, approval_failures, approval = human_approval_failures(
+            profile_root, inventory_path, inventory, len(trace_observations), real_trace_count
+        )
+        failures.extend(approval_failures)
+        missing_repeats = [
+            item
+            for item in expected
+            if real_counts.get(item.experiment_id, 0) < 2
+            and not (approval_valid and has_repeat_waiver(item, inventory, approval))
+        ]
+        failures.extend(summarize_expected_missing("repeatability/stability", expected, missing_repeats))
+
+    failures.extend(confidence_failures(inventory_path, inventory))
+    failures.extend(conflict_status_failures(inventory_path, inventory))
+    if not has_documented_assumptions(text, inventory):
+        failures.append("documented assumptions are missing from quality report or real-platform inventory")
+    failures.extend(t40_deferral_failures(text, inventory, deferred_expected, real_counts))
     return failures
 
 
@@ -343,7 +906,7 @@ def main() -> int:
             failures = synthetic_failures(read_text(report_path), Path(args.profile_root), Path(args.config))
         else:
             report_path = Path(args.quality_report)
-            failures = real_platform_failures(read_text(report_path))
+            failures = real_platform_failures(read_text(report_path), Path(args.profile_root))
     except FileNotFoundError as error:
         print(f"FAIL: {error}")
         return 2
@@ -356,7 +919,7 @@ def main() -> int:
 
     print(f"PASS: {args.mode} gate passed using {report_path}")
     if args.mode == "real_platform_profile":
-        print("Real-platform mode checked coverage/confidence/human approval only; no golden equality was evaluated.")
+        print("Real-platform mode checked real gem5 coverage, repeats, confidence, conflicts, assumptions, and approval.")
     return 0
 
 
