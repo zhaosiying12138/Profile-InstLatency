@@ -3,8 +3,8 @@
 
 The search consumes ``results/<instruction>/profile.yaml`` files and fits
 small integer ``base + k * LMUL`` formulas for LLVM latency and
-ReleaseAtCycles.  It is stdlib-only and does not treat approximate fits as
-calibration proof.
+ReleaseAtCycles.  Claimed profile fields are considered only when they carry
+raw marker-derived evidence; synthetic metadata is not calibration proof.
 """
 
 from __future__ import annotations
@@ -18,6 +18,11 @@ from typing import Any
 
 LMUL_ORDER = ("m1", "m2", "m4")
 LMUL_VALUE = {"m1": 1, "m2": 2, "m4": 4, "m8": 8}
+PIPE_RESOURCE = {
+    "any": "YuShuXinAnyVPipe",
+    "pipe0": "YuShuXinVPipe0",
+    "pipe1": "YuShuXinVPipe1",
+}
 
 
 @dataclass(frozen=True)
@@ -144,6 +149,21 @@ def nested_get(data: dict[str, Any], path: tuple[str, ...]) -> Any:
     return current
 
 
+def record_has_raw_evidence(record: Any) -> bool:
+    if not isinstance(record, dict) or not record.get("claimed"):
+        return False
+    lowered_confidence = str(record.get("confidence", "")).lower()
+    lowered_source = str(record.get("source", "")).lower()
+    if "synthetic" in lowered_confidence or "synthetic" in lowered_source:
+        return False
+    if lowered_source == "raw_marker_observation":
+        return True
+    evidence = record.get("evidence")
+    if isinstance(evidence, list):
+        return any("raw_marker_delta" in str(item) for item in evidence)
+    return False
+
+
 def collect_profile_points(loaded: list[tuple[Path, dict[str, Any]]]) -> dict[str, dict[str, dict[str, float]]]:
     """Return field -> instruction -> lmul -> observed value."""
 
@@ -159,12 +179,39 @@ def collect_profile_points(loaded: list[tuple[Path, dict[str, Any]]]) -> dict[st
             lmul_measurement = measurements.get(lmul)
             if not isinstance(lmul_measurement, dict):
                 continue
-            latency = int_or_float(nested_get(lmul_measurement, ("llvm", "latency", "value")))
-            release = int_or_float(nested_get(lmul_measurement, ("llvm", "release_at_cycles", "value")))
+            latency_record = nested_get(lmul_measurement, ("llvm", "latency"))
+            release_record = nested_get(lmul_measurement, ("llvm", "release_at_cycles"))
+            latency = int_or_float(nested_get(latency_record, ("value",))) if record_has_raw_evidence(latency_record) else None
+            release = int_or_float(nested_get(release_record, ("value",))) if record_has_raw_evidence(release_record) else None
             if latency is not None:
                 points["latency"].setdefault(str(instruction), {})[lmul] = latency
             if release is not None:
                 points["release"].setdefault(str(instruction), {})[lmul] = release
+    return points
+
+
+def collect_resource_points(loaded: list[tuple[Path, dict[str, Any]]]) -> dict[str, dict[str, dict[str, str]]]:
+    """Return resource field -> instruction -> lmul -> observed value."""
+
+    points: dict[str, dict[str, dict[str, str]]] = {"pipe_affinity": {}, "resource_group": {}}
+    for _path, profile in loaded:
+        instruction = nested_get(profile, ("instruction", "id"))
+        if not instruction:
+            continue
+        measurements = profile.get("measurements")
+        if not isinstance(measurements, dict):
+            continue
+        for lmul in LMUL_ORDER:
+            lmul_measurement = measurements.get(lmul)
+            if not isinstance(lmul_measurement, dict):
+                continue
+            for field in ("pipe_affinity", "resource_group"):
+                record = nested_get(lmul_measurement, ("llvm", field))
+                if not record_has_raw_evidence(record):
+                    continue
+                value = nested_get(record, ("value",))
+                if value is not None:
+                    points[field].setdefault(str(instruction), {})[lmul] = str(value)
     return points
 
 
@@ -186,13 +233,46 @@ def fit_formula(points: dict[str, float], max_value: int) -> FormulaCandidate | 
     return best
 
 
+def enumerate_resource_candidate(points: dict[str, str]) -> dict[str, Any]:
+    if not points:
+        return {
+            "status": "not_enough_data",
+            "claimed": False,
+            "observations": points,
+        }
+    values = set(points.values())
+    if len(values) == 1:
+        value = next(iter(values))
+        return {
+            "status": "exact_fit",
+            "claimed": True,
+            "value": value,
+            "observations": points,
+        }
+    return {
+        "status": "conflict",
+        "claimed": False,
+        "observations": points,
+    }
+
+
 def build_report(
     profiles: list[tuple[Path, dict[str, Any]]],
     configs: list[tuple[Path, dict[str, Any]]],
     max_value: int,
 ) -> dict[str, Any]:
     points = collect_profile_points(profiles)
-    instructions = sorted({instr for field in points.values() for instr in field})
+    resource_points = collect_resource_points(profiles)
+    profile_instruction_ids = {
+        str(instruction)
+        for _path, profile in profiles
+        if (instruction := nested_get(profile, ("instruction", "id")))
+    }
+    instructions = sorted(
+        {instr for field in points.values() for instr in field}
+        | {instr for field in resource_points.values() for instr in field}
+        | profile_instruction_ids
+    )
     report: dict[str, Any] = {
         "schema_version": 1,
         "status": "profile_parameter_search",
@@ -201,7 +281,8 @@ def build_report(
         "config_files": [path.as_posix() for path, _data in configs],
         "instructions": {},
         "notes": [
-            "Search reads generated profile.yaml files, not raw trace placeholders.",
+            "Search reads generated profile.yaml files and accepts only raw marker-derived claims.",
+            "Synthetic metadata claims are ignored and reported as insufficient evidence.",
             "Exact zero-residual fits can be compared by the synthetic calibration gate.",
         ],
     }
@@ -213,18 +294,26 @@ def build_report(
             if candidate is None:
                 instr_result[field] = {
                     "status": "not_enough_data",
+                    "claimed": False,
                     "observations": observations,
                 }
                 continue
             residual = int(candidate.residual) if float(candidate.residual).is_integer() else candidate.residual
             instr_result[field] = {
                 "status": "exact_fit" if candidate.residual == 0 else "approximate_fit",
+                "claimed": candidate.residual == 0,
                 "form": "base_plus_lmul_times_k",
                 "base": candidate.base,
                 "k": candidate.k,
                 "absolute_residual": residual,
                 "observations": observations,
             }
+        instr_result["pipe_affinity"] = enumerate_resource_candidate(
+            resource_points.get("pipe_affinity", {}).get(instr, {})
+        )
+        instr_result["resource_group"] = enumerate_resource_candidate(
+            resource_points.get("resource_group", {}).get(instr, {})
+        )
         report["instructions"][instr] = instr_result
     return report
 
@@ -254,11 +343,15 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append("| Instruction | Field | Status | Formula | Residual |")
         lines.append("| --- | --- | --- | --- | ---: |")
         for instr in sorted(instructions):
-            for field in ("latency", "release"):
+            for field in ("latency", "release", "pipe_affinity", "resource_group"):
                 item = instructions[instr][field]
                 if item["status"] in ("exact_fit", "approximate_fit"):
-                    formula = f"{item['base']} + {item['k']} * LMUL"
-                    residual = item["absolute_residual"]
+                    if field in ("latency", "release"):
+                        formula = f"{item['base']} + {item['k']} * LMUL"
+                        residual = item["absolute_residual"]
+                    else:
+                        formula = f"{item.get('value')}"
+                        residual = 0
                 else:
                     formula = "n/a"
                     residual = "n/a"

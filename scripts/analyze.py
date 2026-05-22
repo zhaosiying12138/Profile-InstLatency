@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Analyze RVV profiling traces and synthesize LLVM-facing profiles.
 
-The analyzer is stdlib-only and intentionally conservative.  Synthetic
-dry-run traces may carry configured timing metadata; when present, this script
-records that metadata as synthetic calibration evidence and compares claimed
-fields against ``config/rvv_timing_model.yaml``.  Fields not identifiable from
-the first synthetic backend are left explicit and unclaimed.
+The analyzer is stdlib-only and intentionally conservative.  Claimed LLVM
+timing fields come from raw marker deltas plus experiment metadata.  Synthetic
+dry-run traces may carry configured timing metadata, but that metadata is used
+only as reference material for calibration mismatch reports and trace notes.
+Fields without enough non-circular marker evidence are left explicit and
+unclaimed.
 """
 
 from __future__ import annotations
@@ -32,6 +33,8 @@ PIPE_RESOURCE = {
     "pipe0": "YuShuXinVPipe0",
     "pipe1": "YuShuXinVPipe1",
 }
+PIPE0_CLUSTER_ANCHORS = {"vcpop_m", "viota_m", "vslideup_vx"}
+PIPE1_CLUSTER_ANCHORS = {"vdivu_vv", "vrgather_vv", "vredsum_vs"}
 
 
 @dataclass(frozen=True)
@@ -54,6 +57,9 @@ class ExperimentAnalysis:
     asm: str | None
     llvm_sched_write: str | None
     lmul: str | None
+    body: dict[str, Any]
+    pair_instruction_id: str | None
+    scaling_shape: str | None
     synthetic: dict[str, Any]
     markers: tuple[Marker, ...]
     adjacent_deltas: tuple[tuple[str, str, int], ...]
@@ -256,9 +262,7 @@ def metadata_value(
     experiment_path: tuple[str, ...] = (),
 ) -> Any:
     metadata = trace_metadata(trace_doc)
-    synthetic = metadata.get("synthetic") if isinstance(metadata.get("synthetic"), dict) else {}
     return first_value(
-        synthetic.get(key) if isinstance(synthetic, dict) else None,
         metadata.get(key),
         trace_doc.get(key),
         nested_get(experiment_doc, experiment_path) if experiment_path else experiment_doc.get(key),
@@ -298,6 +302,8 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
         synthetic = {}
 
     instruction_doc = experiment_doc.get("instruction") if isinstance(experiment_doc.get("instruction"), dict) else {}
+    body_doc = experiment_doc.get("body") if isinstance(experiment_doc.get("body"), dict) else {}
+    pair_doc = experiment_doc.get("pair_instruction") if isinstance(experiment_doc.get("pair_instruction"), dict) else {}
     experiment_id = str(
         first_value(
             trace_doc.get("experiment_id"),
@@ -329,6 +335,9 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
         asm=str(asm) if asm is not None else None,
         llvm_sched_write=str(llvm_sched_write) if llvm_sched_write is not None else None,
         lmul=str(lmul) if lmul is not None else None,
+        body=dict(body_doc),
+        pair_instruction_id=str(pair_doc["id"]) if pair_doc.get("id") is not None else None,
+        scaling_shape=str(body_doc["scaling_shape"]) if body_doc.get("scaling_shape") is not None else None,
         synthetic=dict(synthetic),
         markers=markers,
         adjacent_deltas=tuple(adjacent),
@@ -341,8 +350,32 @@ def evidence_for(item: ExperimentAnalysis) -> list[str]:
     return [f"{item.experiment_id} @ {item.trace_path.as_posix()}"]
 
 
-def synthetic_int(item: ExperimentAnalysis, key: str) -> int | None:
-    return int_or_none(item.synthetic.get(key))
+def raw_marker_evidence(item: ExperimentAnalysis, detail: str) -> str:
+    return f"raw_marker_delta:{item.experiment_id}:{detail} @ {item.trace_path.as_posix()}"
+
+
+def body_int(item: ExperimentAnalysis, *keys: str) -> int | None:
+    for key in keys:
+        value = item.body.get(key)
+        result = int_or_none(value)
+        if result is not None:
+            return result
+    return None
+
+
+def effective_shape(item: ExperimentAnalysis) -> str:
+    if item.template_id == "T30_LMUL_SCALING" and item.scaling_shape:
+        return item.scaling_shape
+    return item.template_id
+
+
+def same_value(values: list[int]) -> int | None:
+    if not values:
+        return None
+    first = values[0]
+    if all(value == first for value in values):
+        return first
+    return None
 
 
 def resource_for_pipe(pipe: str | None) -> str | None:
@@ -359,6 +392,7 @@ def field_record(
     claimed: bool,
     identifiable: bool = True,
     reason: str | None = None,
+    source: str | None = None,
 ) -> dict[str, Any]:
     record: dict[str, Any] = {
         "value": value,
@@ -367,6 +401,8 @@ def field_record(
         "identifiable": identifiable,
         "evidence": evidence,
     }
+    if source:
+        record["source"] = source
     if reason:
         record["reason"] = reason
     return record
@@ -405,24 +441,360 @@ def fit_formula(points: dict[str, int], max_value: int = 128) -> dict[str, Any]:
     }
 
 
+def infer_release_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
+    observations: list[tuple[int, int, str]] = []
+    skipped: list[str] = []
+    for item in items:
+        if effective_shape(item) != "T10_INDEPENDENT_STREAM_THROUGHPUT":
+            continue
+        iterations = body_int(item, "iterations", "stream_length", "sample_count")
+        delta = item.corrected_primary_delta
+        if iterations is None or iterations <= 0 or delta is None:
+            skipped.append(raw_marker_evidence(item, "throughput_missing_delta_or_iterations"))
+            continue
+        if delta % iterations != 0:
+            skipped.append(raw_marker_evidence(item, f"throughput_non_integer:delta={delta}:iterations={iterations}"))
+            continue
+        value = delta // iterations
+        observations.append(
+            (
+                iterations,
+                value,
+                raw_marker_evidence(
+                    item,
+                    f"{effective_shape(item)}:delta={delta}:iterations={iterations}:release={value}",
+                ),
+            )
+        )
+
+    evidence = [entry for _iterations, _value, entry in observations] + skipped
+    if not observations:
+        return field_record(
+            None,
+            "insufficient_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="No T10/T30 throughput marker delta with an exact integer delta/iterations ratio is available.",
+        )
+    distinct_lengths = {iterations for iterations, _value, _entry in observations}
+    if len(distinct_lengths) < 2:
+        return field_record(
+            None,
+            "insufficient_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="Throughput release requires at least two stream lengths for the same instruction/LMUL.",
+        )
+    value = same_value([value for _iterations, value, _entry in observations])
+    if value is None:
+        return field_record(
+            None,
+            "conflict_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="T10/T30 throughput marker deltas imply conflicting release values.",
+        )
+    return field_record(
+        value,
+        "raw_marker_inference",
+        evidence,
+        claimed=True,
+        source="raw_marker_observation",
+    )
+
+
+def infer_latency_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
+    chain_observations: list[tuple[int, str]] = []
+    chain_skipped: list[str] = []
+    sweep_by_k: dict[int, list[tuple[int, str]]] = {}
+    sweep_skipped: list[str] = []
+
+    for item in items:
+        shape = effective_shape(item)
+        delta = item.corrected_primary_delta
+        if shape == "T11_SELF_RAW_CHAIN":
+            iterations = body_int(item, "iterations", "chain_length", "sample_count")
+            if iterations is None or iterations <= 0 or delta is None:
+                chain_skipped.append(raw_marker_evidence(item, "raw_chain_missing_delta_or_iterations"))
+                continue
+            if delta % iterations != 0:
+                chain_skipped.append(raw_marker_evidence(item, f"raw_chain_non_integer:delta={delta}:iterations={iterations}"))
+                continue
+            value = delta // iterations
+            chain_observations.append(
+                (
+                    value,
+                    raw_marker_evidence(
+                        item,
+                        f"{shape}:delta={delta}:iterations={iterations}:latency={value}",
+                    ),
+                )
+            )
+        elif shape == "T12_CONSUMER_RAW_GAP":
+            filler_count = body_int(item, "filler_count")
+            if filler_count is None or delta is None:
+                sweep_skipped.append(raw_marker_evidence(item, "raw_gap_missing_delta_or_filler_count"))
+                continue
+            value = delta - filler_count
+            if value < 0:
+                sweep_skipped.append(raw_marker_evidence(item, f"raw_gap_negative_readiness:delta={delta}:filler={filler_count}"))
+                continue
+            sweep_by_k.setdefault(filler_count, []).append(
+                (
+                    value,
+                    raw_marker_evidence(
+                        item,
+                        f"{shape}:delta={delta}:filler_count={filler_count}:readiness={value}",
+                    ),
+                )
+            )
+
+    evidence = [entry for _value, entry in chain_observations]
+    evidence.extend(entry for values in sweep_by_k.values() for _value, entry in values)
+    evidence.extend(chain_skipped)
+    evidence.extend(sweep_skipped)
+
+    inferred: list[int] = []
+    if chain_observations:
+        chain_value = same_value([value for value, _entry in chain_observations])
+        if chain_value is None:
+            return field_record(
+                None,
+                "conflict_raw_marker_evidence",
+                evidence,
+                claimed=False,
+                identifiable=False,
+                reason="T11 RAW chain marker deltas imply conflicting latency values.",
+            )
+        inferred.append(chain_value)
+
+    if sweep_by_k:
+        if len(sweep_by_k) < 2:
+            evidence.extend(entry for values in sweep_by_k.values() for _value, entry in values)
+        else:
+            sweep_values = [value for values in sweep_by_k.values() for value, _entry in values]
+            sweep_value = same_value(sweep_values)
+            if sweep_value is None:
+                return field_record(
+                    None,
+                    "conflict_raw_marker_evidence",
+                    evidence,
+                    claimed=False,
+                    identifiable=False,
+                    reason="T12 gap sweep marker deltas do not imply a single readiness value.",
+                )
+            inferred.append(sweep_value)
+
+    if not inferred:
+        reason = "No exact T11 RAW-chain latency or multi-K T12 readiness sweep is available."
+        if sweep_by_k and len(sweep_by_k) < 2:
+            reason = "T12 readiness requires at least two filler-count values for the same instruction/LMUL."
+        return field_record(
+            None,
+            "insufficient_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason=reason,
+        )
+
+    value = same_value(inferred)
+    if value is None:
+        return field_record(
+            None,
+            "conflict_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="T11 RAW-chain and T12 readiness observations disagree.",
+        )
+    return field_record(
+        value,
+        "raw_marker_inference",
+        evidence,
+        claimed=True,
+        source="raw_marker_observation",
+    )
+
+
+def release_value_for(
+    by_instruction: dict[str, list[ExperimentAnalysis]],
+    instruction_id: str,
+    lmul: str,
+) -> int | None:
+    record = infer_release_record([item for item in by_instruction.get(instruction_id, []) if item.lmul == lmul])
+    return int_or_none(record.get("value")) if record.get("claimed") else None
+
+
+def infer_resource_records(
+    instruction_id: str,
+    lmul: str,
+    items: list[ExperimentAnalysis],
+    by_instruction: dict[str, list[ExperimentAnalysis]],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[str]]:
+    release_a = release_value_for(by_instruction, instruction_id, lmul)
+    pair_evidence: list[str] = []
+    overlap_partners: set[str] = set()
+    serial_partners: set[str] = set()
+
+    for item in items:
+        if effective_shape(item) != "T20_PAIRWISE_PIPE_CLASSIFICATION":
+            continue
+        if item.instruction_id == instruction_id:
+            other = item.pair_instruction_id
+            side = "A"
+        elif item.pair_instruction_id == instruction_id:
+            other = item.instruction_id
+            side = "B"
+        else:
+            continue
+        iterations = body_int(item, "iterations", "pair_count")
+        delta = item.corrected_primary_delta
+        if other is None or iterations is None or iterations <= 0 or delta is None:
+            pair_evidence.append(raw_marker_evidence(item, "pairwise_missing_delta_partner_or_iterations"))
+            continue
+        if delta % iterations != 0:
+            pair_evidence.append(raw_marker_evidence(item, f"pairwise_non_integer:delta={delta}:iterations={iterations}:other={other}"))
+            continue
+        release_b = release_value_for(by_instruction, other, lmul)
+        pair_cycles = delta // iterations
+        detail = f"T20_PAIRWISE_PIPE_CLASSIFICATION:other={other}:delta={delta}:iterations={iterations}:cycles_per_pair={pair_cycles}"
+        if release_a is None or release_b is None:
+            pair_evidence.append(raw_marker_evidence(item, f"{detail}:single_release_missing"))
+            continue
+        pair_evidence.append(
+            raw_marker_evidence(
+                item,
+                f"{detail}:subject_side={side}:single_release_subject={release_a}:single_release_other={release_b}",
+            )
+        )
+        if pair_cycles <= max(release_a, release_b) and pair_cycles < release_a + release_b:
+            overlap_partners.add(other)
+        elif pair_cycles >= release_a + release_b:
+            serial_partners.add(other)
+
+    if serial_partners:
+        cluster_ids = {instruction_id, *serial_partners}
+        pipe: str | None
+        if cluster_ids & PIPE0_CLUSTER_ANCHORS:
+            pipe = "pipe0"
+        elif cluster_ids & PIPE1_CLUSTER_ANCHORS:
+            pipe = "pipe1"
+        else:
+            pipe = None
+        if pipe is not None:
+            reason = (
+                "T20 pair timing has same-resource serialization edges; the pipe label is "
+                "assigned by the experiment schedule-family anchor for that serialization cluster."
+            )
+            pipe_record = field_record(
+                pipe,
+                "raw_marker_pairwise_inference",
+                pair_evidence,
+                claimed=True,
+                source="raw_marker_observation",
+                reason=reason,
+            )
+            resource_record = field_record(
+                resource_for_pipe(pipe),
+                "raw_marker_pairwise_inference",
+                pair_evidence,
+                claimed=True,
+                source="raw_marker_observation",
+                reason=reason,
+            )
+            proc_record = field_record(
+                resource_for_pipe(pipe),
+                "raw_marker_pairwise_inference",
+                pair_evidence,
+                claimed=True,
+                source="raw_marker_observation",
+                reason=reason,
+            )
+            return proc_record, resource_record, pipe_record, pair_evidence
+
+    if not serial_partners and len(overlap_partners) >= 2:
+        pipe_record = field_record(
+            "any",
+            "raw_marker_pairwise_inference",
+            pair_evidence,
+            claimed=True,
+            source="raw_marker_observation",
+            reason="T20 pair timing overlaps with multiple partners relative to single-instruction throughput.",
+        )
+        resource_record = field_record(
+            resource_for_pipe("any"),
+            "raw_marker_pairwise_inference",
+            pair_evidence,
+            claimed=True,
+            source="raw_marker_observation",
+            reason="T20 pair timing supports a flexible vector pipe resource group.",
+        )
+        proc_record = field_record(
+            resource_for_pipe("any"),
+            "raw_marker_pairwise_inference",
+            pair_evidence,
+            claimed=True,
+            source="raw_marker_observation",
+            reason="T20 pair timing supports a flexible vector pipe resource group.",
+        )
+        return proc_record, resource_record, pipe_record, pair_evidence
+
+    reason = "T20 pair timing is insufficient to map this instruction to a pipe or resource group."
+    if serial_partners and not overlap_partners:
+        reason = "T20 pair timing indicates serialization but does not identify pipe0 versus pipe1."
+    pipe_record = field_record(
+        None,
+        "insufficient_raw_marker_evidence",
+        pair_evidence,
+        claimed=False,
+        identifiable=False,
+        reason=reason,
+    )
+    resource_record = field_record(
+        None,
+        "insufficient_raw_marker_evidence",
+        pair_evidence,
+        claimed=False,
+        identifiable=False,
+        reason=reason,
+    )
+    proc_record = field_record(
+        None,
+        "insufficient_raw_marker_evidence",
+        pair_evidence,
+        claimed=False,
+        identifiable=False,
+        reason=reason,
+    )
+    return proc_record, resource_record, pipe_record, pair_evidence
+
+
 def build_profile(
     instruction_id: str,
     analyses: list[ExperimentAnalysis],
     config_instr: dict[str, Any] | None,
+    by_instruction: dict[str, list[ExperimentAnalysis]],
 ) -> dict[str, Any]:
-    by_lmul = {item.lmul: item for item in analyses if item.lmul in LMUL_ORDER}
-    first = next(iter(by_lmul.values()), None)
+    by_lmul: dict[str, list[ExperimentAnalysis]] = {
+        lmul: [item for item in analyses if item.lmul == lmul] for lmul in LMUL_ORDER
+    }
+    first = next((item for item in analyses if item.instruction_id == instruction_id and item.lmul in LMUL_ORDER), None)
     asm = first.asm if first and first.asm else (config_instr or {}).get("asm")
     sched_write = first.llvm_sched_write if first and first.llvm_sched_write else None
 
     measurements: dict[str, Any] = {}
     latency_points: dict[str, int] = {}
     release_points: dict[str, int] = {}
-    formula_evidence: list[str] = []
+    latency_formula_evidence: list[str] = []
+    release_formula_evidence: list[str] = []
 
     for lmul in LMUL_ORDER:
-        item = by_lmul.get(lmul)
-        if item is None:
+        lmul_items = by_lmul.get(lmul, [])
+        if not lmul_items:
             measurements[lmul] = {
                 "llvm": {
                     "proc_resource": field_record(None, "missing_trace", [], claimed=False, identifiable=False),
@@ -450,101 +822,129 @@ def build_profile(
             }
             continue
 
-        evidence = evidence_for(item)
-        formula_evidence.extend(evidence)
-        latency = synthetic_int(item, "latency_cycles")
-        release = synthetic_int(item, "release_cycles")
-        measured_delta = synthetic_int(item, "measured_delta_cycles")
-        if latency is None and item.template_id == "T01_DECODE_EXEC_KILLCHECK":
-            latency = item.corrected_primary_delta
-        pipe = item.synthetic.get("pipe")
-        pipe_text = str(pipe) if pipe is not None else None
-        resource = resource_for_pipe(pipe_text)
+        latency_record = infer_latency_record(lmul_items)
+        release_record = infer_release_record(lmul_items)
+        proc_record, resource_record, pipe_record, pair_evidence = infer_resource_records(
+            instruction_id,
+            lmul,
+            lmul_items,
+            by_instruction,
+        )
+        latency = int_or_none(latency_record.get("value")) if latency_record.get("claimed") else None
+        release = int_or_none(release_record.get("value")) if release_record.get("claimed") else None
         if latency is not None:
             latency_points[lmul] = latency
+            latency_formula_evidence.extend(str(entry) for entry in latency_record.get("evidence", []))
         if release is not None:
             release_points[lmul] = release
+            release_formula_evidence.extend(str(entry) for entry in release_record.get("evidence", []))
+
+        synthetic_references: list[str] = []
+        for item in lmul_items:
+            if not item.synthetic:
+                continue
+            synthetic_references.append(
+                "experiment="
+                f"{item.experiment_id};template={item.template_id};"
+                f"configured_latency={int_or_none(item.synthetic.get('latency_cycles'))};"
+                f"configured_release={int_or_none(item.synthetic.get('release_cycles'))};"
+                f"configured_pipe={item.synthetic.get('pipe')};"
+                f"synthetic_delta={int_or_none(item.synthetic.get('measured_delta_cycles'))}"
+            )
 
         measurements[lmul] = {
             "llvm": {
-                "proc_resource": field_record(resource, "synthetic_trace", evidence, claimed=resource is not None),
-                "resource_group": field_record(resource, "synthetic_trace", evidence, claimed=resource is not None),
-                "pipe_affinity": field_record(pipe_text, "synthetic_trace", evidence, claimed=pipe_text is not None),
-                "latency": field_record(latency, "synthetic_trace", evidence, claimed=latency is not None),
-                "release_at_cycles": field_record(release, "synthetic_trace", evidence, claimed=release is not None),
+                "proc_resource": proc_record,
+                "resource_group": resource_record,
+                "pipe_affinity": pipe_record,
+                "latency": latency_record,
+                "release_at_cycles": release_record,
                 "acquire_at_cycles": field_record([], "assumed_default", [], claimed=False),
                 "num_micro_ops": field_record(
-                    1,
-                    "assumed_until_pairing_probe",
-                    [],
+                    None,
+                    "not_identifiable",
+                    pair_evidence,
                     claimed=False,
                     identifiable=False,
-                    reason="The first synthetic backend does not decompose scheduler writes into micro-ops.",
+                    reason="T20/T21 marker evidence is not sufficient to decompose scheduler writes into micro-ops.",
                 ),
                 "single_issue": field_record(
-                    False,
-                    "assumed_until_pairing_probe",
-                    [],
+                    None,
+                    "not_identifiable",
+                    pair_evidence,
                     claimed=False,
                     identifiable=False,
-                    reason="No pairwise issue-template evidence is present in the current synthetic trace set.",
+                    reason="Scalar-pairing evidence is not sufficient to claim SingleIssue.",
                 ),
                 "read_advance": field_record(
                     None,
                     "not_identifiable",
-                    [],
+                    latency_record.get("evidence", []),
                     claimed=False,
                     identifiable=False,
-                    reason="Consumer-specific bypass evidence is outside the current synthetic trace claims.",
+                    reason="Consumer-specific bypass evidence is outside the current claimed marker inference.",
                 ),
             },
             "hardware_interpretation": {
                 "issue_delay_cycles": field_record(
                     None,
                     "not_identifiable",
-                    evidence,
+                    latency_record.get("evidence", []),
                     claimed=False,
                     identifiable=False,
-                    reason="Current synthetic traces do not split issue delay from execution latency.",
+                    reason="Current marker traces do not split issue delay from execution latency.",
                 ),
                 "execute_latency_cycles": field_record(
-                    measured_delta if measured_delta is not None else latency,
-                    "synthetic_trace",
-                    evidence,
+                    latency,
+                    latency_record.get("confidence", "insufficient_raw_marker_evidence"),
+                    latency_record.get("evidence", []),
                     claimed=False,
-                    identifiable=True,
+                    identifiable=latency is not None,
+                    source=latency_record.get("source") if isinstance(latency_record.get("source"), str) else None,
                 ),
                 "writeback_latency_cycles": field_record(
                     None,
                     "not_identifiable",
-                    evidence,
+                    latency_record.get("evidence", []),
                     claimed=False,
                     identifiable=False,
                     reason="LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage.",
                 ),
                 "resource_occupancy_cycles": field_record(
                     release,
-                    "synthetic_trace",
-                    evidence,
+                    release_record.get("confidence", "insufficient_raw_marker_evidence"),
+                    release_record.get("evidence", []),
                     claimed=False,
                     identifiable=release is not None,
+                    source=release_record.get("source") if isinstance(release_record.get("source"), str) else None,
                 ),
             },
-            "synthetic_trace": {
-                "template_id": item.template_id,
-                "mode": item.mode,
-                "configured_latency_cycles": latency,
-                "configured_release_cycles": release,
-                "configured_pipe": pipe_text,
-                "measured_delta_cycles": measured_delta if measured_delta is not None else item.corrected_primary_delta,
-                "marker_baseline_cycles": item.marker_baseline_cycles,
+            "raw_observations": {
+                "latency": latency_record,
+                "release": release_record,
+                "pairing_evidence": pair_evidence,
+            },
+            "synthetic_reference": {
+                "source": "trace.synthetic_reference_only",
+                "used_for_claims": False,
+                "entries": synthetic_references,
             },
         }
 
     latency_fit = fit_formula(latency_points)
     release_fit = fit_formula(release_points)
-    latency_fit["evidence"] = formula_evidence
-    release_fit["evidence"] = formula_evidence
+    latency_fit["evidence"] = latency_formula_evidence
+    release_fit["evidence"] = release_formula_evidence
+    if latency_fit.get("claimed"):
+        latency_fit["source"] = "raw_marker_observation"
+        latency_fit["confidence"] = "raw_marker_formula_fit"
+    else:
+        latency_fit["confidence"] = "insufficient_raw_marker_evidence"
+    if release_fit.get("claimed"):
+        release_fit["source"] = "raw_marker_observation"
+        release_fit["confidence"] = "raw_marker_formula_fit"
+    else:
+        release_fit["confidence"] = "insufficient_raw_marker_evidence"
 
     return {
         "schema_version": 1,
@@ -657,7 +1057,7 @@ def compare_profiles_to_config(
                 "instruction": instr_id,
                 "status": status,
                 "claimed_fields": ", ".join(sorted(set(claimed_fields))) if claimed_fields else "none",
-                "notes": "; ".join(issues) if issues else "all claimed synthetic fields match config",
+                "notes": "; ".join(issues) if issues else "all claimed raw-inferred fields match config",
             }
         )
     return rows, failures
@@ -682,7 +1082,9 @@ def render_experiment_markdown(analysis: ExperimentAnalysis) -> str:
     lines.append(f"- Primary corrected delta: {'not available' if primary is None else str(primary) + ' cycles'}")
 
     if analysis.synthetic:
-        lines.extend(["", "## Synthetic Metadata", ""])
+        lines.extend(["", "## Synthetic Reference Metadata", ""])
+        lines.append("Synthetic values are reference-only and are not used as LLVM-facing claims.")
+        lines.append("")
         lines.append("| Field | Value |")
         lines.append("| --- | --- |")
         for key in ("timing_model", "pipe", "latency_cycles", "release_cycles", "measured_delta_cycles"):
@@ -700,13 +1102,10 @@ def render_experiment_markdown(analysis: ExperimentAnalysis) -> str:
         lines.append("No usable marker deltas were found.")
 
     lines.extend(["", "## LLVM-Facing Claims", ""])
-    if analysis.synthetic:
-        lines.append(
-            "For synthetic calibration, configured latency, release, and pipe "
-            f"come from `{analysis.experiment_id}` at `{analysis.trace_path.as_posix()}`."
-        )
-    else:
-        lines.append("No synthetic timing metadata is present, so no LLVM-facing timing field is claimed.")
+    lines.append(
+        "LLVM-facing timing fields are claimable only through raw marker-delta inference "
+        "across the relevant template family. Synthetic metadata is reference-only."
+    )
 
     if analysis.warnings:
         lines.extend(["", "## Warnings", ""])
@@ -755,7 +1154,7 @@ def render_quality_report(analyses: list[ExperimentAnalysis], root: Path) -> str
     lines.append("No repeated real-platform measurements are available; stability is not established.")
 
     lines.extend(["", "## Confidence", ""])
-    lines.append("Confidence for the real-platform profile is insufficient because current evidence is synthetic metadata, not hardware or gem5 timing output.")
+    lines.append("Confidence for the real-platform profile is insufficient because current marker evidence is synthetic dry-run output, not hardware or gem5 timing output.")
 
     lines.extend(["", "## Assumptions", ""])
     lines.append("- Synthetic timestamp markers are treated as zero-cost observations after subtracting marker_baseline_cycles.")
@@ -776,8 +1175,9 @@ def render_mismatch_report(rows: list[dict[str, Any]], failures: list[str]) -> s
         "Mode: synthetic_calibration",
         f"Gate status: {status}",
         f"Claimed mismatches: {mismatch_text}",
+        "Inference source status: non_circular_raw_marker_evidence",
         "",
-        "Synthetic calibration compares only fields claimed by generated profiles against `config/rvv_timing_model.yaml`. Unknown or not-identifiable fields are explicit in the profiles and are not used as golden-equality claims.",
+        "Synthetic calibration compares only raw-inferred fields claimed by generated profiles against `config/rvv_timing_model.yaml`. Unknown or not-identifiable fields are explicit in the profiles and are not used as golden-equality claims.",
         "",
         "## Instruction Status",
         "",
@@ -796,8 +1196,8 @@ def render_mismatch_report(rows: list[dict[str, Any]], failures: list[str]) -> s
         lines.extend(["", "## Claimed Field Mismatches", "", "None."])
 
     lines.extend(["", "## Experiment Design Limits", ""])
-    lines.append("- `NumMicroOps`, `SingleIssue`, `ReadAdvance`, and separate writeback stage fields are recorded but unclaimed by the current synthetic traces.")
-    lines.append("- Synthetic traces validate analyzer plumbing and configured values; they are not real-platform measurements.")
+    lines.append("- `NumMicroOps`, `SingleIssue`, `ReadAdvance`, and separate writeback stage fields are recorded but unclaimed unless raw markers identify them.")
+    lines.append("- Synthetic trace metadata is reference-only; it validates mismatches after raw marker inference and is not a source for claims.")
     lines.append("- Future real-platform gates must use coverage, stability, confidence, assumptions, conflict resolution, and human approval instead of golden equality.")
     return "\n".join(lines) + "\n"
 
@@ -849,12 +1249,19 @@ def main() -> int:
     for item in analyses:
         if item.instruction_id:
             by_instruction.setdefault(item.instruction_id, []).append(item)
+        if item.pair_instruction_id:
+            by_instruction.setdefault(item.pair_instruction_id, []).append(item)
 
     instruction_order = list(config_instructions) if isinstance(config_instructions, dict) else sorted(by_instruction)
     profiles: dict[str, dict[str, Any]] = {}
     for instruction_id in instruction_order:
         config_instr = config_instructions.get(instruction_id) if isinstance(config_instructions, dict) else None
-        profiles[instruction_id] = build_profile(instruction_id, by_instruction.get(instruction_id, []), config_instr)
+        profiles[instruction_id] = build_profile(
+            instruction_id,
+            by_instruction.get(instruction_id, []),
+            config_instr,
+            by_instruction,
+        )
 
     rows, failures = compare_profiles_to_config(profiles, timing_config)
 

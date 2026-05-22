@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Check whether profiling results are ready to advance.
 
-Synthetic calibration is a golden-equality check against generated
-``profile.yaml`` claims and ``config/rvv_timing_model.yaml``.  Real-platform
-profiling is deliberately different: it depends on coverage, stability,
-confidence, assumptions, conflict resolution, and explicit human approval, not
-synthetic golden equality.
+Synthetic calibration is a non-circular check: generated ``profile.yaml``
+claims must be sourced from raw marker evidence before they are compared with
+``config/rvv_timing_model.yaml``.  Real-platform profiling is deliberately
+different: it depends on coverage, stability, confidence, assumptions,
+conflict resolution, and explicit human approval, not synthetic golden
+equality.
 """
 
 from __future__ import annotations
@@ -157,6 +158,21 @@ def resource_for_pipe(pipe: Any) -> str | None:
     return PIPE_RESOURCE.get(str(pipe), str(pipe))
 
 
+def record_provenance_failures(record: Any, label: str) -> list[str]:
+    if not isinstance(record, dict) or not record.get("claimed"):
+        return [f"{label}: not claimed"]
+    lowered_confidence = str(record.get("confidence", "")).lower()
+    lowered_source = str(record.get("source", "")).lower()
+    if "synthetic" in lowered_confidence or "synthetic" in lowered_source:
+        return [f"{label}: sourced from synthetic metadata ({record.get('confidence')}/{record.get('source')})"]
+    if lowered_source == "raw_marker_observation":
+        return []
+    evidence = record.get("evidence")
+    if isinstance(evidence, list) and any("raw_marker_delta" in str(item) for item in evidence):
+        return []
+    return [f"{label}: missing non-circular raw marker evidence"]
+
+
 def synthetic_profile_failures(profile_root: Path, config_path: Path) -> list[str]:
     failures: list[str] = []
     if not config_path.exists():
@@ -195,23 +211,26 @@ def synthetic_profile_failures(profile_root: Path, config_path: Path) -> list[st
                 continue
             for profile_field, config_field in (("latency", "latency"), ("release_at_cycles", "release")):
                 record = nested_get(lmul_measurement, ("llvm", profile_field))
-                if not isinstance(record, dict) or not record.get("claimed"):
-                    failures.append(f"{instr_id}.{lmul}.{profile_field}: not claimed")
+                provenance_failures = record_provenance_failures(record, f"{instr_id}.{lmul}.{profile_field}")
+                if provenance_failures:
+                    failures.extend(provenance_failures)
                     continue
                 value = int_or_none(record.get("value"))
                 expected = expected_value(config_instr, config_field, lmul)
                 if value != expected:
                     failures.append(f"{instr_id}.{lmul}.{profile_field}: profile={value} config={expected}")
             pipe_record = nested_get(lmul_measurement, ("llvm", "pipe_affinity"))
-            if not isinstance(pipe_record, dict) or not pipe_record.get("claimed"):
-                failures.append(f"{instr_id}.{lmul}.pipe_affinity: not claimed")
+            provenance_failures = record_provenance_failures(pipe_record, f"{instr_id}.{lmul}.pipe_affinity")
+            if provenance_failures:
+                failures.extend(provenance_failures)
             elif pipe_record.get("value") != expected_pipe:
                 failures.append(
                     f"{instr_id}.{lmul}.pipe_affinity: profile={pipe_record.get('value')} config={expected_pipe}"
                 )
             resource_record = nested_get(lmul_measurement, ("llvm", "resource_group"))
-            if not isinstance(resource_record, dict) or not resource_record.get("claimed"):
-                failures.append(f"{instr_id}.{lmul}.resource_group: not claimed")
+            provenance_failures = record_provenance_failures(resource_record, f"{instr_id}.{lmul}.resource_group")
+            if provenance_failures:
+                failures.extend(provenance_failures)
             elif resource_record.get("value") != expected_resource:
                 failures.append(
                     f"{instr_id}.{lmul}.resource_group: profile={resource_record.get('value')} config={expected_resource}"
@@ -223,8 +242,9 @@ def synthetic_profile_failures(profile_root: Path, config_path: Path) -> list[st
             continue
         for fit_key, config_field in (("latency_formula", "latency"), ("release_formula", "release")):
             record = fit.get(fit_key)
-            if not isinstance(record, dict) or not record.get("claimed"):
-                failures.append(f"{instr_id}.{fit_key}: not claimed")
+            provenance_failures = record_provenance_failures(record, f"{instr_id}.{fit_key}")
+            if provenance_failures:
+                failures.extend(provenance_failures)
                 continue
             base = int_or_none(record.get("base"))
             k = int_or_none(record.get("k"))
@@ -244,6 +264,8 @@ def synthetic_report_failures(text: str) -> list[str]:
     failures: list[str] = []
     if "mode: synthetic_calibration" not in lowered:
         failures.append("mismatch report must declare `mode: synthetic_calibration`")
+    if "inference source status: non_circular_raw_marker_evidence" not in lowered:
+        failures.append("mismatch report must declare non-circular raw marker inference source status")
     if not has_pass_status(text):
         failures.append("mismatch report must contain exact line `Gate status: PASS`")
     claimed_line = next((line for line in text.splitlines() if line.lower().startswith("claimed mismatches:")), "")
