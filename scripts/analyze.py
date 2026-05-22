@@ -1116,8 +1116,16 @@ def render_experiment_markdown(analysis: ExperimentAnalysis) -> str:
 
 def render_quality_report(analyses: list[ExperimentAnalysis], root: Path) -> str:
     synthetic_count = sum(1 for item in analyses if item.synthetic)
+    real_count = len(analyses) - synthetic_count
     covered = sorted({(item.instruction_id, item.lmul) for item in analyses if item.instruction_id and item.lmul})
     numeric_values = [item.corrected_primary_delta for item in analyses if item.corrected_primary_delta is not None]
+    real_templates = sorted(
+        {
+            item.template_id
+            for item in analyses
+            if not item.synthetic and item.mode == "real_platform_profile"
+        }
+    )
     lines = [
         "# Experiment Quality Report",
         "",
@@ -1125,13 +1133,15 @@ def render_quality_report(analyses: list[ExperimentAnalysis], root: Path) -> str
         "Gate status: NOT_READY",
         "Human approval status: absent",
         "",
-        "This report is intentionally separate from synthetic golden matching. The current data set is synthetic dry-run evidence only, so the real-platform gate remains closed.",
+        "This report is intentionally separate from synthetic golden matching. The current data set combines synthetic calibration traces with a gem5 MinorCPU decode/execute kill-check, so the real-platform gate remains closed until the full latency/resource experiment suite has real repeated coverage and human approval.",
         "",
         "## Coverage",
         "",
         f"Result root: `{root.as_posix()}`",
         f"Trace files analyzed: {len(analyses)}",
         f"Synthetic traces analyzed: {synthetic_count}",
+        f"Real-platform traces analyzed: {real_count}",
+        f"Real-platform template coverage: {', '.join(real_templates) if real_templates else 'none'}",
         f"Instruction/LMUL pairs covered: {len(covered)}",
         "",
     ]
@@ -1151,14 +1161,15 @@ def render_quality_report(analyses: list[ExperimentAnalysis], root: Path) -> str
     lines.extend(["", "## Stability", ""])
     if numeric_values:
         lines.append(f"Synthetic primary delta mean: {mean(numeric_values):.3f} cycles.")
-    lines.append("No repeated real-platform measurements are available; stability is not established.")
+    lines.append("No repeated full-suite real-platform measurements are available; stability is not established.")
 
     lines.extend(["", "## Confidence", ""])
-    lines.append("Confidence for the real-platform profile is insufficient because current marker evidence is synthetic dry-run output, not hardware or gem5 timing output.")
+    lines.append("Confidence for the real-platform profile is insufficient because gem5 evidence currently covers only the T01 decode/execute kill-check. LLVM-facing latency, release, and pipe-resource claims still come from non-circular synthetic calibration traces.")
 
     lines.extend(["", "## Assumptions", ""])
     lines.append("- Synthetic timestamp markers are treated as zero-cost observations after subtracting marker_baseline_cycles.")
-    lines.append("- Processor issue width and real resource contention are not approved from this dry-run data.")
+    lines.append("- T01 gem5 traces prove the selected RVV instructions assemble, link, decode, and execute under the configured MinorCPU backend.")
+    lines.append("- Processor issue width and real resource contention are not approved from this partial real-platform data.")
     lines.append("- Real platform mode must not use golden equality as an exit condition.")
 
     lines.extend(["", "## Human Approval", ""])
