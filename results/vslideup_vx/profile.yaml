@@ -1,0 +1,309 @@
+schema_version: 1
+mode: "synthetic_calibration"
+instruction:
+  id: "vslideup_vx"
+  asm: "vslideup.vx"
+  sew: 32
+  llvm_sched_write: "WriteVSlideUpX"
+measurements:
+  m1:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      latency:
+        value: 4
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      release_at_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 4
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 4
+      configured_release_cycles: 1
+      configured_pipe: "pipe0"
+      measured_delta_cycles: 4
+      marker_baseline_cycles: 0
+  m2:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      latency:
+        value: 5
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      release_at_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 5
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 5
+      configured_release_cycles: 1
+      configured_pipe: "pipe0"
+      measured_delta_cycles: 5
+      marker_baseline_cycles: 0
+  m4:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe0"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      latency:
+        value: 7
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      release_at_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 7
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 1
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 7
+      configured_release_cycles: 1
+      configured_pipe: "pipe0"
+      measured_delta_cycles: 7
+      marker_baseline_cycles: 0
+fit:
+  latency_formula:
+    form: "base_plus_lmul_times_k"
+    base: 3
+    k: 1
+    residual: 0
+    status: "exact_fit"
+    claimed: true
+    evidence_lmul: ["m1", "m2", "m4"]
+    evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json", "t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json", "t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]
+  release_formula:
+    form: "base_plus_lmul_times_k"
+    base: 1
+    k: 0
+    residual: 0
+    status: "exact_fit"
+    claimed: true
+    evidence_lmul: ["m1", "m2", "m4"]
+    evidence: ["t30-vslideup-vx-t12-m1-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m1-k0/trace.json", "t30-vslideup-vx-t12-m2-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m2-k0/trace.json", "t30-vslideup-vx-t12-m4-k0 @ results/vslideup_vx/experiments/t30-vslideup-vx-t12-m4-k0/trace.json"]

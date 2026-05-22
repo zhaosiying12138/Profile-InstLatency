@@ -1,0 +1,309 @@
+schema_version: 1
+mode: "synthetic_calibration"
+instruction:
+  id: "vredsum_vs"
+  asm: "vredsum.vs"
+  sew: 32
+  llvm_sched_write: "WriteVIRedV_From"
+measurements:
+  m1:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      latency:
+        value: 9
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      release_at_cycles:
+        value: 2
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 9
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 2
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 9
+      configured_release_cycles: 2
+      configured_pipe: "pipe1"
+      measured_delta_cycles: 9
+      marker_baseline_cycles: 0
+  m2:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      latency:
+        value: 12
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      release_at_cycles:
+        value: 3
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 12
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 3
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 12
+      configured_release_cycles: 3
+      configured_pipe: "pipe1"
+      measured_delta_cycles: 12
+      marker_baseline_cycles: 0
+  m4:
+    llvm:
+      proc_resource:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      resource_group:
+        value: "YuShuXinVPipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      pipe_affinity:
+        value: "pipe1"
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      latency:
+        value: 18
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      release_at_cycles:
+        value: 5
+        confidence: "synthetic_trace"
+        claimed: true
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      acquire_at_cycles:
+        value: []
+        confidence: "assumed_default"
+        claimed: false
+        identifiable: true
+        evidence: []
+      num_micro_ops:
+        value: 1
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "The first synthetic backend does not decompose scheduler writes into micro-ops."
+      single_issue:
+        value: false
+        confidence: "assumed_until_pairing_probe"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "No pairwise issue-template evidence is present in the current synthetic trace set."
+      read_advance:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: []
+        reason: "Consumer-specific bypass evidence is outside the current synthetic trace claims."
+    hardware_interpretation:
+      issue_delay_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+        reason: "Current synthetic traces do not split issue delay from execution latency."
+      execute_latency_cycles:
+        value: 18
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+      writeback_latency_cycles:
+        value: null
+        confidence: "not_identifiable"
+        claimed: false
+        identifiable: false
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+        reason: "LLVM/gem5 marker experiments observe producer-consumer readiness, not a separate physical writeback stage."
+      resource_occupancy_cycles:
+        value: 5
+        confidence: "synthetic_trace"
+        claimed: false
+        identifiable: true
+        evidence: ["t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+    synthetic_trace:
+      template_id: "T30_LMUL_SCALING"
+      mode: "synthetic_calibration"
+      configured_latency_cycles: 18
+      configured_release_cycles: 5
+      configured_pipe: "pipe1"
+      measured_delta_cycles: 18
+      marker_baseline_cycles: 0
+fit:
+  latency_formula:
+    form: "base_plus_lmul_times_k"
+    base: 6
+    k: 3
+    residual: 0
+    status: "exact_fit"
+    claimed: true
+    evidence_lmul: ["m1", "m2", "m4"]
+    evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json", "t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json", "t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]
+  release_formula:
+    form: "base_plus_lmul_times_k"
+    base: 1
+    k: 1
+    residual: 0
+    status: "exact_fit"
+    claimed: true
+    evidence_lmul: ["m1", "m2", "m4"]
+    evidence: ["t30-vredsum-vs-t12-m1-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m1-k0/trace.json", "t30-vredsum-vs-t12-m2-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m2-k0/trace.json", "t30-vredsum-vs-t12-m4-k0 @ results/vredsum_vs/experiments/t30-vredsum-vs-t12-m4-k0/trace.json"]

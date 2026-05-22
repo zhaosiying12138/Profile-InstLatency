@@ -1,0 +1,33 @@
+# Experiment Analysis
+
+Status: analyzed synthetic trace evidence.
+
+- Trace: `results/vmseq_vv/experiments/t30-vmseq-vv-t12-m4-k0/trace.json`
+- Experiment ID: `t30-vmseq-vv-t12-m4-k0`
+- Template ID: `T30_LMUL_SCALING`
+- Mode: `synthetic_calibration`
+- Instruction: `vmseq_vv`
+- LMUL: `m4`
+- Marker baseline cycles: 0
+- Marker count: 2
+- Primary corrected delta: 2 cycles
+
+## Synthetic Metadata
+
+| Field | Value |
+| --- | --- |
+| `timing_model` | `config/rvv_timing_model.yaml` |
+| `pipe` | `any` |
+| `latency_cycles` | `2` |
+| `release_cycles` | `1` |
+| `measured_delta_cycles` | `2` |
+
+## Marker Deltas
+
+| From | To | Corrected delta cycles |
+| --- | --- | ---: |
+| `start` | `end` | 2 |
+
+## LLVM-Facing Claims
+
+For synthetic calibration, configured latency, release, and pipe come from `t30-vmseq-vv-t12-m4-k0` at `results/vmseq_vv/experiments/t30-vmseq-vv-t12-m4-k0/trace.json`.

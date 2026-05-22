@@ -1,48 +1,32 @@
 # Synthetic Calibration Mismatch Report
 
-Status: preliminary scaffold.
 Mode: synthetic_calibration
-Gate status: NOT_READY
+Gate status: PASS
 Claimed mismatches: none
 
-This report is initialized before any synthetic cmodel traces or inferred profile
-fields exist. It therefore makes no calibration claim. The synthetic gate must
-remain closed until every claimed inferred field either matches the configured
-synthetic value or is explicitly marked not identifiable by the first-version
-experiments.
+Synthetic calibration compares only fields claimed by generated profiles against `config/rvv_timing_model.yaml`. Unknown or not-identifiable fields are explicit in the profiles and are not used as golden-equality claims.
 
 ## Instruction Status
 
 | Instruction | Synthetic comparison status | Claimed fields | Notes |
 | --- | --- | --- | --- |
-| `vadd_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vsll_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vmul_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vdivu_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vmseq_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vcpop_m` | not run | none | Awaiting trace and inferred profile. |
-| `viota_m` | not run | none | Awaiting trace and inferred profile. |
-| `vslideup_vx` | not run | none | Awaiting trace and inferred profile. |
-| `vrgather_vv` | not run | none | Awaiting trace and inferred profile. |
-| `vredsum_vs` | not run | none | Awaiting trace and inferred profile. |
+| `vadd_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vsll_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vmul_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vdivu_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vmseq_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vcpop_m` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `viota_m` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vslideup_vx` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vrgather_vv` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
+| `vredsum_vs` | matched | asm, latency_formula, m1.latency, m1.pipe_affinity, m1.release_at_cycles, m1.resource_group, m2.latency, m2.pipe_affinity, m2.release_at_cycles, m2.resource_group, m4.latency, m4.pipe_affinity, m4.release_at_cycles, m4.resource_group, release_formula | all claimed synthetic fields match config |
 
-## Simulator Implementation Bugs
+## Claimed Field Mismatches
 
-No simulator implementation bugs have been observed by this scaffold because no
-synthetic traces have been analyzed.
+None.
 
 ## Experiment Design Limits
 
-- Marker semantics must be validated before any delta is trusted.
-- Independent register rotation must be checked for LMUL overlap.
-- Mask and passthru operands can create hidden dependencies.
-- Scalar frontend limits can masquerade as vector resource occupancy.
-- Non-memory experiments must remain isolated from cache and memory effects.
-
-## Follow-Up
-
-1. Populate synthetic traces under `results/**/experiments/**/trace.json`.
-2. Run `python3 scripts/analyze.py --all`.
-3. Run `python3 scripts/search_model.py` against the timing config and profiles.
-4. Update this report with exact matched, mismatched, and not-identifiable fields.
-5. Set `Gate status: PASS` only when the synthetic calibration gate truly passes.
+- `NumMicroOps`, `SingleIssue`, `ReadAdvance`, and separate writeback stage fields are recorded but unclaimed by the current synthetic traces.
+- Synthetic traces validate analyzer plumbing and configured values; they are not real-platform measurements.
+- Future real-platform gates must use coverage, stability, confidence, assumptions, conflict resolution, and human approval instead of golden equality.

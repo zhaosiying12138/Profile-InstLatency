@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Deterministic placeholder parameter search for RVV timing profiles.
+"""Search deterministic RVV timing formulas from generated profiles.
 
-The search is deliberately conservative: it fits small integer
-`base + k * LMUL` formulas only when enough numeric observations are present.
-It never treats the result as calibrated proof.
+The search consumes ``results/<instruction>/profile.yaml`` files and fits
+small integer ``base + k * LMUL`` formulas for LLVM latency and
+ReleaseAtCycles.  It is stdlib-only and does not treat approximate fits as
+calibration proof.
 """
 
 from __future__ import annotations
@@ -15,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 
+LMUL_ORDER = ("m1", "m2", "m4")
 LMUL_VALUE = {"m1": 1, "m2": 2, "m4": 4, "m8": 8}
 
 
@@ -27,7 +29,7 @@ class FormulaCandidate:
 
 def parse_scalar(text: str) -> Any:
     text = text.strip()
-    if text in ("null", "None", "~"):
+    if text in ("", "null", "None", "~"):
         return None
     if text in ("true", "True"):
         return True
@@ -39,15 +41,15 @@ def parse_scalar(text: str) -> Any:
             return []
         return [parse_scalar(part.strip()) for part in body.split(",")]
     if text.startswith("{") and text.endswith("}"):
-        result: dict[str, Any] = {}
         body = text[1:-1].strip()
         if not body:
-            return result
+            return {}
+        result: dict[str, Any] = {}
         for part in body.split(","):
             if ":" not in part:
                 continue
             key, value = part.split(":", 1)
-            result[key.strip()] = parse_scalar(value)
+            result[str(parse_scalar(key.strip()))] = parse_scalar(value.strip())
         return result
     try:
         return int(text, 0)
@@ -59,9 +61,10 @@ def parse_scalar(text: str) -> Any:
         return text.strip("\"'")
 
 
-def parse_yamlish(path: Path) -> Any:
+def parse_yamlish(path: Path) -> dict[str, Any]:
     if path.suffix == ".json":
-        return json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
 
     root: dict[str, Any] = {}
     stack: list[tuple[int, dict[str, Any]]] = [(-1, root)]
@@ -74,80 +77,99 @@ def parse_yamlish(path: Path) -> Any:
         while stack and indent <= stack[-1][0]:
             stack.pop()
         parent = stack[-1][1]
+        clean_key = str(parse_scalar(key.strip()))
         if value.strip():
-            parent[key.strip()] = parse_scalar(value)
-        else:
-            child: dict[str, Any] = {}
-            parent[key.strip()] = child
-            stack.append((indent, child))
+            parent[clean_key] = parse_scalar(value)
+            continue
+        child: dict[str, Any] = {}
+        parent[clean_key] = child
+        stack.append((indent, child))
     return root
 
 
-def load_inputs(paths: list[str]) -> list[tuple[Path, Any]]:
-    loaded: list[tuple[Path, Any]] = []
+def int_or_float(value: Any) -> float | None:
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        try:
+            return float(int(value, 0))
+        except ValueError:
+            try:
+                return float(value)
+            except ValueError:
+                return None
+    return None
+
+
+def profile_files_from_path(raw: str) -> list[Path]:
+    path = Path(raw)
+    if path.is_dir():
+        return sorted(path.rglob("profile.yaml"), key=lambda item: item.as_posix())
+    if path.exists():
+        return [path]
+    return []
+
+
+def load_profiles(paths: list[str]) -> list[tuple[Path, dict[str, Any]]]:
+    loaded: list[tuple[Path, dict[str, Any]]] = []
     for raw in paths:
-        path = Path(raw)
-        if path.is_dir():
-            for child in sorted(path.rglob("*.yaml")) + sorted(path.rglob("*.yml")) + sorted(path.rglob("*.json")):
-                loaded.append((child, parse_yamlish(child)))
-        elif path.exists():
+        for path in profile_files_from_path(raw):
             loaded.append((path, parse_yamlish(path)))
     return loaded
 
 
-def walk_scalars(data: Any, prefix: tuple[str, ...] = ()) -> list[tuple[tuple[str, ...], Any]]:
-    if isinstance(data, dict):
-        output: list[tuple[tuple[str, ...], Any]] = []
-        for key in sorted(data):
-            output.extend(walk_scalars(data[key], prefix + (str(key),)))
-        return output
-    if isinstance(data, list):
-        output = []
-        for index, value in enumerate(data):
-            output.extend(walk_scalars(value, prefix + (str(index),)))
-        return output
-    return [(prefix, data)]
+def load_configs(paths: list[str]) -> list[tuple[Path, dict[str, Any]]]:
+    loaded: list[tuple[Path, dict[str, Any]]] = []
+    for raw in paths:
+        path = Path(raw)
+        if path.is_dir():
+            candidates = sorted(path.rglob("*.yaml"), key=lambda item: item.as_posix())
+        elif path.exists():
+            candidates = [path]
+        else:
+            candidates = []
+        for candidate in candidates:
+            loaded.append((candidate, parse_yamlish(candidate)))
+    return loaded
 
 
-def collect_points(loaded: list[tuple[Path, Any]]) -> dict[str, dict[str, dict[str, float]]]:
+def nested_get(data: dict[str, Any], path: tuple[str, ...]) -> Any:
+    current: Any = data
+    for part in path:
+        if not isinstance(current, dict):
+            return None
+        current = current.get(part)
+    return current
+
+
+def collect_profile_points(loaded: list[tuple[Path, dict[str, Any]]]) -> dict[str, dict[str, dict[str, float]]]:
     """Return field -> instruction -> lmul -> observed value."""
+
     points: dict[str, dict[str, dict[str, float]]] = {"latency": {}, "release": {}}
-    for _path, data in loaded:
-        for key_path, value in walk_scalars(data):
-            if not isinstance(value, (int, float)) or isinstance(value, bool):
+    for _path, profile in loaded:
+        instruction = nested_get(profile, ("instruction", "id"))
+        if not instruction:
+            continue
+        measurements = profile.get("measurements")
+        if not isinstance(measurements, dict):
+            continue
+        for lmul in LMUL_ORDER:
+            lmul_measurement = measurements.get(lmul)
+            if not isinstance(lmul_measurement, dict):
                 continue
-            lowered = tuple(part.lower() for part in key_path)
-            lmul = next((part for part in lowered if part in LMUL_VALUE), None)
-            if lmul is None:
-                continue
-            instruction = infer_instruction_id(key_path)
-            if instruction is None:
-                continue
-            field = infer_field(lowered)
-            if field is None:
-                continue
-            points.setdefault(field, {}).setdefault(instruction, {})[lmul] = float(value)
+            latency = int_or_float(nested_get(lmul_measurement, ("llvm", "latency", "value")))
+            release = int_or_float(nested_get(lmul_measurement, ("llvm", "release_at_cycles", "value")))
+            if latency is not None:
+                points["latency"].setdefault(str(instruction), {})[lmul] = latency
+            if release is not None:
+                points["release"].setdefault(str(instruction), {})[lmul] = release
     return points
 
 
-def infer_instruction_id(key_path: tuple[str, ...]) -> str | None:
-    for part in key_path:
-        if part.startswith("v") and ("_" in part or part in ("vadd", "vmul", "vsll")):
-            return part
-    return None
-
-
-def infer_field(lowered_path: tuple[str, ...]) -> str | None:
-    joined = ".".join(lowered_path)
-    if "release" in joined or "occupancy" in joined or "throughput" in joined:
-        return "release"
-    if "latency" in joined or "raw" in joined:
-        return "latency"
-    return None
-
-
 def fit_formula(points: dict[str, float], max_value: int) -> FormulaCandidate | None:
-    numeric_points = [(LMUL_VALUE[key], value) for key, value in sorted(points.items()) if key in LMUL_VALUE]
+    numeric_points = [(LMUL_VALUE[key], value) for key, value in points.items() if key in LMUL_VALUE]
     if len(numeric_points) < 2:
         return None
     best: FormulaCandidate | None = None
@@ -155,46 +177,56 @@ def fit_formula(points: dict[str, float], max_value: int) -> FormulaCandidate | 
         for k in range(max_value + 1):
             residual = sum(abs((base + k * lmul) - observed) for lmul, observed in numeric_points)
             candidate = FormulaCandidate(base, k, residual)
-            if best is None or (candidate.residual, candidate.base, candidate.k) < (best.residual, best.base, best.k):
+            if best is None or (candidate.residual, candidate.base, candidate.k) < (
+                best.residual,
+                best.base,
+                best.k,
+            ):
                 best = candidate
     return best
 
 
-def build_report(loaded: list[tuple[Path, Any]], max_value: int) -> dict[str, Any]:
-    points = collect_points(loaded)
+def build_report(
+    profiles: list[tuple[Path, dict[str, Any]]],
+    configs: list[tuple[Path, dict[str, Any]]],
+    max_value: int,
+) -> dict[str, Any]:
+    points = collect_profile_points(profiles)
     instructions = sorted({instr for field in points.values() for instr in field})
-    results: dict[str, Any] = {
+    report: dict[str, Any] = {
         "schema_version": 1,
-        "status": "placeholder_search",
-        "confidence": "low_until_replayed_against_trace_templates",
-        "input_files": [path.as_posix() for path, _data in loaded],
+        "status": "profile_parameter_search",
+        "formula_form": "base_plus_lmul_times_k",
+        "source_profiles": [path.as_posix() for path, _data in profiles],
+        "config_files": [path.as_posix() for path, _data in configs],
         "instructions": {},
         "notes": [
-            "Search fits only small integer base_plus_lmul_times_k formulas.",
-            "No result is a calibration proof without simulator replay and mismatch review.",
+            "Search reads generated profile.yaml files, not raw trace placeholders.",
+            "Exact zero-residual fits can be compared by the synthetic calibration gate.",
         ],
     }
     for instr in instructions:
         instr_result: dict[str, Any] = {}
         for field in ("latency", "release"):
-            field_points = points.get(field, {}).get(instr, {})
-            candidate = fit_formula(field_points, max_value)
+            observations = points.get(field, {}).get(instr, {})
+            candidate = fit_formula(observations, max_value)
             if candidate is None:
                 instr_result[field] = {
                     "status": "not_enough_data",
-                    "observations": field_points,
+                    "observations": observations,
                 }
-            else:
-                instr_result[field] = {
-                    "status": "candidate",
-                    "form": "base_plus_lmul_times_k",
-                    "base": candidate.base,
-                    "k": candidate.k,
-                    "absolute_residual": candidate.residual,
-                    "observations": field_points,
-                }
-        results["instructions"][instr] = instr_result
-    return results
+                continue
+            residual = int(candidate.residual) if float(candidate.residual).is_integer() else candidate.residual
+            instr_result[field] = {
+                "status": "exact_fit" if candidate.residual == 0 else "approximate_fit",
+                "form": "base_plus_lmul_times_k",
+                "base": candidate.base,
+                "k": candidate.k,
+                "absolute_residual": residual,
+                "observations": observations,
+            }
+        report["instructions"][instr] = instr_result
+    return report
 
 
 def render_markdown(report: dict[str, Any]) -> str:
@@ -202,31 +234,29 @@ def render_markdown(report: dict[str, Any]) -> str:
         "# Timing Parameter Search",
         "",
         f"Status: {report['status']}",
-        f"Confidence: {report['confidence']}",
-        "",
-        "This is a deterministic placeholder search. It proposes small integer formulas only; it does not prove calibration.",
+        f"Formula form: `{report['formula_form']}`",
         "",
         "## Inputs",
         "",
     ]
-    input_files = report.get("input_files") or []
-    if input_files:
-        for path in input_files:
+    profiles = report.get("source_profiles") or []
+    if profiles:
+        for path in profiles:
             lines.append(f"- `{path}`")
     else:
-        lines.append("- none")
+        lines.append("- no profile.yaml files found")
 
     lines.extend(["", "## Candidates", ""])
     instructions = report.get("instructions", {})
     if not instructions:
-        lines.append("No candidate formulas were produced because no numeric LMUL observations were found.")
+        lines.append("No candidate formulas were produced because no profile measurements were found.")
     else:
         lines.append("| Instruction | Field | Status | Formula | Residual |")
         lines.append("| --- | --- | --- | --- | ---: |")
         for instr in sorted(instructions):
             for field in ("latency", "release"):
                 item = instructions[instr][field]
-                if item["status"] == "candidate":
+                if item["status"] in ("exact_fit", "approximate_fit"):
                     formula = f"{item['base']} + {item['k']} * LMUL"
                     residual = item["absolute_residual"]
                 else:
@@ -239,17 +269,18 @@ def render_markdown(report: dict[str, Any]) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Search conservative RVV timing-model candidates.")
     parser.add_argument("--config", action="append", default=[], help="YAML-ish timing config file or directory.")
-    parser.add_argument("--profile", action="append", default=[], help="YAML-ish profile file or directory.")
+    parser.add_argument("--profile", action="append", default=[], help="Profile file or directory containing profile.yaml files.")
     parser.add_argument("--output", help="Optional output path.")
     parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
-    parser.add_argument("--max-value", type=int, default=32, help="Maximum integer base/k value to enumerate.")
+    parser.add_argument("--max-value", type=int, default=128, help="Maximum integer base/k value to enumerate.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    loaded = load_inputs(args.config + args.profile)
-    report = build_report(loaded, args.max_value)
+    profiles = load_profiles(args.profile)
+    configs = load_configs(args.config)
+    report = build_report(profiles, configs, args.max_value)
     if args.format == "json":
         content = json.dumps(report, indent=2, sort_keys=True) + "\n"
     else:
