@@ -2,7 +2,7 @@
   "schema_version": 1,
   "artifact_kind": "risk_acceptance_request",
   "round": 10,
-  "request_worker": "Round10T20StrongerEvidenceWorker",
+  "request_worker": "Round10FocusedEvidenceRefresh",
   "status": "pending",
   "request_status": "not_approved",
   "decision_status": "not_approved",
@@ -15,18 +15,18 @@
   "source_inventory_path": "results/common/real_platform_inventory.json",
   "source_inventory_json_pointer": "/field_status/unresolved",
   "current_hashes": {
-    "inventory_sha256": "7c7f53d90bb11b0bd9446b7138bda3351e84273583d142f499612e095e887c13",
-    "real_platform_field_status_sha256": "2a80452bce6d1461f9208cad2ad7cff5a4ec40841e84fbc14c887d34100f559f",
-    "search_model_real_platform_sha256": "c594b52f4f84e631a3740424280b5e2fd296f1e781020e6f9a82d981310669b6",
-    "experiment_quality_sha256": "7b1604434fb2c1760066df25c356e0ca9e804a4fa831777036c28d3c6d4be71a"
+    "inventory_sha256": "728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231",
+    "real_platform_field_status_sha256": "9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b",
+    "search_model_real_platform_sha256": "bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623",
+    "experiment_quality_sha256": "1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae"
   },
   "gate_command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
   "expected_current_fail_closed_reasons": [
     "missing Gate status PASS",
     "missing machine-readable human approval",
-    "39 unresolved non_identifiable risks"
+    "38 unresolved non_identifiable risks"
   ],
-  "risk_status": "39 unresolved non_identifiable risks",
+  "risk_status": "38 unresolved non_identifiable risks",
   "risk_ids": [
     "llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable",
     "llvm_field_status:vadd_vv:m2:ProcResource:non_identifiable",
@@ -45,7 +45,6 @@
     "llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable",
     "llvm_field_status:viota_m:m1:ProcResource:non_identifiable",
     "llvm_field_status:viota_m:m2:ProcResource:non_identifiable",
-    "llvm_field_status:viota_m:m4:Latency:non_identifiable",
     "llvm_field_status:viota_m:m4:ProcResource:non_identifiable",
     "llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable",
     "llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable",
@@ -70,7 +69,7 @@
   ],
   "risk_scope": {
     "source": "results/common/real_platform_inventory.json field_status.unresolved",
-    "unresolved_total": 39,
+    "unresolved_total": 38,
     "required_status": "non_identifiable",
     "risk_ids": [
       "llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable",
@@ -90,7 +89,6 @@
       "llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable",
       "llvm_field_status:viota_m:m1:ProcResource:non_identifiable",
       "llvm_field_status:viota_m:m2:ProcResource:non_identifiable",
-      "llvm_field_status:viota_m:m4:Latency:non_identifiable",
       "llvm_field_status:viota_m:m4:ProcResource:non_identifiable",
       "llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable",
       "llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable",
@@ -117,7 +115,7 @@
   "human_decision_choices": [
     {
       "id": "accept_all_current_risks_with_future_human_approval_json",
-      "description": "Human may later accept all 39 current risks by creating a separate current-hash-bound human_approval.json artifact."
+      "description": "Human may later accept all 38 current risks by creating a separate current-hash-bound human_approval.json artifact."
     },
     {
       "id": "reject_and_require_stronger_experiments_or_modeling",

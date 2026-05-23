@@ -159,15 +159,11 @@ llvm_facing_fields:
         - "t30-viota-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n4/trace.json"
   m4:
     Latency:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: 4
       candidates:
-        - 0
-        - 1
-        - 2
-        - 3
         - 4
-      reason: "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
         - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
         - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
@@ -196,10 +192,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
+      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
       evidence:
         - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
         - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json"

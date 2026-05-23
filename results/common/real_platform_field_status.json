@@ -933,8 +933,20 @@
       "sha256": "fc792566afbf08723cc216bdf7dc1d71c1e218f8dbad70ce0ab62e540f00e6fa"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "d7c53b972abf305c554fe946a3f87d0a2209d56e59759145d90146ea6ef6efde"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5cf53b9ab19849129b59aca452e0abed616d749af11864f623e4e7059b96791f"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "1b61522f99c1e0e41d7e7f4a6baf4c1e578acc8bdafca715830ebf2a39301d0b"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "c32017a6ac8b05259dc5320b730fc99ee3815f580b546229a97d7800f2f3e6db"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n3/trace.json",
@@ -977,8 +989,20 @@
       "sha256": "3923d12f74db684464b05dc4c4044f6d2bb8ee3222f686293b637d4831a67bc7"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "2999f6b1ea6127dcd206fb1b637f58adcaa34338e3b7e083dc96b195c8fd9d37"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "c3775f505ac146c90648fe4f9261cd9cb106580e639f5d80484c50b16ca2f4bc"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n2/trace.json",
       "sha256": "54633a787ef77298da8c3dd7c376dbbf925c7110c0a04fc7f381debfaa490a34"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "903c5113ec48f1c1dc2bcf244ba8cb9bd8b0ec11ee61323c6e0f3e78975b2333"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n3/trace.json",
@@ -1021,8 +1045,20 @@
       "sha256": "f0bd1023f4dd68b9a46219c3f488162228ceb554a41d913912d31903448353ba"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "93e726bedceb0f64d670ec412849532b037062edee4b912d425b65c1b9337d2e"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "4c8f2c01a339b461c612249634c0958fb478857bcd58879f9e04de20ff2a1e50"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "ddb4ed9945a4dc84b5c85155348c9c5cd93c4bc8b4f988853404862262bd96bc"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "019942f476f89907a8b18dc379a32f18fba468086f923ff08e3f2afae9d73721"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n3/trace.json",
@@ -1065,8 +1101,20 @@
       "sha256": "5341ca381605a6f315f730bd9d721c92dff48671d145fd239c4f1ab3bf8f5612"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "c5239a7a0ffdced3195de6182daf45afc0cd2dc56950de560207318c53353ddc"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "55e87dff70075c2579b8951d13a7d01c24029412b5cc16fec5699b1f114a646a"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n2/trace.json",
       "sha256": "1c48f735163bf85e069b22886211c5ebc13b5766b0ef059ac5973a697875db20"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "3decab069eed45e4d65e0c24ea0ba113ff90cc9f20e61c8dff339b1eee11bf4c"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n3/trace.json",
@@ -1109,8 +1157,20 @@
       "sha256": "1de1a77fc89f0733abc0579620fec546045e031d2a22555716f024e488811d74"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "ed2ae21273101132739643ea23c23b506b697e718c696e480f0f80c2a585cd5d"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "cef0272cca1610aa9e3429374bc4e2135b68c9ac42a0ed4494be07651731d2be"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "9f0b78868b98d85c41cd9e3417ad361cac8bf356886d5a08de4d100cbc9bb48b"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "bcf73840238b86027e1f8f739d2385ec734d476e66d11202f0403720137700f6"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n3/trace.json",
@@ -1153,8 +1213,20 @@
       "sha256": "1647d09c1be684bacfe51d523db215b83833d285808b48b6cea1f4c8626d3b2c"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "cb56a560129000ec00f9453351583520a9f592bf4baeb18b6ba65e16bd6efdc3"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "fcf66868523f7837f9fdde8ac4a52ca6379301b0f3518fdf943316539588eefb"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "072ab4c8598bf6723171649e2523aa329316d5c41f2197da821478d6f0785731"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "4bfc550f849f93d32d07a13035009dc47828ba9b8d4012681cc79db2b2a39c62"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n3/trace.json",
@@ -1197,8 +1269,20 @@
       "sha256": "80769c781a78613859b6b5e6ef84b5f3d109652d8058393061179a651ae0709f"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "ef4bb3615e7956a5d43e3d9498c9b81ce6fe5a3a0d5b9cd6e78157cb264e23d3"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "49ae4b96b7c62c5c03da688ec1fd11b409e2566276463469c0805ff6b641517e"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "eb455774f35924cc0aaf52dfce1170dd80f83458f053dc7fd6de3c1d84bf2765"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "9fb3e4a4e0d92e3d86f46073434ba96d6352eeefc8676e820243210365a157a4"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n3/trace.json",
@@ -1241,8 +1325,20 @@
       "sha256": "74fbba6b5126d41818a183accff532ebb13cb8eef87812178b93356f895fac7d"
     },
     {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "0e38a7c316e06070952221b5843d7d6730af9cba08adae6d75b0cc48d53e18fa"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "3e1c3ac9bea01aad1a181449f3d4170f60589086d35278cd8f60d85f2c2db24a"
+    },
+    {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n2/trace.json",
       "sha256": "ecaa17cc057fe70312d33eb39a01ec0febaa37e8731b92f97543c490ca917b47"
+    },
+    {
+      "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "06a8717976469ad67b43653e87758a375656dcaa4e9188fdac47f5f14f99cb0a"
     },
     {
       "path": "results/r01/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n3/trace.json",
@@ -2009,8 +2105,16 @@
       "sha256": "bd4b38a14bfcfd742ce390c9043ec0c7e1743d771dc2179e1d017c40608671cf"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "831409a389728165362e0065572117bdea4bcff34efd083ddda27d0445ceab94"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add/trace.json",
       "sha256": "c791b105dcc199dd0fa4d1486a8bbcee3afee3a2211363a9b91dfe7563940363"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "401f409119615c9e8632c06ec9ec004a7117c499c0692510ca583ff0762ab655"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add/trace.json",
@@ -2057,6 +2161,10 @@
       "sha256": "cc92caa613557a14ad7ea9746165967da74b4bc63ad1fc9908dd01d30cabb8d5"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "e6152e71e2b05d1990c44b93a696207793ed3bb1c7b1ae7153b42d5fe989a615"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add/trace.json",
       "sha256": "9f1a83b752a99ff4acc96391fee583d40b0fdb37656e5df054ede2c301a7deed"
     },
@@ -2099,6 +2207,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k29-scalar-add/trace.json",
       "sha256": "26d9cad07b324ecf0fd65675a5058b3bcdf5f9c6e889dff13d0f5468e5094f0e"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "00848ce55c3e309460639833de3a1646a01f2d31ff7bf749a387ece652006e0b"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add/trace.json",
@@ -2145,6 +2257,10 @@
       "sha256": "fcc214abc88ba0aa6fa6399fd67259828b0411c293a830bf7bc6a9e468134d05"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "a8635ef3dab71796dad46f130b1b77fd3c46be58e21562db0457fdbba39e44b7"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add/trace.json",
       "sha256": "5d2866abacbd380f037d3db5c76683ae4d689a36bbd790c1d51cf835fcad0dfa"
     },
@@ -2153,16 +2269,32 @@
       "sha256": "14ba5591478920f7e2b43eaa2f532f4461c06306228a92a5e8f6936f836b05bf"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "bad7bc88b4249a5fdf51dab2bc3d25298b63628644168eff754289bb8032c6a3"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add/trace.json",
       "sha256": "bf1b19dac9417f2dee7a73bc5b904a08e3f3682deec347f612c04d65b25e5081"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "b3903b9b5f6b593685a3318863ccb57d651e140a7a256f3bd0dc1cc6f18fcfdf"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add/trace.json",
       "sha256": "db29c23fdfdbefe6e38ef6cd9eaefdad779aac64e4a77c786f499863561d63f1"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "6c403294ee2030ff72f6c9ec6267e3ac89d2171e78a9c37a38be4432f11202ca"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add/trace.json",
       "sha256": "de950e6d5d35986cad6ea4c8a42e2562982e8c24c789f74519cd5c7caa7b2b40"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "82fd76bd24acfb9ddba17c20a14f80d9f47f4284ae8932d573ea4b49b37ada4a"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add/trace.json",
@@ -2173,8 +2305,16 @@
       "sha256": "2b97fdf3100c5a0a8b766695d1f5e6801adac4e6dd3becd0e43d4981f8b29340"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "98c7377871c5cd671fb6f38033aaf1926234fdd82a179ec47b927599a6bea743"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add/trace.json",
       "sha256": "ce22c734843cf58ea73c744d10b32403fdf7635e9853069bc24f09803ef82ff9"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "0851086ac8b4ff34aab3b4e0bf8c1618428983a5324a4518cbd6345bffa403e7"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add/trace.json",
@@ -2221,6 +2361,10 @@
       "sha256": "8d7d9c06d107d5f439544037c59eef74569ce8208519872d2b43e67cd6f99ebd"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "d3cecfd78952d5676aa6f8a37ba30037aabf330363f95c87fe988e715a701fe1"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add/trace.json",
       "sha256": "6aaf1d1b5e2233722086de6ad021e8258a555a3999f626ced1152640cd3ecebe"
     },
@@ -2263,6 +2407,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k29-scalar-add/trace.json",
       "sha256": "f36c2b0fc5b8747a4c87053a4af9beba7eed0e78ecc5b9a1f6efee7eb13a5db3"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "e3beabe43f2d2fe2d8b54e6b6953e80e367cd925c56902ca86a16f2c39605509"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add/trace.json",
@@ -2309,6 +2457,10 @@
       "sha256": "af996c644a4073c25f1033cffd2239c5eda4dbe55683ed5da16557a4859ad64d"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "d912e07e1837dcb8f0ee27ba328549cb0eb4a07d9fd80bf1705c1be72f54868c"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add/trace.json",
       "sha256": "c8a02ca1e99b8d84f168218ec6dbe24f8f1a4d3eaaea44177b785e213c5bd2d2"
     },
@@ -2317,16 +2469,32 @@
       "sha256": "32c2f44af5cecc46c881ea9cb7c2d8b8e8d851605206751e950c593ea872a932"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "7cd5322345c45b927edba85652ac7d02d92456e8040854b6c1f135c27f1b2b18"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add/trace.json",
       "sha256": "53f89adcd031228731b21d0cae80f6b0b45a4b3a940d7eeda8e54115660c07d1"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "03e208077f4027e0e6dfddb7654281e6c0b83fbaac3a5b54f700d261a1d46f15"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add/trace.json",
       "sha256": "6ad4fc4250a4956a2af5ad7da906990728f3b52f76a7fbbbb07e5020de724f72"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "4336d10173db56b9de2a447aba56e3287dad2e0817fea1a84c61ef292608cfe3"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add/trace.json",
       "sha256": "35df7f96715ef5f28a1df0e1d8f14c5e2ee45a79d2773f9ffd86e23558da6496"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "554bc1c764473ada10c733b9fe6b8dccbe952ce3d83e23db7a0a219f660e47f1"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add/trace.json",
@@ -2337,8 +2505,16 @@
       "sha256": "41a45b70c9b629ef95aa406f0ca10b8053fd2d84bb90c44f622e00801da45879"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "ce678d911e438e5056360a0772ef00a702c92433a7b72d21ddca7d72ff918d8b"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add/trace.json",
       "sha256": "6d9af4fbdb4afc4e624d38ef26323584ffcb43eb7b509d6e55b3d7a990657f75"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "1e0548fbdf178102298f3e8fdff0e7f2746338af12a68f2b6400e7d1ec47791b"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add/trace.json",
@@ -2385,6 +2561,10 @@
       "sha256": "3db4ff6c8a3efcb8919d42416d920c2941de5e7b53a8e63fa3ecc9212f612bb6"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "402763d374652cedb1706aa6ed6c709ea8e2b4b59104acf224a63c0f13344749"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add/trace.json",
       "sha256": "f535bff4dce4a7acfbf6321c301c9bfa4142e5d62c013482ece3e4ab18181d68"
     },
@@ -2427,6 +2607,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k29-scalar-add/trace.json",
       "sha256": "c4faefc63154f3f463decf1d54ac6e0d7bb975d21346410bc778d11224cb0bfe"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "02bc71e859fe5fae01976c187d36f9c1a8124cc18bc68413ee62a4ac163426c9"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add/trace.json",
@@ -2473,6 +2657,10 @@
       "sha256": "4a271d381e66f3757c887a7cb215a072110f8967e0d579bd3d38275a627879de"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "d438c422010f4dbc0aba8385158a23312aa1827389830b8474fb96f74df06d30"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add/trace.json",
       "sha256": "4cde785b342fed6646b41cacb11c209f72d8bc70a815336b0659430cf6a2f42e"
     },
@@ -2481,16 +2669,32 @@
       "sha256": "cee9198ce18475ebf10ee45dc2ced96e2489ebb74f9563c1bcdeed79ab417c8c"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "375f38335aa63dd7ac8c3266606a3009eb1f44e2a91e991296e6a36a1e8a6673"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add/trace.json",
       "sha256": "caad3e9792cd17c5f2dab4ef3c349a54db176746e0c44dbe7ef04ca58aaac660"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "877cf4f7ac5d3e2c99fc1f019146e2fdf0be7550d7537b8005dbcf10ed353fcd"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add/trace.json",
       "sha256": "72484085e7e8401564e50dd9941d269fed7ef8622f07eab1224dad8b3a8e619e"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "6ccbe6be74ceda9f1e6995c24ae95bd10cf5d4c7c9bd811029e0a1b08b8bb1ea"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add/trace.json",
       "sha256": "cf16fd2ebd78b80ce78a9b14b4fb14267a870d21b18e794d55f6d99f846fc2cb"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "ea2abb38504efe9588a19da3e10b58828c5331837fc484a74516dd2a24fba251"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add/trace.json",
@@ -4001,8 +4205,20 @@
       "sha256": "8c08ab9c293cdd40509cefe4138ec708b08b7adfd8343f917cfcafb5a0626967"
     },
     {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "7e15eec086c928ff78bb4d5f20b8bc744757a14867ef3e08c5afb9f1e3def3e0"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5191385b77b7037555558f1bfb2b63dfc36353f1c5bdeb03050ca6e16fe0230e"
+    },
+    {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n2/trace.json",
       "sha256": "0181997defb6498f3eb0e186e5335d81647f75450a339f806b6f3a4fd5f0a0f3"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "ea11fec198079b926abc39cb2ef7204ec76b50c2c872618a48c3362fd3663df6"
     },
     {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n3/trace.json",
@@ -4045,8 +4261,20 @@
       "sha256": "2a66dc4524a5781659c9b9c9bc3dfb8bd4c002a3f84e3c2e6201c91bad0e5457"
     },
     {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "7cc0426bd57744d1ec71f7e70e5efb1c6a8feab088c3876d87479abc53351884"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "ff5b3e2ac11e96cb29cf0b20474d1bf05180945e155bd56797ed3b080f956447"
+    },
+    {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "7b366b8384177ba2bf2960fd6aff116528c6af0f39a9c9cff5c4d3955de4549b"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "5b360cfd792b598dcd6244df88f4330f447b2ff5730e070d07b0c41382798d1b"
     },
     {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n3/trace.json",
@@ -4089,8 +4317,20 @@
       "sha256": "f554ab2c4dcbb2f5be3af6736483bc406bbc4b1c44bf897894e1e5a8dc5fd6a4"
     },
     {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "f8426ec09f15a629d8185930086ff60ed4a77c53a74b3691daef85688744d60b"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "6b0355d0b9db07ccd89054799a8eda7af26ae6b22723c83634e04c2c58675383"
+    },
+    {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "83a3acc727d152474e30e07eff7cd18a59932749fb122b91de1717c521d48036"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "ec0feee6015950c2eca715b07b75be36504070ecef3981d974661c69f1272b17"
     },
     {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n3/trace.json",
@@ -4133,8 +4373,20 @@
       "sha256": "4be5be7b4dc41a0b65881e0888f89a3bc7b5bc6b4aa5b7b2780e41e960b758ec"
     },
     {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "8a5bc76ec429ea9e623e6253aa22b562119efa657fa534995a1391eab1d3e604"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "3fa836ca8aa39ba3acbdcbd7da6d3cc6cf028c155642d7e4625674b62bb515e0"
+    },
+    {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "9c15d1f84fc54439014ba88d7c5111f78f61b66796ad3e482ed0d9aa8bfd0b16"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "d6b9276ae7b3869b27e68e08708ff1674b68746811bf8fda89d01411ce6f79ff"
     },
     {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n3/trace.json",
@@ -4177,8 +4429,20 @@
       "sha256": "b346054f86ad8a01b8bf89ed6da0434b26a64501c8cfd46d311dc2f9ba115469"
     },
     {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "a785fe806222c9675b4e7159004d7bbcc429c2a6166259cfe552a4e0c48b4c95"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5af08e08f6e779ad501a6a1e89ffaaaf86c13bae2dc66147dd35144598688c98"
+    },
+    {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "3dd95bb1d9da0edff250e4a5808c3a2541bc7fbc3fe3d022050ba9b2804a3c52"
+    },
+    {
+      "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "2e7b9c1dd41f688d4713754e6250c6a95827fd24f45627f18141349407ab6afe"
     },
     {
       "path": "results/r01/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n3/trace.json",
@@ -5245,8 +5509,16 @@
       "sha256": "72c5bc3150536a4af77c6d8f0d9a8b7ae000e9690e22ca92dd1f30831068de9e"
     },
     {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "2ccaef9dc41fc253e72ba78fc67686431ecf2f6110e81ab11df57ee71b2a1626"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k0-vadd-vv/trace.json",
       "sha256": "6c2c6f4b7ac5bd07b82b91abdb121209a3465516f3e00ad0d4ec12154d1bae56"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c40f2ac644fffd6c46602bde8bb25be7c38781347fc6dab80b2c632b2a50d499"
     },
     {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k1-vadd-vv/trace.json",
@@ -5293,6 +5565,10 @@
       "sha256": "4d8cb2504b7f7487f88959af549704bca44847d61d50231528193653d317b854"
     },
     {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "a64d529092452721ea3905976852209a36228ad1967629575afe76b25dbf63da"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k2-vadd-vv/trace.json",
       "sha256": "9d06daefd6b1a65e50e181aae390dfcfca16dac4c3c277d86f185975de0fb57c"
     },
@@ -5335,6 +5611,10 @@
     {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k29-vadd-vv/trace.json",
       "sha256": "746cc7f833a9eb49e66823645c9afc6c98661adcef61e38f1e781c17236b67ea"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "3f2ce34da5d21bf3d03971924ddb6e7bc80a9b48485888e6945550a287e32a5d"
     },
     {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k3-vadd-vv/trace.json",
@@ -5381,6 +5661,10 @@
       "sha256": "59966b63bb15e94bbc5d8874b51fceb614579e83a7c5f3a8c4e2a72393fdd8ea"
     },
     {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "2df80e9ecd6ca32316c15e2042fb766b5a42cc85216dc73a3123082887cb9dea"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k4-vadd-vv/trace.json",
       "sha256": "25a4bcf189bafdc1b8ebcad931480d91be3dbb55d15d880fee04c8ceef273c98"
     },
@@ -5389,16 +5673,32 @@
       "sha256": "f0759cf0cce84fd08d2068ff1e4fc6f278a04f01421e03e56053fa6aa3f64313"
     },
     {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "6e525bd1dd34fbcb7609d9d484aaddf5d484dad640c06eacf97e7c0860695381"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k5-vadd-vv/trace.json",
       "sha256": "7550a4c653aa2ffc565eb2735940a8a381c6b736eec9321eeb4ead448861238b"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "d16a8cdbb7e7ada774f49e7e482f02ec8d1e9c8d0314554ba0f00c5fcb621087"
     },
     {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k6-vadd-vv/trace.json",
       "sha256": "00b987c72586ff0d6f316fe0cb6ce6cb5c46af3aa14e218f327952d4cac67306"
     },
     {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "3be3ddb2269daced4833760cbcf28a2e8cd8e785555491bf9ddf87545ef19810"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k7-vadd-vv/trace.json",
       "sha256": "80b349964059cb8563c8ad1f84a45b2f9447fb58e9b44ab58c264f7d34642e51"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "4b28c01382714b4f91bf36ca835c7874cf8986925c95c94f75fcd02d72625ce0"
     },
     {
       "path": "results/r01/viota_m/experiments/t12-viota-m-m4-k8-vadd-vv/trace.json",
@@ -5441,8 +5741,20 @@
       "sha256": "1640fd70857325dae1f9089f6aa50da06b4b8e35871ade383b2fe5a3bb4eadcc"
     },
     {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "c6ceb857c52d7ff0bdf92f62eaaa6e7ce31a22aa0ed721a180138fc680daac04"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "0dc7789e4a377fdc2eee7cf644a23715f9db70959bd5390c1bd7c8a45bc73685"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n2/trace.json",
       "sha256": "fd8ea8a76f5cb333eca3a13a69f62c29faf1e7209a3b7d5f2054edb030ca2ccd"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "eb7daae39ad8660b327a1983026f20a3e13faa1be6a4900d57e250a151180824"
     },
     {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n3/trace.json",
@@ -5485,8 +5797,20 @@
       "sha256": "515900d0eea5bea56b70c3e41d4110dc4468a511391cb654e8cd3a68b9341b5d"
     },
     {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "31d9b80d76549f398b4d8cdcdb42c3502d529786fd1617576b69f373e4c87f8a"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "84aa3b3501b3b958c801d76b45373514e2a4697813fbd2ea8075fbb155aa8876"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n2/trace.json",
       "sha256": "6a8dc396028996f8d26de17add6eeaeaabab3f680355c3d0ea637656a7646f5d"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "dc9772b7ef98dc84b31f66e6d6b95e48f8185783795dafd9601d2adc69d0b871"
     },
     {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n3/trace.json",
@@ -5529,8 +5853,20 @@
       "sha256": "a7dd9f8276e6f8bb30847cc7d5b4da93e97e788324f1af43177184b59d45da68"
     },
     {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "47ab45e378fe5a767d572630ef59c926375a6c8255cd43febc1e1164c6ecbb75"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "277bd5ebbddc01a1dc3adba2c50f9bc6542ba287855f986b0d961ff1aa19f783"
+    },
+    {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n2/trace.json",
       "sha256": "afd6dd265b6cb9a5578b2730650d7c60bf602872f458d7c6fe8d57aa299ea0f9"
+    },
+    {
+      "path": "results/r01/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "6b255aed855708cbb9da61a6d9fc991ef950dc91a26313fbdfdd16721b8d92cf"
     },
     {
       "path": "results/r01/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n3/trace.json",
@@ -6841,8 +7177,20 @@
       "sha256": "f0fbbabafbeb62e3b3a955d46da8e981001688702c5e23e00455c3b1b0644fdc"
     },
     {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "d733ca48dbc8426790a3c7bccad9892d999e9f1fd45148c81ad1fff1990f2350"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "ee30c21595af07f6e20fb61ead8632c38ac2c3ead6269a50de7fa0ad656d1772"
+    },
+    {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n2/trace.json",
       "sha256": "c8dd6b0138c23bda14eab98e3531699bca09f3743782ac76cdcc673033ffc341"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "905b1a9da1dd57d4eff3932c3921b5fb3ff69727f82f1a48bab50a4cd6c08334"
     },
     {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n3/trace.json",
@@ -6885,8 +7233,20 @@
       "sha256": "8faf186543e3428c2ac0ac5c9eb7ced47bdf24cbf515b64ea15aea12186e6b5e"
     },
     {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "8b388d0873d10aa6fe36169c628042c4d44aa84a39419f056ff7d6fb5971a2e1"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "9b6b8e14c3313beb2299f979f26df90e4ee63c49e6f15fad80539cfd1ead56c1"
+    },
+    {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "acd2e417b9eb522b64e1c5d192b88546ba37ce1aaff967f750adac757d631172"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "34f9d580f3c02b1b82af83ca90fd81451877fdb8670933bfa2b3022a678a27b2"
     },
     {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n3/trace.json",
@@ -6929,8 +7289,20 @@
       "sha256": "5b349d0155b78611122ee62186146f0c0007e9d3ffaa31a5cbced705c7a5c2df"
     },
     {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "428136eb3a3074f5c754ff59cebd5b1a5e988c64aa6ae73a57944a8901921655"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "e10d2fd471052e8bf0e241e885384d19ccfe77e0b5abbce2b639327c6262b0bc"
+    },
+    {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "c596df596b0e26c3feca3d11e4ad0b4fbc5910cb48320adbec814db0da4db819"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "5c1d5fb81eb1b9f8821fd847993fbfe79227beb81a5888d69b93e2d8e09710d1"
     },
     {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n3/trace.json",
@@ -6973,8 +7345,20 @@
       "sha256": "69bfbab061f741bf448224bce1e0ceacacb41898898b938647f9883c8573d7d9"
     },
     {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "bf5dc3d8101b584ed0ad251e08bfed6d9506d0696f0d693812971577c2a9d269"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "fb4c126b2a59d584e1389b1a4b99de8c0754185f7d770312dd35e9f8adda02ba"
+    },
+    {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "7ddf0ebb31b61f7b37a61ac0152a06d8e6556feb1bde65066a69b84640920c2b"
+    },
+    {
+      "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0bb561ab083bebf0be9d9a10062752af4ddca68ec46b902795e066ccad5a4a6e"
     },
     {
       "path": "results/r01/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n3/trace.json",
@@ -8285,8 +8669,20 @@
       "sha256": "1b0aa80a1056f161d24cc8606e0075f4627a0d5a221f9df3340850d2a32ab8ae"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "32a07ff6eff595d141ae09858158fad216afc9078135d2ad03619b0e334fa574"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "852908ccaa8775e432fde586b53c5b2471bf2d00b072c0d385d30deef13b9213"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "5284bf54d64ecbebe5198fd210c32b68ea091bf69398f5f858cca5f13f43d180"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "2fbc5c11b27774fd407508313ef71da21e7cf72623a7d024aa175f87499335ca"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n3/trace.json",
@@ -8329,8 +8725,20 @@
       "sha256": "477b35ca7edde39aa19561cb45428e802284cad78248a3aac090a20c91221ead"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "86540f7126fc288c6bcca5941dc20fee20d5116d5ebb44584261c61919d63981"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "a1f1ad2b719243e5c7a4d57c29c63b0d7a3d3d3866da6cc4e6d11d7d78cab71a"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n2/trace.json",
       "sha256": "45f107503d8780004185ce790a782c1aa41d116f71a14d621222a588c014dc4e"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "426364b6972dd949229b4e781ebcac5eadc30461f9488437571d760d6824c43b"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n3/trace.json",
@@ -8373,8 +8781,20 @@
       "sha256": "ce5c0e6d10aeb4c0d35cf9229200660aa321341e3d6208fd11368eb375f71ab7"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "4684aa213263e1bcd4ebaf26609ddbb9eb0552b26e1328ea52b489f25362d9ce"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "471b89eaade053a01204d0e0019d9f151fda8927bf628999fe614e8bde036cab"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "138e6aa4d87bd1f4a9ecb76bb314bacc19dd716dea5e7d8f18dc8df68b518cd1"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "f585b4b2a427b1a2717efc507c48c276214e993ec3ed3c3cc582ab7e322b8b2d"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n3/trace.json",
@@ -8417,8 +8837,20 @@
       "sha256": "591e4a9ed715b38900183d90237ef84d5424b67032bf865b0320ff7dadb8b98e"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "16f23270b06add35ea3cc703ec24a18e0c3a67c30ee17a956a93bf534f1ffc9f"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "78d572b144b67e6b88ef09223294184cec377262260cf28a5b11798b6cdda5ce"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "81a000922ccd21160a8d94f124f99a6af0e7fb3dc27b86e51ad8be559eb8cdaa"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "6b49b3fd7c89a11bc24ac07e66df3261e026c3934da5200e396fcdeca57b3582"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n3/trace.json",
@@ -8461,8 +8893,20 @@
       "sha256": "b36e7b52d022b480ed3aea88755997924d1d64b014f6b87d45803ef4b14f9589"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "d0fda991b992aaa92af74c2277eee672fa3bebb3913a4268f8d983cda00cbde5"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "46fc7f7cd0a666c9b50cf4769143840abe329ff66c7e5a6b172160ebabf97fb3"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "e2a9196f27fe96dd2d4b64b1f893569ca4cadc248ff80fd32ed69ac7d33525d5"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "822bd135b90d6684387ce2d38978fc3b787ff0a5aa4da589c19859b50a4453bc"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n3/trace.json",
@@ -8505,8 +8949,20 @@
       "sha256": "e4963b699ba7eeb4de04b2ac5340bcd21bdc5b51cf6a0b4681c57d8df853abdc"
     },
     {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "77df20669a6be329d0f29b5d7daafc7daa05ff2f5155bd9d9b71369284a97ae9"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "b7c5a3c2cc40e026349b8afc7f5a02bfb28c6ce525d1433005d51656f32a8bdc"
+    },
+    {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "297349ac0c085be5ca1f741b42529e99f52fb721243d98d8b0b846758a8491a8"
+    },
+    {
+      "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "e2cae081d250c1f609d8ba64a365f1b5ced0644020cc65f805ca9d824758debf"
     },
     {
       "path": "results/r01/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n3/trace.json",
@@ -10793,8 +11249,16 @@
       "sha256": "b2df1ad436d97acfbd717fcf17c8decf73fafe0542c9d19552bc700187469549"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "4d9c1f5b1c38e922b20c14b60af1101961eb538924e52f4283d1e946c914e8a0"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv/trace.json",
       "sha256": "f43fd93baf644dba516f0d34a79967e82c1d954bd191837e0bc44888199b7840"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "5b4072b7325a5039cc098b416c663fd7de692e2c1b254a055b551f44f961e281"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv/trace.json",
@@ -10841,6 +11305,10 @@
       "sha256": "6e8f4599e11a9726a48055cbe260d98fb3b4c255cc1dcc41f0c8b424e2048ed4"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "a25e5ed44641914a31977e6b08a8895d7a8ac369081bafe98dc17c0da3c29e43"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv/trace.json",
       "sha256": "7ba089082d4193efc210ebc2f9c4692e683fe686a0a880cda3fe15ee3559e50f"
     },
@@ -10883,6 +11351,10 @@
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k29-vadd-vv/trace.json",
       "sha256": "110179297c895669b84bda37d6cba2c0a2412e1fe84fca9017bf518dcdd26c0d"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "30b57916851f1ab462dc4bc01727fcd19e94123ad383b6c93fc9c022099f0037"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv/trace.json",
@@ -10929,6 +11401,10 @@
       "sha256": "77e7677a7913fdc5d1ed2172c0893d6fb3030c1ead987351654f9b725d6a76d7"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "1c9850da56aa2edcd46a8651bef1d006ca684e695e93369e5ca5aeba505eec1b"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv/trace.json",
       "sha256": "0983467b9b64f7984f66944f6d8add91a809f784b9f0e7985ca5ebaa36f116ff"
     },
@@ -10937,16 +11413,32 @@
       "sha256": "120d1c1f3f33f790283733242aeb3ce7e16aba8682c261dcb34a17d51ffbb237"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "d35854a0c350ba65ffc199c691044a29ce7e36c1b2ecaf5967d0ab95850c9352"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv/trace.json",
       "sha256": "5dd96e0be4b3282c6d3e2497fb8754a816780d02c123f23af873f6c2da9c1c7a"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "2fcc62ce74081b3e6a3e852a041b4eeb776d0bbdfaddd133a4f362ff3bdacc1b"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv/trace.json",
       "sha256": "b133bd5fba3e71e395bbe377287ca358a153eafe15c42cb851185364d1c5172b"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "6bf5c4cb2ebb9bb3fb93752843bf23b819fbf6160add5de0d11b5589015ddd7c"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv/trace.json",
       "sha256": "6e5fc9ac8968623dc45022ae8f0cf7f2255e1ccfcee78b16c0554e0773c55cdc"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "41ac673a36b1a3c8a077ed9ee9ef9da7940c00ca191bc923b8eefe7d3e48dfe3"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv/trace.json",
@@ -10989,8 +11481,20 @@
       "sha256": "9104e79a5ed70ad5cf70ee2e22f2bef6bdf9c2773c977f5da40b72b5e6c5fb3d"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "c8abb2899514e4077a86f141e44b2562b303d9b7c089083052e10a3153fec754"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "91b7a079df76f4725da8dee1ac95e4842a8bed1d3c85b6805761a85ddaebaff0"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "8a953351cd6c2b107f070da1e7f410f328d66cecc528f26ecaff18eae856ee01"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "a8106a9434ed17bc61b3c14b8454989db9fc517350f2a4f55ce8a5af69e89501"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n3/trace.json",
@@ -12057,8 +12561,16 @@
       "sha256": "15aa19bf81f1034d7a4c2e9210815ef047b35e729ae1537f9b6042ff2252abe3"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "f4496f5b60ce956c91a17aa89e849ba4574b525469727ed989c31bb2e5f5046d"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv/trace.json",
       "sha256": "71697e6b6f60e115a91f4655d78616d80a45d4dc81fd682525bfca0b231aa30b"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "3d66e9a597534e82c93a6cc5e559e25cb929cb38f551d76d7023fb8d13545e58"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv/trace.json",
@@ -12105,6 +12617,10 @@
       "sha256": "192da1df154662a34d5d4f83b0dedd16ac71a7afe9100930b92f23d1c118569e"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "2b0753efa815c4bea19b009376d17b1ddeabb7965e6334636358c609981d7df4"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv/trace.json",
       "sha256": "1b10376a53f25512021c3f5ca9599622b1f5ea2f9bc9f51ab3b3427c4d329273"
     },
@@ -12147,6 +12663,10 @@
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k29-vadd-vv/trace.json",
       "sha256": "541311dfdb4a3a4861429164e1b2ccc0786df825736f5e33cc216a2370120194"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "6ad97ca9bfc0cb06150eb0af2e1f167b2eb5f1db9f65cccf47b09614274c2672"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv/trace.json",
@@ -12193,6 +12713,10 @@
       "sha256": "23454638ee8fe4cd29796476b3bb99e3c2430489716838f2eb9745924eff1e82"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "676d1287e41d196ee979b6ddb413062808983c170580497dfc2f7e917a461504"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv/trace.json",
       "sha256": "9318f49c421e36b735f2e84b485874740ecaf2379fcb4d0b245a2f97d4d60d09"
     },
@@ -12201,16 +12725,32 @@
       "sha256": "7680502981be6add0dbde3633399cff4f0b1e9c905cd2291acea5c06dd3b2a61"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "15431a3cb5d4647cd0136f9ff3b4bc63b34b6b5b6b8eb354134aa66aa4c794d7"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv/trace.json",
       "sha256": "9c3c1600d2852e6e88d4927457d2d6414b11292c70fd219d0bc98b6be2196466"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "7922e00355658a733d1f360b81935b564c25ec7c70c112d9293e62939481271f"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv/trace.json",
       "sha256": "eb2bdae56263dede3134c664a07135360fa3c8c30d94c25e2b94b568cdb845a7"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "e32dbe292148b9ac5fe35ffff9136787bf632d672a78760b61b99e20d5c98e8e"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv/trace.json",
       "sha256": "e9faa891a50fafadcd53218a36c1c91a18b223d5f97a64f6690dd556a57ea88f"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "03c44ff1124bf06f80d6505c6040306f3d6ee56ef706bed569048f8bea47f03c"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv/trace.json",
@@ -12253,8 +12793,20 @@
       "sha256": "0db26dd8465ceb3d60b3bab7af425eda9e74ed23916320242379ddf2056d50a8"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "150e0ca1a3384375418701120fe0f7f96849f7b0b75426fbd5986d66b0ecb677"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "f84d77a65e0e820b4866fdd3b70e79217374bed80fb1492545ba083ced6604cb"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n2/trace.json",
       "sha256": "099ba50b1d532de5b71f2fb56df149c3f8e70a9c2450b23159e176e228c963db"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "207a2f6caf035c4f437a6f37cfe13c027199c9c99515f0c583982e0661b2ec4b"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n3/trace.json",
@@ -12297,8 +12849,20 @@
       "sha256": "63d0ab9b2a0d926f99989a7bf19ec879449955a02f156ddb86e1d8d63485c3e4"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "a2c1a432dc90e30d125589de5ea81373d638d0e6dcab152d8bd907dbbca1299d"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "329eef48d686b4f475197a5536394bbd7c26f26b15bbb4b890c16b3d10779556"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n2/trace.json",
       "sha256": "66e9a53e54c60c732ce02101eb550b594ed8242555febff94b16860346180728"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "9bff8b28362c14a8e158d263f56d88eb2417ab07caa5454d6f011fba4c801aa1"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n3/trace.json",
@@ -13609,8 +14173,20 @@
       "sha256": "449e54409f5b3a0cb5410fbb4cce50472f8548087765ead5ce4c0e1143a2b4fb"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "f7fa7950eee8c337be8f7b3f20d33bb22f9b4f3ac6717b6d822987fa699c6304"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "dac5a090c29ddde401eca15c8e4b172ad4c8066626da659c9d0da665dd23d4f3"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "652a673c86ad421dcdbb9f7cb4dfe5feac29d794ae8ad2ca6e9c5fcd1e66ff92"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "a04ffb8cf1c6efeca5652efc8151ba381281ac838a88211230de9014e9c1e2c6"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n3/trace.json",
@@ -13653,8 +14229,20 @@
       "sha256": "c2f4d0c2a903abea522079e298eb9220ea196b55cea3b9cf8fe4b87bd6a61c3a"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "2fd9bbbab749c4ff5e786821e0fe22d63d95273282d4cbf19278b9640c9f06ad"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "0cc5edeebdf1f09e370220d032d367ac59bd46341c383036704a5a8d2fe0b7ea"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n2/trace.json",
       "sha256": "ac848c5a9a3fd44ab5a9ad3d4f11e5e85f1388450363e11958482087eba5c6a4"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "2de15b6cac95752745636a6f3bc8ba1fb9ae0796ca3ae17a2ade230a847a1320"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n3/trace.json",
@@ -13697,8 +14285,20 @@
       "sha256": "d31bce656c6210332b6b6800e9c9cd0d2062e7d968dafc79228ed66427890c45"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "b0d92cb86924e3a074443e48a733ecf721ed9bc8662aee49f82050ac17786cf0"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "e7bf827b757447d668eeb75d8d8cc0c513480c72bd970109b7fb2b42eedf387f"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "45ae88808d9c9b4a90b5a0abbea13d16357a75a35bd07de7f19c7502498707f3"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "b8e57758ed44379deadd17d273e3d3a5058a48f4ccbe9b1992593a1222cc1f68"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n3/trace.json",
@@ -13741,8 +14341,20 @@
       "sha256": "649e80874e98c97dccfb5bf16e156336803ad29783ceee3fa77dadd377324192"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "479a8237d7a9da658d6c68e8cca16b7323681bc0bc23bb76e51cace9f94537ac"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "f4796086bd836e857de547e6198ef8d10b820f05b768932ffc1afdf74d0ee01a"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n2/trace.json",
       "sha256": "1d49dfda44ec77211b72e2f56a3cbf0b0b8a4bd356118b50be387a23d51281d9"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "3f652a42b19bb86ae36fdff494676bdb7785f49f6dffc9ad3c7df8e6281b1c28"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n3/trace.json",
@@ -13785,8 +14397,20 @@
       "sha256": "7b76132483b2e80154e669a911ecf7c097b65acf9b7b477c02267b928577ecdb"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "bda8b32b1e39f624b32aa1192b3b49c460a66bf9a19870c00e60ae109dfc274c"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "b788d71511422c7f8cc287e0a64ad933a02499a7f9d09deae7a0933076d32e0c"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "680df39050ab616ac8b86a0efee7835df45caa8b80af121d2459ff55ffdf7b2a"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "f8456bbc349a96d1203016cdfd8974af98b7b616bee16e0b3e2b0921983f0640"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n3/trace.json",
@@ -13829,8 +14453,20 @@
       "sha256": "8ecba53f2e4f3832e9f605a48eb6c27846ab05f75986f5d6d801bc582af568e3"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "18d39f54db13376ce4e6e5bb111ca14f9bedcf7aaddb018e3253839821657263"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "9cbe0efbd92d9600aed0da879ef9516ef589db1e252bd6bebab429ce3a0cbcae"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "b5b7abf6619756302161017727994d77a8055143da00139596ceb4c08bf3d4a3"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "40b658f8bcac9658b4bb9ed850967157d1a90dc96edc9258bdf31f8c45dc5397"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n3/trace.json",
@@ -13873,8 +14509,20 @@
       "sha256": "7e792574e7a522de46395b7c07b67b510302e18adcfbb143f599ffc2415df53e"
     },
     {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "2a64e51803f9a0d70d6c962ca7583ffc69279353ef5ee19c4e727226d553087c"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "c9538623fd4cde4dcc04138d158530cf85f4333f0b971a72ba0c9dc3e9727ae5"
+    },
+    {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "fc5e8d93bc77c5b616115aae6438c7d107a4340bc9b3eb00139bd22b24f67087"
+    },
+    {
+      "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "646e7590d13647d162ad3de6944ea5d370fd33075c0cc8585fef3fca0af9d770"
     },
     {
       "path": "results/r01/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n3/trace.json",
@@ -15313,8 +15961,20 @@
       "sha256": "fc31289f581314b71688d180ead7e8823f412604ae93841874e0b1e398b2e213"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "fd599c6bd984ba6d0b81bbb19e764d2de75e6304e73ac4e2ca6575818276c94e"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "f663c674589fc28d047bdb9fe6873bb43b9a1faf84a35b830de11607c96c7170"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "8a60f2889f8cac7c96ec75a53d7c1585fbba6ca04662a03133a85937a19adbef"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "4375273e8a24e93f97573a0f8ddc5f9f1d9be98747184b327fd89b00cce16223"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vdivu-vv-m4-n3/trace.json",
@@ -15357,8 +16017,20 @@
       "sha256": "59e895de0f9db1985e5a5b2f0ae038f77898add4b5645e8d1f3c488c304e9d25"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "6bd3f766b7c9ffe9ea33331680f499489e77e3d6d8b5b3263127a87792dd6a2f"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "3fbc1969399a1c684c126ad8581e74cd87a6e9bc01c7208b6e00a5fe1caf9348"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n2/trace.json",
       "sha256": "09f399c9872ab41e7ba55c620cb963cd68a161c4698f0f8f3a0a2d4feca3f48d"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "db905e54d7fd0c46e8a3f1fd2b564e64d784b85bd7f425107f45003db38c2ffe"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-viota-m-m4-n3/trace.json",
@@ -15401,8 +16073,20 @@
       "sha256": "162d3bc7b1aaf46982c5af0eede6f55fb7487e9c0d36258613d7eb29a98daa57"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "29de3f590abc9ec1ae3629c65ff116c0afd93a2c0eb6d32f444e4a50652de53a"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "8538addbb2f9d96d113d06e7b0f5825fb1a2687675a43946737ddf36ab0694cb"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "958955f31b5d60d05caeb7e9fd02e61f97508a1da5ee22a206f1e87dd3d482e1"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "d9d958352344c7600bc8a3a36ef0325fef9d0e0c50466c9b4dd550c6748fa3d4"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmseq-vv-m4-n3/trace.json",
@@ -15445,8 +16129,20 @@
       "sha256": "84c4d9a1be71d8525b655149b9680fc743a97d9f83b990352a3c5f5b4f6bb18a"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "3c843e1d82528aeafed7c67b9f20a677403c29d96340ffc3a75df951377c8d4c"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "69fdafd4d18fcf1e0b66581ec39880667ccb7848c9e1c1976efd09fd683c7084"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n2/trace.json",
       "sha256": "e3eeb12ec07542d6a301f813357d4d493e268b7d58fe1899e65dfcfcb6695108"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "3883038856603f6c001885fbea4b5f7d014cf25be3a23b0f0ec528632effe57e"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vmul-vv-m4-n3/trace.json",
@@ -15489,8 +16185,20 @@
       "sha256": "fdbbe940d14423f8033b780b4d11a7948ff6a597a3264feece9eedb64f81cde2"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "ccfea2827abf8df4577051ca0276880d6a0ffba28b9622a6c56a70bb59984d6d"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "91b7cb442101ee6857ae949d97279fcc005ae96b81ebeea85c1dfde762dadcb2"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "c2e25a9f22bd8a4fffc6b90a0fd495602be567d1b00ceecb8d39eb2c127fa94b"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "df2f2d6048c4dbf0fc2ba65c59f8a7c729892ddb7eb817b8f18acc81bd3ab7b8"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vredsum-vs-m4-n3/trace.json",
@@ -15533,8 +16241,20 @@
       "sha256": "b903ca55d24cca0af97889af71561a1e4296785e92f37576f4f40c3cfed3b7e6"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "cc675e446228a3a527ee91e514862e809c25d7c3d7179d1a8f5d52862e5257e1"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "bc0a59c11748d4d5a41d2cd762599787a8a431bdfa5cd39af4f928fe230a05a9"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "b225625c34e18d10d770c7ffaa91aa36128cc65cd5fd5eba76276c707b63cd24"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "b83d59425632fa383a109d405eb1108ba47bd06ec11acbdff80b38011f28e7ed"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vrgather-vv-m4-n3/trace.json",
@@ -15577,8 +16297,20 @@
       "sha256": "03ca1032072608850a8a95f7ae77e36887732a09bfc8a5dfd78fcbf720bb859c"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "7cd1d8266eed9328d85d96ec4630c0938695c66edc786dd8020a1a5de2d8a38b"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "649a3fc398fa73ec15250fc5c962828d6912437bc448770d27aea52c40999149"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "c1d4ac5a60fbef40a1698a804d97d43adde2196d9892b4ddac99227554233aa9"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "324dab0aec78e0cc8b30bd0d248fa0ad1b85afd3fdc4df8fca85bd37c52d68f5"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vslideup-vx-m4-n3/trace.json",
@@ -15621,8 +16353,20 @@
       "sha256": "9fa738ff49b645ae1b143603f7c53c011482c19c4befe77cd38e1547ce60f8e7"
     },
     {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "9218c7b0063ddaa1cc2ec8b0b5a9eddbe9bb57294f32d6913a021166768a801e"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5f150531ef6d53b7fbf60afe5d491bc73433b3a896f45829c10fecfe4dc3f733"
+    },
+    {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n2/trace.json",
       "sha256": "24882da0ad1c1b69c99cef6d26f9706a4050a8d222dd2535fa1fad097fa8adec"
+    },
+    {
+      "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "6c94d2dbd7f02a3b79d45b73baa297e9698feb790dbad130ec1f9f8b6ae51103"
     },
     {
       "path": "results/r02/vadd_vv/experiments/t20-vadd-vv-vsll-vv-m4-n3/trace.json",
@@ -16389,8 +17133,16 @@
       "sha256": "6ef8e4ef054639635c7403084553fe5406c0942e58a193fe099261e75ae47f61"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "4e2e4ea9f7a980d168d3f57a35c44fedac30c33fad656d3a36afb56967d67ac4"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add/trace.json",
       "sha256": "0991ee45cd161d880ff0e6182bd1583663ba325c5e1242f57f004cc13ccefc10"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "012f78a1dd6f420b3caeceaee1542ce0173c8689331be6ebd1d9b3bb5e3371f7"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add/trace.json",
@@ -16437,6 +17189,10 @@
       "sha256": "45848de95f7c98a1d34abfec1e200387a1fee0b3a83aecff643ce028b8454304"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "f256379367e62b76dc89f8692c244fecbfeed4b304a9dab1df52ae422219d7e1"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add/trace.json",
       "sha256": "e2bcc18b409cdd2f8280e2645b3635a754e1940389446b8c748541ea37a306c2"
     },
@@ -16479,6 +17235,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k29-scalar-add/trace.json",
       "sha256": "a1952c15738a1903eca6dc3a6ae8b3495a44cf1b348af77a67a32086c0ee5d96"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "1eae841f42a45da1050571118e771db58eaf87c185245ffecee4e112d5d26197"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add/trace.json",
@@ -16525,6 +17285,10 @@
       "sha256": "fe907954981e0cb0b2ed454dd96106e9717a1adf9eea7a07e4f48e1649906f29"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "80332adf404aceb3c462fae38ce103de545beef43bc5cc2481bcabb8215c163a"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add/trace.json",
       "sha256": "624b6ac5654aaef739091fee05dfe81bf213f07e53e1954fdf0e4fa80d3cd380"
     },
@@ -16533,16 +17297,32 @@
       "sha256": "3c5f8be51c94dd423c33221c5a846ed5385dfac763867431e95e306680b0b6ff"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "8d0e933f4eba6f4188a47934633f795e30925fe83ecd7381fafb1a0392747fc4"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add/trace.json",
       "sha256": "f96cf67e1d18dc5c8b827b1ceb3c25f44917e3f22d69e5f746084e5aeba6bc99"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "df82eb17186e9fb021d77005d53d3db7332297baa6472d7de08ef760d8e5d0ca"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add/trace.json",
       "sha256": "d734c03c07dae9072942ed33483623acf0812de655cd9c3c62dcbc6920193166"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "e4a4568db3ea0f8c86d74cd09d453b703d31e9255bb3e7039d81b211e035d30b"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add/trace.json",
       "sha256": "facd995f45c3a15ceac8251ecc40562f544874dee601822f52a6f7e876b0d80e"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "292a668ad9af4cac98d32251bbf974d45f2d83126d53284ee301dc3d042d2a2f"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add/trace.json",
@@ -16553,8 +17333,16 @@
       "sha256": "5a78e90a1da28a4c36701ffd84ab11889573cf11010404d04b641053e642344c"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "13cad77a4d215bb9f6829b53c1bce0bd3eb0c262b2091a97fc3f79bcc01faa7f"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add/trace.json",
       "sha256": "5b545556d2160eccaaaa33289622ca1258e8919ea6aeff2269bd4e7909f856fd"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "fa15be2a8fc52b7b779b789623357e74aa9e85b54931f47763223d91a2b774ae"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add/trace.json",
@@ -16601,6 +17389,10 @@
       "sha256": "eb32904d72f54d3ca5eb2e3fa74e9dc182bbd89738672f8bf7dc3347a37b0430"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "2ed64e8e4ecfec1f60f58c776e66a1382747e04d27b2f4e09cfc9ab3ffebca66"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add/trace.json",
       "sha256": "5178b48d7e566d52b47817857e2aac5096be795208668268521ca82aeaa77ae2"
     },
@@ -16643,6 +17435,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k29-scalar-add/trace.json",
       "sha256": "7c6b3148ff1993b14e46b115a3c7cae9adb965dcc953d93ae34d877f141497e0"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "72d9946d5d888a927dfd382ab65934345e672f4cd30f5fa77b1de49c54a7b9d1"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add/trace.json",
@@ -16689,6 +17485,10 @@
       "sha256": "0682f68b92fcf28647b965873cacad16f584f3c8e20371dea75c7d5bd3d3c6e3"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "9d3fbfc4c26beaddfcb8c8afeeb145ffa2f389dbad65720e46bb65dd10d6f7cc"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add/trace.json",
       "sha256": "61f3d51f034ca0526514ee8687091eacdd0630d9942767f696b0157ec57ad9a2"
     },
@@ -16697,16 +17497,32 @@
       "sha256": "32db3574e9809e9d6a305bb8a1b06896cc0df672fa8f7509685f2cd4056da6ba"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "0a70537136b22bd8620e8927bd7fdb463bc44d2ad62abac24e52bd2918e28c31"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add/trace.json",
       "sha256": "09640e6e322619e9b94fda0e875ee11e7a3fe0fac19c80e27f5f0cd08afadade"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "b43723f160d4cbc781b9311905eb0edf72e57abdce2140ae1d85b8181fffbf3e"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add/trace.json",
       "sha256": "6472382c269c9d8bd0c88194c778ee5965885d0e3694fd0e8c01a002071b5318"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "6b9d06f5e9d3679dcdf0024f3022827a1c420b15a7cb9b66a3fd5cee4d805f13"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add/trace.json",
       "sha256": "ffe6e8d78c8ab78a54ed74d7ac2847159834e85c501d60bc7eaecf64fb15b2d8"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "e5a15dbe82b7067f6b3c8167752954831d0d0d89e851d1dc760919f703ebd10b"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add/trace.json",
@@ -16717,8 +17533,16 @@
       "sha256": "2bd3e073b6adb0fc24269046422ddb2137a11fd00ef90bc5755efd7ea0534dce"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add/trace.json",
+      "sha256": "81e74ae654f305adb3d757eb95da49d1732d8d7c963ecaa31694311ab42aa998"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add/trace.json",
       "sha256": "67eb00bcfb9bbf9690ffc45f977985e3127522674789397a41e922a1257718aa"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add/trace.json",
+      "sha256": "1e5463e2265fa56505040c99b74dabc5338bc975bb8cbe20f4f11f45dbf3dda5"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add/trace.json",
@@ -16765,6 +17589,10 @@
       "sha256": "4282345b1a9d41ba7c5c56cfaff5b7a8bbbac3fbadb78e4f20b8c718c864b0b8"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add/trace.json",
+      "sha256": "04cb6bd022cd7857337fdc3b8b8084f8cb74bc7e2de099a4874f235fc582a1a7"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add/trace.json",
       "sha256": "9e0cc9884606eaffbd9c6d7d93f1bb01faa20f28e0edf49d28ad5d29dd125f52"
     },
@@ -16807,6 +17635,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k29-scalar-add/trace.json",
       "sha256": "5df4cee0a88fc19697a6d129452a9f476b38ba736e373d6c319f4277ff781e14"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add/trace.json",
+      "sha256": "5b472cc57c5c9e9adf0d7560bf78b64100c2e7f9e519a179bcbfcae05fb2697d"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add/trace.json",
@@ -16853,6 +17685,10 @@
       "sha256": "738b27df72df736c74180730179e55de59229b5cae03b9db2f174dff2f81aa96"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add/trace.json",
+      "sha256": "e6bb5ad9e1cef7487cf8639ffdf466e4d38f2f16e7842c505cc9d2a77237b27c"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add/trace.json",
       "sha256": "1a6642644d0b36dd4c48d7d4c324b6068cb26f47eff356097859390e6ca3bd4f"
     },
@@ -16861,16 +17697,32 @@
       "sha256": "61e3306e8b53b458535d312f42586ff617275d15158dc6f610040b43a9c48540"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add/trace.json",
+      "sha256": "e9e19afdff658ae8cbc19eebd0ba9582f9ad95d0e55b20d3f5824daadbf148db"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add/trace.json",
       "sha256": "f5ad474c16ba456dc6664ae837e23d41ee65197e1db99261e490535f88f202cc"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add/trace.json",
+      "sha256": "48c896d0e216e0590f28c797986f700b9e5bf76a426949cdd100b81b94f2ff60"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add/trace.json",
       "sha256": "f270cc978af704486e38fcc6e85165aa160c1756ebc201ce93114ee93e463ddf"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add/trace.json",
+      "sha256": "37b13b8fd21f78745249617e01cb65c179c748da935e6dc56a7f7ab464125ecf"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add/trace.json",
       "sha256": "d22c4c0df87ade62ebbd80da667c467389719409dddfa1392aff8664957c2a28"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add/trace.json",
+      "sha256": "676f47ace040dd30548c443a454d576fca53268f86bed490cba24ae95cafd6ac"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add/trace.json",
@@ -18381,8 +19233,20 @@
       "sha256": "47788e4e9bcdf8fd08ad9f07cec0378b3e6d27b82dcbfa40684f7fc347b1ea7d"
     },
     {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "e641e11aee04950ed31791a16efc84eb2d98dc980e5a2437ba4ab6912ca45fd3"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "d447120fc4c2bd406fbb49a57a7de8574945172dee944fb23912d5311856358b"
+    },
+    {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n2/trace.json",
       "sha256": "a1ef007ff71bd9296b2ffd5a640c1a2b5e184dbb0e3c736f3fd0a9f44c2904d1"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "d73201b2bf849eb5f3e5099971d58e346e1bb2db65de601b982c2fa2e662b8f5"
     },
     {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-viota-m-m4-n3/trace.json",
@@ -18425,8 +19289,20 @@
       "sha256": "2e71c35166bbf6ef92def48969e6c2804e3afb139d27f3902584c554d395e561"
     },
     {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "9e5cd248eecbefc38e5eee08b719c5b3368f81b622b1c64385aee12ae8686a02"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "3a15d8dc4ea24ed7d319984d68a424365990229db430c404f60518a83ced52a3"
+    },
+    {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "44b062d28f559dff4e308a43157070cc3ebe975c06cdcd90e6e18d83a3e60cd2"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "3732ff836387b96c9ea43d1f6e0917d100e54af34250a7e9ad6ce06fc145e848"
     },
     {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vmseq-vv-m4-n3/trace.json",
@@ -18469,8 +19345,20 @@
       "sha256": "ca0449ddbc7462e5ce99b72628386c54508810834d5f2876c4b49a6cbd6e6899"
     },
     {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "544d8029f25bbe1e039aba8682a5e7ed2cb82ecde5f1b0db9b3cb75ab5e322ee"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "115d7047f880a37315977a0252a2ecd99c3302fed47313527d52ceba9b9b047a"
+    },
+    {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "0e9dca43a76487c3e41979e8ee8d610bb33dcb78cef8190aed5d8f82032fee22"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "ac6dd202f400cf41d84906cdb4ea22838473e8b830b4ec461c554a05d787b4fd"
     },
     {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m4-n3/trace.json",
@@ -18513,8 +19401,20 @@
       "sha256": "db775cc72271fb55547789400aa2ccfd2cda2eec097b6dcf292fd06304610015"
     },
     {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "673ecb05d254736391d576e62ff67f88a328d2239ffb23be979abf85a31de373"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "8185abe7a7fe1ca6981af403361c68610feaaef389a18d0d5a1730323539e734"
+    },
+    {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "4dc53c48dfc2966df9b7126d8d31e4a18eb5134c15ed869c918c03532fc7d42a"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "73f2a777f7df21449a8ce79361d27f6c00b67784f736955c6891805c20b6b88e"
     },
     {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vrgather-vv-m4-n3/trace.json",
@@ -18557,8 +19457,20 @@
       "sha256": "8600bb344d20b0546d564a72664a1b604280dba2534ab3dc5b10aeafc8f5fd26"
     },
     {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "3bacfac1d22326be948ef99eb3ea8b944064c8b5f05cfdb60be180f38c25e3e4"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "c00f01e28825d66272cdc07c0a263ef17a9552bbd69139f133bdca695ceceea7"
+    },
+    {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "bd7969a380c4729bb9b77f62909e6ffcbe613a72439cb668cb04e55648b1ef9c"
+    },
+    {
+      "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0822d4b16a2a49a7eb3fb41ac54fb695794142f4f5dcf0e67f161996a4c6715b"
     },
     {
       "path": "results/r02/vdivu_vv/experiments/t20-vdivu-vv-vslideup-vx-m4-n3/trace.json",
@@ -19625,8 +20537,16 @@
       "sha256": "e1d3e3147fa2de279f26f0b5c58a6d922038699fd357bc0d12004e2d87fab6ab"
     },
     {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "e3e0bd607022882d74c13679cc6dfc62223aec8da5647c1a88275cb84b1ade76"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k0-vadd-vv/trace.json",
       "sha256": "ee66604f76068e0ae59bdf2ddd445259db8cef70057541c7973510f0a1d937fe"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "eade336299f7584d32f201d5788348db78cc957cf483c225b7f64609a8364277"
     },
     {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k1-vadd-vv/trace.json",
@@ -19673,6 +20593,10 @@
       "sha256": "9e6cb129aa2b4509bf7e71c6868d1d956c1af7480372af179df13dba9c825401"
     },
     {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "ef4c028bb3e8855ab810c5ebf809014be73a1c9bf6b67499cf8247ba9ed705d0"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k2-vadd-vv/trace.json",
       "sha256": "31f2e3549feeaca9ca604fcb03613c89605c911679a273c980e6f448cf66328c"
     },
@@ -19715,6 +20639,10 @@
     {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k29-vadd-vv/trace.json",
       "sha256": "2f3e9a4ba03083b3d019d7112e33f1c8951f236f51ef62d32f61d70512e80467"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c148a03c4d364dbbfd32cb698b47029c5d9d1f770d05e118a87aa62ef26dd411"
     },
     {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k3-vadd-vv/trace.json",
@@ -19761,6 +20689,10 @@
       "sha256": "c2ca4c8dfdc6a580ec3993731a0d56b09bb219ea79dea1f34776b84ade883cb9"
     },
     {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "90c3ff864c9f7fb6a6b34e06467a3ce16faca7f913d2d323d53d8622d4917ade"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k4-vadd-vv/trace.json",
       "sha256": "ff11849c3d3950ba1d4f41fc1df00cc97c486ecbf5f03dade84bebbf479f886e"
     },
@@ -19769,16 +20701,32 @@
       "sha256": "7df70ee5272dc7d95fa48cf1628b1b2fb6c883c3291059fa9281666bbd1e70f3"
     },
     {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "5021199be1fefec6f254608922c479ce3fa8eb3fc5d13c96188ba5b9d0295fbc"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k5-vadd-vv/trace.json",
       "sha256": "91143a0941d17cb87484b219ca4bbe6a8b8098ca50d424336dec16dfc4e6fdc6"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "65ce8ade1f67b6ee648057b21461bda5fa5988e2fbddfb47ad3216408008080a"
     },
     {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k6-vadd-vv/trace.json",
       "sha256": "acd0e03ad3c34441b8d543feb96ebce56278fa2aadcd31860323a74c3f6dff12"
     },
     {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c0c1835a3380f1b6f25619016a1345760273f63e7be0bf0666a2bd94ab429d24"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k7-vadd-vv/trace.json",
       "sha256": "212e82bed28183541a9ba0a4ec5bbb2d5c886ab368897624693f23974056ee3d"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "54bb731b14fbf45c3ef84513c110cbb47e3edb4098eb0dea80bf552bd051995d"
     },
     {
       "path": "results/r02/viota_m/experiments/t12-viota-m-m4-k8-vadd-vv/trace.json",
@@ -19821,8 +20769,20 @@
       "sha256": "7f5d360f0e9949f21bea6902d356ec27393a1963108ab8a086ca35ecadb2c626"
     },
     {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "cdf563ec38b398e3b14aca0c70286e6552f9527df52daed2892fc037b9cef599"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "a0edf2d06fb8b8495f63b3d89058e163e33bd788c3a419d0c062697a70ced9e8"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n2/trace.json",
       "sha256": "49e3378cc9f5e368791dadc80625e5f03caeb8963192bf7ff5c99033de1b6635"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "03e58c28dbdfe60a440d570b843179104d889ef3f530f06d749271b51c3f3fa6"
     },
     {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vredsum-vs-m4-n3/trace.json",
@@ -19865,8 +20825,20 @@
       "sha256": "0dbc921f354657cc1be3bd89de6f021fa5d41551e1abaa14eca24b529e669d3e"
     },
     {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "ff7d6498f12c3db5672587295d10b801e1ae396a21a770b352cc7a09f95e24db"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "7ca7597688fcc1f62b7cbe53315ac84094bb13918bdd120e9e122d4f774e161e"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n2/trace.json",
       "sha256": "a6b1f5fdd0d626d5264ccf7df6d00766014523d2a2569bf6aae72a80c8cee775"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "3348b5e1f44fe817ce93fab25a8edd9b2172d03acea23267c819bce6dd965037"
     },
     {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vrgather-vv-m4-n3/trace.json",
@@ -19909,8 +20881,20 @@
       "sha256": "0cc5557f25c76bc50858a0782e4687ec23586c66c5031edfcba76c97e8244112"
     },
     {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "e6816eaf6002621abedd4131cd46f56c8039e3e2edec44db0cb9e59c4774c7d2"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5a2d907e782b0f9eef6e70af91db2264e0adc44cc87985d6cd9a3568af31a0bf"
+    },
+    {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n2/trace.json",
       "sha256": "1c1929896a3ad8bbf32bad013efe712347016d898b3d7c096a4354838a965db3"
+    },
+    {
+      "path": "results/r02/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "fc4a33e496fbb9448227cd19bc81b2bbe88337f1220bf581b69008af63e20f7d"
     },
     {
       "path": "results/r02/viota_m/experiments/t20-viota-m-vslideup-vx-m4-n3/trace.json",
@@ -21221,8 +22205,20 @@
       "sha256": "65f3d7d51d6c5afdf834e30dfa00e19e742a773dd6f72641ac72a5e72cf529f5"
     },
     {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "edaf3143bf90144ac4d32d3439537ced124c6ec01cd05681f424260187527054"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "4e6cbf17397113797757e266f6190d64b08acb2487a347e56d914df2c5fdce67"
+    },
+    {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n2/trace.json",
       "sha256": "437be8d91cead79daad69e9e716b888fa4dab6ba917f06257f2cb3ed485c189f"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "953d1d67be8c1db5c58b452518a08261eb63644a805fb9b3bfcdc8db7b64d70b"
     },
     {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-viota-m-m4-n3/trace.json",
@@ -21265,8 +22261,20 @@
       "sha256": "fa2065b1d5d58ba3baa96b7c1dcfcdb4d026a1c14b7726bac97b44671fb3dcb7"
     },
     {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "b80ff8339818e4f2c4d470cfb883be6cba435e0d39db4e0671afac17e09a89c5"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "8192e721c562e94d47579b208ef378927be762b11e1276641066b590220fed00"
+    },
+    {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "14a419fe68f660e0f60544544f73b22537071a95cbddfdcb63f483e179633dcb"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "29c7a1f8faa4cb0f044168da3bfef8fb65b49334860009aed85295570b95aa53"
     },
     {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vredsum-vs-m4-n3/trace.json",
@@ -21309,8 +22317,20 @@
       "sha256": "a7f61fc12cb07586ce22fa6778b80fb919d7465fc18dbeec44c1e14f53c9996f"
     },
     {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "7b8074e045c0291345d778499891e20594287b35a53c8cc4f3dad5dc1dd6913c"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "1b76d835fa3aa3b068bd596ccc70e79ccc10b66ce7d5a5d9b86d78fe8f92f29d"
+    },
+    {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "331dc0c85719cad06e018424887436dcce677a3622ddd261e0293c51494f98fd"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0df4332525263e76c039e6f7319e5f1b5ac5ada2e9a23103b84f7551a4fc6494"
     },
     {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vrgather-vv-m4-n3/trace.json",
@@ -21353,8 +22373,20 @@
       "sha256": "b60a6d2f60ad5c4706af4b86cdce852016a42ccfb7ddeb5fd8ca1534bfb777e7"
     },
     {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "58c1e1e0f3a90c36b94419459d9683b0d28e8420858f9e86623c209d22ae9942"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "d8eb53603c3e8bfbc521fe3b0b012fb05d14cfc07f5cbfd69997285061daea85"
+    },
+    {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "540df2ff852fa281735cdda53581979a0b928b9ec0971bd423572b99c2ebde73"
+    },
+    {
+      "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "10d347eba9b973f6832f5289c06765c094ec7f03f6b248cc241461561d54266a"
     },
     {
       "path": "results/r02/vmseq_vv/experiments/t20-vmseq-vv-vslideup-vx-m4-n3/trace.json",
@@ -22665,8 +23697,20 @@
       "sha256": "cd4699f17c74ae4b8609144c8d4a69150e4502721b87814ea3dddbaa80560254"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "7d484f76a3a58b4a2eacbd68fe87d76a3e1493613a46fa0cceb594202bee4aa7"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "917ca9cb93e5af725f6570514d45f479719b8ca7a0d03cf09ab69878efba576f"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "05e09b305a032552a6163c84f1b3c76c0d115e0df3c48ae5ee19b5e14041cf2d"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "35e7825454c11017e7921fa0ef8c3b811d39a53ad0aeb5ea7e052c10240a7db2"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vdivu-vv-m4-n3/trace.json",
@@ -22709,8 +23753,20 @@
       "sha256": "3a86d5491bbf0b114bdfa7af40439501bbb1cd2709ae1068779d895171104d54"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "29d53fe0bf80b6b2b775e50e63ec827c91fb13764b4d32f2ba6480de8ddceffc"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "1613fa62089c52bd52abad074a5d92c62d8bc400cd4cfc8fc7412ed45c4c3b78"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n2/trace.json",
       "sha256": "462907b8edcfe41abd64285b03fb6eae581dd74ddf0686b71755938408a5e845"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "750bd2a1e6362d16bf4d37e2c7b6d2fe4c375f880d4388fba132627db489a208"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-viota-m-m4-n3/trace.json",
@@ -22753,8 +23809,20 @@
       "sha256": "dfd83645f392c270a285707f82d02f0a3c8b30ee3b8dee2f8d2a6a9bfca0d64b"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "1ae0fa59deff1d86c2b1bcf8040d43ed768c8a8459db74599d6297e741809341"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "9e339d9eb758331ddd44684a4b114d6a19fa6bbd7e70d556c5e7353a405d0eb6"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "e4d4351aca2a1b5608f7848bd61361848dee61e8a263de2ec2b438ee8a5bd795"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "e845e3080c1ab0fa4542a0159d63dd9dc23a7124b83d3b596c4c817abec37d36"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vmseq-vv-m4-n3/trace.json",
@@ -22797,8 +23865,20 @@
       "sha256": "fa2eccd1a136b9b6f1b5d648399b9bca4105585921e9675f654f01ed82f243d5"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "db5a2392297975419e212a23ceeb9875d68bc250df9c66af48ba6ba3f02d77ca"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "cd8b1668a2f350e09df42a88c7aba001093d06d23b7d0ed1d064dacd63111825"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "d5c26e26388ade38cdfe671b50f3a83a3e8a802ff20562df7ddd89ce46636258"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "a4ed1fdf40e10c46f9c9e9d832fb66cc061b157932437d6be56ff4069c5f40e3"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vredsum-vs-m4-n3/trace.json",
@@ -22841,8 +23921,20 @@
       "sha256": "b59b6270767617180727e1c3d92e0e4f57d5aebe77cf4cb8d90d4a27e6cdf3f6"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "fec6f4d5a73929f913339c79d89a0484d040601c5981f55083bf8544c4192423"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "0d95479a0d7686651d0aa3e02624fe3d1cbd74d68c0fb75e46e682b66a888c21"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "4921ccf8b0409245abfeada3f537ddbddc4252536c1d5e795430fd1090443c52"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0bcd903a36ba5710c53592afccb8092544e7b24440ef906ca64a2907d4bf8e13"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vrgather-vv-m4-n3/trace.json",
@@ -22885,8 +23977,20 @@
       "sha256": "72381ff12264309c6db3973b1da911f7f867233050055cd69d2cbe9f059d4dba"
     },
     {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "b1aeaf7af96c2ed7dfd92553233fda6c4cf671e40bb0f94ebc125616dd78d99e"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "15fb340e77d3b1d0d67d1c9167c6a457d88815c68fa0c7b8a0a4fb39e4eda2eb"
+    },
+    {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "962ea48fae03f94e4d8f1aafd9fa7cc14a830eca0ea3f6f1b76de60bafffe933"
+    },
+    {
+      "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0153082b1644d10e29d9f82b4c81e7fbc42137ef2b5a970608605f8e4ae61626"
     },
     {
       "path": "results/r02/vmul_vv/experiments/t20-vmul-vv-vslideup-vx-m4-n3/trace.json",
@@ -25173,8 +26277,16 @@
       "sha256": "34425dd16084fc86a286835c2fce3cff092338d7dbc0099974063aad42a8c8ca"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "dabe3aeea4af9241e45a03623b91899eb5f5563cb84934b9709c8b84a9ea7c4e"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv/trace.json",
       "sha256": "35e41db0013040f129acfbf9ea6ec73a3127f8ad31fd11f9e9fcce4330441947"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "3b9d83154c96dd2f050efb96822668a54e7877b259a50a2a9826c5589c55c2fc"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv/trace.json",
@@ -25221,6 +26333,10 @@
       "sha256": "7f6e8c64643301a28b36c31b5d43c130af141ca7bc6962b000dd65452a29ac89"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c4a955b314f19aee27d574cff511b32261af925c3fe5a23dbc576dd0fc643f9c"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv/trace.json",
       "sha256": "aba2ae35f3020aea20e681da8e05fb94f5c077be5fdccf9b69f18cd1aac09674"
     },
@@ -25263,6 +26379,10 @@
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k29-vadd-vv/trace.json",
       "sha256": "48d6138cae07997deb921e73ce893107b4ea85d799f6a066e638b27204dbfb2c"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c325b3861bde42d3e9ce24ff07422b92be7624c10fda3c3a4423c9436a2c1b90"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv/trace.json",
@@ -25309,6 +26429,10 @@
       "sha256": "d54d8450aab22c3d5523fea877831c800f73746dc0bb16aa075098a37695ebdf"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "1bbd62dafab6326124802305163e53318e31d5598efe271da9b810ef04bec8dd"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv/trace.json",
       "sha256": "38597e1ffa8327da7ac1522fc9604a478c47c483774f5459a6955575592b4f6c"
     },
@@ -25317,16 +26441,32 @@
       "sha256": "cd3bc56bc99b66d289627aa2dc54684c0f53e8a7718f2d624609c504d0f8b629"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "0f4e9dff690c2160b1b2ede9c5887f898d87ae9813bf7799e4a320f175a9a58f"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv/trace.json",
       "sha256": "391f4a37dfb3967908521f3097caa04e1ea62ef0133c5df3b93fb499287c2093"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "d19800fded9b66dc478dd21a26ea7aaecf9b238583a31440079b6da7dd09da63"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv/trace.json",
       "sha256": "f1e86334425bb9b949c953d8657e1533dc6007c63be2c153f08ade79d8c1438c"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "b9f8b6a101640670e50f90d5fe201a90c127806a9cf824637cc97aec833a35fc"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv/trace.json",
       "sha256": "aba0ea41cac29b3e4514d246395a577c6c0600aae924076a2bce78c81da58dc2"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "8d85a0c38be5c4ed324f649defb8fe2ee3eedb63f48b57273bff2c8bc80f8e47"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv/trace.json",
@@ -25369,8 +26509,20 @@
       "sha256": "293a15117cdff52fdb533d8898564564e833564bd7023873b1398b8e7419769a"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "4dd67fbb2868b7e63f45185b66b296af2a31fee8a86df5f7495dc53165ae0c07"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "4c1c090c1e7c51a3922afd49021c431cc38f393c5b1aabcfdd04f752871a0dcd"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "958b4cd2cadff59c73b1bb9ca129afc0b317f47395a4881966d36cc36f89c645"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "435aa0d37f3646b463617cbea8fcfa9e2135ebab2ef3efd625039f58012ce0ef"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t20-vrgather-vv-vredsum-vs-m4-n3/trace.json",
@@ -26437,8 +27589,16 @@
       "sha256": "823db55cf4f4ec4ead074b82ddceb7643da1c379f6ef015ff985d2558aecdb3a"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add/trace.json",
+      "sha256": "d236885d103bde7588a8a16538e4693480c5ac5fa8807486334d2a10458fcf31"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv/trace.json",
       "sha256": "a2349e3ce2fb651bd65260533c23cd48349d9e6ce00e0a9049ca12aa3d89e494"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add/trace.json",
+      "sha256": "c7b8e3f9cc89752628923f51ac7c3e5f3b7690b37a7a8255907c6aaa449ed32c"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv/trace.json",
@@ -26485,6 +27645,10 @@
       "sha256": "f45fb9a3bf32720cbedad2c7f4571c66ac28b77ab1af78bafcb24114882e2891"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add/trace.json",
+      "sha256": "8c0238c97e80ab1ce890541e06e196a09e43f9dfd75d16d6750182380fc57e3e"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv/trace.json",
       "sha256": "1ef95072fe74e17e9141c2dc9ac55fc3648f7d16a25261f572d8dc77f0099e8a"
     },
@@ -26527,6 +27691,10 @@
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k29-vadd-vv/trace.json",
       "sha256": "4367ed4f88d01b29ea240892a55c49852670b0f545fea39ec5abc020f033f0d6"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add/trace.json",
+      "sha256": "d4a1150c452be48c722af9b27fe5203ca4f3e9ae5e9b53d544d4ece3eb44e6de"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv/trace.json",
@@ -26573,6 +27741,10 @@
       "sha256": "a3351e1d6aaff9f9c11dc1bd1728831b951c9155cd547386a565aff60524f08c"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add/trace.json",
+      "sha256": "b13d83411d2098763cf952ace2f0a165e14a3ea42b93cd8646cd728ed2ecf140"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv/trace.json",
       "sha256": "15a5413eb0405bf027e646c52adf74dfef149ad42bcce51ddec30a2b35526c5a"
     },
@@ -26581,16 +27753,32 @@
       "sha256": "46964debb11f0bc496e8b336a27a4ab5c4442959efa368232d9f9a29fbba2774"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add/trace.json",
+      "sha256": "5c8c655e43e8276996f037f0e199815a78ca27c569c522c754dba1f09a983b76"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv/trace.json",
       "sha256": "c87db7bdf8079bcfb483f2e1a8ba1de705c23dfcdd2c5eca2b217faf7e88269c"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add/trace.json",
+      "sha256": "5a95a900fb6d2d4a61408ea64ea34e47da57d9c360d5ceaea457ef7ca4cd8101"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv/trace.json",
       "sha256": "b6398ffd355c2025b696b6c613e5f89216f8a204db16cd8ad8011b38fe9dac80"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add/trace.json",
+      "sha256": "ba3a98fa0edaa8d6ce7b1aff2d07224bc7e97f53ecca28699611f67a84919f0e"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv/trace.json",
       "sha256": "0d66948b2616ba2b4d888b168736451bb13a730394c5993c21fc7f52555355c4"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add/trace.json",
+      "sha256": "9c7332a1728fd400892fe63185587a7cc2ae578643d76f3b969983174bad97c9"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv/trace.json",
@@ -26633,8 +27821,20 @@
       "sha256": "a143bd6268a2b2ee47450d1eb495d00e099b6085ac9ee93d8849f567c3cdc45d"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "ae02bfdfa858b9f984f2fef9305607e68aaf6c8a3adbdc9934772ffc8499eb45"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "e5daa9132c672b40fd9fc030c55ba8ef9a91154b27c10a77458bf6a28cba2d1c"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n2/trace.json",
       "sha256": "f4f6d39eb313d15f39a8ea1e34b7142f425b3b285ad2678106b18c9b784677af"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "eb916c1842212470f0bbaa6b5877556a1f2ed746fd92cb797a2af6703eef3e02"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vredsum-vs-m4-n3/trace.json",
@@ -26677,8 +27877,20 @@
       "sha256": "05ff37ef44d713bea32624077e69b119e49bb924aa6f2223174165b8685cf34a"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "2136773a811dbda5776e1bbb1f98322e83b84ee3ce0a86271b6207a2df45fcfb"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "311eafa1a66fdc16e2ff98b687ffb5c18c1c3b3dce0253c0cecdf66ba7ace1e1"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n2/trace.json",
       "sha256": "d66b95f387e2b8af920ab1d94a5df0797194d3ee6204c052fc0f1e3ff3b6b03a"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "0735a59fa7cd808feb49d2e6fb85156208fb406e3141820f71aaea245d75050f"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t20-vslideup-vx-vrgather-vv-m4-n3/trace.json",
@@ -27989,8 +29201,20 @@
       "sha256": "1e9c71dfd71f71b65840c7b37885f0a94fa5ab763f3ae17ed88c299b08ce75f9"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "c26aef39a3bcd93c7c3b3b52960aee28c55f497064ea3e7114af04ef95ab7546"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "030aaa7895e3fa266bcd3da6b197787db2720c734d5ae88e018c6e3ee07e787d"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n2/trace.json",
       "sha256": "4c98f97e4b0c48c2cf71d2b6cc29f73a440dcd22801713cf7818e249863fdc43"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "56f346f541e4582de9c3d9f9018b62d7ee6c0682e58e7d345a79320537a86e77"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vdivu-vv-m4-n3/trace.json",
@@ -28033,8 +29257,20 @@
       "sha256": "17a06287f7f3326860b5d2fdc7e9079abc975f58c7c9e0a2ebe5408bdde4a311"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n1-resource-noreuse/trace.json",
+      "sha256": "39516244e60f9e63f372897429f60ebc1e47c22eba1548b1d28566fcae834cdb"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n2-resource-noreuse/trace.json",
+      "sha256": "347ebdcf6ae5f219312cc592360e8bf41a4a3d7ea3dc0ac0742cf307d4578cae"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n2/trace.json",
       "sha256": "574c5e8af9030eb7cca1494ea46b568b9784d8ef0c07a57fe28a8c042ce4e692"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n3-resource-noreuse/trace.json",
+      "sha256": "65c6eed698c6bd46f6cde37d4093d4cd1c04a766775e1e359a44db81b86dde27"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-viota-m-m4-n3/trace.json",
@@ -28077,8 +29313,20 @@
       "sha256": "9db32660501491cc55ec850f5cf74a8073c1ad9ef8ba89eb87b5f97896f8198d"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "9a174c7d67cec344856f2ee767fc13ca70b78922faffc066718191a0696d3ced"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "4e1ca775d8e51f8da34448b1ea2adeac1e749598a0e6e00bf10bc7985b2e4bd0"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n2/trace.json",
       "sha256": "56d09697f0654e33ef3176d0f19673644e2288845058311fb5582bd36b46b1dc"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "714e722faf41439197b35fc018f37219fa17e90b0606a92a608d2964ab3f0634"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmseq-vv-m4-n3/trace.json",
@@ -28121,8 +29369,20 @@
       "sha256": "11d1c7d36f951b31df6d6390573274ef507e90aed26305f4c052026df2022090"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "314f2eddb357425e1ddba55b7e877ed18d38497cefa7d851e8fe929123f21adc"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "320d9261944a11a8c531ccf32a4cca7575e184253389fdf84348a75a9b46fb6e"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n2/trace.json",
       "sha256": "9f3c86735e4d7fc135c68a5ecbcea6d65b98eaad8aad0a0865f76b36912acfcf"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "19b2a492a68b6e323272d88a12ec036e039442bf54a34af9a72f4a35e218654d"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vmul-vv-m4-n3/trace.json",
@@ -28165,8 +29425,20 @@
       "sha256": "8551f9aa9caa945ebd23d058f7e8c1ffea97cddc59812fcfb998720d49361ba5"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n1-resource-noreuse/trace.json",
+      "sha256": "c172ad0b909aa293c64bdda7f8471e51e09ba248b9468e4fbc3902ec43a81d56"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n2-resource-noreuse/trace.json",
+      "sha256": "536af402a433819e285fca1f383d238731f66b080e19ec4e46063169496ec052"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n2/trace.json",
       "sha256": "ad3a3ba7dba98e05418fcc461a49e75a949a154d536754a2bde5d84bc7010afd"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n3-resource-noreuse/trace.json",
+      "sha256": "b75d6940194f536ccb9ac91fa923d3413d13323df262a27e44aaaba7196e3e9d"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vredsum-vs-m4-n3/trace.json",
@@ -28209,8 +29481,20 @@
       "sha256": "06bc0a25acf9a5c1218ab1668b21f9931b38471a528ed950249261f90ee96df6"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n1-resource-noreuse/trace.json",
+      "sha256": "0f0480be81b3c78c12569627286c40fcbd70e0b48ceaa0d6130663e2c20f8a8e"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n2-resource-noreuse/trace.json",
+      "sha256": "c93d0df54e1e723d9c36c7b82b0eb0b7dfad524568d683b241740489ada30721"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n2/trace.json",
       "sha256": "bd3f9d6f20d0fd42617a4605bcaa09fa6a5c9bf5e383d308c9ca234011278b34"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n3-resource-noreuse/trace.json",
+      "sha256": "f332390a81d15e6c86e38044fc3cab646ccb1fb3abca7c401ae403b1461c47e0"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vrgather-vv-m4-n3/trace.json",
@@ -28253,8 +29537,20 @@
       "sha256": "dea0183a5954f77ebe9a36d9fb65144e98fd041762c55c5f6f807f346da7801b"
     },
     {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n1-resource-noreuse/trace.json",
+      "sha256": "4e05c9c8a6e1428923c944424566146402ee37e46090fc99d38f1e505ba156e3"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n2-resource-noreuse/trace.json",
+      "sha256": "5aeba05afc46a33c90b6c753c04f24a3a9e60bd8334dea9f5833ee2da335ed79"
+    },
+    {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n2/trace.json",
       "sha256": "3c2ea919bc4f8f4ee20632065099607cae13407bcf6be19b177d34cc49f30101"
+    },
+    {
+      "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n3-resource-noreuse/trace.json",
+      "sha256": "a09bc1285a02d1ca480ce1804e157f3b5e6495e2657a70569e22aceb3eb6417a"
     },
     {
       "path": "results/r02/vsll_vv/experiments/t20-vsll-vv-vslideup-vx-m4-n3/trace.json",
@@ -28889,9 +30185,9 @@
     "mode": "real_platform_profile"
   },
   "input_counts": {
-    "trace_files_after_filter": 7220,
-    "trace_files_before_filter": 10411,
-    "usable_marker_observations": 7216
+    "trace_files_after_filter": 7544,
+    "trace_files_before_filter": 10735,
+    "usable_marker_observations": 7540
   },
   "mode": "real_platform_profile",
   "required_fields": [
@@ -29160,7 +30456,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29185,7 +30481,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29206,13 +30502,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 198,
+      "constraint_count": 8,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29224,10 +30519,10 @@
         "t11-vadd-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n8/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m4 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m4 pairs=vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv,vmseq_vv,vmul_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29237,7 +30532,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29262,7 +30557,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29546,7 +30841,7 @@
         3,
         4
       ],
-      "constraint_count": 288,
+      "constraint_count": 306,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29569,7 +30864,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 288,
+      "constraint_count": 306,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29592,7 +30887,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 288,
+      "constraint_count": 306,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29615,7 +30910,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 288,
+      "constraint_count": 306,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29638,7 +30933,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 288,
+      "constraint_count": 306,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29915,7 +31210,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29940,7 +31235,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29961,13 +31256,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 198,
+      "constraint_count": 8,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29979,10 +31273,10 @@
         "t11-vdivu-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n8/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m4 pairs=vadd_vv,vcpop_m,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,viota_m,viota_m,vmseq_vv,vmseq_vv,vmul_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29992,7 +31286,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -30017,7 +31311,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -30289,16 +31583,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
-      "candidate_count": 5,
+      "candidate": 4,
+      "candidate_count": 1,
       "candidates": [
-        0,
-        1,
-        2,
-        3,
         4
       ],
-      "constraint_count": 178,
+      "constraint_count": 238,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30310,12 +31600,12 @@
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=viota_m lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "viota_m",
       "lmul": "m4",
-      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 4,
@@ -30323,7 +31613,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 178,
+      "constraint_count": 238,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30344,13 +31634,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 178,
+      "constraint_count": 8,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30362,10 +31651,10 @@
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vadd-vv-m4-{n2,n3,n4,n6}, t20-viota-m-vcpop-m-m4-{n2,n3,n4,n6}, t20-viota-m-vdivu-vv-m4-{n2,n3,n4,n6}, t20-viota-m-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,vmseq_vv,vmseq_vv,vmul_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vadd-vv-m4-{n2,n3,n4,n6}, t20-viota-m-vadd-vv-m4-{n2,n3,n4,n6}, t20-viota-m-vcpop-m-m4-{n2,n3,n4,n6}, t20-viota-m-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30375,7 +31664,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 178,
+      "constraint_count": 238,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30400,7 +31689,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 178,
+      "constraint_count": 238,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30677,7 +31966,7 @@
       "candidates": [
         7
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30702,7 +31991,7 @@
       "candidates": [
         8
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30723,13 +32012,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 178,
+      "constraint_count": 8,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30741,10 +32029,10 @@
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r02/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmul_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30754,7 +32042,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30779,7 +32067,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -31056,7 +32344,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31081,7 +32369,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31102,13 +32390,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 198,
+      "constraint_count": 8,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31120,10 +32407,10 @@
         "t11-vmul-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n8/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmul-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmul-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vmul-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31133,7 +32420,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31158,7 +32445,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31435,7 +32722,7 @@
       "candidates": [
         7
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31460,7 +32747,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31481,13 +32768,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 198,
+      "constraint_count": 8,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31499,10 +32785,10 @@
         "t11-vredsum-vs-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=52:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n8/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-vadd-vv-m4-{n2,n3,n4,n6}, t20-vredsum-vs-vcpop-m-m4-{n2,n3,n4,n6}, t20-vredsum-vs-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vredsum-vs-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-vadd-vv-m4-{n2,n3,n4,n6}, t20-vredsum-vs-vadd-vv-m4-{n2,n3,n4,n6}, t20-vredsum-vs-vcpop-m-m4-{n2,n3,n4,n6}, t20-vredsum-vs-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31512,7 +32798,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31537,7 +32823,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31818,7 +33104,7 @@
         3,
         4
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31843,7 +33129,7 @@
       "candidates": [
         20
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31864,13 +33150,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 178,
+      "constraint_count": 8,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31882,10 +33167,10 @@
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vrgather-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vrgather-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vrgather-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vrgather-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vrgather-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vrgather-vv-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31895,7 +33180,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31920,7 +33205,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -32201,7 +33486,7 @@
         3,
         4
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32226,7 +33511,7 @@
       "candidates": [
         18
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32247,13 +33532,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 178,
+      "constraint_count": 8,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32265,10 +33549,10 @@
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vadd-vv-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vcpop-m-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vslideup-vx-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vadd-vv-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vadd-vv-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vcpop-m-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32278,7 +33562,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32303,7 +33587,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 178,
+      "constraint_count": 226,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32580,7 +33864,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32605,7 +33889,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32626,13 +33910,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 198,
+      "constraint_count": 8,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32644,10 +33927,10 @@
         "t11-vsll-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n8/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m4 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vsll-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
+      "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m4 pairs=vadd_vv,vadd_vv,vcpop_m,vdivu_vv,vdivu_vv,viota_m,viota_m,vmseq_vv observed_counts=[1,2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vsll-vv-vadd-vv-m4-{n2,n3,n4,n6}, t20-vsll-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32657,7 +33940,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32682,7 +33965,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 198,
+      "constraint_count": 246,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32705,9 +33988,9 @@
   "schema_version": 1,
   "summary": {
     "blocking_status_counts": {
-      "non_identifiable": 39
+      "non_identifiable": 38
     },
-    "blocking_total": 39,
+    "blocking_total": 38,
     "required_fields": [
       "Latency",
       "ReleaseAtCycles",
@@ -32716,8 +33999,8 @@
       "SingleIssue"
     ],
     "status_counts": {
-      "inferred": 111,
-      "non_identifiable": 39
+      "inferred": 112,
+      "non_identifiable": 38
     },
     "total_rows": 150
   }

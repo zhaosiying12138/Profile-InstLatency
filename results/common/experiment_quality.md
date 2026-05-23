@@ -9,16 +9,16 @@ This report is generated from trace inventory. Synthetic calibration traces rema
 
 ## Approval Blockers
 
-- LLVM field-status unresolved risks: 39 (non_identifiable=39).
+- LLVM field-status unresolved risks: 38 (non_identifiable=38).
 - Explicit human approval artifact: absent or not approved.
 
 ## Trace Inventory
 
 Result root: `results`
-Trace files analyzed: 10411
+Trace files analyzed: 10735
 Synthetic traces: 3191
-Real-platform traces: 7220
-Real gem5 traces: 7220
+Real-platform traces: 7544
+Real gem5 traces: 7544
 Unknown/conflicting traces: 0 unknown, 0 conflicting
 
 Classification uses JSON `mode` and `backend`; result paths are not used.
@@ -36,8 +36,8 @@ Real gem5 templates covered: `T00_BASELINE_MARKER`, `T01_DECODE_EXEC_KILLCHECK`,
 
 ## Repeatability
 
-Repeat groups found: 3595
-Stable repeat groups: 3595
+Repeat groups found: 3757
+Stable repeat groups: 3757
 Unstable repeat groups: 0
 
 | Template | Instruction | LMUL | Traces | Delta values | Status |
@@ -343,6 +343,33 @@ Unstable repeat groups: 0
 | `T11_SELF_RAW_CHAIN` | `vmul_vv` | `m4` | 2 | `31, 31` | stable |
 | `T11_SELF_RAW_CHAIN` | `vredsum_vs` | `m4` | 2 | `52, 52` | stable |
 | `T11_SELF_RAW_CHAIN` | `vsll_vv` | `m4` | 2 | `31, 31` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
@@ -589,6 +616,33 @@ Unstable repeat groups: 0
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `10, 10` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `19, 19` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `37, 37` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `14, 14` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `14, 14` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `28, 28` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `26, 26` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `29, 29` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `27, 27` | stable |
 | `T30_LMUL_SCALING` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `viota_m` | `m4` | 2 | `7, 7` | stable |
@@ -3103,42 +3157,150 @@ Unstable repeat groups: 0
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `11, 11` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `17, 17` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `35, 35` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `27, 27` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `37, 37` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `25, 25` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `55, 55` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `55, 55` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `75, 75` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `75, 75` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `51, 51` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `51, 51` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `83, 83` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `113, 113` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `77, 77` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `31, 31` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `31, 31` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `31, 31` | stable |
@@ -3649,15 +3811,15 @@ Failed gate checks:
 
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
-Artifact sha256: `2a80452bce6d1461f9208cad2ad7cff5a4ec40841e84fbc14c887d34100f559f`
+Artifact sha256: `9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b`
 Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150
 
 | Field status | Count |
 | --- | ---: |
-| `inferred` | 111 |
-| `non_identifiable` | 39 |
+| `inferred` | 112 |
+| `non_identifiable` | 38 |
 
 Unresolved field-status risks:
 
@@ -3665,7 +3827,7 @@ Unresolved field-status risks:
 | --- | --- | --- | --- | --- | --- |
 | `llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable` | `vadd_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vadd_vv:m2:ProcResource:non_identifiable` | `vadd_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vadd_vv:m4:ProcResource:non_identifiable` | `vadd_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vadd_vv:m4:ProcResource:non_identifiable` | `vadd_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vcpop_m:m1:Latency:non_identifiable` | `vcpop_m` | `m1` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 1); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
 | `llvm_field_status:vcpop_m:m1:ProcResource:non_identifiable` | `vcpop_m` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vcpop_m:m2:Latency:non_identifiable` | `vcpop_m` | `m2` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 2); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
@@ -3677,31 +3839,30 @@ Unresolved field-status risks:
 | `llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable` | `vcpop_m` | `m4` | `SingleIssue` | `non_identifiable` | The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect. |
 | `llvm_field_status:vdivu_vv:m1:ProcResource:non_identifiable` | `vdivu_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vdivu_vv:m2:ProcResource:non_identifiable` | `vdivu_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable` | `vdivu_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable` | `vdivu_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:viota_m:m1:ProcResource:non_identifiable` | `viota_m` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:viota_m:m2:ProcResource:non_identifiable` | `viota_m` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:viota_m:m4:Latency:non_identifiable` | `viota_m` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
-| `llvm_field_status:viota_m:m4:ProcResource:non_identifiable` | `viota_m` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:viota_m:m4:ProcResource:non_identifiable` | `viota_m` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable` | `vmseq_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable` | `vmseq_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vmseq_vv:m4:ProcResource:non_identifiable` | `vmseq_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmseq_vv:m4:ProcResource:non_identifiable` | `vmseq_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vmul_vv:m1:ProcResource:non_identifiable` | `vmul_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vmul_vv:m2:ProcResource:non_identifiable` | `vmul_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vmul_vv:m4:ProcResource:non_identifiable` | `vmul_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmul_vv:m4:ProcResource:non_identifiable` | `vmul_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vredsum_vs:m1:ProcResource:non_identifiable` | `vredsum_vs` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vredsum_vs:m2:ProcResource:non_identifiable` | `vredsum_vs` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vredsum_vs:m4:ProcResource:non_identifiable` | `vredsum_vs` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vredsum_vs:m4:ProcResource:non_identifiable` | `vredsum_vs` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vrgather_vv:m1:ProcResource:non_identifiable` | `vrgather_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vrgather_vv:m2:ProcResource:non_identifiable` | `vrgather_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vrgather_vv:m4:Latency:non_identifiable` | `vrgather_vv` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
-| `llvm_field_status:vrgather_vv:m4:ProcResource:non_identifiable` | `vrgather_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vrgather_vv:m4:ProcResource:non_identifiable` | `vrgather_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vslideup_vx:m1:ProcResource:non_identifiable` | `vslideup_vx` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vslideup_vx:m2:ProcResource:non_identifiable` | `vslideup_vx` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vslideup_vx:m4:Latency:non_identifiable` | `vslideup_vx` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
-| `llvm_field_status:vslideup_vx:m4:ProcResource:non_identifiable` | `vslideup_vx` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vslideup_vx:m4:ProcResource:non_identifiable` | `vslideup_vx` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vsll_vv:m1:ProcResource:non_identifiable` | `vsll_vv` | `m1` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 | `llvm_field_status:vsll_vv:m2:ProcResource:non_identifiable` | `vsll_vv` | `m2` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
-| `llvm_field_status:vsll_vv:m4:ProcResource:non_identifiable` | `vsll_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vsll_vv:m4:ProcResource:non_identifiable` | `vsll_vv` | `m4` | `ProcResource` | `non_identifiable` | Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable. |
 
 ## Marker Contract
 

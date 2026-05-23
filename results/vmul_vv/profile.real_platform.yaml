@@ -192,10 +192,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
+      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
       evidence:
         - "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json"
         - "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json"
