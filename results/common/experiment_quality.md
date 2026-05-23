@@ -15,10 +15,10 @@ This report is generated from trace inventory. Synthetic calibration traces rema
 ## Trace Inventory
 
 Result root: `results`
-Trace files analyzed: 10735
+Trace files analyzed: 10825
 Synthetic traces: 3191
-Real-platform traces: 7544
-Real gem5 traces: 7544
+Real-platform traces: 7634
+Real gem5 traces: 7634
 Unknown/conflicting traces: 0 unknown, 0 conflicting
 
 Classification uses JSON `mode` and `backend`; result paths are not used.
@@ -36,8 +36,8 @@ Real gem5 templates covered: `T00_BASELINE_MARKER`, `T01_DECODE_EXEC_KILLCHECK`,
 
 ## Repeatability
 
-Repeat groups found: 3757
-Stable repeat groups: 3757
+Repeat groups found: 3802
+Stable repeat groups: 3802
 Unstable repeat groups: 0
 
 | Template | Instruction | LMUL | Traces | Delta values | Status |
@@ -346,6 +346,33 @@ Unstable repeat groups: 0
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
@@ -616,6 +643,24 @@ Unstable repeat groups: 0
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `10, 10` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `19, 19` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `37, 37` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `28, 28` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `26, 26` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `29, 29` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `27, 27` | stable |
 | `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
@@ -3811,7 +3856,7 @@ Failed gate checks:
 
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
-Artifact sha256: `8d83edaefa7d5d29ad1eade4c3f6b389873b6e082c4d1f1b583dad3278838578`
+Artifact sha256: `5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50`
 Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150

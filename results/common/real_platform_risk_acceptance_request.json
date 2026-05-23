@@ -2,7 +2,7 @@
   "schema_version": 1,
   "artifact_kind": "risk_acceptance_request",
   "round": 11,
-  "request_worker": "Round11ProcResourceMirrorCanonicalization",
+  "request_worker": "Round11T12MatchedControl",
   "status": "pending",
   "request_status": "not_approved",
   "decision_status": "not_approved",
@@ -15,10 +15,10 @@
   "source_inventory_path": "results/common/real_platform_inventory.json",
   "source_inventory_json_pointer": "/field_status/unresolved",
   "current_hashes": {
-    "inventory_sha256": "064dc65b4c7e08aefae3e5310072b62dba0a87a6cd932ec060e0960ff5e14ced",
-    "real_platform_field_status_sha256": "8d83edaefa7d5d29ad1eade4c3f6b389873b6e082c4d1f1b583dad3278838578",
-    "search_model_real_platform_sha256": "81bece0f495d6ce84732180f3b169b7264baf874b57caee665c7212d518a90c7",
-    "experiment_quality_sha256": "7c32450329d11ac2967e7afaff9a6f2bc151a5e52b0212cd7664e1e5116768fb"
+    "inventory_sha256": "e6687617845d3d6272f474303650f0125d30e1d55aef9ff274611cca1a15bc19",
+    "real_platform_field_status_sha256": "5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50",
+    "search_model_real_platform_sha256": "1a08061c3e16a37a54af73dd2119c22b55367bd805b9d16208f806b2090fc31c",
+    "experiment_quality_sha256": "ab03900c8f44b28f05ff0d64850c2e9e3c97586b9ebaff2d0a7bd089cb819de6"
   },
   "gate_command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
   "expected_current_fail_closed_reasons": [

@@ -38,12 +38,23 @@ T12_FOCUSED_FILLER_COUNTS = tuple(range(9))
 T12_DEFAULT_FILLER = "vadd_vv"
 T12_SCALAR_FILLER = "scalar_add"
 T12_FILLERS = (T12_DEFAULT_FILLER, T12_SCALAR_FILLER)
+T12_DEFAULT_CONSUMER_ROLE = "dependent"
+T12_CONSUMER_ROLES = (T12_DEFAULT_CONSUMER_ROLE, "control")
 T12_SCALAR_FILLER_TARGETS = frozenset(
     {
         ("vcpop_m", "m1"),
         ("vcpop_m", "m2"),
         ("vcpop_m", "m4"),
         ("viota_m", "m4"),
+        ("vrgather_vv", "m4"),
+        ("vslideup_vx", "m4"),
+    }
+)
+T12_CONTROL_TARGETS = frozenset(
+    {
+        ("vcpop_m", "m1"),
+        ("vcpop_m", "m2"),
+        ("vcpop_m", "m4"),
         ("vrgather_vv", "m4"),
         ("vslideup_vx", "m4"),
     }
@@ -395,6 +406,10 @@ def t12_filler(args: argparse.Namespace) -> str:
     return getattr(args, "t12_filler", None) or T12_DEFAULT_FILLER
 
 
+def t12_consumer_role(args: argparse.Namespace) -> str:
+    return getattr(args, "t12_consumer_role", None) or T12_DEFAULT_CONSUMER_ROLE
+
+
 def vector_destination_slots(specs: Iterable[InstructionSpec]) -> int:
     return sum(1 for spec in specs if spec.result_kind != "scalar")
 
@@ -548,6 +563,8 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
         and t12_filler(args) != T12_DEFAULT_FILLER
     ):
         argv += ["--t12-filler", t12_filler(args)]
+    if args.template == "T12_CONSUMER_RAW_GAP" and t12_consumer_role(args) != T12_DEFAULT_CONSUMER_ROLE:
+        argv += ["--t12-consumer-role", t12_consumer_role(args)]
     if args.template == "T30_LMUL_SCALING" and getattr(args, "shape", None):
         argv += ["--shape", args.shape]
     policy = scalar_dest_policy(args)
@@ -711,6 +728,8 @@ def make_experiment_id(args: argparse.Namespace) -> str:
         parts.extend([f"k{filler_count}", args.consumer or default_consumer(args.instr)])
         if t12_filler(args) != T12_DEFAULT_FILLER:
             parts.append(f"f{t12_filler(args)}")
+        if t12_consumer_role(args) == "control":
+            parts.append("control")
     if template_id == "T30_LMUL_SCALING":
         if args.shape == "T12_CONSUMER_RAW_GAP":
             filler_count = args.filler_count if args.filler_count is not None else 0
@@ -835,6 +854,8 @@ def body_t12(
     filler_count: int,
     consumer: str,
     filler: str = T12_DEFAULT_FILLER,
+    consumer_role: str = T12_DEFAULT_CONSUMER_ROLE,
+    matched_dependent_experiment_id: str | None = None,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
     vector_filler_count = filler_count if filler == T12_DEFAULT_FILLER else 0
@@ -859,18 +880,54 @@ def body_t12(
         valid = ", ".join(T12_FILLERS)
         raise SystemExit(f"unknown T12 filler {filler!r}; valid values: {valid}")
     consumer_kind = "scalar_add"
+    consumer_source = producer_dest
+    fallback_source = src_b
+    independent_consumer_source: dict[str, Any] | None = None
+    if consumer_role == "control":
+        if consumer == "scalar_add" or spec.result_kind == "scalar":
+            consumer_source = "x28"
+            fallback_source = "x0"
+            independent_consumer_source = {
+                "register": consumer_source,
+                "kind": "scalar",
+                "initialized_by": "setup_block",
+            }
+        elif consumer == "vcpop_m" or spec.result_kind == "mask":
+            consumer_source = "v0"
+            fallback_source = src_b
+            independent_consumer_source = {
+                "register": consumer_source,
+                "kind": "mask",
+                "initialized_by": "setup_block_all_true_mask",
+            }
+        else:
+            consumer_source = src_b
+            fallback_source = src_a
+            independent_consumer_source = {
+                "register": consumer_source,
+                "kind": "vector",
+                "initialized_by": "setup_block",
+            }
     if consumer == "scalar_add" or spec.result_kind == "scalar":
-        lines.append(emit_consumer("scalar", producer_dest, consumer_dest, src_b))
+        lines.append(emit_consumer("scalar", consumer_source, consumer_dest, fallback_source))
     elif consumer == "vcpop_m" or spec.result_kind == "mask":
         consumer_kind = "mask_popcount"
-        lines.append(emit_consumer("mask", producer_dest, consumer_dest, src_b))
+        lines.append(emit_consumer("mask", consumer_source, consumer_dest, fallback_source))
     else:
         consumer_spec = require_instruction(consumer)
         consumer_kind = consumer_spec.result_kind
         if consumer_spec.result_kind == "scalar":
-            lines.append(emit_instruction(consumer_spec, dest=consumer_dest, src_a=producer_dest, src_b=src_b, scalar="x6"))
+            lines.append(
+                emit_instruction(
+                    consumer_spec,
+                    dest=consumer_dest,
+                    src_a=consumer_source,
+                    src_b=fallback_source,
+                    scalar="x6",
+                )
+            )
         else:
-            lines.append(emit_consumer("vector", producer_dest, consumer_dest, src_b))
+            lines.append(emit_consumer("vector", consumer_source, consumer_dest, fallback_source))
     lines.append("TIMESTAMP_MARK end")
     raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
     filler_kind = "scalar" if filler == T12_SCALAR_FILLER else "vector"
@@ -883,7 +940,7 @@ def body_t12(
     }
     if filler_cadence is not None:
         gap_sweep["independent_filler_cadence_cycles"] = filler_cadence
-    return ["start", "end"], lines, {
+    body_meta: dict[str, Any] = {
         "filler_count": filler_count,
         "filler_instruction_id": filler,
         "independent_filler_kind": filler_kind,
@@ -893,10 +950,26 @@ def body_t12(
         "consumer": consumer,
         "consumer_kind": consumer_kind,
         "consumer_destination": consumer_dest,
-        "consumer_reads_producer": True,
+        "consumer_reads_producer": consumer_role == T12_DEFAULT_CONSUMER_ROLE,
         "raw_path": raw_path,
         "gap_sweep": gap_sweep,
     }
+    if consumer_role == "control":
+        body_meta.update(
+            {
+                "t12_consumer_role": "control",
+                "matched_dependent_experiment_id": matched_dependent_experiment_id,
+                "independent_consumer_source": independent_consumer_source,
+            }
+        )
+    return ["start", "end"], lines, body_meta
+
+
+def t12_dependent_experiment_id(args: argparse.Namespace) -> str:
+    ns = argparse.Namespace(**vars(args))
+    ns.t12_consumer_role = T12_DEFAULT_CONSUMER_ROLE
+    ns.experiment_id = None
+    return make_experiment_id(ns)
 
 
 def body_t20(
@@ -1055,7 +1128,15 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
     if template_id == "T12_CONSUMER_RAW_GAP":
         filler_count = args.filler_count if args.filler_count is not None else 0
         consumer = args.consumer or default_consumer(args.instr)
-        return body_t12(spec, args.lmul, filler_count, consumer, t12_filler(args))
+        return body_t12(
+            spec,
+            args.lmul,
+            filler_count,
+            consumer,
+            t12_filler(args),
+            t12_consumer_role(args),
+            t12_dependent_experiment_id(args) if t12_consumer_role(args) == "control" else None,
+        )
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         other = require_instruction(args.other_instr or default_other_instr(args.instr))
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
@@ -1195,6 +1276,10 @@ def generate_one(args: argparse.Namespace) -> dict[str, Path]:
         raise SystemExit("--filler-count must be non-negative")
     if t12_filler(args) not in T12_FILLERS:
         raise SystemExit(f"--t12-filler must be one of: {', '.join(T12_FILLERS)}")
+    if t12_consumer_role(args) not in T12_CONSUMER_ROLES:
+        raise SystemExit(f"--t12-consumer-role must be one of: {', '.join(T12_CONSUMER_ROLES)}")
+    if args.template != "T12_CONSUMER_RAW_GAP" and t12_consumer_role(args) != T12_DEFAULT_CONSUMER_ROLE:
+        raise SystemExit("--t12-consumer-role=control is only valid for T12_CONSUMER_RAW_GAP")
 
     output_root = repo_path(args.output_root)
     template_path = repo_path(args.asm_template)
@@ -1234,6 +1319,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             scalar_dest_policy=extra.get("scalar_dest_policy"),
             t20_register_policy=extra.get("t20_register_policy"),
             t12_filler=extra.get("t12_filler", T12_DEFAULT_FILLER),
+            t12_consumer_role=extra.get("t12_consumer_role", T12_DEFAULT_CONSUMER_ROLE),
             iterations=extra.get("iterations"),
             filler_count=extra.get("filler_count"),
             output_root=args.output_root,
@@ -1260,12 +1346,18 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             "scalar_dest_policy",
             "t20_register_policy",
             "t12_filler",
+            "t12_consumer_role",
             "iterations",
             "filler_count",
         ):
             value = getattr(ns, key)
-            if value is not None and (key != "t12_filler" or value != T12_DEFAULT_FILLER):
-                entry[key] = value
+            if value is None:
+                continue
+            if key == "t12_filler" and value == T12_DEFAULT_FILLER:
+                continue
+            if key == "t12_consumer_role" and value == T12_DEFAULT_CONSUMER_ROLE:
+                continue
+            entry[key] = value
         entries.append(entry)
 
     add("T00_BASELINE_MARKER")
@@ -1297,6 +1389,17 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
                         filler_count=filler_count,
                         consumer=default_consumer(instr),
                         t12_filler=T12_SCALAR_FILLER,
+                    )
+            if (instr, lmul) in T12_CONTROL_TARGETS:
+                for filler_count in T12_FOCUSED_FILLER_COUNTS:
+                    add(
+                        "T12_CONSUMER_RAW_GAP",
+                        instr,
+                        lmul,
+                        filler_count=filler_count,
+                        consumer=default_consumer(instr),
+                        t12_filler=T12_SCALAR_FILLER,
+                        t12_consumer_role="control",
                     )
             add("T21_PAIR_WITH_SCALAR", instr, lmul)
             for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
@@ -1418,6 +1521,12 @@ def build_parser() -> argparse.ArgumentParser:
         choices=T12_FILLERS,
         default=T12_DEFAULT_FILLER,
         help="independent filler instruction for T12 gap probes",
+    )
+    one.add_argument(
+        "--t12-consumer-role",
+        choices=T12_CONSUMER_ROLES,
+        default=T12_DEFAULT_CONSUMER_ROLE,
+        help="T12 consumer role; control reads an independent initialized source instead of the producer result",
     )
     one.add_argument(
         "--scalar-dest-policy",

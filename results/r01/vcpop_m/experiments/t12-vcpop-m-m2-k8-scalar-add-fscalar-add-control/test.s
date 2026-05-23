@@ -1,0 +1,79 @@
+# Generated RVV profiling experiment.
+# experiment_id: t12-vcpop-m-m2-k8-scalar-add-fscalar-add-control
+# template_id: T12_CONSUMER_RAW_GAP
+# vector_shape: e32,m2
+# markers: start=__rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_start, end=__rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_end
+#
+# Timestamp markers are emitted as zero-cost labels at the next instruction PC.
+# experiment.yaml records the corresponding global symbols and marker semantics.
+
+    .section .text
+    .globl _start
+_start:
+    # Scalar setup used by vector length and scalar-pair probes.
+    li x5, 64
+    li x6, 1
+    li x7, 2
+    li x20, 20
+    li x21, 21
+    li x22, 22
+    li x23, 23
+    li x24, 24
+    li x25, 25
+    li x26, 26
+    li x27, 27
+    li x28, 28
+    li x29, 29
+    li x30, 30
+    li x31, 31
+
+    # Fixed first-version vector shape: SEW=e32, LMUL=m2.
+    vsetvli x0, x5, e32, m2, ta, ma
+
+    # Initialize aligned vector groups. Values are simple and non-zero
+    # where divisor/index operands might otherwise create simulator noise.
+    vmv.v.i v0, 1
+    vmv.v.i v2, 2
+    vmv.v.i v4, 3
+    vmv.v.i v6, 4
+    vmv.v.i v8, 5
+    vmv.v.i v10, 6
+    vmv.v.i v12, 7
+    vmv.v.i v14, 1
+    vmv.v.i v16, 2
+    vmv.v.i v18, 3
+    vmv.v.i v20, 4
+    vmv.v.i v22, 5
+    vmv.v.i v24, 6
+    vmv.v.i v26, 7
+    vmv.v.i v28, 1
+    vmv.v.i v30, 2
+
+    # Establish a reusable all-true mask input for mask instructions.
+    vmseq.vi v0, v0, 1
+
+    # Producer-consumer gap probe. Fillers are independent of the producer result.
+    # marker start: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_start
+    __rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_start:
+    .Lrvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_start:
+    vcpop.m x10, v0
+    add x20, x6, x7  # independent scalar filler 0
+    add x21, x6, x7  # independent scalar filler 1
+    add x22, x6, x7  # independent scalar filler 2
+    add x23, x6, x7  # independent scalar filler 3
+    add x24, x6, x7  # independent scalar filler 4
+    add x25, x6, x7  # independent scalar filler 5
+    add x26, x6, x7  # independent scalar filler 6
+    add x27, x6, x7  # independent scalar filler 7
+    add x11, x28, x0
+    # marker end: zero-cost timestamp point at the next instruction PC.
+    .globl __rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_end
+    __rvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_end:
+    .Lrvv_profile_marker_t12_vcpop_m_m2_k8_scalar_add_fscalar_add_control_end:
+
+    # Terminate through the conventional Linux exit syscall for runners that
+    # execute the assembled program directly.
+    li a0, 0
+    li a7, 93
+    ecall

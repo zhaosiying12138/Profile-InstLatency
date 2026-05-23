@@ -2105,12 +2105,20 @@
       "sha256": "bd4b38a14bfcfd742ce390c9043ec0c7e1743d771dc2179e1d017c40608671cf"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3b51512b8e8ad16c5a3e3985b743ea2cc72c15c92b92c16003d6ff5f32bbe8d6"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "831409a389728165362e0065572117bdea4bcff34efd083ddda27d0445ceab94"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add/trace.json",
       "sha256": "c791b105dcc199dd0fa4d1486a8bbcee3afee3a2211363a9b91dfe7563940363"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "e45b2c5174ed4f04c91e67a91cc72cb9af314360e3cde33a9375a89be5dd9590"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add/trace.json",
@@ -2161,6 +2169,10 @@
       "sha256": "cc92caa613557a14ad7ea9746165967da74b4bc63ad1fc9908dd01d30cabb8d5"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "fc0b501f8fc8adf3acb61f613194310d6542c87a0f8712ab6daef38f0dcc7f5d"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "e6152e71e2b05d1990c44b93a696207793ed3bb1c7b1ae7153b42d5fe989a615"
     },
@@ -2207,6 +2219,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k29-scalar-add/trace.json",
       "sha256": "26d9cad07b324ecf0fd65675a5058b3bcdf5f9c6e889dff13d0f5468e5094f0e"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "c6d9c92a015039a725dc16d90e28276dc19d85bc7b046089f5c990b475d9b9d1"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add/trace.json",
@@ -2257,6 +2273,10 @@
       "sha256": "fcc214abc88ba0aa6fa6399fd67259828b0411c293a830bf7bc6a9e468134d05"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "a6e8db81c1695cf51993253063ce8cbd163ddb160fbcfcd0dce99a8559c765d1"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "a8635ef3dab71796dad46f130b1b77fd3c46be58e21562db0457fdbba39e44b7"
     },
@@ -2269,12 +2289,20 @@
       "sha256": "14ba5591478920f7e2b43eaa2f532f4461c06306228a92a5e8f6936f836b05bf"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "163b4c0ed55d10bf6443360b1af00ec5c17d418f94a1ee5ed8ca737712cfaebb"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "bad7bc88b4249a5fdf51dab2bc3d25298b63628644168eff754289bb8032c6a3"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add/trace.json",
       "sha256": "bf1b19dac9417f2dee7a73bc5b904a08e3f3682deec347f612c04d65b25e5081"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "e952773c959dc89958ce5a69ff1332ca5ab8a3d51c24cd38595db49128e0414b"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add/trace.json",
@@ -2285,12 +2313,20 @@
       "sha256": "db29c23fdfdbefe6e38ef6cd9eaefdad779aac64e4a77c786f499863561d63f1"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "f2aec3bec5ecf06293e68667c630f3cbd1f88fefeca549959a44525bd2906f1e"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "6c403294ee2030ff72f6c9ec6267e3ac89d2171e78a9c37a38be4432f11202ca"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add/trace.json",
       "sha256": "de950e6d5d35986cad6ea4c8a42e2562982e8c24c789f74519cd5c7caa7b2b40"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "e3f5a4730d1feaa3007c3b557f053b03511420bd2523ca5a52a59d8376cfd49c"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add/trace.json",
@@ -2305,12 +2341,20 @@
       "sha256": "2b97fdf3100c5a0a8b766695d1f5e6801adac4e6dd3becd0e43d4981f8b29340"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "15f6ddba7901f5804c8a59c50e4428afe73b732d8846c68c6941586600318b93"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "98c7377871c5cd671fb6f38033aaf1926234fdd82a179ec47b927599a6bea743"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add/trace.json",
       "sha256": "ce22c734843cf58ea73c744d10b32403fdf7635e9853069bc24f09803ef82ff9"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "91120d7c568646be2cfd5ec09bb327e1d589b8079d3167c320831e41ca53558c"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add/trace.json",
@@ -2361,6 +2405,10 @@
       "sha256": "8d7d9c06d107d5f439544037c59eef74569ce8208519872d2b43e67cd6f99ebd"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "d5b14ed92ab76ef4f4781bb281b5e67329dcad23759f816c5ead18f8081f8f45"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "d3cecfd78952d5676aa6f8a37ba30037aabf330363f95c87fe988e715a701fe1"
     },
@@ -2407,6 +2455,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k29-scalar-add/trace.json",
       "sha256": "f36c2b0fc5b8747a4c87053a4af9beba7eed0e78ecc5b9a1f6efee7eb13a5db3"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3c1a428d32af7c7f2ecb4f0a70d2a4a5149bfdbad5e2d704f42f498e58ef1f77"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add/trace.json",
@@ -2457,6 +2509,10 @@
       "sha256": "af996c644a4073c25f1033cffd2239c5eda4dbe55683ed5da16557a4859ad64d"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3bb37eeb0af0cf83ca540aef33049bfcf584eb6521523c3364cf27ba954903e3"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "d912e07e1837dcb8f0ee27ba328549cb0eb4a07d9fd80bf1705c1be72f54868c"
     },
@@ -2469,12 +2525,20 @@
       "sha256": "32c2f44af5cecc46c881ea9cb7c2d8b8e8d851605206751e950c593ea872a932"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3f19371e6c22ae9d27b166a2976bb17217c5488e9e424e977ff23490210faa6a"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "7cd5322345c45b927edba85652ac7d02d92456e8040854b6c1f135c27f1b2b18"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add/trace.json",
       "sha256": "53f89adcd031228731b21d0cae80f6b0b45a4b3a940d7eeda8e54115660c07d1"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "051a119c0c3ed6363ed015819c43f38d5246fd195a383f9383f70e28bbf930bb"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add/trace.json",
@@ -2485,12 +2549,20 @@
       "sha256": "6ad4fc4250a4956a2af5ad7da906990728f3b52f76a7fbbbb07e5020de724f72"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "a7318ca4510b3c2fff4609f43b4ad087e14c98e8f7847702b68e6de7d5656cca"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "4336d10173db56b9de2a447aba56e3287dad2e0817fea1a84c61ef292608cfe3"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add/trace.json",
       "sha256": "35df7f96715ef5f28a1df0e1d8f14c5e2ee45a79d2773f9ffd86e23558da6496"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "1c26c9e08f2a64569f41b27e8800f400463287cd0823216e678677ad121f9a6d"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add/trace.json",
@@ -2505,12 +2577,20 @@
       "sha256": "41a45b70c9b629ef95aa406f0ca10b8053fd2d84bb90c44f622e00801da45879"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "5ebfd55d3b18032a16ccdb01974afbcf4b19bbdd07b04b33f19fb1091217e11a"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "ce678d911e438e5056360a0772ef00a702c92433a7b72d21ddca7d72ff918d8b"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add/trace.json",
       "sha256": "6d9af4fbdb4afc4e624d38ef26323584ffcb43eb7b509d6e55b3d7a990657f75"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "73aacbd4ee68e29e3b3d47faa991b4b24cc9e69d44ef9ec1a0aef4c8d5c83986"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add/trace.json",
@@ -2561,6 +2641,10 @@
       "sha256": "3db4ff6c8a3efcb8919d42416d920c2941de5e7b53a8e63fa3ecc9212f612bb6"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "de4d5d69c233fbf9c3cfc69641fbe623bef84a9d9404095ac01b459c5ce8788f"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "402763d374652cedb1706aa6ed6c709ea8e2b4b59104acf224a63c0f13344749"
     },
@@ -2607,6 +2691,10 @@
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k29-scalar-add/trace.json",
       "sha256": "c4faefc63154f3f463decf1d54ac6e0d7bb975d21346410bc778d11224cb0bfe"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "92b854a4f6cb47dcbfc3ffa133a0d4a837b1c20db6d3773b51615d273568a99d"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add/trace.json",
@@ -2657,6 +2745,10 @@
       "sha256": "4a271d381e66f3757c887a7cb215a072110f8967e0d579bd3d38275a627879de"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "800cb3036941568edcb2db1d7662cda8d9a40e96be9e21d539236ff7cb43c733"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "d438c422010f4dbc0aba8385158a23312aa1827389830b8474fb96f74df06d30"
     },
@@ -2669,12 +2761,20 @@
       "sha256": "cee9198ce18475ebf10ee45dc2ced96e2489ebb74f9563c1bcdeed79ab417c8c"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3d21cee048801286fe7b4afabbd16c7687b01285e64e076869e96510d5d00c7d"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "375f38335aa63dd7ac8c3266606a3009eb1f44e2a91e991296e6a36a1e8a6673"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add/trace.json",
       "sha256": "caad3e9792cd17c5f2dab4ef3c349a54db176746e0c44dbe7ef04ca58aaac660"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "0c36ceab4eb1a90395c2c019e434b6a477438c9a1a9a093a0e2c5c717097d50d"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add/trace.json",
@@ -2685,12 +2785,20 @@
       "sha256": "72484085e7e8401564e50dd9941d269fed7ef8622f07eab1224dad8b3a8e619e"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "e0793bc4c5aca31dc5ce7408d78e0403912dc5f9d9a3031faf03764c97b858c8"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "6ccbe6be74ceda9f1e6995c24ae95bd10cf5d4c7c9bd811029e0a1b08b8bb1ea"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add/trace.json",
       "sha256": "cf16fd2ebd78b80ce78a9b14b4fb14267a870d21b18e794d55f6d99f846fc2cb"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "a29d625608195781c2c2f9b64ee14cdccb679c86905c5a83e381c45b72b99f88"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add/trace.json",
@@ -11249,12 +11357,20 @@
       "sha256": "b2df1ad436d97acfbd717fcf17c8decf73fafe0542c9d19552bc700187469549"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "fe4ae6d5fe3935dc006d7811271d54ed9b13183da371059fd1d6185cf29d1be2"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add/trace.json",
       "sha256": "4d9c1f5b1c38e922b20c14b60af1101961eb538924e52f4283d1e946c914e8a0"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv/trace.json",
       "sha256": "f43fd93baf644dba516f0d34a79967e82c1d954bd191837e0bc44888199b7840"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "1600ec41d902e5070266133468e57ea4652ff3fa1c66f0a1e4e43aa43b7bd7e9"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add/trace.json",
@@ -11305,6 +11421,10 @@
       "sha256": "6e8f4599e11a9726a48055cbe260d98fb3b4c255cc1dcc41f0c8b424e2048ed4"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "7788485510d20233f684ffc5d4a8a1525662c9b69c7c2e0c95b2256ba7939345"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add/trace.json",
       "sha256": "a25e5ed44641914a31977e6b08a8895d7a8ac369081bafe98dc17c0da3c29e43"
     },
@@ -11351,6 +11471,10 @@
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k29-vadd-vv/trace.json",
       "sha256": "110179297c895669b84bda37d6cba2c0a2412e1fe84fca9017bf518dcdd26c0d"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "89a0312c99d41f64542ad5a85ed17bf6256928fbfa7450af20ca9e5c66ec9230"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add/trace.json",
@@ -11401,6 +11525,10 @@
       "sha256": "77e7677a7913fdc5d1ed2172c0893d6fb3030c1ead987351654f9b725d6a76d7"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "532e4ed681619553d00f74a7bf546aa1b89db7791a670d57b4e0421c32321ab2"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add/trace.json",
       "sha256": "1c9850da56aa2edcd46a8651bef1d006ca684e695e93369e5ca5aeba505eec1b"
     },
@@ -11413,12 +11541,20 @@
       "sha256": "120d1c1f3f33f790283733242aeb3ce7e16aba8682c261dcb34a17d51ffbb237"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "406e3ff9ccda8debff658dca11324a5a5d37148a4f85ca34612f6ed02f2a16d4"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add/trace.json",
       "sha256": "d35854a0c350ba65ffc199c691044a29ce7e36c1b2ecaf5967d0ab95850c9352"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv/trace.json",
       "sha256": "5dd96e0be4b3282c6d3e2497fb8754a816780d02c123f23af873f6c2da9c1c7a"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "13e7d2d0e9e7c154d3e4dee806dfdf9aeb69795caecd0ef1d87ac2061134c451"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add/trace.json",
@@ -11429,12 +11565,20 @@
       "sha256": "b133bd5fba3e71e395bbe377287ca358a153eafe15c42cb851185364d1c5172b"
     },
     {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "55e9033e8ec2c2388e99b24486c30fa1f2061f560675149bc01e44b7b7fd3fdb"
+    },
+    {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add/trace.json",
       "sha256": "6bf5c4cb2ebb9bb3fb93752843bf23b819fbf6160add5de0d11b5589015ddd7c"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv/trace.json",
       "sha256": "6e5fc9ac8968623dc45022ae8f0cf7f2255e1ccfcee78b16c0554e0773c55cdc"
+    },
+    {
+      "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "22e905ae801e2a638bb5b84d3ec3f3be82b8b156599d4b2f6c92f17b0e512a30"
     },
     {
       "path": "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add/trace.json",
@@ -12561,12 +12705,20 @@
       "sha256": "15aa19bf81f1034d7a4c2e9210815ef047b35e729ae1537f9b6042ff2252abe3"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "08e66242d18f1e114fac4899e8ffaff830d78a5bbe093d686885abaf526fdd4c"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add/trace.json",
       "sha256": "f4496f5b60ce956c91a17aa89e849ba4574b525469727ed989c31bb2e5f5046d"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv/trace.json",
       "sha256": "71697e6b6f60e115a91f4655d78616d80a45d4dc81fd682525bfca0b231aa30b"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "22d2d023aa1c66360f784e9b0ba423be63413ec5055fea0cec6d74c701e9c04e"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add/trace.json",
@@ -12617,6 +12769,10 @@
       "sha256": "192da1df154662a34d5d4f83b0dedd16ac71a7afe9100930b92f23d1c118569e"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "c671df7fc6421b61fd75bf5cc0b2a84475c8d07872a123b78738e09b1dd5a5c6"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add/trace.json",
       "sha256": "2b0753efa815c4bea19b009376d17b1ddeabb7965e6334636358c609981d7df4"
     },
@@ -12663,6 +12819,10 @@
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k29-vadd-vv/trace.json",
       "sha256": "541311dfdb4a3a4861429164e1b2ccc0786df825736f5e33cc216a2370120194"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "882c073d90740a471a9f30efa36206382a8a49b926f9504ce2ecf3c5b0fdc187"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add/trace.json",
@@ -12713,6 +12873,10 @@
       "sha256": "23454638ee8fe4cd29796476b3bb99e3c2430489716838f2eb9745924eff1e82"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "5e36559bfb69b8342c632bd777f6fa18fbe0394823b78d730cea01249a430c18"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add/trace.json",
       "sha256": "676d1287e41d196ee979b6ddb413062808983c170580497dfc2f7e917a461504"
     },
@@ -12725,12 +12889,20 @@
       "sha256": "7680502981be6add0dbde3633399cff4f0b1e9c905cd2291acea5c06dd3b2a61"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "1160b2521839b946e48bdb59d252c8d722a8cbddac8e013ffe18f8ee6d3979e7"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add/trace.json",
       "sha256": "15431a3cb5d4647cd0136f9ff3b4bc63b34b6b5b6b8eb354134aa66aa4c794d7"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv/trace.json",
       "sha256": "9c3c1600d2852e6e88d4927457d2d6414b11292c70fd219d0bc98b6be2196466"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "68b51b97ab62f9e6657301d5782f6551c0be3e89233bda2e9b7aa25905f2be9e"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add/trace.json",
@@ -12741,12 +12913,20 @@
       "sha256": "eb2bdae56263dede3134c664a07135360fa3c8c30d94c25e2b94b568cdb845a7"
     },
     {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "7dfc0f1924690963ae78a6e5802da657e9044243fe6cd36c1fa1e42ac8af8e53"
+    },
+    {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add/trace.json",
       "sha256": "e32dbe292148b9ac5fe35ffff9136787bf632d672a78760b61b99e20d5c98e8e"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv/trace.json",
       "sha256": "e9faa891a50fafadcd53218a36c1c91a18b223d5f97a64f6690dd556a57ea88f"
+    },
+    {
+      "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "eab4630cfded4bcf3ffecee1450297493d1634ea7771f56a5a5409224d1dbefe"
     },
     {
       "path": "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add/trace.json",
@@ -17133,12 +17313,20 @@
       "sha256": "6ef8e4ef054639635c7403084553fe5406c0942e58a193fe099261e75ae47f61"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "758c7812ae38fa71d5944afa1c6045c4c8b2698cfbe42ce9adafda22fb19b4e1"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "4e2e4ea9f7a980d168d3f57a35c44fedac30c33fad656d3a36afb56967d67ac4"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add/trace.json",
       "sha256": "0991ee45cd161d880ff0e6182bd1583663ba325c5e1242f57f004cc13ccefc10"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "6037e609999625646156e9e0e496c1a6ede77a46ab81c4c36054e0d559890baf"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add/trace.json",
@@ -17189,6 +17377,10 @@
       "sha256": "45848de95f7c98a1d34abfec1e200387a1fee0b3a83aecff643ce028b8454304"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "3b10871f6f23d89075b1cd2ecc953c7df018c1b15d5da329fad6d2957928a378"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "f256379367e62b76dc89f8692c244fecbfeed4b304a9dab1df52ae422219d7e1"
     },
@@ -17235,6 +17427,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k29-scalar-add/trace.json",
       "sha256": "a1952c15738a1903eca6dc3a6ae8b3495a44cf1b348af77a67a32086c0ee5d96"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "ce130d55efad9f78b86f4815edd433a5581af8dabd5fc76b381dca819243d833"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add/trace.json",
@@ -17285,6 +17481,10 @@
       "sha256": "fe907954981e0cb0b2ed454dd96106e9717a1adf9eea7a07e4f48e1649906f29"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "bd1f8f7488ad9daff6fa8e9d912d11a1c79710e7aa4f076e2b051ae1ef9963ec"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "80332adf404aceb3c462fae38ce103de545beef43bc5cc2481bcabb8215c163a"
     },
@@ -17297,12 +17497,20 @@
       "sha256": "3c5f8be51c94dd423c33221c5a846ed5385dfac763867431e95e306680b0b6ff"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "d4e3cac5b541fd9ef7f39eeaf61733eff1a02df2795fb0fa812ea212a00d819e"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "8d0e933f4eba6f4188a47934633f795e30925fe83ecd7381fafb1a0392747fc4"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add/trace.json",
       "sha256": "f96cf67e1d18dc5c8b827b1ceb3c25f44917e3f22d69e5f746084e5aeba6bc99"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "0c8bb3420632d47900349045de4247dbdc47ec588c9d1324c92ffcacb5ede6d9"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add/trace.json",
@@ -17313,12 +17521,20 @@
       "sha256": "d734c03c07dae9072942ed33483623acf0812de655cd9c3c62dcbc6920193166"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "7990124193805db9996682985f897762a1887e62439440b200bd2dc8d42a459d"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "e4a4568db3ea0f8c86d74cd09d453b703d31e9255bb3e7039d81b211e035d30b"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add/trace.json",
       "sha256": "facd995f45c3a15ceac8251ecc40562f544874dee601822f52a6f7e876b0d80e"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "8d3c1c24f612b6ee829ffdb10b5249cefc752abad2d11875947339f573b79aa9"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add/trace.json",
@@ -17333,12 +17549,20 @@
       "sha256": "5a78e90a1da28a4c36701ffd84ab11889573cf11010404d04b641053e642344c"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "7ad9bd7fece9fa263709b317cade4f32faafc818d25290f6863ea5e9a0a4cdca"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "13cad77a4d215bb9f6829b53c1bce0bd3eb0c262b2091a97fc3f79bcc01faa7f"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add/trace.json",
       "sha256": "5b545556d2160eccaaaa33289622ca1258e8919ea6aeff2269bd4e7909f856fd"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "be945b2e72a1784aed4fed4dbf9e61cb3c5ac44260b4cd8d4ad6dce439ac73ce"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add/trace.json",
@@ -17389,6 +17613,10 @@
       "sha256": "eb32904d72f54d3ca5eb2e3fa74e9dc182bbd89738672f8bf7dc3347a37b0430"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "8a868446a44680d6f9d7e6e8b3ca9c3ecd96af1b6d48435ee0e67357901a14b4"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "2ed64e8e4ecfec1f60f58c776e66a1382747e04d27b2f4e09cfc9ab3ffebca66"
     },
@@ -17435,6 +17663,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k29-scalar-add/trace.json",
       "sha256": "7c6b3148ff1993b14e46b115a3c7cae9adb965dcc953d93ae34d877f141497e0"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "21a05cf1ea53f0e0ebfd62d63a1a96700c807ee7f76629b98c6172b94e00701d"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add/trace.json",
@@ -17485,6 +17717,10 @@
       "sha256": "0682f68b92fcf28647b965873cacad16f584f3c8e20371dea75c7d5bd3d3c6e3"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "9a74ce8696657becf18455039e7dd4dce639980e6a514bf4d9ba2f457c407f9a"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "9d3fbfc4c26beaddfcb8c8afeeb145ffa2f389dbad65720e46bb65dd10d6f7cc"
     },
@@ -17497,12 +17733,20 @@
       "sha256": "32db3574e9809e9d6a305bb8a1b06896cc0df672fa8f7509685f2cd4056da6ba"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "ceb1018bbb219964340831d9a9ba3c2ff5cdb47b85ae4b80d655c26fe7e3bc37"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "0a70537136b22bd8620e8927bd7fdb463bc44d2ad62abac24e52bd2918e28c31"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add/trace.json",
       "sha256": "09640e6e322619e9b94fda0e875ee11e7a3fe0fac19c80e27f5f0cd08afadade"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "387ff6e99f689f854da426cc86a15e5936827228cd6d1bfde1845db867922e33"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add/trace.json",
@@ -17513,12 +17757,20 @@
       "sha256": "6472382c269c9d8bd0c88194c778ee5965885d0e3694fd0e8c01a002071b5318"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "73cab4499a0c94ece8d6092e9ad334a940f132d65f122ab8aa82c3c4c777aa5c"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "6b9d06f5e9d3679dcdf0024f3022827a1c420b15a7cb9b66a3fd5cee4d805f13"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add/trace.json",
       "sha256": "ffe6e8d78c8ab78a54ed74d7ac2847159834e85c501d60bc7eaecf64fb15b2d8"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "e7afb9e1cb2c161fa78e7efb490e5278a09ccc1a91e358f24646027a49d3219d"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add/trace.json",
@@ -17533,12 +17785,20 @@
       "sha256": "2bd3e073b6adb0fc24269046422ddb2137a11fd00ef90bc5755efd7ea0534dce"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "9b6bbdce5732da5c37aea34620be7e6ac3832e49e57f0bc703e24ae2a25f4faf"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add/trace.json",
       "sha256": "81e74ae654f305adb3d757eb95da49d1732d8d7c963ecaa31694311ab42aa998"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add/trace.json",
       "sha256": "67eb00bcfb9bbf9690ffc45f977985e3127522674789397a41e922a1257718aa"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "0653f2d73e3a7d193100e0eb1ed3c1d456207c57ccc4e9a6966e12f52725ae36"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add/trace.json",
@@ -17589,6 +17849,10 @@
       "sha256": "4282345b1a9d41ba7c5c56cfaff5b7a8bbbac3fbadb78e4f20b8c718c864b0b8"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "63530c8550042bcc8ad23220ea44ca7655bde065405985caba2d4f3f2e2b56ae"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add/trace.json",
       "sha256": "04cb6bd022cd7857337fdc3b8b8084f8cb74bc7e2de099a4874f235fc582a1a7"
     },
@@ -17635,6 +17899,10 @@
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k29-scalar-add/trace.json",
       "sha256": "5df4cee0a88fc19697a6d129452a9f476b38ba736e373d6c319f4277ff781e14"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "2fce63a73624fa0c9e77f232e6b09ff75f4703fd23aae22648898923de1b7dbd"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add/trace.json",
@@ -17685,6 +17953,10 @@
       "sha256": "738b27df72df736c74180730179e55de59229b5cae03b9db2f174dff2f81aa96"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "df2bce157f48dfd050d9271f17b513f23337066188678e9d3f6c002bd576d41e"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add/trace.json",
       "sha256": "e6bb5ad9e1cef7487cf8639ffdf466e4d38f2f16e7842c505cc9d2a77237b27c"
     },
@@ -17697,12 +17969,20 @@
       "sha256": "61e3306e8b53b458535d312f42586ff617275d15158dc6f610040b43a9c48540"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "21a366645ec1b1671afeaa6cbfbc4ca8eb45a0a0f69a4066fc7a6c491d8c05a4"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add/trace.json",
       "sha256": "e9e19afdff658ae8cbc19eebd0ba9582f9ad95d0e55b20d3f5824daadbf148db"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add/trace.json",
       "sha256": "f5ad474c16ba456dc6664ae837e23d41ee65197e1db99261e490535f88f202cc"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "86ea770fdae5e86acf3154f77be4e2c4eca1944136e1458394e2461c9bb0c9af"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add/trace.json",
@@ -17713,12 +17993,20 @@
       "sha256": "f270cc978af704486e38fcc6e85165aa160c1756ebc201ce93114ee93e463ddf"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "2c2bfb25a78744634f8c3d652f567918eeae333cc26c170826357bb922bf6549"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add/trace.json",
       "sha256": "37b13b8fd21f78745249617e01cb65c179c748da935e6dc56a7f7ab464125ecf"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add/trace.json",
       "sha256": "d22c4c0df87ade62ebbd80da667c467389719409dddfa1392aff8664957c2a28"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add-control/trace.json",
+      "sha256": "cc366633d5746984b4c1af158bbed847e5dc5052b3288f1f8cd9d27ff94d70b0"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add/trace.json",
@@ -26277,12 +26565,20 @@
       "sha256": "34425dd16084fc86a286835c2fce3cff092338d7dbc0099974063aad42a8c8ca"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "7a6a85a98563f5f0e5591361f6f8244daf8a722a03dd1fbf6689312caa444283"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add/trace.json",
       "sha256": "dabe3aeea4af9241e45a03623b91899eb5f5563cb84934b9709c8b84a9ea7c4e"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv/trace.json",
       "sha256": "35e41db0013040f129acfbf9ea6ec73a3127f8ad31fd11f9e9fcce4330441947"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "202a5621de92ba655e6a539310aff809d007094d24e98f6ebc3fd37213227d69"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add/trace.json",
@@ -26333,6 +26629,10 @@
       "sha256": "7f6e8c64643301a28b36c31b5d43c130af141ca7bc6962b000dd65452a29ac89"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "a1dc3d1394cad3acc6231b06e2aab29911dd17b366c4cc9bdfc81a36019c8a95"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add/trace.json",
       "sha256": "c4a955b314f19aee27d574cff511b32261af925c3fe5a23dbc576dd0fc643f9c"
     },
@@ -26379,6 +26679,10 @@
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k29-vadd-vv/trace.json",
       "sha256": "48d6138cae07997deb921e73ce893107b4ea85d799f6a066e638b27204dbfb2c"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "192a8e19591c480b0e5b5632ddf9d42dc9f9e3076d3163987a0ba60d316789b4"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add/trace.json",
@@ -26429,6 +26733,10 @@
       "sha256": "d54d8450aab22c3d5523fea877831c800f73746dc0bb16aa075098a37695ebdf"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "c7ab2bcbfd63668ffcfd045de474f4796c60197874413ccf018b726a65856d12"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add/trace.json",
       "sha256": "1bbd62dafab6326124802305163e53318e31d5598efe271da9b810ef04bec8dd"
     },
@@ -26441,12 +26749,20 @@
       "sha256": "cd3bc56bc99b66d289627aa2dc54684c0f53e8a7718f2d624609c504d0f8b629"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "e2c8d4297c6d24c0feeee1349055af85213ec632aede897b73ed90a00b4cd040"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add/trace.json",
       "sha256": "0f4e9dff690c2160b1b2ede9c5887f898d87ae9813bf7799e4a320f175a9a58f"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv/trace.json",
       "sha256": "391f4a37dfb3967908521f3097caa04e1ea62ef0133c5df3b93fb499287c2093"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "f6de6cc7a737cef505c434583571515eae6e7683c46cebff53e0f6797e03b867"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add/trace.json",
@@ -26457,12 +26773,20 @@
       "sha256": "f1e86334425bb9b949c953d8657e1533dc6007c63be2c153f08ade79d8c1438c"
     },
     {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "2f1d136a52b2fc8a5447d5d7e783de5587c3f7d27b150574f71a844cbb0a53c3"
+    },
+    {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add/trace.json",
       "sha256": "b9f8b6a101640670e50f90d5fe201a90c127806a9cf824637cc97aec833a35fc"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv/trace.json",
       "sha256": "aba0ea41cac29b3e4514d246395a577c6c0600aae924076a2bce78c81da58dc2"
+    },
+    {
+      "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "9e28df55d68f8723f69c8d2c54296ad4e7e3b5ce84adc11827b1762654a45a90"
     },
     {
       "path": "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add/trace.json",
@@ -27589,12 +27913,20 @@
       "sha256": "823db55cf4f4ec4ead074b82ddceb7643da1c379f6ef015ff985d2558aecdb3a"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "3204c570a2d74cf809434d98d35994bd38c66aad2d8d2092f3208b55169be690"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add/trace.json",
       "sha256": "d236885d103bde7588a8a16538e4693480c5ac5fa8807486334d2a10458fcf31"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv/trace.json",
       "sha256": "a2349e3ce2fb651bd65260533c23cd48349d9e6ce00e0a9049ca12aa3d89e494"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "37f664b9869def3cee58296b6e3a0ae36add9e5285ffd725c29e8e780b62dd62"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add/trace.json",
@@ -27645,6 +27977,10 @@
       "sha256": "f45fb9a3bf32720cbedad2c7f4571c66ac28b77ab1af78bafcb24114882e2891"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "1acb108bccb8157e55a7ac6ace2ca6bdc6eb5fb1f6c5a615ed5c86164131e615"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add/trace.json",
       "sha256": "8c0238c97e80ab1ce890541e06e196a09e43f9dfd75d16d6750182380fc57e3e"
     },
@@ -27691,6 +28027,10 @@
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k29-vadd-vv/trace.json",
       "sha256": "4367ed4f88d01b29ea240892a55c49852670b0f545fea39ec5abc020f033f0d6"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "fb197f277d53d459e5d57cd577bea94536aa802af41a1750927ba3c7b997b1af"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add/trace.json",
@@ -27741,6 +28081,10 @@
       "sha256": "a3351e1d6aaff9f9c11dc1bd1728831b951c9155cd547386a565aff60524f08c"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "8e3266af7194057553db7f2a58e9bc7adf04c670084a0370b7113a71a6c8fe97"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add/trace.json",
       "sha256": "b13d83411d2098763cf952ace2f0a165e14a3ea42b93cd8646cd728ed2ecf140"
     },
@@ -27753,12 +28097,20 @@
       "sha256": "46964debb11f0bc496e8b336a27a4ab5c4442959efa368232d9f9a29fbba2774"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "c43d01e5e71d9b25c42e6706c1ba451a7830492b1713137a4084d20a712cf004"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add/trace.json",
       "sha256": "5c8c655e43e8276996f037f0e199815a78ca27c569c522c754dba1f09a983b76"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv/trace.json",
       "sha256": "c87db7bdf8079bcfb483f2e1a8ba1de705c23dfcdd2c5eca2b217faf7e88269c"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "dffc84934c0587aa35a8a7eed92d5b960daa2e63e74b2d884cce73af96ff8117"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add/trace.json",
@@ -27769,12 +28121,20 @@
       "sha256": "b6398ffd355c2025b696b6c613e5f89216f8a204db16cd8ad8011b38fe9dac80"
     },
     {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "be02fe26b90ed27333528b170781f408f603026bdf091e3ab8fdded541f08900"
+    },
+    {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add/trace.json",
       "sha256": "ba3a98fa0edaa8d6ce7b1aff2d07224bc7e97f53ecca28699611f67a84919f0e"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv/trace.json",
       "sha256": "0d66948b2616ba2b4d888b168736451bb13a730394c5993c21fc7f52555355c4"
+    },
+    {
+      "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+      "sha256": "dc6d468466c2ae6e159517b4e97f7b5b0b8770605c8ecf2265e413ba1a2bda2a"
     },
     {
       "path": "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add/trace.json",
@@ -30185,9 +30545,9 @@
     "mode": "real_platform_profile"
   },
   "input_counts": {
-    "trace_files_after_filter": 7544,
-    "trace_files_before_filter": 10735,
-    "usable_marker_observations": 7540
+    "trace_files_after_filter": 7634,
+    "trace_files_before_filter": 10825,
+    "usable_marker_observations": 7630
   },
   "mode": "real_platform_profile",
   "required_fields": [
@@ -31019,7 +31379,7 @@
         3,
         4
       ],
-      "constraint_count": 306,
+      "constraint_count": 324,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -31042,7 +31402,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 306,
+      "constraint_count": 324,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -31065,7 +31425,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 306,
+      "constraint_count": 324,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -31088,7 +31448,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 306,
+      "constraint_count": 324,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -31111,7 +31471,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 306,
+      "constraint_count": 324,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",

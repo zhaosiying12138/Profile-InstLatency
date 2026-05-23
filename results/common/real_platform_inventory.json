@@ -33,11 +33,11 @@
   },
   "counts": {
     "by_backend": {
-      "gem5_minor": 7544,
+      "gem5_minor": 7634,
       "synthetic_cmodel": 3191
     },
     "by_mode": {
-      "real_platform_profile": 7544,
+      "real_platform_profile": 7634,
       "synthetic_calibration": 3191
     },
     "real_by_template_instruction_lmul": {
@@ -209,9 +209,9 @@
           "m4": 82
         },
         "vcpop_m": {
-          "m1": 100,
-          "m2": 100,
-          "m4": 100
+          "m1": 118,
+          "m2": 118,
+          "m4": 118
         },
         "vdivu_vv": {
           "m1": 82,
@@ -241,12 +241,12 @@
         "vrgather_vv": {
           "m1": 82,
           "m2": 82,
-          "m4": 100
+          "m4": 118
         },
         "vslideup_vx": {
           "m1": 82,
           "m2": 82,
-          "m4": 100
+          "m4": 118
         },
         "vsll_vv": {
           "m1": 82,
@@ -580,9 +580,9 @@
           "m4": 82
         },
         "vcpop_m": {
-          "m1": 100,
-          "m2": 100,
-          "m4": 100
+          "m1": 118,
+          "m2": 118,
+          "m4": 118
         },
         "vdivu_vv": {
           "m1": 82,
@@ -612,12 +612,12 @@
         "vrgather_vv": {
           "m1": 82,
           "m2": 82,
-          "m4": 100
+          "m4": 118
         },
         "vslideup_vx": {
           "m1": 82,
           "m2": 82,
-          "m4": 100
+          "m4": 118
         },
         "vsll_vv": {
           "m1": 82,
@@ -1151,7 +1151,7 @@
       "NumMicroOps",
       "SingleIssue"
     ],
-    "sha256": "8d83edaefa7d5d29ad1eade4c3f6b389873b6e082c4d1f1b583dad3278838578",
+    "sha256": "5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50",
     "status": "blocked",
     "status_counts": {
       "inferred": 141,
@@ -9830,6 +9830,762 @@
       },
       {
         "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k0-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k0-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k0-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k0-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k0-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k0-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":1,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":1,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":1},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k1-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k1-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":1,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":1,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":1},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k1-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k1-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":1,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":1,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":1},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k1-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 1,
+          "mean": 1,
+          "min": 1,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            1,
+            1
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k1-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":2,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":2,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":2},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k2-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k2-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":2,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":2,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":2},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k2-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k2-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":2,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":2,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":2},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k2-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k2-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":3,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":3,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":3},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k3-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k3-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":3,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":3,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":3},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k3-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k3-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":3,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":3,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":3},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k3-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 2,
+          "mean": 2,
+          "min": 2,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k3-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":4,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":4,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":4},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k4-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 3,
+          "mean": 3,
+          "min": 3,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            3,
+            3
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k4-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":4,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":4,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":4},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k4-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 3,
+          "mean": 3,
+          "min": 3,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            3,
+            3
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k4-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":4,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":4,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":4},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k4-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 3,
+          "mean": 3,
+          "min": 3,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            3,
+            3
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k4-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":5,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":5,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":5},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k5-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 3,
+          "mean": 3,
+          "min": 3,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            3,
+            3
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k5-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":5,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":5,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":5},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k5-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 3,
+          "mean": 3,
+          "min": 3,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            3,
+            3
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k5-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":5,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":5,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":5},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k5-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 8,
+          "mean": 8,
+          "min": 8,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            8,
+            8
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k5-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":6,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":6,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":6},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k6-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k6-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":6,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":6,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":6},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k6-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k6-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":6,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":6,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":6},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k6-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 8,
+          "mean": 8,
+          "min": 8,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            8,
+            8
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k6-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":7,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":7,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":7},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k7-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k7-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":7,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":7,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":7},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k7-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k7-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":7,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":7,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":7},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k7-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 9,
+          "mean": 9,
+          "min": 9,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            9,
+            9
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k7-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":8,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":8,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":8},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m1-k8-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m1",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 5,
+          "mean": 5,
+          "min": 5,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            5,
+            5
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m1-k8-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":8,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":8,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":8},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m2-k8-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m2",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 5,
+          "mean": 5,
+          "min": 5,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            5,
+            5
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m2-k8-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":8,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":8,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":8},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"scalar\",\"register\":\"x28\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vcpop-m-m4-k8-scalar-add-fscalar-add\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 9,
+          "mean": 9,
+          "min": 9,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            9,
+            9
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add-control/trace.json",
+          "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k8-scalar-add-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
           "body_signature": "{\"consumer\":\"scalar_add\",\"consumer_destination\":\"x11\",\"consumer_kind\":\"scalar_add\",\"consumer_reads_producer\":true,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_filler_kind\":\"scalar\",\"producer_destination\":\"x10\",\"producer_result_kind\":\"scalar\",\"raw_path\":\"scalar_result_to_scalar_add\"}",
           "instruction_id": "vcpop_m",
           "lmul": "m1",
@@ -17470,6 +18226,510 @@
         "trace_paths": [
           "results/r01/vcpop_m/experiments/t12-vcpop-m-m4-k9-scalar-add/trace.json",
           "results/r02/vcpop_m/experiments/t12-vcpop-m-m4-k9-scalar-add/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 23,
+          "mean": 23,
+          "min": 23,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            23,
+            23
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":0,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":0,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":0},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 21,
+          "mean": 21,
+          "min": 21,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            21,
+            21
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k0-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":1,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":1,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":1},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 23,
+          "mean": 23,
+          "min": 23,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            23,
+            23
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":1,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":1,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":1},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 21,
+          "mean": 21,
+          "min": 21,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            21,
+            21
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k1-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":2,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":2,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":2},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 23,
+          "mean": 23,
+          "min": 23,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            23,
+            23
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k2-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":2,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":2,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":2},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 21,
+          "mean": 21,
+          "min": 21,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            21,
+            21
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k2-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":3,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":3,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":3},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 24,
+          "mean": 24,
+          "min": 24,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            24,
+            24
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k3-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":3,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":3,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":3},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 22,
+          "mean": 22,
+          "min": 22,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            22,
+            22
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k3-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":4,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":4,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":4},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 24,
+          "mean": 24,
+          "min": 24,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            24,
+            24
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k4-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":4,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":4,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":4},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 22,
+          "mean": 22,
+          "min": 22,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            22,
+            22
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k4-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":5,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":5,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":5},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 25,
+          "mean": 25,
+          "min": 25,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            25,
+            25
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k5-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":5,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":5,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":5},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 23,
+          "mean": 23,
+          "min": 23,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            23,
+            23
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k5-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":6,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":6,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":6},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 25,
+          "mean": 25,
+          "min": 25,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            25,
+            25
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k6-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":6,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":6,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":6},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 23,
+          "mean": 23,
+          "min": 23,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            23,
+            23
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k6-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":7,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":7,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":7},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 28,
+          "mean": 28,
+          "min": 28,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            28,
+            28
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k7-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":7,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":7,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":7},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 26,
+          "mean": 26,
+          "min": 26,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            26,
+            26
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k7-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":8,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":8,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":8},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vrgather_vv",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 29,
+          "mean": 29,
+          "min": 29,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            29,
+            29
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vrgather_vv/experiments/t12-vrgather-vv-m4-k8-vadd-vv-fscalar-add-control/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"consumer\":\"vadd_vv\",\"consumer_destination\":\"v12\",\"consumer_kind\":\"vector\",\"consumer_reads_producer\":false,\"filler_cadence_cycles\":1,\"filler_count\":8,\"filler_instruction_id\":\"scalar_add\",\"gap_sweep\":{\"independent_filler_cadence_cycles\":1,\"independent_filler_count\":8,\"independent_filler_instruction\":\"scalar_add\",\"parameter\":\"filler_count\",\"value\":8},\"independent_consumer_source\":{\"initialized_by\":\"setup_block\",\"kind\":\"vector\",\"register\":\"v4\"},\"independent_filler_kind\":\"scalar\",\"matched_dependent_experiment_id\":\"t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add\",\"producer_destination\":\"v8\",\"producer_result_kind\":\"vector\",\"raw_path\":\"vector_result_to_vector\",\"t12_consumer_role\":\"control\"}",
+          "instruction_id": "vslideup_vx",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T12_CONSUMER_RAW_GAP"
+        },
+        "primary_delta_cycles": {
+          "max": 27,
+          "mean": 27,
+          "min": 27,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            27,
+            27
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add-control/trace.json",
+          "results/r02/vslideup_vx/experiments/t12-vslideup-vx-m4-k8-vadd-vv-fscalar-add-control/trace.json"
         ]
       },
       {
@@ -106658,9 +107918,9 @@
       }
     ],
     "missing_stable_repeat_template_instruction_lmul": [],
-    "repeat_groups_total": 3757,
-    "repeated_trace_total": 7544,
-    "stable_repeat_groups": 3757,
+    "repeat_groups_total": 3802,
+    "repeated_trace_total": 7634,
+    "stable_repeat_groups": 3802,
     "stable_template_instruction_lmul": [
       {
         "instruction_id": "unknown",
@@ -107718,10 +108978,10 @@
   "schema_version": 1,
   "trace_totals": {
     "conflict": 0,
-    "real": 7544,
-    "real_gem5": 7544,
+    "real": 7634,
+    "real_gem5": 7634,
     "synthetic": 3191,
-    "total": 10735,
+    "total": 10825,
     "unknown": 0
   }
 }

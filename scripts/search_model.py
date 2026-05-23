@@ -1676,6 +1676,18 @@ def t12_register_policy(item: RawObservation) -> str:
     return str(policy) if policy is not None else "unspecified"
 
 
+def t12_consumer_role(item: RawObservation) -> str:
+    role = first_metadata_value(item, "t12_consumer_role", "consumer_role")
+    if role is not None:
+        role_text = str(role)
+        if role_text in {"dependent", "control"}:
+            return role_text
+    reads_producer = body_bool(item, "consumer_reads_producer")
+    if reads_producer is False:
+        return "control"
+    return "dependent"
+
+
 def t12_trailing_min_residual_gaps(clean_gaps: list[int], residuals: dict[int, int]) -> tuple[int, ...]:
     if not clean_gaps:
         return ()
@@ -1742,6 +1754,200 @@ def t12_filler_cadence(
     return None, f"missing_filler_cadence:{filler}"
 
 
+def t12_matched_control_constraint(
+    item: RawObservation,
+    group: tuple[RawObservation, ...],
+    cadence: int,
+    cadence_source: str,
+) -> T12LatencyConstraint | None:
+    roles = {t12_consumer_role(member) for member in group}
+    if "control" not in roles:
+        return None
+    if "dependent" not in roles:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:matched_control_missing_dependent;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)}"
+            ),
+            group,
+            filler_cadence=cadence,
+        )
+
+    deltas_by_role_gap: dict[str, dict[int, set[int]]] = {
+        "dependent": defaultdict(set),
+        "control": defaultdict(set),
+    }
+    observations_by_role_gap: dict[str, dict[int, list[RawObservation]]] = {
+        "dependent": defaultdict(list),
+        "control": defaultdict(list),
+    }
+    for member in group:
+        role = t12_consumer_role(member)
+        if role not in deltas_by_role_gap:
+            continue
+        gap = body_int(member, "filler_count")
+        if gap is None or gap < 0:
+            continue
+        deltas_by_role_gap[role][gap].add(member.delta_cycles)
+        observations_by_role_gap[role][gap].append(member)
+
+    for role in ("dependent", "control"):
+        disagreeing_gaps = sorted(gap for gap, deltas in deltas_by_role_gap[role].items() if len(deltas) != 1)
+        if disagreeing_gaps:
+            evidence = tuple(
+                member
+                for gap in disagreeing_gaps
+                for member in observations_by_role_gap[role][gap]
+            )
+            return T12LatencyConstraint(
+                "skipped",
+                (
+                    "T12 skipped:repeated_gap_delta_disagreement;"
+                    f"role={role};instruction={item.instruction_id};lmul={item.lmul};"
+                    f"consumer={t12_consumer_key(item)};gaps={disagreeing_gaps}"
+                ),
+                evidence,
+                filler_cadence=cadence,
+            )
+
+    dependent_gaps = set(deltas_by_role_gap["dependent"])
+    control_gaps = set(deltas_by_role_gap["control"])
+    matched_gaps = sorted(dependent_gaps & control_gaps)
+    if not matched_gaps or matched_gaps[0] != 0:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:matched_control_missing_gap0;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"dependent_gaps={sorted(dependent_gaps)};control_gaps={sorted(control_gaps)}"
+            ),
+            group,
+            filler_cadence=cadence,
+        )
+    expected_gaps = list(range(matched_gaps[-1] + 1))
+    if matched_gaps != expected_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:matched_control_non_contiguous_gaps;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"matched_gaps={matched_gaps}"
+            ),
+            group,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+        )
+    if len(matched_gaps) < 2:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:matched_control_insufficient_coverage;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"matched_gaps={matched_gaps}"
+            ),
+            group,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+        )
+
+    dependent_delta = {gap: next(iter(deltas_by_role_gap["dependent"][gap])) for gap in matched_gaps}
+    control_delta = {gap: next(iter(deltas_by_role_gap["control"][gap])) for gap in matched_gaps}
+    control_cadence_gaps: list[int] = []
+    for previous, current in zip(matched_gaps, matched_gaps[1:]):
+        slope = control_delta[current] - control_delta[previous]
+        if slope < 0 or slope > cadence:
+            return T12LatencyConstraint(
+                "skipped",
+                (
+                    "T12 skipped:control_non_monotonic_or_exceeds_cadence;"
+                    f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                    f"previous_gap={previous};current_gap={current};slope={slope};filler_cadence={cadence}"
+                ),
+                group,
+                filler_cadence=cadence,
+                clean_gaps=tuple(matched_gaps),
+            )
+        if slope == cadence:
+            control_cadence_gaps.append(current)
+
+    stalls = {gap: dependent_delta[gap] - control_delta[gap] for gap in matched_gaps}
+    negative_gaps = [gap for gap, stall in stalls.items() if stall < 0]
+    if negative_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:matched_control_negative_stall;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"gaps={negative_gaps}"
+            ),
+            group,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+    for previous, current in zip(matched_gaps, matched_gaps[1:]):
+        if stalls[current] > stalls[previous]:
+            return T12LatencyConstraint(
+                "skipped",
+                (
+                    "T12 skipped:matched_control_stall_not_non_increasing;"
+                    f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                    f"previous_gap={previous};current_gap={current};"
+                    f"previous_stall={stalls[previous]};current_stall={stalls[current]}"
+                ),
+                group,
+                filler_cadence=cadence,
+                clean_gaps=tuple(matched_gaps),
+                observed_cadence_gaps=tuple(control_cadence_gaps),
+            )
+
+    converged_gaps = [gap for gap in matched_gaps if stalls[gap] == 0]
+    reason_prefix = (
+        f"T12 matched_control_convergence;instruction={item.instruction_id};lmul={item.lmul};"
+        f"consumer={t12_consumer_key(item)};filler_cadence={cadence};"
+        f"cadence_source={cadence_source};matched_gaps={matched_gaps};"
+        f"stalls={[stalls[gap] for gap in matched_gaps]};"
+        f"control_cadence_gaps={control_cadence_gaps}"
+    )
+    evidence = tuple(
+        member
+        for gap in matched_gaps
+        for role in ("dependent", "control")
+        for member in observations_by_role_gap[role][gap]
+    )
+    if not converged_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            f"{reason_prefix};no_matched_control_convergence",
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+    converged_gap = converged_gaps[0]
+    if not any(gap > converged_gap and stalls[gap] == 0 for gap in matched_gaps):
+        return T12LatencyConstraint(
+            "skipped",
+            f"{reason_prefix};insufficient_post_convergence_coverage;converged_gap={converged_gap}",
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+
+    latency = converged_gap * cadence
+    return T12LatencyConstraint(
+        "exact",
+        f"{reason_prefix};converged_gap={converged_gap};exact_latency={latency}",
+        evidence,
+        latency=latency,
+        filler_cadence=cadence,
+        clean_gaps=tuple(matched_gaps),
+        observed_cadence_gaps=tuple(control_cadence_gaps),
+    )
+
+
 def t12_constraint_for_group(
     item: RawObservation,
     group_items: Iterable[RawObservation],
@@ -1760,9 +1966,14 @@ def t12_constraint_for_group(
             ),
             group,
         )
+    matched_control = t12_matched_control_constraint(item, group, cadence, cadence_source)
+    if matched_control is not None:
+        return matched_control
     deltas_by_gap: dict[int, set[int]] = defaultdict(set)
     observations_by_gap: dict[int, list[RawObservation]] = defaultdict(list)
     for member in group:
+        if t12_consumer_role(member) != "dependent":
+            continue
         gap = body_int(member, "filler_count")
         if gap is None or gap < 0:
             continue

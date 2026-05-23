@@ -125,6 +125,7 @@ def t12_observations(
     lmul="m1",
     filler_instruction_id="vadd_vv",
     body_extra=None,
+    experiment_suffix="",
 ):
     extra = dict(body_extra or {})
     return [
@@ -133,7 +134,7 @@ def t12_observations(
             lmul=lmul,
             template_id="T12_CONSUMER_RAW_GAP",
             delta_cycles=delta,
-            experiment_id=f"t12-{instruction_id}-{lmul}-k{gap}",
+            experiment_id=f"t12-{instruction_id}-{lmul}-k{gap}{experiment_suffix}",
             body={
                 "filler_count": gap,
                 "consumer": "vconsumer",
@@ -143,6 +144,43 @@ def t12_observations(
         )
         for gap, delta in deltas_by_gap
     ]
+
+
+def t12_matched_control_observations(
+    dependent_deltas_by_gap,
+    control_deltas_by_gap,
+    *,
+    instruction_id="vproducer",
+    lmul="m1",
+    filler_instruction_id="scalar_add",
+    cadence=1,
+):
+    dependent = t12_observations(
+        dependent_deltas_by_gap,
+        instruction_id=instruction_id,
+        lmul=lmul,
+        filler_instruction_id=filler_instruction_id,
+        body_extra={
+            "filler_cadence_cycles": cadence,
+            "t12_consumer_role": "dependent",
+            "consumer_reads_producer": True,
+        },
+        experiment_suffix="-dependent",
+    )
+    control = t12_observations(
+        control_deltas_by_gap,
+        instruction_id=instruction_id,
+        lmul=lmul,
+        filler_instruction_id=filler_instruction_id,
+        body_extra={
+            "filler_cadence_cycles": cadence,
+            "t12_consumer_role": "control",
+            "consumer_reads_producer": False,
+            "matched_dependent_experiment_id": "t12-vproducer-m1-k0-dependent",
+        },
+        experiment_suffix="-control",
+    )
+    return dependent + control
 
 
 def candidate(*, proc_resource="pipe0", release_at_cycles=1, num_micro_ops=1, single_issue=False, latency=1):
@@ -366,6 +404,77 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(field["value"], 4)
         self.assertEqual(field["t12_latency_constraints"][0]["filler_cadence"], 2)
         self.assertIn("candidate_options:vfiller", field["t12_latency_constraints"][0]["reason"])
+
+    def test_t12_matched_control_convergence_infers_exact_latency(self):
+        field = solve_latency_field(
+            t12_matched_control_observations(
+                [(0, 7), (1, 7), (2, 7), (3, 7), (4, 8), (5, 9)],
+                [(0, 4), (1, 5), (2, 6), (3, 7), (4, 8), (5, 9)],
+            )
+        )
+
+        self.assertEqual(field["status"], "exact_fit")
+        self.assertEqual(field["value"], 3)
+        constraint = field["t12_latency_constraints"][0]
+        self.assertEqual(constraint["status"], "exact")
+        self.assertIn("matched_control_convergence", constraint["reason"])
+        self.assertIn("converged_gap=3", constraint["reason"])
+
+    def test_t12_matched_control_repeat_disagreement_fails_closed(self):
+        observations = t12_matched_control_observations(
+            [(0, 7), (1, 7), (2, 7), (3, 7)],
+            [(0, 4), (1, 5), (2, 6), (3, 7)],
+        )
+        observations.append(
+            raw_observation(
+                instruction_id="vproducer",
+                lmul="m1",
+                template_id="T12_CONSUMER_RAW_GAP",
+                delta_cycles=8,
+                experiment_id="t12-vproducer-m1-k3-control-repeat-disagree",
+                body={
+                    "filler_count": 3,
+                    "consumer": "vconsumer",
+                    "filler_instruction_id": "scalar_add",
+                    "filler_cadence_cycles": 1,
+                    "t12_consumer_role": "control",
+                    "consumer_reads_producer": False,
+                },
+            )
+        )
+
+        field = solve_latency_field(observations)
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("repeated_gap_delta_disagreement", field["t12_latency_constraints"][0]["reason"])
+
+    def test_t12_matched_control_non_monotonic_control_fails_closed(self):
+        field = solve_latency_field(
+            t12_matched_control_observations(
+                [(0, 7), (1, 7), (2, 7), (3, 7)],
+                [(0, 4), (1, 6), (2, 5), (3, 7)],
+            )
+        )
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("control_non_monotonic_or_exceeds_cadence", field["t12_latency_constraints"][0]["reason"])
+
+    def test_t12_matched_control_last_only_convergence_fails_closed(self):
+        field = solve_latency_field(
+            t12_matched_control_observations(
+                [(0, 6), (1, 6), (2, 6)],
+                [(0, 4), (1, 5), (2, 6)],
+            )
+        )
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("insufficient_post_convergence_coverage", field["t12_latency_constraints"][0]["reason"])
 
     def test_non_affine_vcpop_m4_issue_fields_keep_stream_diagnostics(self):
         observations = t10_observations(
