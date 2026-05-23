@@ -1,13 +1,13 @@
 schema_version: 1
-round: 7
+round: 9
 source_plan: docs/plan.md
 rlcr_goal_tracker: .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
 ultimate_goal: profile selected non-memory RVV instruction timing and preserve LLVM schedule-model evidence
 lesson_ids: NONE
 acceptance_focus:
   - AC-9 candidate-simulator scope was accepted by Round 5 review for peer-side T20 constraints and the T12 short-sweep guard in commit 773f27d6.
-  - AC-12 now includes the normalized Round 5 code-worker package, the Round 6 Gibbs approval-gate package, and this Round 7 request-worker package with prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
-  - AC-13 now makes empty-context replay reconstruct the Round 5 code-worker scope, Round 6 approval-gate scope, and Round 7 pending request scope, including the request path, gate command, current hashes, 39 unresolved risk IDs, and approval boundary.
+  - AC-12 now includes the normalized Round 5 code-worker package, the Round 6 Gibbs approval-gate package, the Round 7 request-worker package, and the Round 9 field-status hash refresh package with prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
+  - AC-13 now makes empty-context replay reconstruct the Round 5 code-worker scope, Round 6 approval-gate scope, Round 7 pending request scope, and Round 9 current hash refresh, including the request path, gate command, current hashes, 39 unresolved risk IDs, field-status blocking counts, and approval boundary.
   - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 39 non-identifiable risks.
 worker_split:
   A: LLVM read-only extractor and mapping docs
@@ -25,8 +25,10 @@ worker_split:
   Kepler: Round 5 agentic-flow capture refresh
   Gibbs: Round 6 approval-gate hardening for hash-bound unresolved-risk acceptance
   Round7RiskRequest: Round 7 pending risk-acceptance request artifact and Humanize2 capture
-active_worker: Round7RiskRequest
-status: round7_risk_acceptance_request_created_pending_human_decision
+  Round8Review: Round 8 review kept AC-16 blocked and identified field-status blocking-count drift
+  Round9FieldStatusHashRefresh: Round 9 pending request hash refresh and Humanize2 capture after field-status blocking-count fix
+active_worker: Round9FieldStatusHashRefresh
+status: round9_request_hashes_refreshed_pending_human_decision
 round_status:
   round_2: shared_candidate_search_introduced_but_t20_t12_and_approval_blocked
   round_3: expanded_real_t20_coverage_and_regenerated_artifacts_but_t20_t12_modeling_blocked
@@ -34,7 +36,10 @@ round_status:
   round_5: code_worker_candidate_simulator_scope_accepted_capture_gap_found_approval_blocked
   round_6: missing_round5_code_worker_capture_package_added_and_approval_gate_hardened_but_gibbs_capture_gap_found
   round_7: pending_risk_acceptance_request_created_and_human_handoff_captured
+  round_8: review_blocked_ac16_and_identified_field_status_summary_undercount
+  round_9: field_status_summary_counts_non_identifiable_as_blocking_request_hashes_refreshed_capture_updated
 remaining_open_items:
   - Present results/common/real_platform_risk_acceptance_request.json to the human before creating any future human_approval.json.
   - Explicit human approval or stronger evidence is still required before the real-platform gate can pass.
   - 39 unresolved non_identifiable real-platform field rows remain approval-bound risks.
+  - AC-16 remains blocked until the real-platform gate passes with explicit current-hash-bound approval or the 39 rows are resolved by stronger evidence.

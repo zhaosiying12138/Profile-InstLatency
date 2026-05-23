@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.7.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.9.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1,rvv.riskAcceptanceRequest.v1"></h2-capability>
@@ -27,6 +27,9 @@
   </h2-template>
   <h2-template id="round-7-risk-acceptance-request-worker" type="prompt" href="../artifacts/prompts/round-7-risk-acceptance-request-worker.md">
     Normalized self-capture of the Round 7 worker that creates a pending risk-acceptance request, registers it in Humanize2, and hands it to the human before any future gate-consumed artifact is created.
+  </h2-template>
+  <h2-template id="round-9-field-status-hash-refresh-worker" type="prompt" href="../artifacts/prompts/round-9-field-status-hash-refresh-worker.md">
+    Normalized reconstruction of the Round 9 capture worker that refreshes request metadata and Humanize2 state after field-status non-identifiable rows are counted as blocking.
   </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
@@ -88,7 +91,7 @@
       <h2-approval-boundary status="fail-closed" inventory-sha256="4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b" field-status-sha256="904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179" unresolved-non-identifiable-risks="39"></h2-approval-boundary>
     </h2-agent>
     <h2-agent id="round7-risk-acceptance-request-worker" role="worker" tool="codex" prompt="#round-7-risk-acceptance-request-worker" short-name="risk-request" timeout="unknown">
-      <h2-current-status>pending-request-created-not-approved-not-gate-consumed</h2-current-status>
+      <h2-current-status>superseded-by-round9-field-status-hash-refresh</h2-current-status>
       <h2-owned-write-set>results/common/real_platform_risk_acceptance_request.json,results/common/agentic_flow/**</h2-owned-write-set>
       <h2-expect artifact="round-7-risk-acceptance-request" schema="rvv.riskAcceptanceRequest.v1"></h2-expect>
       <h2-expect artifact="round-7-risk-request-contract" schema="rvv.workerContract.v1"></h2-expect>
@@ -97,11 +100,24 @@
       <h2-expect artifact="round-7-risk-request-tool-call" schema="rvv.toolCall.v1"></h2-expect>
       <h2-request-boundary status="pending-not-approved" gate-consumed="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b" field-status-sha256="904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179" unresolved-non-identifiable-risks="39"></h2-request-boundary>
     </h2-agent>
+    <h2-agent id="round9-field-status-hash-refresh-worker" role="worker" tool="codex" prompt="#round-9-field-status-hash-refresh-worker" short-name="hash-refresh" timeout="unknown">
+      <h2-current-status>pending-request-refreshed-not-approved-not-gate-consumed</h2-current-status>
+      <h2-commit>f6614b00177e4139c8cfcf53b349b69478942b66</h2-commit>
+      <h2-owned-write-set>results/common/real_platform_risk_acceptance_request.json,results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-expect artifact="round-9-risk-acceptance-request" schema="rvv.riskAcceptanceRequest.v1"></h2-expect>
+      <h2-expect artifact="round-9-field-status-hash-refresh-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-9-field-status-hash-refresh-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-9-field-status-hash-refresh-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-9-field-status-hash-refresh-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-round8-review-blocker ac16-blocked="true" field-status-summary-undercounted-non-identifiable="true"></h2-round8-review-blocker>
+      <h2-field-status-summary blocking-total="39" non-identifiable-blocking-count="39"></h2-field-status-summary>
+      <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37" field-status-sha256="0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195" search-sha256="d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73" quality-sha256="b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e" unresolved-non-identifiable-risks="39"></h2-request-boundary>
+    </h2-agent>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
       <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 39 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>
     </h2-check>
-    <h2-human id="real-platform-approval" prompt="Present results/common/real_platform_risk_acceptance_request.json, then approve or reject explicit real-platform risk acceptance tied to inventory hash 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b, field-status hash 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179, and the 39 unresolved risk IDs before treating AC-16 as satisfied.">
+    <h2-human id="real-platform-approval" prompt="Present results/common/real_platform_risk_acceptance_request.json, then approve or reject explicit real-platform risk acceptance tied to inventory hash 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37, field-status hash 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195, and the 39 unresolved risk IDs before treating AC-16 as satisfied.">
       <h2-current-status>absent</h2-current-status>
       <h2-request-artifact>results/common/real_platform_risk_acceptance_request.json</h2-request-artifact>
       <h2-required-artifact>results/common/human_approval.json</h2-required-artifact>

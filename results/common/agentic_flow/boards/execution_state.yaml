@@ -1,5 +1,5 @@
 schema_version: 1
-round: 7
+round: 9
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,12 +12,12 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 7
-  status: awaiting_human_risk_decision
+  round: 9
+  status: awaiting_human_risk_decision_after_field_status_hash_refresh
   owner_scope:
     - results/common/real_platform_risk_acceptance_request.json
     - results/common/agentic_flow/**
-  task: create_non_gate_consumed_risk_acceptance_request
+  task: refresh_round9_request_semantics_and_humanize2_capture
   code_and_generated_result_fixes_owned_by_round5_worker: true
   round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   round5_code_worker_review_status: accepted_for_candidate_simulator_scope
@@ -25,6 +25,10 @@ current_boundary:
   round6_approval_gate_worker: Gibbs
   round6_approval_gate_worker_commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
   round6_approval_gate_review_status: accepted_for_approval_gate_behavior
+  round8_review_status: request_changes_ac16_blocked_and_field_status_summary_undercounted_non_identifiable
+  round9_code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
+  round9_code_worker_status: field_status_summary_counts_non_identifiable_as_blocking
+  request_worker: Round9FieldStatusHashRefresh
   forbidden_paths:
     - scripts/search_model.py
     - tests/test_search_model_candidate_sim.py
@@ -38,7 +42,7 @@ phase_status:
   phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round7_request_worker_captured_without_ac16_completion_claim
+  humanize2_capture: round9_hash_refresh_captured_without_ac16_completion_claim
 real_platform_evidence:
   checked_in_r01_r02_trace_files: 7190
   required_real_gem5_groups: 178
@@ -52,10 +56,14 @@ real_platform_evidence:
     conflict: 0
     insufficient_evidence: 0
   artifact_hashes:
-    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
-    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
     search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-    experiment_quality_md: b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6
+    experiment_quality_md: b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e
+  field_status_summary:
+    blocking_total: 39
+    blocking_status_counts:
+      non_identifiable: 39
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
@@ -82,6 +90,8 @@ approval_boundary:
   risk_acceptance_request:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
+    round: 9
+    request_worker: Round9FieldStatusHashRefresh
     gate_consumed: false
     is_approval_artifact: false
     present_to_human_before_human_approval_json: true
@@ -91,8 +101,8 @@ approval_boundary:
       - accept selected listed risk IDs
   note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
   must_bind_to_hashes:
-    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
-    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
   accepted_risk_scope_required: true
   unresolved_non_identifiable_risks: 39
 remaining_blockers:

@@ -1,0 +1,113 @@
+{
+  "id": "tool-worker-r9-field-status-hash-refresh-normalized",
+  "round": 9,
+  "worker": "Round9FieldStatusHashRefresh",
+  "primitive": "h2-agent",
+  "tool_surface": "shell",
+  "capture_type": "normalized_reconstruction",
+  "source_commit": "f6614b00177e4139c8cfcf53b349b69478942b66",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "sources": [
+    ".humanize/rlcr/2026-05-23_01-15-03/round-8-review-result.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-9-prompt.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-9-summary.md",
+    "git show --format=fuller --name-only f6614b00",
+    "results/common/real_platform_inventory.json",
+    "results/common/real_platform_field_status.json",
+    "results/common/real_platform_risk_acceptance_request.json"
+  ],
+  "state_changes": [
+    {
+      "kind": "request_metadata_refresh",
+      "summary": "Refresh the pending risk-acceptance request from Round 7 to Round 9 semantics while preserving not-approved and not-gate-consumed status.",
+      "paths": [
+        "results/common/real_platform_risk_acceptance_request.json"
+      ]
+    },
+    {
+      "kind": "humanize2_capture",
+      "summary": "Register the Round 9 field-status hash refresh in templates, artifacts, flow nodes, boards, replay, events, cartridge, status view, manifest notes, worker output, verification, and tool-call capture.",
+      "paths": [
+        "results/common/agentic_flow/h2_primitives.yaml",
+        "results/common/agentic_flow/events.jsonl",
+        "results/common/agentic_flow/replay.md",
+        "results/common/agentic_flow/h2_manifest_notes.md",
+        "results/common/agentic_flow/boards/execution_state.yaml",
+        "results/common/agentic_flow/boards/experiment_matrix.yaml",
+        "results/common/agentic_flow/boards/goal_tracker.yaml",
+        "results/common/agentic_flow/boards/inference_state.yaml",
+        "results/common/agentic_flow/boards/simulator_selection.yaml",
+        "results/common/agentic_flow/views/status_panel.html",
+        "results/common/agentic_flow/cartridges/rvv-profile-workflow.draft.html",
+        "results/common/agentic_flow/artifacts/prompts/round-9-field-status-hash-refresh-worker.md",
+        "results/common/agentic_flow/artifacts/worker_contracts/worker-r9-field-status-hash-refresh.md",
+        "results/common/agentic_flow/artifacts/worker_outputs/worker-r9-field-status-hash-refresh.md",
+        "results/common/agentic_flow/artifacts/verification/worker-r9-field-status-hash-refresh.md",
+        "results/common/agentic_flow/artifacts/tool_calls/worker-r9-field-status-hash-refresh-normalized.json"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "worker-r9-parse-h2-json-yaml-jsonl",
+      "category": "parse",
+      "command": "python3 - <<'PY'\nimport glob, json\nfrom pathlib import Path\nimport yaml\nfor path in ['results/common/agentic_flow/h2_primitives.yaml'] + glob.glob('results/common/agentic_flow/boards/*.yaml'):\n    with open(path, 'r', encoding='utf-8') as f:\n        yaml.safe_load(f)\nfor path in glob.glob('results/common/agentic_flow/artifacts/tool_calls/*.json') + ['results/common/real_platform_risk_acceptance_request.json']:\n    with open(path, 'r', encoding='utf-8') as f:\n        json.load(f)\nwith open('results/common/agentic_flow/events.jsonl', 'r', encoding='utf-8') as f:\n    for line in f:\n        if line.strip():\n            json.loads(line)\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "parse ok: yaml=6 json=15 events=53"
+    },
+    {
+      "id": "worker-r9-structural-request-and-blocking",
+      "category": "structural",
+      "command": "python3 - <<'PY'\nimport hashlib, json\nfrom pathlib import Path\ninv = json.loads(Path('results/common/real_platform_inventory.json').read_text())\nstatus = json.loads(Path('results/common/real_platform_field_status.json').read_text())\nreq = json.loads(Path('results/common/real_platform_risk_acceptance_request.json').read_text())\nexpected_hashes = {\n    'inventory_sha256': hashlib.sha256(Path('results/common/real_platform_inventory.json').read_bytes()).hexdigest(),\n    'real_platform_field_status_sha256': hashlib.sha256(Path('results/common/real_platform_field_status.json').read_bytes()).hexdigest(),\n    'search_model_real_platform_sha256': hashlib.sha256(Path('results/common/search_model_real_platform.json').read_bytes()).hexdigest(),\n    'experiment_quality_sha256': hashlib.sha256(Path('results/common/experiment_quality.md').read_bytes()).hexdigest(),\n}\nids = [row['risk_id'] for row in inv['field_status']['unresolved']]\nassert status['summary']['blocking_total'] == 39\nassert status['summary']['blocking_status_counts']['non_identifiable'] == 39\nassert req['round'] == 9\nassert req['request_worker'] == 'Round9FieldStatusHashRefresh'\nassert req['status'] == 'pending'\nassert req['request_status'] == 'not_approved'\nassert req['decision_status'] == 'not_approved'\nassert req['gate_status'] == 'not_submitted'\nassert req['approved'] is False\nassert req['is_gate_input'] is False\nassert req['is_approval_artifact'] is False\nassert req['gate_consumed'] is False\nassert req['current_hashes'] == expected_hashes\nassert req['risk_ids'] == ids\nassert req['risk_scope']['risk_ids'] == ids\nassert len(ids) == 39\nassert not list(Path('results/common').glob('*approval*'))\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "structural ok: blocking_total=39 non_identifiable=39 risk_ids=39 hashes=current approval_files=0"
+    },
+    {
+      "id": "worker-r9-unit-tests",
+      "category": "tests",
+      "command": "python3 -m unittest tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed, 18 tests"
+    },
+    {
+      "id": "worker-r9-synthetic-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r9-real-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "expected_exit_code": 1,
+      "expected_failure": true,
+      "exit_code": 1,
+      "reported_result": "failed closed: missing Gate status PASS, missing machine-readable human approval, and 39 unresolved non_identifiable risks"
+    },
+    {
+      "id": "worker-r9-diff-check",
+      "category": "whitespace",
+      "command": "git diff --check",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed"
+    }
+  ],
+  "outputs": [
+    "results/common/real_platform_risk_acceptance_request.json",
+    "results/common/agentic_flow/artifacts/prompts/round-9-field-status-hash-refresh-worker.md",
+    "results/common/agentic_flow/artifacts/worker_contracts/worker-r9-field-status-hash-refresh.md",
+    "results/common/agentic_flow/artifacts/worker_outputs/worker-r9-field-status-hash-refresh.md",
+    "results/common/agentic_flow/artifacts/verification/worker-r9-field-status-hash-refresh.md",
+    "results/common/agentic_flow/artifacts/tool_calls/worker-r9-field-status-hash-refresh-normalized.json"
+  ],
+  "request_status": "not_approved",
+  "approval_artifact_created": false,
+  "gate_consumed": false,
+  "status": "verified_fail_closed_pending_human_decision"
+}

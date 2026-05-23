@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "artifact_kind": "risk_acceptance_request",
-  "round": 7,
-  "request_worker": "Round7RiskRequest",
+  "round": 9,
+  "request_worker": "Round9FieldStatusHashRefresh",
   "status": "pending",
   "request_status": "not_approved",
   "decision_status": "not_approved",

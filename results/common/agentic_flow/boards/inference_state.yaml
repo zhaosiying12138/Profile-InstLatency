@@ -1,5 +1,5 @@
 schema_version: 1
-status: real_platform_artifacts_round7_request_created_gate_not_ready
+status: real_platform_artifacts_round9_request_hashes_refreshed_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -31,10 +31,18 @@ current_counts:
   field_rows_conflict: 0
   field_rows_insufficient_evidence: 0
 artifact_hashes:
-  real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
-  real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+  real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
   search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-  experiment_quality_md: b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6
+  experiment_quality_md: b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e
+field_status_summary:
+  blocking_total: 39
+  blocking_status_counts:
+    non_identifiable: 39
+round9_code_worker_commit:
+  commit: f6614b00177e4139c8cfcf53b349b69478942b66
+  fix: non_identifiable_counted_as_blocking_in_field_status_summary
+  request_worker: Round9FieldStatusHashRefresh
 round4_review_hashes:
   real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
   real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
@@ -62,6 +70,8 @@ approval:
   request_artifact:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
+    round: 9
+    request_worker: Round9FieldStatusHashRefresh
     gate_consumed: false
     expected_fail_closed_reasons:
       - missing Gate status PASS
@@ -69,8 +79,8 @@ approval:
       - 39 unresolved non_identifiable risks
     human_handoff: present_request_before_creating_human_approval_json
   must_bind_to_hashes:
-    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
-    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
   accepted_risk_scope_required: true
   unresolved_non_identifiable_risks: 39
 llvm_worktree_helper:

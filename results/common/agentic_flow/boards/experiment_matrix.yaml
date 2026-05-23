@@ -75,3 +75,28 @@ round7_risk_acceptance_request_worker:
   unresolved_non_identifiable_risks: 39
   gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
   human_handoff: present_request_before_creating_human_approval_json
+round8_review:
+  recommendation: request_changes
+  ac16_status: blocked
+  field_status_summary_issue: non_identifiable_rows_were_not_counted_as_blocking
+round9_field_status_hash_refresh:
+  worker: Round9FieldStatusHashRefresh
+  code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
+  request_artifact: ../real_platform_risk_acceptance_request.json
+  request_status: pending_not_approved
+  decision_status: not_approved
+  gate_status: not_submitted
+  gate_consumed: false
+  approval_artifact_created: false
+  unresolved_non_identifiable_risks: 39
+  field_status_summary:
+    blocking_total: 39
+    blocking_status_counts:
+      non_identifiable: 39
+  current_hashes:
+    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
+    search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
+    experiment_quality_md: b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e
+  gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+  human_handoff: present_request_before_creating_human_approval_json

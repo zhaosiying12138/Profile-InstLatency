@@ -1,11 +1,12 @@
 # Humanize2 Replay Notes
 
-Status: Round 7 request-worker package after the Round 6 approval-gate worker
-capture. This is intentionally not a completion claim: Round 5 review accepted
-commit `773f27d6` for the candidate-simulator scope and Round 6 review accepted
-commit `ea7c0aca` for approval-gate behavior, but the real-platform gate still
-lacks explicit machine-readable human approval or stronger evidence for 39
-unresolved `non_identifiable` rows.
+Status: Round 9 field-status hash refresh package after code-worker commit
+`f6614b00177e4139c8cfcf53b349b69478942b66`. This is intentionally not a
+completion claim: Round 5 review accepted commit `773f27d6` for the
+candidate-simulator scope and Round 6 review accepted commit `ea7c0aca` for
+approval-gate behavior, but the real-platform gate still lacks explicit
+machine-readable human approval or stronger evidence for 39 unresolved
+`non_identifiable` rows.
 
 ## Checkout
 
@@ -63,6 +64,14 @@ Important files for replay:
   finds the Gibbs capture package missing, updates the current hashes, and
   keeps AC-16 blocked by absent explicit approval plus 39 unresolved
   `non_identifiable` risks.
+- `round-8-summary.md`: records the blocked human handoff state. No approval
+  artifact was created.
+- `round-8-review-result.md`: keeps AC-16 blocked and identifies that the
+  pre-Round-9 field-status sidecar undercounted approval-bound
+  `non_identifiable` rows in `blocking_total`.
+- `round-9-prompt.md`: dispatches the fix for the field-status summary
+  undercount and requires refreshed request hashes and Humanize2 capture.
+- `round-9-summary.md`: records the Round 9 code-worker result.
 
 Do not edit `.humanize/rlcr/**` from worker tasks. This replay records where
 those files are read, not a modification of RLCR state.
@@ -86,14 +95,15 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 6 boundary hashes after approval-gate commit `ea7c0aca`:
+Current Round 9 approval-bound hashes after field-status summary commit
+`f6614b00`:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `results/common/real_platform_inventory.json` | `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b` |
-| `results/common/real_platform_field_status.json` | `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179` |
+| `results/common/real_platform_inventory.json` | `671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37` |
+| `results/common/real_platform_field_status.json` | `0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195` |
 | `results/common/search_model_real_platform.json` | `d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73` |
-| `results/common/experiment_quality.md` | `b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6` |
+| `results/common/experiment_quality.md` | `b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e` |
 
 Current source-backed counts:
 
@@ -103,6 +113,9 @@ Current source-backed counts:
 - `results/common/real_platform_field_status.json` has 150 rows: 111
   `inferred`, 39 `non_identifiable`, 0 `conflict`, and 0
   `insufficient_evidence`.
+- `results/common/real_platform_field_status.json` now reports
+  `summary.blocking_total = 39` and
+  `summary.blocking_status_counts.non_identifiable = 39`.
 - `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
   `Confidence: unresolved_llvm_field_status`, and `Human approval status:
   absent`.
@@ -247,7 +260,9 @@ Forbidden write scope:
 - existing generated real-platform outputs
 - any new file under `results/common` whose name contains `approval`
 
-The request is bound to the current Round 6 hashes:
+At the Round 7 boundary, the request was bound to the then-current Round 6
+hashes. The active request metadata has since been superseded by the Round 9
+hash refresh below:
 
 - Inventory:
   `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b`
@@ -265,6 +280,122 @@ Human decision choices:
 
 The request is not consumed by the gate. Empty-context replay must present this
 request to the human before creating any future `human_approval.json`.
+
+## Round 8 Review Blocker
+
+Round 8 did not create approval and did not make the real-platform gate pass.
+The review kept AC-16 blocked and identified a sidecar consistency bug: the
+pre-Round-9 `results/common/real_platform_field_status.json` reported zero
+blocking rows even though the gate and quality report treated the 39
+`non_identifiable` rows as approval-bound blockers.
+
+The required Round 9 code-worker fix was to count `non_identifiable` as
+blocking in the field-status summary, add a regression test, regenerate
+real-platform artifacts, and refresh the request hashes and Humanize2 capture
+without crossing the approval boundary.
+
+## Round 9 Field-Status Hash Refresh Package
+
+Round 9 code-worker commit:
+
+```text
+f6614b00177e4139c8cfcf53b349b69478942b66
+```
+
+The Round 9 capture worker is a normalized reconstruction:
+
+- Prompt:
+  `artifacts/prompts/round-9-field-status-hash-refresh-worker.md`
+- Contract:
+  `artifacts/worker_contracts/worker-r9-field-status-hash-refresh.md`
+- Output:
+  `artifacts/worker_outputs/worker-r9-field-status-hash-refresh.md`
+- Verification:
+  `artifacts/verification/worker-r9-field-status-hash-refresh.md`
+- Tool calls:
+  `artifacts/tool_calls/worker-r9-field-status-hash-refresh-normalized.json`
+
+Current approval-bound hashes:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `results/common/real_platform_inventory.json` | `671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37` |
+| `results/common/real_platform_field_status.json` | `0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195` |
+| `results/common/search_model_real_platform.json` | `d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73` |
+| `results/common/experiment_quality.md` | `b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e` |
+
+Request state:
+
+- `round`: 9
+- `request_worker`: `Round9FieldStatusHashRefresh`
+- `status`: pending
+- `request_status`: not approved
+- `decision_status`: not approved
+- `gate_status`: not submitted
+- `approved`, `is_gate_input`, `is_approval_artifact`, and `gate_consumed`:
+  false
+- `risk_ids` and `risk_scope.risk_ids`: the exact 39 IDs from
+  `results/common/real_platform_inventory.json` `field_status.unresolved`
+
+Round 9 validation commands:
+
+```bash
+python3 - <<'PY'
+import glob, json
+from pathlib import Path
+import yaml
+for path in ['results/common/agentic_flow/h2_primitives.yaml'] + glob.glob('results/common/agentic_flow/boards/*.yaml'):
+    with open(path, 'r', encoding='utf-8') as f:
+        yaml.safe_load(f)
+for path in glob.glob('results/common/agentic_flow/artifacts/tool_calls/*.json') + ['results/common/real_platform_risk_acceptance_request.json']:
+    with open(path, 'r', encoding='utf-8') as f:
+        json.load(f)
+with open('results/common/agentic_flow/events.jsonl', 'r', encoding='utf-8') as f:
+    for line in f:
+        if line.strip():
+            json.loads(line)
+PY
+python3 - <<'PY'
+import hashlib, json
+from pathlib import Path
+inv = json.loads(Path('results/common/real_platform_inventory.json').read_text())
+status = json.loads(Path('results/common/real_platform_field_status.json').read_text())
+req = json.loads(Path('results/common/real_platform_risk_acceptance_request.json').read_text())
+expected_hashes = {
+    'inventory_sha256': hashlib.sha256(Path('results/common/real_platform_inventory.json').read_bytes()).hexdigest(),
+    'real_platform_field_status_sha256': hashlib.sha256(Path('results/common/real_platform_field_status.json').read_bytes()).hexdigest(),
+    'search_model_real_platform_sha256': hashlib.sha256(Path('results/common/search_model_real_platform.json').read_bytes()).hexdigest(),
+    'experiment_quality_sha256': hashlib.sha256(Path('results/common/experiment_quality.md').read_bytes()).hexdigest(),
+}
+ids = [row['risk_id'] for row in inv['field_status']['unresolved']]
+assert status['summary']['blocking_total'] == 39
+assert status['summary']['blocking_status_counts']['non_identifiable'] == 39
+assert req['round'] == 9
+assert req['request_worker'] == 'Round9FieldStatusHashRefresh'
+assert req['status'] == 'pending'
+assert req['request_status'] == 'not_approved'
+assert req['decision_status'] == 'not_approved'
+assert req['gate_status'] == 'not_submitted'
+assert req['approved'] is False
+assert req['is_gate_input'] is False
+assert req['is_approval_artifact'] is False
+assert req['gate_consumed'] is False
+assert req['current_hashes'] == expected_hashes
+assert req['risk_ids'] == ids
+assert req['risk_scope']['risk_ids'] == ids
+assert len(ids) == 39
+assert not list(Path('results/common').glob('*approval*'))
+PY
+python3 -m unittest tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+git diff --check
+```
+
+The real-platform gate remains expected to return nonzero until a current,
+machine-readable human approval artifact exists, covers the 39 unresolved
+field-status risks, binds the current inventory and field-status hashes, and
+the quality report says `Gate status: PASS`.
 
 ## Replay Commands
 
@@ -409,6 +540,22 @@ Humanize2 capture so empty-context replay presents the request to the human
 before any future `human_approval.json` is created. This request does not
 create approval, is not consumed by the gate, and does not cross the explicit
 approval boundary.
+
+### Round 8 Review
+
+Round 8 recorded the blocked handoff state and did not create approval. The
+review kept AC-16 blocked because the real-platform gate still failed closed.
+It also found that the field-status sidecar undercounted approval-bound rows:
+the sidecar had 39 `non_identifiable` rows but did not include them in
+`blocking_total`.
+
+### Round 9 Refresh
+
+Round 9 code-worker commit `f6614b00` fixed the field-status summary so
+`non_identifiable` rows are blocking, added a regression test, regenerated the
+real-platform artifacts, and refreshed request hashes. This capture package
+updates the request metadata to `Round9FieldStatusHashRefresh`, records current
+hashes, and keeps the request pending, not approved, and not gate-consumed.
 
 ## Humanize2 Hub Path
 

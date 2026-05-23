@@ -30,8 +30,8 @@ full_timing_gate:
   risk_acceptance_request: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   request_gate_consumed: false
-  approval_must_bind_inventory_hash: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
-  approval_must_bind_field_status_hash: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  approval_must_bind_inventory_hash: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+  approval_must_bind_field_status_hash: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
 round5_code_worker_commit:
   commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   targets:
@@ -48,4 +48,19 @@ round7_risk_acceptance_request_worker:
   worker: Round7RiskRequest
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
+  human_handoff: present_request_before_creating_human_approval_json
+round9_field_status_hash_refresh:
+  worker: Round9FieldStatusHashRefresh
+  code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
+  request_artifact: ../real_platform_risk_acceptance_request.json
+  request_status: pending_not_approved
+  decision_status: not_approved
+  gate_status: not_submitted
+  request_gate_consumed: false
+  approval_artifact_created: false
+  field_status_blocking_total: 39
+  blocking_status_counts:
+    non_identifiable: 39
+  approval_must_bind_inventory_hash: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
+  approval_must_bind_field_status_hash: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
   human_handoff: present_request_before_creating_human_approval_json
