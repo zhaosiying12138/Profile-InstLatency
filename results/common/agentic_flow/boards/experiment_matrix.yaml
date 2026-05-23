@@ -67,3 +67,11 @@ round6_approval_gate_worker_commit:
   approval_requires_accepted_risk_scope: true
   review_status: accepted_for_approval_gate_behavior
   capture_package: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md
+round7_risk_acceptance_request_worker:
+  worker: Round7RiskRequest
+  request_artifact: ../real_platform_risk_acceptance_request.json
+  request_status: pending_not_approved
+  gate_consumed: false
+  unresolved_non_identifiable_risks: 39
+  gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+  human_handoff: present_request_before_creating_human_approval_json

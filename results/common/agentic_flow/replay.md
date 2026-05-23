@@ -1,9 +1,8 @@
 # Humanize2 Replay Notes
 
-Status: Round 7 capture package for the Round 6 approval-gate worker,
-preserving the Rounds 2-5 lineage and Round 6 review outcome. This is
-intentionally not a completion claim: Round 5 review accepted commit
-`773f27d6` for the candidate-simulator scope and Round 6 review accepted
+Status: Round 7 request-worker package after the Round 6 approval-gate worker
+capture. This is intentionally not a completion claim: Round 5 review accepted
+commit `773f27d6` for the candidate-simulator scope and Round 6 review accepted
 commit `ea7c0aca` for approval-gate behavior, but the real-platform gate still
 lacks explicit machine-readable human approval or stronger evidence for 39
 unresolved `non_identifiable` rows.
@@ -108,6 +107,9 @@ Current source-backed counts:
   `Confidence: unresolved_llvm_field_status`, and `Human approval status:
   absent`.
 - `find results/common -maxdepth 1 -iname '*approval*' -print` is empty.
+- `results/common/real_platform_risk_acceptance_request.json` is a pending
+  request artifact. It is not consumed by the gate and is not a human approval
+  artifact.
 
 ## Round 5 Code Worker Capture Package
 
@@ -220,6 +222,50 @@ sha256sum results/common/real_platform_inventory.json results/common/real_platfo
 git diff --check
 ```
 
+## Round 7 Risk-Acceptance Request Package
+
+The Round 7 request-worker is a normalized self-capture:
+
+- Request:
+  `../real_platform_risk_acceptance_request.json`
+- Prompt: `artifacts/prompts/round-7-risk-acceptance-request-worker.md`
+- Contract: `artifacts/worker_contracts/worker-r7-risk-request.md`
+- Output: `artifacts/worker_outputs/worker-r7-risk-request.md`
+- Verification: `artifacts/verification/worker-r7-risk-request.md`
+- Tool calls: `artifacts/tool_calls/worker-r7-risk-request.json`
+
+Allowed write scope:
+
+- `results/common/real_platform_risk_acceptance_request.json`
+- `results/common/agentic_flow/**`
+
+Forbidden write scope:
+
+- `.humanize/**`
+- scripts
+- tests
+- existing generated real-platform outputs
+- any new file under `results/common` whose name contains `approval`
+
+The request is bound to the current Round 6 hashes:
+
+- Inventory:
+  `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b`
+- Field status:
+  `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`
+
+It lists all 39 unresolved risk IDs from
+`results/common/real_platform_inventory.json` `field_status.unresolved`.
+
+Human decision choices:
+
+- Accept all current risks with a future `human_approval.json`.
+- Reject and require stronger experiments or modeling.
+- Accept selected listed risk IDs in a future `human_approval.json`.
+
+The request is not consumed by the gate. Empty-context replay must present this
+request to the human before creating any future `human_approval.json`.
+
 ## Replay Commands
 
 ### Environment and Generation
@@ -283,6 +329,7 @@ python3 scripts/analyze.py --all --root results
 python3 -m json.tool results/common/search_model_real_platform.json >/dev/null
 python3 -m json.tool results/common/real_platform_field_status.json >/dev/null
 python3 -m json.tool results/common/real_platform_inventory.json >/dev/null
+python3 -m json.tool results/common/real_platform_risk_acceptance_request.json >/dev/null
 find results/r01 results/r02 -name trace.json | wc -l
 sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md
 python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
@@ -355,10 +402,13 @@ accepted risk scope for the 39 unresolved `non_identifiable` rows.
 
 ### Round 7 Capture
 
-This Round 7 capture package owns only `results/common/agentic_flow/**`. It
-records the missing Round 6 Gibbs control flow and replay commands, refreshes
-current hashes in boards and views, does not create approval, and does not
-cross the explicit approval boundary.
+The first Round 7 commit `e175258a` captured the missing Round 6 Gibbs control
+flow and replay commands. The request-worker then created
+`results/common/real_platform_risk_acceptance_request.json` and updated the
+Humanize2 capture so empty-context replay presents the request to the human
+before any future `human_approval.json` is created. This request does not
+create approval, is not consumed by the gate, and does not cross the explicit
+approval boundary.
 
 ## Humanize2 Hub Path
 
@@ -378,11 +428,15 @@ current persistent state.
 2. Read `boards/execution_state.yaml` for active mode, gate status, and owned
    write boundaries.
 3. Read `boards/inference_state.yaml` for real-platform artifact hashes,
-   current field-status counts, and replay commands.
+   current field-status counts, the pending request artifact, and replay
+   commands.
 4. Read `.humanize/rlcr/2026-05-23_01-15-03/round-*-prompt.md`,
    `round-*-summary.md`, and `round-*-review-result.md` for the exact RLCR
    prompt/result lineage.
 5. Re-run only the failed lightweight check or worker-owned package. Do not run
    heavy gem5 unless the active worker explicitly owns that task.
-6. Append a new event and verification artifact before asking the coordinator
+6. If AC-16 is the active topic, present
+   `results/common/real_platform_risk_acceptance_request.json` to the human
+   before creating any future `human_approval.json`.
+7. Append a new event and verification artifact before asking the coordinator
    to integrate the result.

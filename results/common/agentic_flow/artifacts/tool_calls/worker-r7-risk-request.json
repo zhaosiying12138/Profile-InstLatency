@@ -1,0 +1,110 @@
+{
+  "id": "tool-worker-r7-risk-request",
+  "round": 7,
+  "worker": "Round7RiskRequest",
+  "primitive": "h2-agent",
+  "tool_surface": "shell",
+  "capture_type": "normalized_self_capture",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "sources": [
+    "results/common/real_platform_inventory.json",
+    "results/common/agentic_flow/h2_primitives.yaml",
+    "results/common/agentic_flow/replay.md",
+    "results/common/agentic_flow/boards/*.yaml"
+  ],
+  "state_changes": [
+    {
+      "kind": "request_artifact",
+      "summary": "Create a pending, non-gate-consumed risk-acceptance request bound to current Round 6 hashes and all 39 unresolved risk IDs.",
+      "paths": [
+        "results/common/real_platform_risk_acceptance_request.json"
+      ]
+    },
+    {
+      "kind": "humanize2_capture",
+      "summary": "Register the request artifact and request-worker capture in the Humanize2 registry, replay, boards, events, cartridge, status view, and manifest notes.",
+      "paths": [
+        "results/common/agentic_flow/h2_primitives.yaml",
+        "results/common/agentic_flow/events.jsonl",
+        "results/common/agentic_flow/replay.md",
+        "results/common/agentic_flow/h2_manifest_notes.md",
+        "results/common/agentic_flow/boards/execution_state.yaml",
+        "results/common/agentic_flow/boards/experiment_matrix.yaml",
+        "results/common/agentic_flow/boards/goal_tracker.yaml",
+        "results/common/agentic_flow/boards/inference_state.yaml",
+        "results/common/agentic_flow/boards/simulator_selection.yaml",
+        "results/common/agentic_flow/views/status_panel.html",
+        "results/common/agentic_flow/cartridges/rvv-profile-workflow.draft.html",
+        "results/common/agentic_flow/artifacts/prompts/round-7-risk-acceptance-request-worker.md",
+        "results/common/agentic_flow/artifacts/worker_contracts/worker-r7-risk-request.md",
+        "results/common/agentic_flow/artifacts/worker_outputs/worker-r7-risk-request.md",
+        "results/common/agentic_flow/artifacts/verification/worker-r7-risk-request.md",
+        "results/common/agentic_flow/artifacts/tool_calls/worker-r7-risk-request.json"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "worker-r7-request-json-shape",
+      "category": "json",
+      "command": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ndata = json.loads(Path('results/common/real_platform_risk_acceptance_request.json').read_text())\nassert len(data['risk_ids']) == 39\nfor key, value in data.items():\n    if key.endswith('status') or key in {'status', 'approved'}:\n        lowered = str(value).lower()\n        assert lowered not in {'approved', 'true', 'yes', 'pass'}\nassert data.get('approved') is False\nassert data.get('is_approval_artifact') is False\nassert data.get('gate_consumed') is False\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "request json ok: 39 risk ids; pending/not approved; not gate consumed"
+    },
+    {
+      "id": "worker-r7-request-no-approval-files",
+      "category": "approval_boundary",
+      "command": "find results/common -maxdepth 1 -iname '*approval*' -print",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "actual_output": "",
+      "reported_result": "expected empty output"
+    },
+    {
+      "id": "worker-r7-request-real-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "expected_exit_code": 1,
+      "exit_code": 1,
+      "expected_failure": true,
+      "reported_result": "failed closed: missing Gate status PASS, missing machine-readable human approval, and 39 unresolved non_identifiable risks"
+    },
+    {
+      "id": "worker-r7-request-yaml-json-jsonl",
+      "category": "parse",
+      "command": "python3 - <<'PY'\nimport glob, json\nfrom pathlib import Path\nimport yaml\nfor path in ['results/common/agentic_flow/h2_primitives.yaml'] + glob.glob('results/common/agentic_flow/boards/*.yaml'):\n    with open(path, 'r', encoding='utf-8') as f:\n        yaml.safe_load(f)\nfor path in glob.glob('results/common/agentic_flow/artifacts/tool_calls/*.json') + ['results/common/real_platform_risk_acceptance_request.json']:\n    with open(path, 'r', encoding='utf-8') as f:\n        json.load(f)\nwith open('results/common/agentic_flow/events.jsonl', 'r', encoding='utf-8') as f:\n    for line in f:\n        if line.strip():\n            json.loads(line)\nwith open('results/common/agentic_flow/h2_primitives.yaml', 'r', encoding='utf-8') as f:\n    primitives = yaml.safe_load(f)\nfor entry in primitives.get('artifacts', []):\n    path = entry.get('path', '')\n    if path and not path.startswith('../../../'):\n        assert Path('results/common/agentic_flow', path).exists(), path\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "yaml ok; json ok; events jsonl ok: 46 events; registered paths ok: 62"
+    },
+    {
+      "id": "worker-r7-request-rg-refs",
+      "category": "content",
+      "command": "rg 'real_platform_risk_acceptance_request|4f25f066|904cca46|39 unresolved' results/common/agentic_flow results/common/real_platform_risk_acceptance_request.json",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "request path, current hashes, and 39 unresolved-risk references are present"
+    },
+    {
+      "id": "worker-r7-request-diff-check",
+      "category": "whitespace",
+      "command": "git diff --check",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed"
+    }
+  ],
+  "outputs": [
+    "results/common/real_platform_risk_acceptance_request.json",
+    "results/common/agentic_flow/artifacts/prompts/round-7-risk-acceptance-request-worker.md",
+    "results/common/agentic_flow/artifacts/worker_contracts/worker-r7-risk-request.md",
+    "results/common/agentic_flow/artifacts/worker_outputs/worker-r7-risk-request.md",
+    "results/common/agentic_flow/artifacts/verification/worker-r7-risk-request.md",
+    "results/common/agentic_flow/artifacts/tool_calls/worker-r7-risk-request.json"
+  ],
+  "request_status": "not_approved",
+  "approval_artifact_created": false,
+  "gate_consumed": false,
+  "status": "captured_pending_human_decision"
+}

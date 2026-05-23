@@ -6,8 +6,8 @@ ultimate_goal: profile selected non-memory RVV instruction timing and preserve L
 lesson_ids: NONE
 acceptance_focus:
   - AC-9 candidate-simulator scope was accepted by Round 5 review for peer-side T20 constraints and the T12 short-sweep guard in commit 773f27d6.
-  - AC-12 is addressed here by adding the missing normalized Round 5 code-worker package plus the Round 6 Gibbs approval-gate prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
-  - AC-13 is addressed here by making empty-context replay reconstruct the Round 5 code-worker scope and Round 6 approval-gate scope, including state-changing commands, regenerated artifacts, verification evidence, current hashes, and approval boundary.
+  - AC-12 now includes the normalized Round 5 code-worker package, the Round 6 Gibbs approval-gate package, and this Round 7 request-worker package with prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
+  - AC-13 now makes empty-context replay reconstruct the Round 5 code-worker scope, Round 6 approval-gate scope, and Round 7 pending request scope, including the request path, gate command, current hashes, 39 unresolved risk IDs, and approval boundary.
   - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 39 non-identifiable risks.
 worker_split:
   A: LLVM read-only extractor and mapping docs
@@ -24,15 +24,17 @@ worker_split:
   Anscombe: Round 5 candidate-simulator peer T20 and short T12 exactness fixes
   Kepler: Round 5 agentic-flow capture refresh
   Gibbs: Round 6 approval-gate hardening for hash-bound unresolved-risk acceptance
-active_worker: Round7GibbsCapturePackage
-status: round7_gibbs_capture_package_added_real_platform_gate_fail_closed
+  Round7RiskRequest: Round 7 pending risk-acceptance request artifact and Humanize2 capture
+active_worker: Round7RiskRequest
+status: round7_risk_acceptance_request_created_pending_human_decision
 round_status:
   round_2: shared_candidate_search_introduced_but_t20_t12_and_approval_blocked
   round_3: expanded_real_t20_coverage_and_regenerated_artifacts_but_t20_t12_modeling_blocked
   round_4: subject_t20_and_t12_constraints_added_artifacts_refreshed_capture_stale
   round_5: code_worker_candidate_simulator_scope_accepted_capture_gap_found_approval_blocked
   round_6: missing_round5_code_worker_capture_package_added_and_approval_gate_hardened_but_gibbs_capture_gap_found
-  round_7: round6_gibbs_approval_gate_capture_package_added_current_hash_boundary_preserved
+  round_7: pending_risk_acceptance_request_created_and_human_handoff_captured
 remaining_open_items:
+  - Present results/common/real_platform_risk_acceptance_request.json to the human before creating any future human_approval.json.
   - Explicit human approval or stronger evidence is still required before the real-platform gate can pass.
-  - 39 non-identifiable real-platform field rows remain unresolved approval-bound risks.
+  - 39 unresolved non_identifiable real-platform field rows remain approval-bound risks.

@@ -13,9 +13,11 @@ rlcr_state_policy:
 lesson_ids: NONE
 current_boundary:
   round: 7
-  status: in_progress
-  owner_scope: results/common/agentic_flow/**
-  task: complete_round6_gibbs_approval_gate_capture_package
+  status: awaiting_human_risk_decision
+  owner_scope:
+    - results/common/real_platform_risk_acceptance_request.json
+    - results/common/agentic_flow/**
+  task: create_non_gate_consumed_risk_acceptance_request
   code_and_generated_result_fixes_owned_by_round5_worker: true
   round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   round5_code_worker_review_status: accepted_for_candidate_simulator_scope
@@ -36,7 +38,7 @@ phase_status:
   phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round5_code_worker_and_round6_gibbs_packages_added_by_round7_without_ac16_completion_claim
+  humanize2_capture: round7_request_worker_captured_without_ac16_completion_claim
 real_platform_evidence:
   checked_in_r01_r02_trace_files: 7190
   required_real_gem5_groups: 178
@@ -71,11 +73,22 @@ gates:
     expected_failure_reasons:
       - quality report lacks exact Gate status: PASS
       - machine-readable human approval file under results/common is absent
-      - 39 non-identifiable real-platform LLVM field-status risks remain unresolved
+      - 39 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
+    request_artifact: results/common/real_platform_risk_acceptance_request.json
 approval_boundary:
   explicit_human_approval_required: true
   approval_artifact_exists: false
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
+  risk_acceptance_request:
+    path: results/common/real_platform_risk_acceptance_request.json
+    status: pending_not_approved
+    gate_consumed: false
+    is_approval_artifact: false
+    present_to_human_before_human_approval_json: true
+    human_choices:
+      - accept all current risks with a future human_approval.json
+      - reject and require stronger experiments or modeling
+      - accept selected listed risk IDs
   note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
   must_bind_to_hashes:
     real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b

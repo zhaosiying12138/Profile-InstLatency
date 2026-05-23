@@ -3,7 +3,7 @@ workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
   round: 7
-  status: in_progress
+  status: awaiting_human_risk_decision
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -24,6 +24,7 @@ manifest:
       - rvv.decision.v1
       - rvv.verification.v1
       - rvv.rlcrReference.v1
+      - rvv.riskAcceptanceRequest.v1
     human_input: true
     view: true
 templates:
@@ -42,6 +43,9 @@ templates:
   - id: round-6-approval-gate-worker-gibbs
     primitive: h2-template
     path: artifacts/prompts/round-6-approval-gate-worker-gibbs.md
+  - id: round-7-risk-acceptance-request-worker
+    primitive: h2-template
+    path: artifacts/prompts/round-7-risk-acceptance-request-worker.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -223,6 +227,26 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/worker-r6-gibbs-approval-gate-normalized.json
+  - id: round-7-risk-acceptance-request
+    primitive: h2-artifact
+    schema: rvv.riskAcceptanceRequest.v1
+    path: ../real_platform_risk_acceptance_request.json
+  - id: round-7-risk-request-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r7-risk-request.md
+  - id: round-7-risk-request-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r7-risk-request.md
+  - id: round-7-risk-request-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r7-risk-request.md
+  - id: round-7-risk-request-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r7-risk-request.json
   - id: round-5-capture-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -273,6 +297,10 @@ events:
   - type: round6.approval_gate_worker.verification.captured
   - type: round6.real_gate.fail_closed
   - type: round6.review.outcome.captured
+  - type: round7.risk_request_worker.dispatched
+  - type: round7.risk_request.created
+  - type: round7.risk_request.verification.captured
+  - type: round7.risk_request.boundary_handoff
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -337,6 +365,34 @@ flow_nodes:
         real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
         real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
     status: reviewed_accepted_for_approval_gate_behavior_capture_added
+  - id: round7-risk-acceptance-request-worker
+    primitive: h2-agent
+    worker: Round7RiskRequest
+    prompt: artifacts/prompts/round-7-risk-acceptance-request-worker.md
+    owned_write_set:
+      - results/common/real_platform_risk_acceptance_request.json
+      - results/common/agentic_flow/**
+    artifacts:
+      request: ../real_platform_risk_acceptance_request.json
+      contract: artifacts/worker_contracts/worker-r7-risk-request.md
+      output: artifacts/worker_outputs/worker-r7-risk-request.md
+      verification: artifacts/verification/worker-r7-risk-request.md
+      tool_call: artifacts/tool_calls/worker-r7-risk-request.json
+    request_boundary:
+      status: pending_not_approved
+      gate_consumed: false
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 39
+      gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+      expected_fail_closed_reasons:
+        - missing Gate status PASS
+        - missing machine-readable human approval
+        - 39 unresolved non_identifiable risks
+      must_bind_to_hashes:
+        real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
+        real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+      next_human_step: present_request_before_creating_human_approval_json
+    status: pending_human_decision_request_created
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
@@ -345,6 +401,11 @@ approval_boundary:
   required: true
   artifact_exists: false
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
+  risk_acceptance_request:
+    path: ../real_platform_risk_acceptance_request.json
+    status: pending_not_approved
+    gate_consumed: false
+    present_to_human_before_human_approval_json: true
   must_bind_to_hashes:
     real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
     real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179

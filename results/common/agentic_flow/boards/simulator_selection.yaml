@@ -27,6 +27,9 @@ full_timing_gate:
   status: not_ready
   reason: explicit machine-readable human approval is absent and 39 LLVM-facing rows remain non-identifiable approval-bound risks
   approval_artifact_exists: false
+  risk_acceptance_request: ../real_platform_risk_acceptance_request.json
+  request_status: pending_not_approved
+  request_gate_consumed: false
   approval_must_bind_inventory_hash: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
   approval_must_bind_field_status_hash: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
 round5_code_worker_commit:
@@ -41,3 +44,8 @@ round6_approval_gate_worker_commit:
   commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
   review_status: accepted_for_approval_gate_behavior
   capture_package: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md
+round7_risk_acceptance_request_worker:
+  worker: Round7RiskRequest
+  request_artifact: ../real_platform_risk_acceptance_request.json
+  request_status: pending_not_approved
+  human_handoff: present_request_before_creating_human_approval_json
