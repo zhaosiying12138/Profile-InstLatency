@@ -10,6 +10,7 @@ through as labeled references, but they are never used to claim a candidate.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -27,11 +28,19 @@ KNOWN_MARKER_PAIRS = (
 LMUL_ORDER = ("m1", "m2", "m4")
 LMUL_VALUE = {"m1": 1, "m2": 2, "m4": 4, "m8": 8}
 FIELD_ORDER = ("Latency", "ReleaseAtCycles", "ProcResource", "NumMicroOps", "SingleIssue")
+FIELD_VALUE_ATTR = {
+    "Latency": "latency",
+    "ReleaseAtCycles": "release_at_cycles",
+    "ProcResource": "proc_resource",
+    "NumMicroOps": "num_micro_ops",
+    "SingleIssue": "single_issue",
+}
 PIPE_RESOURCE = {
     "any": "YuShuXinAnyVPipe",
     "pipe0": "YuShuXinVPipe0",
     "pipe1": "YuShuXinVPipe1",
 }
+PROC_RESOURCE_DOMAIN = ("any", "pipe0", "pipe1")
 PIPE_LABEL_KEYS = (
     "pipe",
     "pipe_label",
@@ -68,6 +77,10 @@ class RawObservation:
     pair_instruction_id: str | None
     raw_pipe_labels: tuple[str, ...]
     synthetic_reference: dict[str, Any]
+    mode: str
+    backend: str
+    dry_run_trace: bool
+    trace_sha256: str
 
 
 @dataclass(frozen=True)
@@ -75,6 +88,23 @@ class FormulaCandidate:
     base: int
     k: int
     residual: float
+
+
+@dataclass(frozen=True)
+class TimingCandidate:
+    latency: int
+    release_at_cycles: int
+    proc_resource: str
+    num_micro_ops: int
+    single_issue: bool
+
+
+@dataclass(frozen=True)
+class CandidateSearchResult:
+    candidates: tuple[TimingCandidate, ...]
+    evidence: tuple[RawObservation, ...]
+    skipped: tuple[str, ...]
+    conflict_examples: tuple[dict[str, Any], ...]
 
 
 def parse_scalar(text: str) -> Any:
@@ -168,6 +198,61 @@ def int_or_none(value: Any) -> int | None:
         except ValueError:
             return None
     return None
+
+
+def bool_or_false(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "on"}
+    if isinstance(value, (int, float)):
+        return bool(value)
+    return False
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def yaml_scalar(value: Any) -> str:
+    if value is None:
+        return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return str(value)
+    return json.dumps(str(value))
+
+
+def dump_yaml(value: Any, indent: int = 0) -> str:
+    spaces = " " * indent
+    if isinstance(value, dict):
+        if not value:
+            return f"{spaces}{{}}"
+        lines: list[str] = []
+        for key, item in value.items():
+            if isinstance(item, (dict, list)):
+                lines.append(f"{spaces}{key}:")
+                lines.append(dump_yaml(item, indent + 2))
+            else:
+                lines.append(f"{spaces}{key}: {yaml_scalar(item)}")
+        return "\n".join(lines)
+    if isinstance(value, list):
+        if not value:
+            return f"{spaces}[]"
+        lines = []
+        for item in value:
+            if isinstance(item, (dict, list)):
+                lines.append(f"{spaces}-")
+                lines.append(dump_yaml(item, indent + 2))
+            else:
+                lines.append(f"{spaces}- {yaml_scalar(item)}")
+        return "\n".join(lines)
+    return f"{spaces}{yaml_scalar(value)}"
 
 
 def profile_files_from_path(raw: str) -> list[Path]:
@@ -383,12 +468,41 @@ def collect_raw_pipe_labels(trace_doc: dict[str, Any]) -> tuple[str, ...]:
     return tuple(dict.fromkeys(labels))
 
 
-def load_trace_observations(trace_path: Path) -> tuple[list[RawObservation], list[str]]:
+def trace_document_mode(trace_doc: dict[str, Any]) -> str:
+    return str(first_value(trace_doc.get("mode"), trace_metadata(trace_doc).get("mode"), "unknown"))
+
+
+def trace_document_backend(trace_doc: dict[str, Any]) -> str:
+    return str(first_value(trace_doc.get("backend"), trace_metadata(trace_doc).get("backend"), "unknown"))
+
+
+def trace_document_matches(
+    trace_doc: dict[str, Any],
+    *,
+    mode: str | None,
+    backend: str | None,
+    include_dry_run: bool,
+) -> bool:
+    if mode is not None and trace_document_mode(trace_doc) != mode:
+        return False
+    if backend is not None and trace_document_backend(trace_doc) != backend:
+        return False
+    real_filter = mode == "real_platform_profile" or backend == "gem5_minor"
+    if real_filter and not include_dry_run and bool_or_false(trace_doc.get("dry_run_trace")):
+        return False
+    return True
+
+
+def load_trace_observations(
+    trace_path: Path,
+    trace_doc: dict[str, Any] | None = None,
+) -> tuple[list[RawObservation], list[str]]:
     warnings: list[str] = []
-    try:
-        trace_doc = load_trace_document(trace_path)
-    except (OSError, json.JSONDecodeError, ValueError) as error:
-        return [], [f"{trace_path.as_posix()}: {error}"]
+    if trace_doc is None:
+        try:
+            trace_doc = load_trace_document(trace_path)
+        except (OSError, json.JSONDecodeError, ValueError) as error:
+            return [], [f"{trace_path.as_posix()}: {error}"]
 
     experiment_path = trace_path.with_name("experiment.yaml")
     experiment_doc = parse_yamlish(experiment_path) if experiment_path.exists() else {}
@@ -422,6 +536,13 @@ def load_trace_observations(trace_path: Path) -> tuple[list[RawObservation], lis
     effective_template_id = str(scaling_shape) if template_text == "T30_LMUL_SCALING" and scaling_shape else template_text
     synthetic = trace_metadata(trace_doc).get("synthetic")
     synthetic_reference = dict(synthetic) if isinstance(synthetic, dict) else {}
+    mode = trace_document_mode(trace_doc)
+    backend = trace_document_backend(trace_doc)
+    dry_run_trace = bool_or_false(trace_doc.get("dry_run_trace"))
+    try:
+        trace_sha256 = file_sha256(trace_path)
+    except OSError:
+        trace_sha256 = ""
     parameters = compact_parameters(
         trace_doc,
         experiment_doc,
@@ -456,24 +577,43 @@ def load_trace_observations(trace_path: Path) -> tuple[list[RawObservation], lis
                 pair_instruction_id=str(pair_instruction_id) if pair_instruction_id is not None else None,
                 raw_pipe_labels=raw_pipe_labels,
                 synthetic_reference=synthetic_reference,
+                mode=mode,
+                backend=backend,
+                dry_run_trace=dry_run_trace,
+                trace_sha256=trace_sha256,
             )
         )
     return observations, warnings
 
 
-def load_observations(paths: list[str]) -> tuple[list[RawObservation], list[Path], list[str]]:
+def load_observations(
+    paths: list[str],
+    *,
+    mode: str | None = None,
+    backend: str | None = None,
+    include_dry_run: bool = False,
+) -> tuple[list[RawObservation], list[Path], list[str]]:
     trace_paths: list[Path] = []
     for raw in paths:
         trace_paths.extend(trace_files_from_path(raw))
     trace_paths = sorted(dict.fromkeys(trace_paths), key=lambda item: item.as_posix())
 
     observations: list[RawObservation] = []
+    filtered_trace_paths: list[Path] = []
     warnings: list[str] = []
     for trace_path in trace_paths:
-        loaded, trace_warnings = load_trace_observations(trace_path)
+        try:
+            trace_doc = load_trace_document(trace_path)
+        except (OSError, json.JSONDecodeError, ValueError) as error:
+            warnings.append(f"{trace_path.as_posix()}: {error}")
+            continue
+        if not trace_document_matches(trace_doc, mode=mode, backend=backend, include_dry_run=include_dry_run):
+            continue
+        filtered_trace_paths.append(trace_path)
+        loaded, trace_warnings = load_trace_observations(trace_path, trace_doc)
         observations.extend(loaded)
         warnings.extend(trace_warnings)
-    return observations, trace_paths, warnings
+    return observations, filtered_trace_paths, warnings
 
 
 def observation_key(observation: RawObservation) -> tuple[str, str]:
@@ -943,6 +1083,22 @@ def group_observations(observations: list[RawObservation]) -> dict[tuple[str, st
     return dict(grouped)
 
 
+def all_trace_paths(paths: list[str]) -> list[Path]:
+    trace_paths: list[Path] = []
+    for raw in paths:
+        trace_paths.extend(trace_files_from_path(raw))
+    return sorted(dict.fromkeys(trace_paths), key=lambda item: item.as_posix())
+
+
+def filter_description(mode: str | None, backend: str | None, include_dry_run: bool) -> dict[str, Any]:
+    return {
+        "mode": mode,
+        "backend": backend,
+        "include_dry_run": include_dry_run,
+        "dry_run_trace_excluded": not include_dry_run and (mode == "real_platform_profile" or backend == "gem5_minor"),
+    }
+
+
 def build_report(
     profile_paths: list[Path],
     trace_paths: list[Path],
@@ -950,6 +1106,9 @@ def build_report(
     configs: list[tuple[Path, dict[str, Any]]],
     warnings: list[str],
     max_value: int,
+    *,
+    input_counts: dict[str, int] | None = None,
+    filters: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     grouped = group_observations(observations)
     latency_results: dict[tuple[str, str], dict[str, Any]] = {}
@@ -1018,10 +1177,167 @@ def build_report(
         "source_profiles_reference_only": [path.as_posix() for path in profile_paths],
         "source_trace_files": [path.as_posix() for path in trace_paths],
         "config_files_reference_only": [path.as_posix() for path, _data in configs],
+        "filters": filters or filter_description(None, None, False),
+        "input_counts": input_counts or {
+            "trace_files_before_filter": len(trace_paths),
+            "trace_files_after_filter": len(trace_paths),
+            "usable_marker_observations": len(observations),
+        },
         "observation_summary": observation_summary(observations),
         "warnings": warnings,
         "instructions": instructions,
     }
+
+
+def result_status_for_field(item: dict[str, Any]) -> str:
+    status = str(item.get("status", "missing"))
+    if status == "exact_fit":
+        return "inferred"
+    if status in {"conflict", "insufficient_evidence"}:
+        return status
+    if status in {"missing", "unknown", "invalid", "error", "not_set"}:
+        return status
+    return status
+
+
+def first_evidence(item: dict[str, Any], limit: int = 8) -> list[str]:
+    evidence = item.get("evidence")
+    if not isinstance(evidence, list):
+        return []
+    return [str(entry) for entry in evidence[:limit]]
+
+
+def field_status_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    instructions = report.get("instructions", {})
+    for instruction_id in sorted(instructions):
+        lmuls = instructions[instruction_id].get("lmuls", {})
+        for lmul in sorted(lmuls, key=lmul_sort_key):
+            fields = lmuls[lmul].get("fields", {})
+            for field in FIELD_ORDER:
+                item = fields.get(field, {})
+                status = result_status_for_field(item)
+                reason = item.get("reason")
+                if not reason and status == "insufficient_evidence":
+                    reason = "Current real-platform templates do not uniquely identify this LLVM-facing field."
+                elif not reason and status == "conflict":
+                    reason = "No bounded candidate explains all real-platform marker observations for this field."
+                elif not reason and status == "inferred":
+                    reason = "Unique candidate inferred from real-platform marker observations."
+                row = {
+                    "instruction_id": instruction_id,
+                    "lmul": lmul,
+                    "field": field,
+                    "status": status,
+                    "source_status": item.get("status", "missing"),
+                    "candidate": item.get("value"),
+                    "candidates": item.get("candidates", []),
+                    "candidate_count": item.get("candidate_count"),
+                    "constraint_count": item.get("constraint_count", 0),
+                    "reason": reason,
+                    "follow_up": (
+                        "Add a focused experiment that separates issue occupancy, pipe identity, and RAW readiness."
+                        if status in {"conflict", "insufficient_evidence", "missing", "unknown"}
+                        else None
+                    ),
+                    "evidence": first_evidence(item),
+                }
+                rows.append(row)
+    return rows
+
+
+def build_field_status(report: dict[str, Any]) -> dict[str, Any]:
+    rows = field_status_rows(report)
+    status_counts = Counter(str(row.get("status", "missing")) for row in rows)
+    blocking_statuses = {"conflict", "insufficient_evidence", "missing", "unknown", "invalid", "error", "not_set"}
+    blocking_counts = {
+        status: count for status, count in sorted(status_counts.items()) if status in blocking_statuses
+    }
+    # The full trace list is already recorded in the search report; keep this
+    # sidecar compact and hash the report inputs by path for approval binding.
+    artifact_hash_inputs = [
+        {"path": path, "sha256": file_sha256(Path(path))}
+        for path in report.get("source_trace_files", [])
+        if Path(path).exists()
+    ]
+    return {
+        "schema_version": 1,
+        "mode": report.get("filters", {}).get("mode"),
+        "backend": report.get("filters", {}).get("backend"),
+        "filters": report.get("filters", {}),
+        "input_counts": report.get("input_counts", {}),
+        "required_fields": list(FIELD_ORDER),
+        "artifact_hash_inputs": artifact_hash_inputs,
+        "summary": {
+            "total_rows": len(rows),
+            "required_fields": list(FIELD_ORDER),
+            "status_counts": dict(sorted(status_counts.items())),
+            "blocking_status_counts": blocking_counts,
+            "blocking_total": sum(blocking_counts.values()),
+        },
+        "rows": rows,
+    }
+
+
+def profile_for_instruction(instruction_id: str, rows: list[dict[str, Any]], report: dict[str, Any]) -> dict[str, Any]:
+    by_lmul: dict[str, dict[str, Any]] = defaultdict(dict)
+    for row in rows:
+        if row["instruction_id"] != instruction_id:
+            continue
+        by_lmul[row["lmul"]][row["field"]] = {
+            "status": row["status"],
+            "value": row["candidate"],
+            "candidates": row["candidates"],
+            "reason": row["reason"],
+            "evidence": row["evidence"],
+        }
+    return {
+        "schema_version": 1,
+        "mode": "real_platform_profile",
+        "backend": report.get("filters", {}).get("backend"),
+        "instruction_id": instruction_id,
+        "llvm_facing_fields": dict(sorted(by_lmul.items(), key=lambda item: lmul_sort_key(item[0]))),
+        "hardware_interpretation": {
+            "issue_width": 2,
+            "issue_order": "in_order",
+            "rob": "none",
+            "vector_pipes": 2,
+            "timestamp_marker_cost": 0,
+        },
+        "confidence": {
+            "source": "mode_isolated_real_platform_marker_observations",
+            "blocking_statuses": ["conflict", "insufficient_evidence", "missing", "unknown"],
+        },
+    }
+
+
+def common_output_root(profile_args: list[str], output: str | None) -> Path:
+    candidates = [Path(raw) for raw in profile_args]
+    if output:
+        candidates.append(Path(output))
+    for path in candidates:
+        current = path if path.is_dir() else path.parent
+        for ancestor in (current, *current.parents):
+            if ancestor.name == "common":
+                return ancestor
+            if (ancestor / "common").exists():
+                return ancestor / "common"
+    return Path("results/common")
+
+
+def write_real_platform_artifacts(report: dict[str, Any], common_root: Path) -> None:
+    common_root.mkdir(parents=True, exist_ok=True)
+    field_status = build_field_status(report)
+    field_status_path = common_root / "real_platform_field_status.json"
+    field_status_path.write_text(json.dumps(field_status, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    rows = field_status["rows"]
+    result_root = common_root.parent if common_root.name == "common" else common_root
+    for instruction_id in sorted({row["instruction_id"] for row in rows}):
+        profile = profile_for_instruction(instruction_id, rows, report)
+        instr_dir = result_root / instruction_id
+        instr_dir.mkdir(parents=True, exist_ok=True)
+        (instr_dir / "profile.real_platform.yaml").write_text(dump_yaml(profile) + "\n", encoding="utf-8")
 
 
 def value_text(item: dict[str, Any]) -> str:
@@ -1036,6 +1352,8 @@ def value_text(item: dict[str, Any]) -> str:
 
 
 def render_markdown(report: dict[str, Any]) -> str:
+    input_counts = report.get("input_counts", {})
+    filters = report.get("filters", {})
     lines = [
         "# Timing Parameter Search",
         "",
@@ -1043,9 +1361,12 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## Inputs",
         "",
-        f"- trace files: {len(report.get('source_trace_files', []))}",
+        f"- trace files before filter: {input_counts.get('trace_files_before_filter', len(report.get('source_trace_files', [])))}",
+        f"- trace files after filter: {input_counts.get('trace_files_after_filter', len(report.get('source_trace_files', [])))}",
         f"- usable marker observations: {report.get('observation_summary', {}).get('count', 0)}",
         f"- profile summaries reference-only: {len(report.get('source_profiles_reference_only', []))}",
+        f"- mode filter: `{filters.get('mode')}`",
+        f"- backend filter: `{filters.get('backend')}`",
         "",
         "## Global Assumptions",
         "",
@@ -1116,6 +1437,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", help="Optional output path.")
     parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
     parser.add_argument("--max-value", type=int, default=128, help="Maximum integer candidate value to enumerate.")
+    parser.add_argument("--mode", help="Optional trace JSON mode filter, e.g. real_platform_profile.")
+    parser.add_argument("--backend", help="Optional trace JSON backend filter, e.g. gem5_minor.")
+    parser.add_argument(
+        "--include-dry-run",
+        action="store_true",
+        help="Include dry_run_trace entries even when selecting real-platform/gem5 traces.",
+    )
     return parser.parse_args()
 
 
@@ -1123,8 +1451,29 @@ def main() -> int:
     args = parse_args()
     profile_paths = load_profiles(args.profile)
     configs = load_configs(args.config)
-    observations, trace_paths, warnings = load_observations(args.profile)
-    report = build_report(profile_paths, trace_paths, observations, configs, warnings, args.max_value)
+    before_filter = all_trace_paths(args.profile)
+    observations, trace_paths, warnings = load_observations(
+        args.profile,
+        mode=args.mode,
+        backend=args.backend,
+        include_dry_run=args.include_dry_run,
+    )
+    filters = filter_description(args.mode, args.backend, args.include_dry_run)
+    input_counts = {
+        "trace_files_before_filter": len(before_filter),
+        "trace_files_after_filter": len(trace_paths),
+        "usable_marker_observations": len(observations),
+    }
+    report = build_report(
+        profile_paths,
+        trace_paths,
+        observations,
+        configs,
+        warnings,
+        args.max_value,
+        input_counts=input_counts,
+        filters=filters,
+    )
     if args.format == "json":
         content = json.dumps(report, indent=2, sort_keys=True) + "\n"
     else:
@@ -1137,6 +1486,16 @@ def main() -> int:
         print(f"wrote {path}")
     else:
         print(content, end="")
+
+    real_platform_selected = args.mode == "real_platform_profile" or args.backend == "gem5_minor"
+    if real_platform_selected:
+        common_root = common_output_root(args.profile, args.output)
+        write_real_platform_artifacts(report, common_root)
+        summary_path = common_root / "search_model_real_platform_summary.md"
+        summary_path.write_text(render_markdown(report), encoding="utf-8")
+        json_path = common_root / "search_model_real_platform.json"
+        if Path(args.output or "") != json_path:
+            json_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return 0
 
 

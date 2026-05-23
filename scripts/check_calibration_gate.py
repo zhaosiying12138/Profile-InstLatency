@@ -12,6 +12,7 @@ equality.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from dataclasses import dataclass
 import hashlib
 import json
@@ -631,6 +632,10 @@ def human_approval_failures(
         "total_trace_count",
         "real_trace_count",
         "profile_root",
+        "field_status_path",
+        "field_status_sha256",
+        "real_platform_field_status_path",
+        "real_platform_field_status_sha256",
     }
     tie_values = find_values_by_key(approval, tie_fields)
     if not tie_values:
@@ -651,6 +656,19 @@ def human_approval_failures(
             if not any(str(value).strip().lower() == digest for value in hash_values):
                 failures.append(f"{path}: approval inventory sha256 does not match {inventory_path}")
 
+    field_status = inventory.get("field_status") if isinstance(inventory, dict) else None
+    if isinstance(field_status, dict) and field_status.get("sha256"):
+        field_hash_values = find_values_by_key(
+            approval,
+            {"field_status_sha256", "real_platform_field_status_sha256", "llvm_field_status_sha256"},
+        )
+        if field_hash_values:
+            expected_hash = str(field_status.get("sha256", "")).strip().lower()
+            if not any(str(value).strip().lower() == expected_hash for value in field_hash_values):
+                failures.append(f"{path}: approval field_status_sha256 does not match inventory field_status sha256")
+        elif field_status.get("unresolved_total"):
+            failures.append(f"{path}: approval does not record real_platform_field_status_sha256 for unresolved field risks")
+
     for value in find_values_by_key(approval, {"trace_count", "total_trace_count"}):
         expected = int_or_none(value)
         if expected is not None and expected != total_traces:
@@ -661,6 +679,59 @@ def human_approval_failures(
             failures.append(f"{path}: approved real_trace_count={expected}, scanned real_trace_count={real_traces}")
 
     return not failures, failures, approval
+
+
+def real_platform_field_status_failures(
+    inventory_path: Path,
+    inventory: dict[str, Any] | None,
+    approval_valid: bool,
+) -> list[str]:
+    if inventory is None:
+        return [f"missing {inventory_path}; cannot verify real-platform LLVM field status"]
+    field_status = inventory.get("field_status")
+    if not isinstance(field_status, dict):
+        return [f"{inventory_path}: missing machine-readable field_status section"]
+    if not field_status.get("exists"):
+        return [f"{inventory_path}: missing real_platform_field_status.json artifact"]
+    status = str(field_status.get("status", "missing"))
+    if status in {"invalid", "no_records", "missing"}:
+        detail = field_status.get("error") or status
+        return [f"{inventory_path}: invalid real-platform field status artifact: {detail}"]
+    unresolved_total = int_or_none(field_status.get("unresolved_total")) or 0
+    accepted = bool(
+        inventory.get("risk_acceptance", {}).get("field_status_unresolved_risks_accepted")
+        if isinstance(inventory.get("risk_acceptance"), dict)
+        else False
+    )
+    if unresolved_total and not (approval_valid and accepted):
+        unresolved = field_status.get("unresolved")
+        counts = Counter(
+            str(record.get("status", "unknown"))
+            for record in unresolved
+            if isinstance(record, dict)
+        ) if isinstance(unresolved, list) else field_status.get("status_counts")
+        suffix = ""
+        if isinstance(counts, dict) and counts:
+            suffix = " status_counts=" + json.dumps(counts, sort_keys=True)
+        return [f"{inventory_path}: unresolved real-platform LLVM field-status risks={unresolved_total}{suffix}"]
+    return []
+
+
+def marker_contract_failures(inventory_path: Path, inventory: dict[str, Any] | None) -> list[str]:
+    if inventory is None:
+        return [f"missing {inventory_path}; cannot verify marker contract"]
+    marker_contract = inventory.get("marker_contract")
+    if not isinstance(marker_contract, dict):
+        return [f"{inventory_path}: missing machine-readable marker_contract section"]
+    if marker_contract.get("status") != "PASS":
+        failures = marker_contract.get("failures")
+        if failures:
+            return [f"{inventory_path}: marker contract failed: {json.dumps(failures[:3], sort_keys=True)}"]
+        return [f"{inventory_path}: marker contract status is {marker_contract.get('status', 'missing')}"]
+    checked = int_or_none(marker_contract.get("checked_real_gem5_t00_traces")) or 0
+    if checked <= 0:
+        return [f"{inventory_path}: marker contract has no checked real gem5 T00 baseline traces"]
+    return []
 
 
 def waiver_dicts(data: Any) -> list[dict[str, Any]]:
@@ -861,6 +932,8 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
     observations = trace_observations + inventory_observations(inventory, profile_root)
     real_counts = real_observation_counts(observations)
     real_trace_count = sum(1 for observation in trace_observations if is_real_gem5_observation(observation))
+    approval_valid = False
+    approval: dict[str, Any] | None = None
 
     if not expected:
         failures.append("no required generated experiments found for selected suite")
@@ -880,6 +953,8 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
         ]
         failures.extend(summarize_expected_missing("repeatability/stability", expected, missing_repeats))
 
+    failures.extend(real_platform_field_status_failures(inventory_path, inventory, approval_valid))
+    failures.extend(marker_contract_failures(inventory_path, inventory))
     failures.extend(confidence_failures(inventory_path, inventory))
     failures.extend(conflict_status_failures(inventory_path, inventory))
     if not has_documented_assumptions(text, inventory):

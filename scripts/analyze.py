@@ -12,6 +12,7 @@ unclaimed.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from collections import Counter, defaultdict
@@ -38,6 +39,17 @@ PIPE_RESOURCE = {
 PIPE0_CLUSTER_ANCHORS = {"vcpop_m", "viota_m", "vslideup_vx"}
 PIPE1_CLUSTER_ANCHORS = {"vdivu_vv", "vrgather_vv", "vredsum_vs"}
 NON_REQUIRED_REAL_TEMPLATES = {"T00_BASELINE_MARKER"}
+REQUIRED_REAL_LLVM_FIELDS = ("Latency", "ReleaseAtCycles", "ProcResource", "NumMicroOps", "SingleIssue")
+FIELD_STATUS_FILENAME = "real_platform_field_status.json"
+BLOCKING_FIELD_STATUSES = {
+    "conflict",
+    "insufficient_evidence",
+    "missing",
+    "unknown",
+    "invalid",
+    "error",
+    "not_set",
+}
 APPROVAL_FILENAMES = {
     "approval.json",
     "human_approval.json",
@@ -53,7 +65,7 @@ QUALITY_ASSUMPTIONS = (
     "Synthetic calibration traces remain reference-only for mismatch reporting and are not counted as real-platform coverage.",
     "Required real templates are inferred from non-baseline synthetic template inventory because that inventory defines the current latency/resource suite.",
     "Repeated measurements mean at least two real gem5 traces for the same template/instruction/LMUL/body signature with identical corrected primary deltas.",
-    "Zero-cost timestamp-marker assumptions remain documented in per-trace metadata and are not revalidated by this analyzer.",
+    "Timestamp markers use the documented label-PC wrapper: marker labels emit no instructions, adjacent marker labels may share one PC, and the checked-in real T00 baseline must show zero corrected marker delta.",
 )
 RUN_RESULT_DIR_RE = re.compile(r"r\d+$", re.IGNORECASE)
 
@@ -83,6 +95,9 @@ class ExperimentAnalysis:
     body: dict[str, Any]
     pair_instruction_id: str | None
     scaling_shape: str | None
+    timestamp_model_kind: str | None
+    timestamp_model_occupies_issue_slot: bool | None
+    marker_definitions: tuple[dict[str, Any], ...]
     synthetic: dict[str, Any]
     markers: tuple[Marker, ...]
     adjacent_deltas: tuple[tuple[str, str, int], ...]
@@ -307,6 +322,9 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
     entries = trace_doc.get("entries", [])
     markers = extract_markers(entries if isinstance(entries, list) else [])
     warnings: list[str] = []
+    trace_warnings = trace_doc.get("warnings")
+    if isinstance(trace_warnings, list):
+        warnings.extend(str(warning) for warning in trace_warnings if str(warning).strip())
     if not markers:
         warnings.append("trace contains no marker entries with numeric cycles")
 
@@ -356,6 +374,12 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
     mode = str(first_value(trace_doc.get("mode"), "unknown"))
     backend = str(first_value(trace_doc.get("backend"), trace_metadata(trace_doc).get("backend"), "unknown"))
     dry_run_trace = bool_or_false(trace_doc.get("dry_run_trace"))
+    timestamp_model = trace_doc.get("timestamp_model")
+    if not isinstance(timestamp_model, dict):
+        timestamp_model = {}
+    marker_definitions = trace_doc.get("markers")
+    if not isinstance(marker_definitions, list):
+        marker_definitions = []
 
     return ExperimentAnalysis(
         trace_path=trace_path,
@@ -373,6 +397,11 @@ def analyze_trace(trace_path: Path) -> ExperimentAnalysis:
         body=dict(body_doc),
         pair_instruction_id=str(pair_doc["id"]) if pair_doc.get("id") is not None else None,
         scaling_shape=str(body_doc["scaling_shape"]) if body_doc.get("scaling_shape") is not None else None,
+        timestamp_model_kind=str(timestamp_model["kind"]) if timestamp_model.get("kind") is not None else None,
+        timestamp_model_occupies_issue_slot=bool_or_false(timestamp_model.get("occupies_issue_slot"))
+        if "occupies_issue_slot" in timestamp_model
+        else None,
+        marker_definitions=tuple(dict(item) for item in marker_definitions if isinstance(item, dict)),
         synthetic=dict(synthetic),
         markers=markers,
         adjacent_deltas=tuple(adjacent),
@@ -1177,6 +1206,441 @@ def stable_json(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), default=str)
 
 
+def common_result_root(root: Path) -> Path:
+    if root.name == "common":
+        return root
+    candidate = root / "common"
+    if candidate.exists():
+        return candidate
+    return root
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def canonical_json_key(value: Any) -> str:
+    return str(value).strip().lower().replace("-", "_").replace(" ", "_")
+
+
+def get_first_by_keys(data: dict[str, Any], names: set[str]) -> Any:
+    for key, value in data.items():
+        if canonical_json_key(key) in names:
+            return value
+    return None
+
+
+def walk_json_dicts(data: Any, path: tuple[str, ...] = ("$",)) -> list[tuple[tuple[str, ...], dict[str, Any]]]:
+    found: list[tuple[tuple[str, ...], dict[str, Any]]] = []
+    if isinstance(data, dict):
+        found.append((path, data))
+        for key, value in data.items():
+            found.extend(walk_json_dicts(value, path + (str(key),)))
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            found.extend(walk_json_dicts(value, path + (f"[{index}]",)))
+    return found
+
+
+def json_path_text(path: tuple[str, ...]) -> str:
+    text = ""
+    for part in path:
+        if not text:
+            text = part
+        elif part.startswith("["):
+            text += part
+        else:
+            text += f".{part}"
+    return text
+
+
+def path_value_after(path: tuple[str, ...], marker: str) -> str | None:
+    for index, part in enumerate(path[:-1]):
+        if canonical_json_key(part) != marker:
+            continue
+        candidate = path[index + 1]
+        if not candidate.startswith("["):
+            return candidate
+    return None
+
+
+def normalize_required_field(value: Any) -> str | None:
+    if value is None:
+        return None
+    token = re.sub(r"[^a-z0-9]", "", str(value).lower())
+    lookup = {
+        re.sub(r"[^a-z0-9]", "", field.lower()): field
+        for field in REQUIRED_REAL_LLVM_FIELDS
+    }
+    lookup.update(
+        {
+            "latency": "Latency",
+            "releaseatcycles": "ReleaseAtCycles",
+            "release": "ReleaseAtCycles",
+            "procresource": "ProcResource",
+            "resource": "ProcResource",
+            "nummicroops": "NumMicroOps",
+            "microops": "NumMicroOps",
+            "singleissue": "SingleIssue",
+        }
+    )
+    return lookup.get(token)
+
+
+def normalize_field_status(value: Any) -> str:
+    if value is None:
+        return "missing"
+    text = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+    if not text:
+        return "missing"
+    if "conflict" in text:
+        return "conflict"
+    if text.startswith("insufficient") or "insufficient_evidence" in text or "not_enough" in text:
+        return "insufficient_evidence"
+    if "unknown" in text:
+        return "unknown"
+    return text
+
+
+def is_blocking_field_status(status: str) -> bool:
+    return normalize_field_status(status) in BLOCKING_FIELD_STATUSES
+
+
+def field_status_risk_id(instruction_id: Any, lmul: Any, field: Any, status: Any) -> str:
+    return (
+        "llvm_field_status:"
+        f"{normalized_id(instruction_id)}:"
+        f"{normalized_id(lmul)}:"
+        f"{normalize_required_field(field) or normalized_id(field)}:"
+        f"{normalize_field_status(status)}"
+    )
+
+
+def extract_field_status_records(data: Any) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str, str, str]] = set()
+    for path, item in walk_json_dicts(data):
+        path_text = json_path_text(path)
+        field = normalize_required_field(
+            first_value(
+                get_first_by_keys(item, {"field", "llvm_field", "field_name", "name"}),
+                path[-1] if path else None,
+            )
+        )
+        if field is None:
+            continue
+        raw_status = first_value(
+            get_first_by_keys(item, {"status", "state", "confidence", "resolution"}),
+            "missing",
+        )
+        status = normalize_field_status(raw_status)
+        instruction_id = first_value(
+            get_first_by_keys(item, {"instruction_id", "instruction", "instr", "instr_id"}),
+            path_value_after(path, "instructions"),
+            path_value_after(path, "instruction"),
+            "unknown",
+        )
+        lmul = first_value(
+            get_first_by_keys(item, {"lmul", "vector_lmul"}),
+            path_value_after(path, "lmuls"),
+            path_value_after(path, "lmul"),
+            "unknown",
+        )
+        key = (path_text, normalized_id(instruction_id), normalized_id(lmul), field, status)
+        if key in seen:
+            continue
+        seen.add(key)
+        record = {
+            "risk_id": field_status_risk_id(instruction_id, lmul, field, status),
+            "instruction_id": normalized_id(instruction_id),
+            "lmul": normalized_id(lmul),
+            "field": field,
+            "status": status,
+            "source_status": raw_status,
+            "json_path": path_text,
+        }
+        reason = get_first_by_keys(item, {"reason", "diagnostic", "message", "summary"})
+        if reason is not None:
+            record["reason"] = str(reason)
+        evidence = get_first_by_keys(item, {"evidence", "evidence_paths", "traces", "trace_paths"})
+        if evidence is not None:
+            record["evidence"] = evidence
+        records.append(record)
+    return records
+
+
+def missing_required_field_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    pairs = sorted(
+        {
+            (record["instruction_id"], record["lmul"])
+            for record in records
+            if record.get("instruction_id") not in (None, "unknown") and record.get("lmul") not in (None, "unknown")
+        }
+    )
+    present = {
+        (record.get("instruction_id"), record.get("lmul"), record.get("field"))
+        for record in records
+    }
+    missing: list[dict[str, Any]] = []
+    for instruction_id, lmul in pairs:
+        for field in REQUIRED_REAL_LLVM_FIELDS:
+            if (instruction_id, lmul, field) in present:
+                continue
+            missing.append(
+                {
+                    "risk_id": field_status_risk_id(instruction_id, lmul, field, "missing"),
+                    "instruction_id": instruction_id,
+                    "lmul": lmul,
+                    "field": field,
+                    "status": "missing",
+                    "source_status": "missing",
+                    "json_path": "$",
+                    "reason": "Required LLVM-facing field has no status record.",
+                }
+            )
+    return missing
+
+
+def load_real_platform_field_status(root: Path) -> dict[str, Any]:
+    path = common_result_root(root) / FIELD_STATUS_FILENAME
+    summary: dict[str, Any] = {
+        "path": path.as_posix(),
+        "exists": path.exists(),
+        "sha256": None,
+        "required_fields": list(REQUIRED_REAL_LLVM_FIELDS),
+        "records_total": 0,
+        "status_counts": {},
+        "unresolved_total": 0,
+        "unresolved": [],
+        "missing_required_total": 0,
+        "missing_required": [],
+        "status": "missing",
+    }
+    if not path.exists():
+        summary["unresolved"] = [
+            {
+                "risk_id": "real_platform_field_status:missing",
+                "status": "missing",
+                "field": "all",
+                "reason": f"Missing {FIELD_STATUS_FILENAME}; cannot verify required LLVM-facing field status.",
+            }
+        ]
+        summary["unresolved_total"] = 1
+        return summary
+
+    summary["sha256"] = sha256_file(path)
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        summary.update(
+            {
+                "status": "invalid",
+                "error": str(error),
+                "unresolved_total": 1,
+                "unresolved": [
+                    {
+                        "risk_id": "real_platform_field_status:invalid_json",
+                        "status": "invalid",
+                        "field": "all",
+                        "reason": f"{FIELD_STATUS_FILENAME} is not valid JSON: {error}",
+                    }
+                ],
+            }
+        )
+        return summary
+
+    records = extract_field_status_records(data)
+    missing = missing_required_field_records(records)
+    unresolved = [record for record in records if is_blocking_field_status(record["status"])] + missing
+    status_counts = Counter(record["status"] for record in records)
+    summary.update(
+        {
+            "status": "ready" if records and not unresolved else "blocked",
+            "records_total": len(records),
+            "status_counts": sorted_counter(status_counts),
+            "unresolved_total": len(unresolved),
+            "unresolved": unresolved,
+            "missing_required_total": len(missing),
+            "missing_required": missing,
+        }
+    )
+    if not records:
+        summary.update(
+            {
+                "status": "no_records",
+                "unresolved_total": 1,
+                "unresolved": [
+                    {
+                        "risk_id": "real_platform_field_status:no_records",
+                        "status": "insufficient_evidence",
+                        "field": "all",
+                        "reason": f"{FIELD_STATUS_FILENAME} contains no required LLVM-facing field status records.",
+                    }
+                ],
+            }
+        )
+    return summary
+
+
+def values_from_json_key(data: Any, names: set[str]) -> list[Any]:
+    values: list[Any] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if canonical_json_key(key) in names:
+                values.append(value)
+            values.extend(values_from_json_key(value, names))
+    elif isinstance(data, list):
+        for value in data:
+            values.extend(values_from_json_key(value, names))
+    return values
+
+
+def risk_ids_from_value(value: Any) -> set[str]:
+    risk_ids: set[str] = set()
+    if isinstance(value, str):
+        if value.strip():
+            risk_ids.add(value.strip())
+    elif isinstance(value, list):
+        for item in value:
+            risk_ids.update(risk_ids_from_value(item))
+    elif isinstance(value, dict):
+        risk_id = get_first_by_keys(value, {"risk_id", "id"})
+        if risk_id is not None and str(risk_id).strip():
+            risk_ids.add(str(risk_id).strip())
+        for nested in value.values():
+            if isinstance(nested, (dict, list)):
+                risk_ids.update(risk_ids_from_value(nested))
+    return risk_ids
+
+
+def accepted_risk_ids_from_document(data: dict[str, Any]) -> set[str]:
+    accepted: set[str] = set()
+    for value in values_from_json_key(
+        data,
+        {
+            "accepted_risk_ids",
+            "accepted_risks",
+            "accepted_unresolved_risks",
+            "accepted_field_status_risks",
+            "field_status_accepted_risks",
+            "risk_acceptance",
+            "risk_acceptances",
+        },
+    ):
+        accepted.update(risk_ids_from_value(value))
+    return accepted
+
+
+def field_status_risks_accepted(field_status: dict[str, Any], approval: dict[str, Any]) -> bool:
+    unresolved = field_status.get("unresolved")
+    if not isinstance(unresolved, list) or not unresolved:
+        return True
+    accepted = set(str(value) for value in approval.get("accepted_risk_ids", []) if str(value).strip())
+    if "*" in accepted or "all" in {value.lower() for value in accepted}:
+        return True
+    required = {
+        str(item.get("risk_id"))
+        for item in unresolved
+        if isinstance(item, dict) and item.get("risk_id")
+    }
+    return bool(required) and required <= accepted
+
+
+def marker_definition_status(item: ExperimentAnalysis) -> tuple[bool, list[str]]:
+    failures: list[str] = []
+    if not item.marker_definitions:
+        failures.append("trace has no marker metadata definitions")
+        return False, failures
+    for marker in item.marker_definitions:
+        label = marker.get("label", marker.get("name", "unknown"))
+        if marker.get("zero_cost") is not True:
+            failures.append(f"marker {label} is not declared zero_cost: true")
+        if marker.get("occupies_issue_slot") is not False:
+            failures.append(f"marker {label} is not declared occupies_issue_slot: false")
+    return not failures, failures
+
+
+def build_marker_contract(real_gem5_items: list[ExperimentAnalysis]) -> dict[str, Any]:
+    candidates = [
+        item
+        for item in real_gem5_items
+        if item.template_id == "T00_BASELINE_MARKER" and item.experiment_id == "t00-marker"
+    ]
+    records: list[dict[str, Any]] = []
+    failures: list[dict[str, Any]] = []
+    for item in sorted(candidates, key=lambda entry: entry.trace_path.as_posix()):
+        named_delta = next(
+            (delta for left, right, delta in item.named_deltas if left == "t0" and right == "t1"),
+            item.corrected_primary_delta,
+        )
+        marker_pcs = {
+            marker.name: marker.pc
+            for marker in item.markers
+            if marker.name in {"t0", "t1"}
+        }
+        non_null_pcs = [pc for pc in marker_pcs.values() if pc is not None]
+        marker_defs_ok, marker_def_failures = marker_definition_status(item)
+        record_failures: list[str] = []
+        if item.warnings:
+            record_failures.append("marker extraction warnings present: " + "; ".join(item.warnings))
+        if named_delta != 0:
+            record_failures.append(f"corrected t0/t1 marker delta is {named_delta}, expected 0")
+        if len(marker_pcs) != 2:
+            record_failures.append("t0/t1 marker PCs are incomplete")
+        if len(set(non_null_pcs)) != 1:
+            record_failures.append("t0/t1 marker labels do not resolve to the same PC")
+        if item.timestamp_model_kind != "zero_cost_label_marker":
+            record_failures.append(
+                f"timestamp_model.kind is {item.timestamp_model_kind}, expected zero_cost_label_marker"
+            )
+        if item.timestamp_model_occupies_issue_slot is not False:
+            record_failures.append("timestamp_model.occupies_issue_slot is not false")
+        record_failures.extend(marker_def_failures)
+        record = {
+            "trace_path": item.trace_path.as_posix(),
+            "mode": item.mode,
+            "backend": item.backend,
+            "marker_delta_cycles": named_delta,
+            "marker_pcs": marker_pcs,
+            "timestamp_model_kind": item.timestamp_model_kind,
+            "timestamp_model_occupies_issue_slot": item.timestamp_model_occupies_issue_slot,
+            "marker_definitions_zero_cost": marker_defs_ok,
+            "warnings": list(item.warnings),
+            "status": "PASS" if not record_failures else "FAIL",
+        }
+        if record_failures:
+            record["failures"] = record_failures
+            failures.append({"trace_path": item.trace_path.as_posix(), "failures": record_failures})
+        records.append(record)
+
+    if not candidates:
+        failures.append(
+            {
+                "trace_path": None,
+                "failures": ["missing checked-in real gem5 T00_BASELINE_MARKER trace evidence"],
+            }
+        )
+
+    return {
+        "status": "PASS" if candidates and not failures else "FAIL",
+        "template_id": "T00_BASELINE_MARKER",
+        "experiment_id": "t00-marker",
+        "required": True,
+        "contract": "zero_cost_label_pc_wrapper",
+        "documented_assumption": (
+            "TIMESTAMP_MARK is implemented as a zero-cost label-PC wrapper. Marker labels emit no instructions; "
+            "the marker cycle is recovered from the first Exec-log instruction at the marker PC."
+        ),
+        "checked_real_gem5_t00_traces": len(candidates),
+        "records": records,
+        "failures": failures,
+    }
+
+
 def group_key_record(item: ExperimentAnalysis) -> dict[str, str]:
     return {
         "template_id": normalized_id(item.template_id),
@@ -1256,6 +1720,8 @@ def discover_approval(root: Path) -> dict[str, Any]:
             "path": path.as_posix(),
             "status": "present_unapproved",
             "approved": False,
+            "machine_readable": path.suffix.lower() == ".json",
+            "accepted_risk_ids": [],
         }
         try:
             if path.suffix.lower() == ".json":
@@ -1272,6 +1738,7 @@ def discover_approval(root: Path) -> dict[str, Any]:
                     bool_value = first_value(data.get("approved"), data.get("human_approved"), data.get("human_approval"))
                     artifact["approved"] = bool_value is True or status_value in {"approved", "accepted", "pass", "passed"}
                     artifact["status"] = "approved" if artifact["approved"] else status_value or "present_unapproved"
+                    artifact["accepted_risk_ids"] = sorted(accepted_risk_ids_from_document(data))
             else:
                 text = path.read_text(encoding="utf-8").lower()
                 has_positive = "approved: true" in text or "status: approved" in text or "human approval: approved" in text
@@ -1289,6 +1756,14 @@ def discover_approval(root: Path) -> dict[str, Any]:
         "approved": approved,
         "artifact_path": next((entry["path"] for entry in artifacts if entry.get("approved")), artifacts[0]["path"]),
         "artifacts": artifacts,
+        "accepted_risk_ids": sorted(
+            {
+                risk_id
+                for entry in artifacts
+                if entry.get("approved")
+                for risk_id in entry.get("accepted_risk_ids", [])
+            }
+        ),
     }
 
 
@@ -1422,6 +1897,8 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
     missing_groups = sorted(required_groups - real_gem5_groups)
 
     repeatability = summarize_repeat_groups(real_gem5_items)
+    field_status = load_real_platform_field_status(root)
+    marker_contract = build_marker_contract(real_gem5_items)
     stable_repeat_groups = {
         (entry["template_id"], entry["instruction_id"], entry["lmul"])
         for entry in repeatability["stable_template_instruction_lmul"]
@@ -1441,16 +1918,28 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
             )
 
     approval = discover_approval(root)
+    field_status_accepted = field_status_risks_accepted(field_status, approval)
     gate_checks = {
         "required_templates_covered_by_real_gem5": bool(required_templates) and not missing_templates,
         "required_template_instruction_lmul_covered_by_real_gem5": bool(required_groups) and not missing_groups,
         "stable_repeats_exist_for_required_groups": bool(required_groups) and not missing_repeat_groups,
+        "real_platform_field_status_present": bool(field_status.get("exists"))
+        and field_status.get("status") not in {"invalid", "no_records"},
+        "required_llvm_field_status_clean_or_accepted": field_status.get("status") == "ready"
+        or (bool(approval.get("approved")) and field_status_accepted),
+        "marker_contract_valid": marker_contract.get("status") == "PASS",
         "no_unresolved_conflicts": not conflicts,
         "assumptions_documented": bool(QUALITY_ASSUMPTIONS),
         "explicit_human_approval": bool(approval.get("approved")),
     }
     failed_checks = [key for key, value in gate_checks.items() if not value]
-    if conflicts:
+    if marker_contract.get("status") != "PASS":
+        confidence_level = "invalid_marker_contract"
+    elif not field_status.get("exists") or field_status.get("status") in {"invalid", "no_records"}:
+        confidence_level = "missing_real_platform_field_status"
+    elif field_status.get("unresolved_total") and not field_status_accepted:
+        confidence_level = "unresolved_llvm_field_status"
+    elif conflicts:
         confidence_level = "conflicted"
     elif missing_templates or missing_groups:
         confidence_level = "insufficient_real_coverage"
@@ -1514,7 +2003,13 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
             "unresolved_total": len(conflicts),
             "items": conflicts,
         },
+        "field_status": field_status,
+        "marker_contract": marker_contract,
         "approval": approval,
+        "risk_acceptance": {
+            "field_status_unresolved_risks_accepted": field_status_accepted,
+            "accepted_risk_ids": approval.get("accepted_risk_ids", []),
+        },
         "gate": {
             "status": "PASS" if not failed_checks else "NOT_READY",
             "checks": gate_checks,
@@ -1544,6 +2039,9 @@ def render_quality_report(inventory: dict[str, Any]) -> str:
     coverage = inventory["coverage"]
     repeatability = inventory["repeatability"]
     conflicts = inventory["conflicts"]
+    field_status = inventory.get("field_status", {})
+    marker_contract = inventory.get("marker_contract", {})
+    risk_acceptance = inventory.get("risk_acceptance", {})
     approval = inventory["approval"]
     confidence = inventory["confidence"]
     gate = inventory["gate"]
@@ -1564,6 +2062,32 @@ def render_quality_report(inventory: dict[str, Any]) -> str:
         "",
     ]
     blockers: list[str] = []
+    if not field_status.get("exists"):
+        blockers.append(f"LLVM field-status artifact: missing `{field_status.get('path', FIELD_STATUS_FILENAME)}`.")
+    elif field_status.get("status") == "invalid":
+        blockers.append(
+            "LLVM field-status artifact: invalid JSON"
+            + (f" ({field_status.get('error')})." if field_status.get("error") else ".")
+        )
+    elif field_status.get("status") == "no_records":
+        blockers.append("LLVM field-status artifact: no required LLVM-facing field records.")
+    if field_status.get("missing_required_total"):
+        blockers.append(
+            f"LLVM field-status artifact: {field_status['missing_required_total']} required field records are missing."
+        )
+    field_status_accepted = bool(risk_acceptance.get("field_status_unresolved_risks_accepted"))
+    if field_status.get("unresolved_total") and not field_status_accepted:
+        unresolved_records = field_status.get("unresolved", [])
+        counts = Counter(
+            str(record.get("status", "unknown"))
+            for record in unresolved_records
+            if isinstance(record, dict)
+        )
+        count_text = ", ".join(f"{key}={value}" for key, value in counts.items()) if isinstance(counts, dict) else ""
+        suffix = f" ({count_text})." if count_text else "."
+        blockers.append(f"LLVM field-status unresolved risks: {field_status['unresolved_total']}{suffix}")
+    if marker_contract.get("status") != "PASS":
+        blockers.append("Marker contract: checked-in real gem5 T00 label-PC wrapper evidence is not valid.")
     if coverage["missing_real_templates"]:
         blockers.append(
             "Missing real gem5 template coverage: "
@@ -1655,6 +2179,59 @@ def render_quality_report(inventory: dict[str, Any]) -> str:
     else:
         lines.append("No failed gate checks.")
 
+    lines.extend(["", "## LLVM Field Status", ""])
+    lines.append(f"Field-status artifact: `{field_status.get('path', FIELD_STATUS_FILENAME)}`")
+    lines.append(f"Artifact present: {str(bool(field_status.get('exists'))).lower()}")
+    if field_status.get("sha256"):
+        lines.append(f"Artifact sha256: `{field_status['sha256']}`")
+    lines.append(f"Field-status summary: `{field_status.get('status', 'missing')}`")
+    lines.append(f"Required LLVM-facing fields: {', '.join(f'`{field}`' for field in REQUIRED_REAL_LLVM_FIELDS)}")
+    lines.append(f"Status records: {field_status.get('records_total', 0)}")
+    status_counts = field_status.get("status_counts")
+    if isinstance(status_counts, dict) and status_counts:
+        lines.append("")
+        lines.append("| Field status | Count |")
+        lines.append("| --- | ---: |")
+        for status, count in status_counts.items():
+            lines.append(f"| `{status}` | {count} |")
+    unresolved = field_status.get("unresolved")
+    if isinstance(unresolved, list) and unresolved:
+        lines.extend(["", "Unresolved field-status risks:", ""])
+        lines.append("| Risk ID | Instruction | LMUL | Field | Status | Reason |")
+        lines.append("| --- | --- | --- | --- | --- | --- |")
+        for risk in unresolved:
+            if not isinstance(risk, dict):
+                continue
+            reason = str(risk.get("reason", "")).replace("|", "\\|")
+            lines.append(
+                f"| `{risk.get('risk_id', '')}` | `{risk.get('instruction_id', 'unknown')}` | "
+                f"`{risk.get('lmul', 'unknown')}` | `{risk.get('field', 'unknown')}` | "
+                f"`{risk.get('status', 'unknown')}` | {reason} |"
+            )
+    else:
+        lines.append("No unresolved field-status risks.")
+
+    lines.extend(["", "## Marker Contract", ""])
+    lines.append(f"Contract status: `{marker_contract.get('status', 'FAIL')}`")
+    lines.append(f"Contract: `{marker_contract.get('contract', 'zero_cost_label_pc_wrapper')}`")
+    if marker_contract.get("documented_assumption"):
+        lines.append(str(marker_contract["documented_assumption"]))
+    lines.append(f"Checked real gem5 T00 traces: {marker_contract.get('checked_real_gem5_t00_traces', 0)}")
+    marker_failures = marker_contract.get("failures")
+    if isinstance(marker_failures, list) and marker_failures:
+        lines.append("")
+        lines.append("| Trace | Failure |")
+        lines.append("| --- | --- |")
+        for failure in marker_failures:
+            if not isinstance(failure, dict):
+                continue
+            trace = failure.get("trace_path") or "missing"
+            for detail in failure.get("failures", []):
+                detail_text = str(detail).replace("|", "\\|")
+                lines.append(f"| `{trace}` | {detail_text} |")
+    else:
+        lines.append("No marker-contract failures.")
+
     lines.extend(["", "## Conflicts", ""])
     if conflicts["items"]:
         lines.append("| Kind | Detail |")
@@ -1675,7 +2252,10 @@ def render_quality_report(inventory: dict[str, Any]) -> str:
         lines.append(f"Approval accepted by gate: {str(bool(approval.get('approved'))).lower()}")
     else:
         lines.append("Approval artifact: absent")
-    lines.append("The real gate cannot pass without an explicit approved human approval artifact after this report is reviewed.")
+    lines.append(
+        "The real gate cannot pass without clean field-status evidence or explicit per-risk acceptance, "
+        "plus an approved human approval artifact tied to the real-platform inventory and field-status hashes."
+    )
 
     lines.extend(["", "## Machine-Readable Sidecar", ""])
     lines.append(

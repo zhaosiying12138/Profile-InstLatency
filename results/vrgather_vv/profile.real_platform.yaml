@@ -1,0 +1,200 @@
+schema_version: 1
+mode: "real_platform_profile"
+backend: "gem5_minor"
+instruction_id: "vrgather_vv"
+llvm_facing_fields:
+  m1:
+    Latency:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No value in the bounded search range satisfies all raw marker constraints."
+      evidence:
+        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
+        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
+        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t11-vrgather-vv-m1-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n6/trace.json"
+        - "t11-vrgather-vv-m1-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=17:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n8/trace.json"
+        - "t12-vrgather-vv-m1-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=7:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m1-k0-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m1-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=7:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m1-k1-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m1-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=14:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m1-k10-vadd-vv/trace.json"
+    ReleaseAtCycles:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No value in the bounded search range satisfies all raw marker constraints."
+      evidence:
+        - "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json"
+        - "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json"
+        - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
+        - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
+        - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:T10 expected delta=iterations*ReleaseAtCycles;iterations=8 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
+    ProcResource:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - "unknown"
+      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+      evidence:
+        - "t20-vrgather-vv-vredsum-vs-m1-n4:T20 relation=conflict"
+        - "t20-vrgather-vv-vredsum-vs-m1-n4:T20 relation=conflict"
+    NumMicroOps:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - 1
+        - 2
+        - 3
+        - 4
+      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      evidence:
+        - "t21-vrgather-vv-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-vrgather-vv-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+    SingleIssue:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - false
+        - true
+      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      evidence:
+        - "t21-vrgather-vv-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-vrgather-vv-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+  m2:
+    Latency:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No value in the bounded search range satisfies all raw marker constraints."
+      evidence:
+        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
+        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
+        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t11-vrgather-vv-m2-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=36:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n6/trace.json"
+        - "t11-vrgather-vv-m2-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=48:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n8/trace.json"
+        - "t12-vrgather-vv-m2-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=10:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m2-k0-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m2-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=10:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m2-k1-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m2-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=28:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m2-k10-vadd-vv/trace.json"
+    ReleaseAtCycles:
+      status: "inferred"
+      value: 6
+      candidates:
+        - 6
+      reason: "Unique candidate inferred from real-platform marker observations."
+      evidence:
+        - "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json"
+        - "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json"
+        - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
+        - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
+        - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:T10 expected delta=iterations*ReleaseAtCycles;iterations=8 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
+    ProcResource:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - "unknown"
+      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+      evidence:
+        - "t20-vrgather-vv-vredsum-vs-m2-n4:T20 relation=insufficient_evidence"
+        - "t20-vrgather-vv-vredsum-vs-m2-n4:T20 relation=insufficient_evidence"
+    NumMicroOps:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No candidate in the bounded domain satisfies all T21 checks."
+      evidence:
+        - "t21-vrgather-vv-m2-n4:T21 status=conflict:cycles_per_pair=None"
+        - "t21-vrgather-vv-m2-n4:T21 status=conflict:cycles_per_pair=None"
+    SingleIssue:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No candidate in the bounded domain satisfies all T21 checks."
+      evidence:
+        - "t21-vrgather-vv-m2-n4:T21 status=conflict:cycles_per_pair=None"
+        - "t21-vrgather-vv-m2-n4:T21 status=conflict:cycles_per_pair=None"
+  m4:
+    Latency:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No value in the bounded search range satisfies all raw marker constraints."
+      evidence:
+        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
+        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
+        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
+        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
+        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t12-vrgather-vv-m4-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=23:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k0-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m4-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=27:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k1-vadd-vv/trace.json"
+        - "t12-vrgather-vv-m4-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=63:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/vrgather_vv/experiments/t12-vrgather-vv-m4-k10-vadd-vv/trace.json"
+    ReleaseAtCycles:
+      status: "conflict"
+      value: null
+      candidates:
+        []
+      reason: "No value in the bounded search range satisfies all raw marker constraints."
+      evidence:
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
+        - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
+    ProcResource:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - "unknown"
+      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+      evidence:
+        - "t20-vrgather-vv-vredsum-vs-m4-n3:T20 relation=conflict"
+        - "t20-vrgather-vv-vredsum-vs-m4-n3:T20 relation=conflict"
+    NumMicroOps:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - 1
+        - 2
+        - 3
+        - 4
+      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      evidence:
+        - "t21-vrgather-vv-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-vrgather-vv-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+    SingleIssue:
+      status: "insufficient_evidence"
+      value: null
+      candidates:
+        - false
+        - true
+      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      evidence:
+        - "t21-vrgather-vv-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-vrgather-vv-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+hardware_interpretation:
+  issue_width: 2
+  issue_order: "in_order"
+  rob: "none"
+  vector_pipes: 2
+  timestamp_marker_cost: 0
+confidence:
+  source: "mode_isolated_real_platform_marker_observations"
+  blocking_statuses:
+    - "conflict"
+    - "insufficient_evidence"
+    - "missing"
+    - "unknown"
