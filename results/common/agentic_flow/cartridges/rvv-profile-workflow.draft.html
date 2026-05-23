@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.11.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.12.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1,rvv.riskAcceptanceRequest.v1"></h2-capability>
@@ -36,6 +36,9 @@
   </h2-template>
   <h2-template id="round-11-current-head-capture-worker" type="prompt" href="../artifacts/prompts/round-11-current-head-capture-worker.md">
     Capture current-head post-Round-10 evidence, search reproducibility, 9 unresolved risks, and the fail-closed approval boundary.
+  </h2-template>
+  <h2-template id="round-12-t12-exactness-fix-worker" type="prompt" href="../artifacts/prompts/round-12-t12-exactness-fix-worker.md">
+    Fix and capture matched-control T12 exactness: infer exact latency from agreeing positive-stall equations and fail closed on disagreement.
   </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
@@ -143,7 +146,7 @@
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231" field-status-sha256="9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b" search-sha256="bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623" quality-sha256="1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae" unresolved-non-identifiable-risks="38"></h2-request-boundary>
     </h2-agent>
     <h2-agent id="round11-current-head-capture-worker" role="worker" tool="codex" prompt="#round-11-current-head-capture-worker" short-name="r11-capture" timeout="unknown">
-      <h2-current-status>current-head-capture-refreshed-pending-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round12-t12-exactness-fix</h2-current-status>
       <h2-commit>77d181af</h2-commit>
       <h2-commit>6ff16b7c</h2-commit>
       <h2-commit>88c9e6e5</h2-commit>
@@ -153,6 +156,18 @@
       <h2-expect artifact="round-11-current-head-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
       <h2-expect artifact="round-11-current-head-capture-verification" schema="rvv.verification.v1"></h2-expect>
       <h2-expect artifact="round-11-current-head-capture-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-field-status-summary blocking-total="9" non-identifiable-blocking-count="9" inferred-count="141"></h2-field-status-summary>
+      <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
+    </h2-agent>
+    <h2-agent id="round12-t12-exactness-fix-worker" role="worker" tool="codex" prompt="#round-12-t12-exactness-fix-worker" short-name="r12-t12-fix" timeout="unknown">
+      <h2-current-status>t12-exactness-fixed-pending-human-decision</h2-current-status>
+      <h2-commit>91201d20</h2-commit>
+      <h2-owned-write-set>scripts/search_model_impl.py,tests/test_search_model_candidate_sim.py,results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md,.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md</h2-owned-write-set>
+      <h2-expect artifact="round-12-t12-exactness-fix-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-12-t12-exactness-fix-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-12-t12-exactness-fix-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-12-t12-exactness-fix-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-t12-exactness fixed-rule="positive-stall-equations-gap-times-cadence-plus-stall" partial-stall-regression="cadence-2-stalls-3-1-0-0-infers-latency-3" disagreement-regression="fails-closed-non-identifiable"></h2-t12-exactness>
       <h2-field-status-summary blocking-total="9" non-identifiable-blocking-count="9" inferred-count="141"></h2-field-status-summary>
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>

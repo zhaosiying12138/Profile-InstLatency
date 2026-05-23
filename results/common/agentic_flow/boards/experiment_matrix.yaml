@@ -35,6 +35,9 @@ current_head_evidence:
   search_reproduction_fix:
     commit: 8ec7a8a8
     effect: documented /tmp search command reproduces checked-in search artifact and does not mutate tracked artifacts
+  t12_matched_control_exactness_fix:
+    commit: 91201d20
+    effect: matched-control T12 exact latency is derived from agreeing positive-stall equations; cadence-2 stalls [3, 1, 0, 0] infer latency 3 and disagreement fails closed
 current_counts:
   real_platform_traces: 7660
   stable_repeat_groups: 3815

@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 11
-  status: awaiting_human_risk_decision_after_current_head_capture
+  round: 12
+  status: awaiting_human_risk_decision_after_t12_exactness_fix
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -55,6 +55,9 @@ templates:
   - id: round-11-current-head-capture-worker
     primitive: h2-template
     path: artifacts/prompts/round-11-current-head-capture-worker.md
+  - id: round-12-t12-exactness-fix-worker
+    primitive: h2-template
+    path: artifacts/prompts/round-12-t12-exactness-fix-worker.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -324,6 +327,22 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/worker-r11-current-head-capture-normalized.json
+  - id: round-12-t12-exactness-fix-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r12-t12-exactness-fix.md
+  - id: round-12-t12-exactness-fix-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r12-t12-exactness-fix.md
+  - id: round-12-t12-exactness-fix-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r12-t12-exactness-fix.md
+  - id: round-12-t12-exactness-fix-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r12-t12-exactness-fix-normalized.json
   - id: rlcr-round-10-summary
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
@@ -400,6 +419,9 @@ events:
   - type: round11.search_reproducibility.fixed
   - type: round11.current_head.capture.completed
   - type: round11.real_gate.fail_closed
+  - type: round12.t12_exactness_fix.completed
+  - type: round12.search_reproducibility.confirmed
+  - type: round12.real_gate.fail_closed
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -644,7 +666,67 @@ flow_nodes:
         search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
       next_human_step: present_request_before_creating_human_approval_json
-    status: current_head_capture_refreshed_pending_human_decision
+    status: superseded_by_round12_t12_exactness_fix
+  - id: round12-t12-exactness-fix-worker
+    primitive: h2-agent
+    worker: Round12T12ExactnessFix
+    commit: 91201d20
+    prompt: artifacts/prompts/round-12-t12-exactness-fix-worker.md
+    owned_write_set:
+      - scripts/search_model_impl.py
+      - tests/test_search_model_candidate_sim.py
+      - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+      - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+      - results/common/agentic_flow/**
+    forbidden_write_set:
+      - results/common/*approval*
+      - results/common/real_platform_risk_acceptance_request.json
+      - results/common/search_model_real_platform.json
+      - results/common/real_platform_field_status.json
+      - results/common/real_platform_inventory.json
+      - results/common/experiment_quality.md
+      - .humanize/rlcr/2026-05-23_01-15-03/state.md
+    artifacts:
+      contract: artifacts/worker_contracts/worker-r12-t12-exactness-fix.md
+      output: artifacts/worker_outputs/worker-r12-t12-exactness-fix.md
+      verification: artifacts/verification/worker-r12-t12-exactness-fix.md
+      tool_call: artifacts/tool_calls/worker-r12-t12-exactness-fix-normalized.json
+    t12_exactness_fix:
+      prior_bug: matched_control_converged_gap_times_cadence_overclaimed_exact_latency_when_filler_cadence_gt_1
+      fixed_rule: infer_exact_latency_from_agreeing_positive_stall_equations_gap_times_cadence_plus_stall
+      partial_stall_regression: cadence_2_stalls_3_1_0_0_infers_latency_3
+      disagreement_regression: positive_stall_disagreement_fails_closed_non_identifiable
+    field_status_summary:
+      total: 150
+      inferred: 141
+      non_identifiable: 9
+      conflict: 0
+      insufficient_evidence: 0
+      blocking_total: 9
+    request_boundary:
+      status: pending_not_approved
+      request_status: not_approved
+      decision_status: not_approved
+      gate_status: not_submitted
+      approved: false
+      is_gate_input: false
+      is_approval_artifact: false
+      gate_consumed: false
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 9
+      request_worker: Round11VcpopM4IssueFieldDiagnostics
+      gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+      expected_fail_closed_reasons:
+        - missing Gate status PASS
+        - missing machine-readable human approval
+        - 9 unresolved non_identifiable risks
+      current_hashes:
+        real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+        real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+        search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+        experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+      next_human_step: present_request_before_creating_human_approval_json
+    status: t12_exactness_fixed_pending_human_decision
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree

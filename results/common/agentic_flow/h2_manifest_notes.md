@@ -1,7 +1,7 @@
 # Humanize2 Manifest Notes
 
-Status: Round 11 current-head capture package after commit
-`8ec7a8a8`.
+Status: Round 12 T12 exactness fix capture package after commit
+`91201d20`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -85,6 +85,12 @@ Round 6 ownership:
   Current artifacts report 141 inferred rows and 9 non-identifiable rows.
   Commit `8ec7a8a8` fixed the documented `/tmp` search reproduction path while
   preserving the request-bound search hash.
+- Round 12 commit `91201d20` fixed the matched-control T12 exactness rule:
+  exact latency is inferred from agreeing positive-stall equations
+  `gap * cadence + stall`, zero-stall convergence must be consistent, and
+  disagreement fails closed. The cadence-2 partial-stall regression now infers
+  `Latency = 3`; real-platform search remains byte-reproducible against the
+  checked-in artifact, so request-bound hashes are unchanged.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "worker": "Round12T12ExactnessFix",
+  "commit": "91201d20",
+  "commands": [
+    {
+      "command": "python3 -m pytest -q",
+      "status": "passed",
+      "summary": "56 tests passed"
+    },
+    {
+      "command": "python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-t12-fix-search.json --format json",
+      "status": "passed"
+    },
+    {
+      "command": "cmp /tmp/profile-inst-latency-t12-fix-search.json results/common/search_model_real_platform.json",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "status": "failed_expected",
+      "failures": [
+        "quality report must contain exact line `Gate status: PASS`",
+        "missing machine-readable human approval file under results/common",
+        "unresolved real-platform LLVM field-status risks=9 status_counts={\"non_identifiable\": 9}"
+      ]
+    }
+  ],
+  "search_sha256": "2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6",
+  "approval_artifact_created": false
+}

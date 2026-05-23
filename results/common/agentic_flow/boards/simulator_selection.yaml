@@ -36,6 +36,11 @@ current_head_capture:
     t12_matched_controls: 6ff16b7c
     vcpop_m4_r11_diagnostics: 88c9e6e5
     search_reproduction_fix: 8ec7a8a8
+    t12_matched_control_exactness_fix: 91201d20
+  round12_t12_exactness_fix:
+    worker: Round12T12ExactnessFix
+    status: fixed_and_captured
+    effect: matched-control exact latency now uses agreeing positive-stall equations and fails closed on disagreement
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   decision_status: not_approved

@@ -4,7 +4,7 @@ Recommendation: REQUEST CHANGES
 
 Architectural Status: BLOCK
 
-Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The strict Round 10 summary is accurate for commits through `7a7da5d2`: Round 10 added focused T20/T12 evidence, refreshed real-platform artifacts, reduced unresolved rows from 39 to 38, and kept the request pending rather than approved. Current `HEAD` is now past that boundary and includes `77d181af`, `6ff16b7c`, `88c9e6e5`, and `8ec7a8a8`; current artifacts report 141 inferred rows and 9 `non_identifiable` rows.
+Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The strict Round 10 summary is accurate for commits through `7a7da5d2`: Round 10 added focused T20/T12 evidence, refreshed real-platform artifacts, reduced unresolved rows from 39 to 38, and kept the request pending rather than approved. Current `HEAD` is now past that boundary and includes `77d181af`, `6ff16b7c`, `88c9e6e5`, `8ec7a8a8`, `fbc490b4`, and `91201d20`; current artifacts report 141 inferred rows and 9 `non_identifiable` rows.
 
 ## Part 1: Implementation Review
 
@@ -45,6 +45,29 @@ Focused tests also cover the wrapper split and `/tmp` output behavior.
 The current worktree includes a Round 11/current-head capture package under `results/common/agentic_flow/**` for `77d181af`, `6ff16b7c`, `88c9e6e5`, and `8ec7a8a8`. It includes prompt, contract, worker output, verification, normalized tool-call JSON, boards, events, replay, status view, draft cartridge, and manifest notes. YAML/JSON/JSONL parsing passed.
 
 The capture correctly preserves request semantics: `results/common/real_platform_risk_acceptance_request.json` remains pending, not approved, not submitted, not a gate input, not an approval artifact, and not gate-consumed.
+
+### Accepted: matched-control T12 exactness is fixed
+
+The matched-control exactness bug found during review is now fixed by `91201d20`. `t12_matched_control_constraint()` derives exact latency from all positive-stall equations `gap * cadence + stall`, requires agreement across positive stalls, and checks zero-stall convergence consistency.
+
+Reviewer reproduction after the fix:
+
+```text
+$ python3 - <<'PY'
+from tests import test_search_model_candidate_sim as t
+field = t.solve_latency_field(t.t12_matched_control_observations(
+    [(0, 3), (1, 1), (2, 0), (3, 0)],
+    [(0, 0), (1, 0), (2, 0), (3, 0)],
+    cadence=2,
+))
+print(field['status'], field.get('value'))
+print(field['t12_latency_constraints'][0]['reason'])
+PY
+exact_fit 3
+T12 matched_control_convergence;...;stalls=[3, 1, 0, 0];...;converged_gap=2;positive_stall_latency=3;exact_latency=3
+```
+
+Regression coverage also includes a cadence-2 positive-stall disagreement case, which now fails closed as `non_identifiable`. The real-platform `/tmp` search output remains byte-for-byte identical to `results/common/search_model_real_platform.json`, so the checked-in real artifacts did not need regeneration.
 
 ### BLOCKER 1. AC-16 remains incomplete
 
@@ -116,27 +139,30 @@ Claude's Round 10 tracker request is approved as a progress update, not a comple
 
 Changes applied to `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md`:
 
-- Updated Plan Version to 18 for current-head capture verification.
+- Updated Plan Version to 20 for current-head capture verification plus the matched-control T12 exactness fix.
 - Kept the Round 10 progress entries for `f3bb4552`, `cd71b7ed`, `c1032a2c`, `73b99c2e`, and `7a7da5d2`.
 - Kept the current-head search reproducibility fix entry for `8ec7a8a8`.
 - Added a current-head capture verification entry for `77d181af`, `6ff16b7c`, `88c9e6e5`, and `8ec7a8a8`.
 - Marked T6 and T12 completed for current-head Humanize2 capture/replay after parse checks passed.
+- Marked T10 completed again after `91201d20` fixed matched-control exactness and tests/search byte-repro passed.
 - Kept T9 and T11 as `needs_changes` because AC-16 still lacks either explicit current-hash-bound human approval or stronger evidence resolving the 9 risks.
 - Removed the now-resolved open issue for missing current-head Humanize2 capture.
 - Kept the open AC-16 issue for 9 non-identifiable real-platform LLVM-facing rows.
+- Removed the resolved AC-9 issue for matched-control T12 exact-latency overclaim.
 - Did not modify the immutable goal or acceptance criteria section.
 
 ## Reviewer Verification Commands
 
-- `python3 -m pytest -q`: passed, 54 tests.
+- `python3 -m pytest -q`: passed, 56 tests.
 - `python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py`: passed.
 - `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results`: passed.
 - `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results`: failed closed as expected on missing PASS, missing approval, and 9 unresolved risks.
 - `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r10-review-current-search.json --format json`: passed.
 - `cmp /tmp/profile-inst-latency-r10-review-current-search.json results/common/search_model_real_platform.json`: passed.
+- Adversarial matched-control probe now reports `exact_fit 3` for cadence-2 stalls `[3, 1, 0, 0]`.
 - YAML/JSON/JSONL parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, and `events.jsonl`: passed.
 - Request risk IDs match inventory unresolved risk IDs exactly.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no output.
-- `git diff --check` and `git diff --cached --check`: passed after the corrected Round 11 capture files were staged.
+- `git diff --check` and `git diff --cached --check`: passed during review.
 
 REQUEST CHANGES

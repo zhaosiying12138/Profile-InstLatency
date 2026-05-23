@@ -684,6 +684,22 @@ The real-platform gate is expected to fail closed until the human explicitly
 approves the current hashes and exact 9-risk scope, or stronger evidence
 resolves those rows.
 
+### Round 12 T12 Exactness Fix
+
+Round 10 review found that matched-control T12 exact latency could be
+overclaimed when filler cadence was greater than 1. Commit `91201d20` fixed
+the rule: exact latency is now inferred from all positive-stall equations
+`gap * cadence + stall`, all positive stalls must agree, and zero-stall
+convergence must be consistent with the inferred value. A cadence-2 case with
+stalls `[3, 1, 0, 0]` now infers `Latency = 3`; a disagreement case fails
+closed as `non_identifiable`.
+
+The current real-platform search artifact remains byte-reproducible against
+`results/common/search_model_real_platform.json`, so the request-bound hashes
+above did not change. The real-platform gate still fails closed for AC-16
+because no approval artifact exists and the same 9 unresolved
+`non_identifiable` rows remain approval-bound.
+
 ## Humanize2 Hub Path
 
 If a Humanize2 hub is available, load:
