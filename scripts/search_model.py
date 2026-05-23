@@ -28,6 +28,16 @@ KNOWN_MARKER_PAIRS = (
 LMUL_ORDER = ("m1", "m2", "m4")
 LMUL_VALUE = {"m1": 1, "m2": 2, "m4": 4, "m8": 8}
 FIELD_ORDER = ("Latency", "ReleaseAtCycles", "ProcResource", "NumMicroOps", "SingleIssue")
+BLOCKING_FIELD_STATUSES = (
+    "conflict",
+    "insufficient_evidence",
+    "non_identifiable",
+    "missing",
+    "unknown",
+    "invalid",
+    "error",
+    "not_set",
+)
 FIELD_VALUE_ATTR = {
     "Latency": "latency",
     "ReleaseAtCycles": "release_at_cycles",
@@ -2489,9 +2499,8 @@ def field_status_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
 def build_field_status(report: dict[str, Any]) -> dict[str, Any]:
     rows = field_status_rows(report)
     status_counts = Counter(str(row.get("status", "missing")) for row in rows)
-    blocking_statuses = {"conflict", "insufficient_evidence", "missing", "unknown", "invalid", "error", "not_set"}
     blocking_counts = {
-        status: count for status, count in sorted(status_counts.items()) if status in blocking_statuses
+        status: count for status, count in sorted(status_counts.items()) if status in BLOCKING_FIELD_STATUSES
     }
     # The full trace list is already recorded in the search report; keep this
     # sidecar compact and hash the report inputs by path for approval binding.
@@ -2546,7 +2555,7 @@ def profile_for_instruction(instruction_id: str, rows: list[dict[str, Any]], rep
         },
         "confidence": {
             "source": "mode_isolated_real_platform_marker_observations",
-            "blocking_statuses": ["conflict", "insufficient_evidence", "missing", "unknown"],
+            "blocking_statuses": list(BLOCKING_FIELD_STATUSES),
         },
     }
 

@@ -273,6 +273,38 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(field["t12_latency_constraints"][0]["filler_cadence"], 2)
         self.assertIn("candidate_options:vfiller", field["t12_latency_constraints"][0]["reason"])
 
+    def test_field_status_counts_non_identifiable_as_blocking(self):
+        report = {
+            "filters": {"mode": "real_platform_profile", "backend": "gem5_minor"},
+            "instructions": {
+                "vsubject": {
+                    "lmuls": {
+                        "m1": {
+                            "fields": {
+                                "Latency": {"status": "exact_fit", "value": 4},
+                                "ReleaseAtCycles": {"status": "exact_fit", "value": 1},
+                                "ProcResource": {
+                                    "status": "non_identifiable",
+                                    "value": None,
+                                    "reason": "unit test unresolved row",
+                                },
+                                "NumMicroOps": {"status": "exact_fit", "value": 1},
+                                "SingleIssue": {"status": "exact_fit", "value": False},
+                            }
+                        }
+                    }
+                }
+            },
+        }
+
+        field_status = search_model.build_field_status(report)
+
+        self.assertEqual(
+            field_status["summary"]["blocking_status_counts"].get("non_identifiable"),
+            1,
+        )
+        self.assertEqual(field_status["summary"]["blocking_total"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

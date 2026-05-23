@@ -32704,8 +32704,10 @@
   ],
   "schema_version": 1,
   "summary": {
-    "blocking_status_counts": {},
-    "blocking_total": 0,
+    "blocking_status_counts": {
+      "non_identifiable": 39
+    },
+    "blocking_total": 39,
     "required_fields": [
       "Latency",
       "ReleaseAtCycles",

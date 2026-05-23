@@ -246,5 +246,9 @@ confidence:
   blocking_statuses:
     - "conflict"
     - "insufficient_evidence"
+    - "non_identifiable"
     - "missing"
     - "unknown"
+    - "invalid"
+    - "error"
+    - "not_set"

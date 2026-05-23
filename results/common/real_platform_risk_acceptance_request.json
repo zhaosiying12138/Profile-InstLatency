@@ -15,10 +15,10 @@
   "source_inventory_path": "results/common/real_platform_inventory.json",
   "source_inventory_json_pointer": "/field_status/unresolved",
   "current_hashes": {
-    "inventory_sha256": "4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b",
-    "real_platform_field_status_sha256": "904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179",
+    "inventory_sha256": "671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37",
+    "real_platform_field_status_sha256": "0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195",
     "search_model_real_platform_sha256": "d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73",
-    "experiment_quality_sha256": "b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6"
+    "experiment_quality_sha256": "b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e"
   },
   "gate_command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
   "expected_current_fail_closed_reasons": [

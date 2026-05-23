@@ -3649,7 +3649,7 @@ Failed gate checks:
 
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
-Artifact sha256: `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`
+Artifact sha256: `0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195`
 Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150
