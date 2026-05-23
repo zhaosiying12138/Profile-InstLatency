@@ -124,7 +124,9 @@ def t12_observations(
     instruction_id="vproducer",
     lmul="m1",
     filler_instruction_id="vadd_vv",
+    body_extra=None,
 ):
+    extra = dict(body_extra or {})
     return [
         raw_observation(
             instruction_id=instruction_id,
@@ -136,6 +138,7 @@ def t12_observations(
                 "filler_count": gap,
                 "consumer": "vconsumer",
                 "filler_instruction_id": filler_instruction_id,
+                **extra,
             },
         )
         for gap, delta in deltas_by_gap
@@ -167,6 +170,15 @@ def solve_latency_field(observations, *, max_value=8):
     key = (observations[0].instruction_id, observations[0].lmul)
     result = search_model.solve_candidate_sets({key: list(observations)}, max_value)[key]
     return search_model.candidate_field_result("Latency", result, max_value=max_value)
+
+
+def solve_candidate_fields(observations, *, max_value=8):
+    key = (observations[0].instruction_id, observations[0].lmul)
+    result = search_model.solve_candidate_sets({key: list(observations)}, max_value)[key]
+    return {
+        field: search_model.candidate_field_result(field, result, max_value=max_value)
+        for field in search_model.FIELD_ORDER
+    }
 
 
 def solve_latency_field_from_groups(grouped, key, *, max_value=8):
@@ -281,6 +293,47 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(field["candidates"], [0, 1, 2, 3, 4])
         self.assertEqual(field["candidate_count"], 5)
 
+    def test_t12_metadata_cadence_narrows_upper_bound_without_exact_claim(self):
+        wide = t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4")
+        focused = t12_observations(
+            [(0, 7), (1, 8), (2, 9), (3, 10)],
+            lmul="m4",
+            filler_instruction_id="scalar_add",
+            body_extra={"filler_cadence_cycles": 1},
+        )
+
+        field = solve_latency_field(wide + focused)
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertEqual(field["upper_bound"], 1)
+        self.assertEqual(field["candidate_domain"], "0..1")
+        self.assertEqual(field["candidates"], [0, 1])
+        self.assertTrue(
+            any(
+                constraint["status"] == "upper_bound"
+                and constraint["upper_bound"] == 1
+                and "metadata_filler_cadence:scalar_add" in constraint["reason"]
+                for constraint in field["t12_latency_constraints"]
+            )
+        )
+
+    def test_t12_metadata_cadence_short_transition_remains_non_identifiable(self):
+        focused = t12_observations(
+            [(0, 4), (1, 4)],
+            lmul="m4",
+            filler_instruction_id="scalar_add",
+            body_extra={"filler_cadence_cycles": 1},
+        )
+
+        field = solve_latency_field(focused)
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertNotEqual(field.get("value"), 4)
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("insufficient_post_transition_coverage", field["t12_latency_constraints"][0]["reason"])
+
     def test_t12_regime_break_uses_clean_prefix(self):
         deltas = [(0, 4), (1, 4), (2, 4), (3, 4)]
         deltas.extend((gap, gap + 1) for gap in range(4, 13))
@@ -313,6 +366,30 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(field["value"], 4)
         self.assertEqual(field["t12_latency_constraints"][0]["filler_cadence"], 2)
         self.assertIn("candidate_options:vfiller", field["t12_latency_constraints"][0]["reason"])
+
+    def test_non_affine_vcpop_m4_issue_fields_keep_stream_diagnostics(self):
+        observations = t10_observations(
+            [(2, 6), (4, 10), (6, 18)],
+            instruction_id="vcpop_m",
+            lmul="m4",
+        )
+
+        fields = solve_candidate_fields(observations)
+
+        for field in ("ReleaseAtCycles", "ProcResource", "NumMicroOps", "SingleIssue"):
+            row = fields[field]
+            self.assertEqual(row["status"], "non_identifiable", field)
+            self.assertIsNone(row["value"], field)
+            self.assertIn("not affine", row["reason"])
+            self.assertEqual(
+                row["non_affine_stream_observations"],
+                [
+                    {"experiment_id": "t10-vcpop_m-m4-n2", "iterations": 2, "delta_cycles": 6},
+                    {"experiment_id": "t10-vcpop_m-m4-n4", "iterations": 4, "delta_cycles": 10},
+                    {"experiment_id": "t10-vcpop_m-m4-n6", "iterations": 6, "delta_cycles": 18},
+                ],
+            )
+            self.assertIn("observed_points=n2=delta6,n4=delta10,n6=delta18", row["follow_up"])
 
     def test_field_status_counts_non_identifiable_as_blocking(self):
         report = {

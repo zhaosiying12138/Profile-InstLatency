@@ -19,7 +19,7 @@ from typing import Any, Iterable
 
 SEW = 32
 VL_VALUE = 64
-GENERATOR_VERSION = 2
+GENERATOR_VERSION = 3
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_ROOT = Path("experiments/generated")
@@ -34,6 +34,20 @@ LMUL_FACTORS = {
 BASE_STREAM_ITERATIONS = (2, 4, 6)
 EXTENDED_STREAM_ITERATIONS = (8, 12)
 T12_FILLER_COUNTS = tuple(range(41))
+T12_FOCUSED_FILLER_COUNTS = tuple(range(9))
+T12_DEFAULT_FILLER = "vadd_vv"
+T12_SCALAR_FILLER = "scalar_add"
+T12_FILLERS = (T12_DEFAULT_FILLER, T12_SCALAR_FILLER)
+T12_SCALAR_FILLER_TARGETS = frozenset(
+    {
+        ("vcpop_m", "m1"),
+        ("vcpop_m", "m2"),
+        ("vcpop_m", "m4"),
+        ("viota_m", "m4"),
+        ("vrgather_vv", "m4"),
+        ("vslideup_vx", "m4"),
+    }
+)
 T20_BASE_PAIR_COUNTS = (2, 3, 4)
 T20_EXTENDED_PAIR_COUNTS = (6,)
 T20_RESOURCE_NOREUSE_PAIR_COUNTS = (1, 2, 3)
@@ -377,6 +391,10 @@ def scalar_dest_policy(args: argparse.Namespace) -> str:
     return getattr(args, "scalar_dest_policy", None) or DEFAULT_SCALAR_DEST_POLICY
 
 
+def t12_filler(args: argparse.Namespace) -> str:
+    return getattr(args, "t12_filler", None) or T12_DEFAULT_FILLER
+
+
 def vector_destination_slots(specs: Iterable[InstructionSpec]) -> int:
     return sum(1 for spec in specs if spec.result_kind != "scalar")
 
@@ -525,6 +543,11 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
         argv += ["--t20-register-policy", T20_RESOURCE_NOREUSE_POLICY]
     if args.template in {"T12_CONSUMER_RAW_GAP", "T30_LMUL_SCALING"} and getattr(args, "consumer", None):
         argv += ["--consumer", args.consumer]
+    if (
+        args.template in {"T12_CONSUMER_RAW_GAP", "T30_LMUL_SCALING"}
+        and t12_filler(args) != T12_DEFAULT_FILLER
+    ):
+        argv += ["--t12-filler", t12_filler(args)]
     if args.template == "T30_LMUL_SCALING" and getattr(args, "shape", None):
         argv += ["--shape", args.shape]
     policy = scalar_dest_policy(args)
@@ -686,10 +709,14 @@ def make_experiment_id(args: argparse.Namespace) -> str:
     if template_id == "T12_CONSUMER_RAW_GAP":
         filler_count = args.filler_count if args.filler_count is not None else 0
         parts.extend([f"k{filler_count}", args.consumer or default_consumer(args.instr)])
+        if t12_filler(args) != T12_DEFAULT_FILLER:
+            parts.append(f"f{t12_filler(args)}")
     if template_id == "T30_LMUL_SCALING":
         if args.shape == "T12_CONSUMER_RAW_GAP":
             filler_count = args.filler_count if args.filler_count is not None else 0
             parts.append(f"k{filler_count}")
+            if t12_filler(args) != T12_DEFAULT_FILLER:
+                parts.append(f"f{t12_filler(args)}")
         else:
             iterations, _ = default_iterations(args.shape, args.lmul, args.iterations)
             parts.append(f"n{iterations}")
@@ -807,9 +834,11 @@ def body_t12(
     lmul: str,
     filler_count: int,
     consumer: str,
+    filler: str = T12_DEFAULT_FILLER,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
-    dests, _ = output_vectors(lmul, 2 + max(filler_count, 1), allow_reuse=True)
+    vector_filler_count = filler_count if filler == T12_DEFAULT_FILLER else 0
+    dests, _ = output_vectors(lmul, max(2, 2 + vector_filler_count), allow_reuse=True)
     producer_dest = scalar_reg(10) if spec.result_kind == "scalar" else dests[0]
     consumer_dest = scalar_reg(11) if spec.result_kind in {"scalar", "mask"} else dests[1]
     filler_destinations = dests[2:]
@@ -818,9 +847,17 @@ def body_t12(
         "TIMESTAMP_MARK start",
         emit_instruction(spec, dest=producer_dest, src_a=src_a, src_b=src_b, scalar="x6"),
     ]
-    for index in range(filler_count):
-        filler_dest = filler_destinations[index]
-        lines.append(f"vadd.vv {filler_dest}, {src_a}, {src_b}  # independent filler {index}")
+    if filler == T12_DEFAULT_FILLER:
+        for index in range(filler_count):
+            filler_dest = filler_destinations[index]
+            lines.append(f"vadd.vv {filler_dest}, {src_a}, {src_b}  # independent filler {index}")
+    elif filler == T12_SCALAR_FILLER:
+        scalar_dests = scalar_outputs(filler_count, start=20)
+        for index, filler_dest in enumerate(scalar_dests):
+            lines.append(f"add {filler_dest}, x6, x7  # independent scalar filler {index}")
+    else:
+        valid = ", ".join(T12_FILLERS)
+        raise SystemExit(f"unknown T12 filler {filler!r}; valid values: {valid}")
     consumer_kind = "scalar_add"
     if consumer == "scalar_add" or spec.result_kind == "scalar":
         lines.append(emit_consumer("scalar", producer_dest, consumer_dest, src_b))
@@ -836,8 +873,21 @@ def body_t12(
             lines.append(emit_consumer("vector", producer_dest, consumer_dest, src_b))
     lines.append("TIMESTAMP_MARK end")
     raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
+    filler_kind = "scalar" if filler == T12_SCALAR_FILLER else "vector"
+    filler_cadence = 1 if filler == T12_SCALAR_FILLER else None
+    gap_sweep: dict[str, Any] = {
+        "parameter": "filler_count",
+        "value": filler_count,
+        "independent_filler_instruction": filler,
+        "independent_filler_count": filler_count,
+    }
+    if filler_cadence is not None:
+        gap_sweep["independent_filler_cadence_cycles"] = filler_cadence
     return ["start", "end"], lines, {
         "filler_count": filler_count,
+        "filler_instruction_id": filler,
+        "independent_filler_kind": filler_kind,
+        **({"filler_cadence_cycles": filler_cadence} if filler_cadence is not None else {}),
         "producer_destination": producer_dest,
         "producer_result_kind": spec.result_kind,
         "consumer": consumer,
@@ -845,12 +895,7 @@ def body_t12(
         "consumer_destination": consumer_dest,
         "consumer_reads_producer": True,
         "raw_path": raw_path,
-        "gap_sweep": {
-            "parameter": "filler_count",
-            "value": filler_count,
-            "independent_filler_instruction": "vadd_vv",
-            "independent_filler_count": filler_count,
-        },
+        "gap_sweep": gap_sweep,
     }
 
 
@@ -1010,7 +1055,7 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
     if template_id == "T12_CONSUMER_RAW_GAP":
         filler_count = args.filler_count if args.filler_count is not None else 0
         consumer = args.consumer or default_consumer(args.instr)
-        return body_t12(spec, args.lmul, filler_count, consumer)
+        return body_t12(spec, args.lmul, filler_count, consumer, t12_filler(args))
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         other = require_instruction(args.other_instr or default_other_instr(args.instr))
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
@@ -1035,7 +1080,13 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
         elif shape == "T12_CONSUMER_RAW_GAP":
             note = None
             filler_count = args.filler_count if args.filler_count is not None else 0
-            markers, lines, meta = body_t12(spec, args.lmul, filler_count, args.consumer or default_consumer(args.instr))
+            markers, lines, meta = body_t12(
+                spec,
+                args.lmul,
+                filler_count,
+                args.consumer or default_consumer(args.instr),
+                t12_filler(args),
+            )
         else:
             raise SystemExit(f"T30 shape must be one of: {', '.join(T30_SHAPES)}")
         meta["scaling_shape"] = shape
@@ -1115,6 +1166,8 @@ def build_metadata(
         elif args.shape == "T12_CONSUMER_RAW_GAP":
             shape_parameters["filler_count"] = args.filler_count if args.filler_count is not None else 0
             shape_parameters["consumer"] = args.consumer or default_consumer(args.instr)
+            if t12_filler(args) != T12_DEFAULT_FILLER:
+                shape_parameters["t12_filler"] = t12_filler(args)
         meta["scaling"] = {
             "shape": args.shape,
             "shape_parameters": shape_parameters,
@@ -1140,6 +1193,8 @@ def generate_one(args: argparse.Namespace) -> dict[str, Path]:
         raise SystemExit("--iterations must be positive")
     if args.filler_count is not None and args.filler_count < 0:
         raise SystemExit("--filler-count must be non-negative")
+    if t12_filler(args) not in T12_FILLERS:
+        raise SystemExit(f"--t12-filler must be one of: {', '.join(T12_FILLERS)}")
 
     output_root = repo_path(args.output_root)
     template_path = repo_path(args.asm_template)
@@ -1178,6 +1233,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             shape=extra.get("shape", "T10_INDEPENDENT_STREAM_THROUGHPUT"),
             scalar_dest_policy=extra.get("scalar_dest_policy"),
             t20_register_policy=extra.get("t20_register_policy"),
+            t12_filler=extra.get("t12_filler", T12_DEFAULT_FILLER),
             iterations=extra.get("iterations"),
             filler_count=extra.get("filler_count"),
             output_root=args.output_root,
@@ -1203,11 +1259,12 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             "shape",
             "scalar_dest_policy",
             "t20_register_policy",
+            "t12_filler",
             "iterations",
             "filler_count",
         ):
             value = getattr(ns, key)
-            if value is not None:
+            if value is not None and (key != "t12_filler" or value != T12_DEFAULT_FILLER):
                 entry[key] = value
         entries.append(entry)
 
@@ -1231,6 +1288,16 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
                 add("T11_SELF_RAW_CHAIN", instr, lmul, iterations=iterations)
             for filler_count in T12_FILLER_COUNTS:
                 add("T12_CONSUMER_RAW_GAP", instr, lmul, filler_count=filler_count, consumer=default_consumer(instr))
+            if (instr, lmul) in T12_SCALAR_FILLER_TARGETS:
+                for filler_count in T12_FOCUSED_FILLER_COUNTS:
+                    add(
+                        "T12_CONSUMER_RAW_GAP",
+                        instr,
+                        lmul,
+                        filler_count=filler_count,
+                        consumer=default_consumer(instr),
+                        t12_filler=T12_SCALAR_FILLER,
+                    )
             add("T21_PAIR_WITH_SCALAR", instr, lmul)
             for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
                 add("T30_LMUL_SCALING", instr, lmul, shape="T10_INDEPENDENT_STREAM_THROUGHPUT", iterations=iterations)
@@ -1346,6 +1413,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     one.add_argument("--consumer", help="consumer id for T12/T30; default is result-kind aware")
     one.add_argument("--shape", choices=T30_SHAPES, default="T10_INDEPENDENT_STREAM_THROUGHPUT", help="base shape for T30")
+    one.add_argument(
+        "--t12-filler",
+        choices=T12_FILLERS,
+        default=T12_DEFAULT_FILLER,
+        help="independent filler instruction for T12 gap probes",
+    )
     one.add_argument(
         "--scalar-dest-policy",
         choices=SCALAR_DEST_POLICIES,

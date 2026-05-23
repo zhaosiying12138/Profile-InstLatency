@@ -139,6 +139,7 @@ class T12LatencyConstraint:
     upper_bound: int | None = None
     filler_cadence: int | None = None
     clean_gaps: tuple[int, ...] = ()
+    observed_cadence_gaps: tuple[int, ...] = ()
 
 
 def t12_constraint_to_dict(constraint: T12LatencyConstraint) -> dict[str, Any]:
@@ -149,6 +150,7 @@ def t12_constraint_to_dict(constraint: T12LatencyConstraint) -> dict[str, Any]:
         "upper_bound": constraint.upper_bound,
         "filler_cadence": constraint.filler_cadence,
         "clean_gaps": list(constraint.clean_gaps),
+        "observed_cadence_gaps": list(constraint.observed_cadence_gaps),
     }
 
 
@@ -1638,6 +1640,14 @@ def t12_filler_cadence(
     fixed_candidates: dict[tuple[str, str], TimingCandidate],
 ) -> tuple[int | None, str]:
     filler = t12_filler_instruction(item)
+    metadata_cadence = body_int(
+        item,
+        "filler_cadence_cycles",
+        "independent_filler_cadence_cycles",
+        "filler_release_at_cycles",
+    )
+    if metadata_cadence is not None and metadata_cadence > 0:
+        return metadata_cadence, f"metadata_filler_cadence:{filler}"
     key = (filler, item.lmul)
     fixed = fixed_candidates.get(key)
     if fixed is not None:
@@ -1645,6 +1655,8 @@ def t12_filler_cadence(
     option_release = unique_release_from_options(candidate_options.get(key, ()))
     if option_release is not None:
         return option_release, f"candidate_options:{filler}"
+    if filler == "scalar_add":
+        return 1, "known_scalar_add_cadence"
     if filler == "vadd_vv" and item.lmul in {"m1", "m2", "m4"}:
         return LMUL_VALUE[item.lmul], "known_vadd_vv_lmul_cadence"
     return None, f"missing_filler_cadence:{filler}"
@@ -1724,10 +1736,16 @@ def t12_constraint_for_group(
     residuals = {gap: gap_to_delta[gap] - gap * cadence for gap in clean_gaps}
     residual0 = residuals[0]
     minimum_residual = min(residuals.values())
+    observed_cadence_gaps = tuple(
+        gap
+        for gap in clean_gaps[1:]
+        if gap_to_delta[gap] - gap_to_delta[gap - 1] == cadence
+    )
     reason_prefix = (
         f"T12 clean_prefix;instruction={item.instruction_id};lmul={item.lmul};"
         f"consumer={t12_consumer_key(item)};filler_cadence={cadence};"
-        f"cadence_source={cadence_source};clean_gaps={clean_gaps}"
+        f"cadence_source={cadence_source};clean_gaps={clean_gaps};"
+        f"observed_cadence_gaps={list(observed_cadence_gaps)}"
     )
     evidence = tuple(member for gap in clean_gaps for member in observations_by_gap[gap])
     if residual0 > minimum_residual:
@@ -1744,6 +1762,7 @@ def t12_constraint_for_group(
                 evidence,
                 filler_cadence=cadence,
                 clean_gaps=tuple(clean_gaps),
+                observed_cadence_gaps=observed_cadence_gaps,
             )
         return T12LatencyConstraint(
             "exact",
@@ -1752,6 +1771,19 @@ def t12_constraint_for_group(
             latency=latency,
             filler_cadence=cadence,
             clean_gaps=tuple(clean_gaps),
+            observed_cadence_gaps=observed_cadence_gaps,
+        )
+    if not observed_cadence_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                f"{reason_prefix};no_observed_filler_cadence;"
+                "cannot treat this filler stream as a conservative time-gap upper bound"
+            ),
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(clean_gaps),
+            observed_cadence_gaps=observed_cadence_gaps,
         )
     return T12LatencyConstraint(
         "upper_bound",
@@ -1760,6 +1792,7 @@ def t12_constraint_for_group(
         upper_bound=cadence,
         filler_cadence=cadence,
         clean_gaps=tuple(clean_gaps),
+        observed_cadence_gaps=observed_cadence_gaps,
     )
 
 
@@ -2114,6 +2147,24 @@ def non_affine_stream_follow_up(observations: Iterable[RawObservation]) -> str:
     )
 
 
+def non_affine_stream_observations(observations: Iterable[RawObservation]) -> list[dict[str, Any]]:
+    points: list[dict[str, Any]] = []
+    for item in observations:
+        if item.effective_template_id != "T10_INDEPENDENT_STREAM_THROUGHPUT":
+            continue
+        iterations = body_int(item, "iterations", "stream_length", "sample_count")
+        if iterations is None:
+            continue
+        points.append(
+            {
+                "experiment_id": item.experiment_id,
+                "iterations": iterations,
+                "delta_cycles": item.delta_cycles,
+            }
+        )
+    return sorted(points, key=lambda item: (item["iterations"], item["experiment_id"]))
+
+
 def candidate_field_result(
     field: str,
     result: CandidateSearchResult,
@@ -2244,6 +2295,7 @@ def candidate_field_result(
                     "for the extra platform effect."
                 ),
                 "follow_up": non_affine_stream_follow_up(result.all_observations),
+                "non_affine_stream_observations": non_affine_stream_observations(result.all_observations),
                 "conflict_examples": list(result.conflict_examples),
                 "t20_startup_slope_groups": t20_startup_slope_groups(result.all_observations),
             }
