@@ -20,12 +20,12 @@ Status: focused evidence captured; not approval
 - Record `viota_m` `m4` `Latency` as the newly resolved inferred row.
 - Preserve the approval boundary: no `results/common/human_approval.*` file,
   no approval semantics, and real gate remains fail-closed.
-- Write the Round 10 RLCR summary with the required BitLesson Delta.
+- Reference the coordinator-owned Round 10 RLCR summary without writing
+  `.humanize/rlcr/**`.
 
 ## Owned Write Set
 
 - `results/common/agentic_flow/**`
-- `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md`
 - `results/common/real_platform_risk_acceptance_request.json` only for
   non-semantic metadata wording if needed.
 
@@ -33,7 +33,7 @@ Status: focused evidence captured; not approval
 
 - Code, tests, generated experiments, generated trace results, search
   artifacts, profile sidecars, inventory, field-status, quality, mismatch, or
-  goal-tracker/state files.
+  `.humanize/rlcr/**` control-plane files.
 - Any human approval artifact under `results/common`.
 
 ## Required Validation
@@ -41,8 +41,9 @@ Status: focused evidence captured; not approval
 - YAML parse for `h2_primitives.yaml` and touched board YAML files.
 - JSON parse for tool-call artifacts and the risk request JSON.
 - JSONL parse for `events.jsonl`.
-- Summary section check for Work Completed, Files Changed, Validation,
-  Remaining Items, Goal Tracker Update Request, and BitLesson Delta.
+- Coordinator-owned summary section check for Work Completed, Files Changed,
+  Validation, Remaining Items, Goal Tracker Update Request, and BitLesson
+  Delta.
 - Structural check that request hashes match live files, 38 risk IDs match the
   inventory order, no approval file exists, and the field-status summary has
   `blocking_total: 38`.

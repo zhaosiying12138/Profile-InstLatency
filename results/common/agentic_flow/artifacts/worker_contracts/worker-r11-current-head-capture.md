@@ -5,8 +5,6 @@ Worker: `Round11CurrentHeadCapture`
 Owned write scope:
 
 - `results/common/agentic_flow/**`
-- `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md`
-- `.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md`
 
 Forbidden write scope:
 
@@ -16,7 +14,7 @@ Forbidden write scope:
 - `results/common/real_platform_field_status.json`
 - `results/common/real_platform_inventory.json`
 - `results/common/experiment_quality.md`
-- `.humanize/rlcr/2026-05-23_01-15-03/state.md`
+- `.humanize/rlcr/**`
 
 Expected output:
 

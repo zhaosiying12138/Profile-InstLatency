@@ -41,6 +41,10 @@ current_head_capture:
     worker: Round12T12ExactnessFix
     status: fixed_and_captured
     effect: matched-control exact latency now uses agreeing positive-stall equations and fails closed on disagreement
+  round13_control_plane_ownership:
+    owner: CoordinatorAndCodexReviewer
+    status: repaired
+    effect: worker-owned write sets no longer grant `.humanize/rlcr/**` write scope
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   decision_status: not_approved

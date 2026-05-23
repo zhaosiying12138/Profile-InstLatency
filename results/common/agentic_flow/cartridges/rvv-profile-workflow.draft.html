@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.12.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.13.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1,rvv.riskAcceptanceRequest.v1"></h2-capability>
@@ -136,7 +136,8 @@
     <h2-agent id="round10-focused-evidence-capture-worker" role="worker" tool="codex" prompt="#round-10-focused-evidence-capture-worker" short-name="r10-capture" timeout="unknown">
       <h2-current-status>superseded-by-round11-current-head-capture</h2-current-status>
       <h2-commit>73b99c2e1e95ed7828c5ce76d750a909bc83b5c5</h2-commit>
-      <h2-owned-write-set>results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md</h2-owned-write-set>
+      <h2-owned-write-set>results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-control-plane-ref owner="RLCRCoordinator" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md" worker-write-scope="false"></h2-control-plane-ref>
       <h2-expect artifact="round-10-risk-acceptance-request" schema="rvv.riskAcceptanceRequest.v1"></h2-expect>
       <h2-expect artifact="round-10-focused-evidence-capture-contract" schema="rvv.workerContract.v1"></h2-expect>
       <h2-expect artifact="round-10-focused-evidence-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
@@ -151,7 +152,9 @@
       <h2-commit>6ff16b7c</h2-commit>
       <h2-commit>88c9e6e5</h2-commit>
       <h2-commit>8ec7a8a8</h2-commit>
-      <h2-owned-write-set>results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md,.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md</h2-owned-write-set>
+      <h2-owned-write-set>results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-control-plane-ref owner="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md" worker-write-scope="false"></h2-control-plane-ref>
+      <h2-control-plane-ref owner="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md" worker-write-scope="false"></h2-control-plane-ref>
       <h2-expect artifact="round-11-current-head-capture-contract" schema="rvv.workerContract.v1"></h2-expect>
       <h2-expect artifact="round-11-current-head-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
       <h2-expect artifact="round-11-current-head-capture-verification" schema="rvv.verification.v1"></h2-expect>
@@ -162,7 +165,9 @@
     <h2-agent id="round12-t12-exactness-fix-worker" role="worker" tool="codex" prompt="#round-12-t12-exactness-fix-worker" short-name="r12-t12-fix" timeout="unknown">
       <h2-current-status>t12-exactness-fixed-pending-human-decision</h2-current-status>
       <h2-commit>91201d20</h2-commit>
-      <h2-owned-write-set>scripts/search_model_impl.py,tests/test_search_model_candidate_sim.py,results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md,.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md</h2-owned-write-set>
+      <h2-owned-write-set>scripts/search_model_impl.py,tests/test_search_model_candidate_sim.py,results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-control-plane-ref owner="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md" worker-write-scope="false"></h2-control-plane-ref>
+      <h2-control-plane-ref owner="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md" worker-write-scope="false"></h2-control-plane-ref>
       <h2-expect artifact="round-12-t12-exactness-fix-contract" schema="rvv.workerContract.v1"></h2-expect>
       <h2-expect artifact="round-12-t12-exactness-fix-output" schema="rvv.workerOutput.v1"></h2-expect>
       <h2-expect artifact="round-12-t12-exactness-fix-verification" schema="rvv.verification.v1"></h2-expect>
@@ -171,6 +176,13 @@
       <h2-field-status-summary blocking-total="9" non-identifiable-blocking-count="9" inferred-count="141"></h2-field-status-summary>
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
+    <h2-control id="round13-control-plane-ownership-repair" owner="CoordinatorAndCodexReviewer" decision="../artifacts/decisions/round-13-control-plane-ownership.md">
+      <h2-current-status>worker-scope-repaired-pending-ac16-human-decision</h2-current-status>
+      <h2-control-plane-owner name="RLCRCoordinator" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"></h2-control-plane-owner>
+      <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md"></h2-control-plane-owner>
+      <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md"></h2-control-plane-owner>
+      <h2-verification worker-owned-write-set-excludes-humanize="true" worker-prompts-and-contracts-exclude-humanize-write-scope="true" humanize-read-only-lineage-allowed="true"></h2-verification>
+    </h2-control>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
       <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 9 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>

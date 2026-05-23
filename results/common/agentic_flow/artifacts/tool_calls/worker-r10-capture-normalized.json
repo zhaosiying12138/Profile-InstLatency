@@ -35,8 +35,8 @@
       ]
     },
     {
-      "kind": "rlcr_summary",
-      "summary": "Write the Round 10 RLCR summary while requesting goal-tracker updates instead of editing goal-tracker state.",
+      "kind": "coordinator_control_plane_reference",
+      "summary": "Reference the coordinator-owned Round 10 RLCR summary while requesting goal-tracker updates instead of giving the worker .humanize write scope.",
       "paths": [
         ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"
       ]
@@ -61,11 +61,11 @@
     },
     {
       "id": "worker-r10-summary-format",
-      "category": "markdown",
+      "category": "read_only_control_plane_check",
       "command": "python3 - <<'PY'\nfrom pathlib import Path\nsummary = Path('.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md').read_text()\nfor marker in ['## Work Completed','## Files Changed','## Validation','## Remaining Items','## Goal Tracker Update Request','## BitLesson Delta','- Action: none','- Lesson ID(s): NONE']:\n    assert marker in summary, marker\nPY",
       "expected_exit_code": 0,
       "exit_code": 0,
-      "reported_result": "summary format ok"
+      "reported_result": "read-only coordinator-owned summary format ok"
     },
     {
       "id": "worker-r10-diff-check",
@@ -92,8 +92,14 @@
     "results/common/agentic_flow/artifacts/tool_calls/worker-r10-capture-normalized.json",
     "results/common/agentic_flow/artifacts/worker_outputs/coordinator-r10-focused-evidence.md",
     "results/common/agentic_flow/artifacts/verification/coordinator-r10-focused-evidence.md",
-    "results/common/agentic_flow/artifacts/tool_calls/coordinator-r10-focused-evidence.json",
-    ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"
+    "results/common/agentic_flow/artifacts/tool_calls/coordinator-r10-focused-evidence.json"
+  ],
+  "control_plane_references": [
+    {
+      "owner": "RLCRCoordinator",
+      "path": ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md",
+      "worker_write_scope": false
+    }
   ],
   "request_status": "not_approved",
   "approval_artifact_created": false,

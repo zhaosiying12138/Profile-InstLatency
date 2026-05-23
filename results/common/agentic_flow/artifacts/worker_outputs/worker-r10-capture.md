@@ -16,19 +16,20 @@ Status: focused evidence captured; request still pending and not approval
 - Recorded the evidence delta from 39 to 38 unresolved `non_identifiable`
   risks and from 111 to 112 inferred rows.
 - Recorded the newly resolved row: `viota_m` `m4` `Latency`, candidate `4`.
-- Wrote `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md` with the
-  requested sections and BitLesson Delta.
+- Recorded the coordinator-owned
+  `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md` as control-plane
+  lineage; this worker does not own `.humanize/rlcr/**`.
 
 ## Files Changed
 
 - `results/common/agentic_flow/**`
-- `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md`
 
 ## Boundary
 
 No code, tests, generated experiments, trace results, search artifacts,
-inventory, field-status, quality, profile sidecars, goal-tracker/state files,
-or approval artifacts were modified by this capture worker. The request remains
+inventory, field-status, quality, profile sidecars, `.humanize/rlcr/**`
+control-plane files, or approval artifacts were modified by this capture
+worker. The request remains
 pending, not approved, not submitted, not a gate input, not an approval
 artifact, and not consumed by the gate.
 

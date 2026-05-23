@@ -6,7 +6,7 @@ Worker: Round10FocusedEvidenceRefresh
 Round: 10
 Capture type: normalized reconstruction
 
-This prompt capture records the Humanize2 capture and RLCR summary update after
+This prompt capture records the Humanize2 capture after
 commit `73b99c2e1e95ed7828c5ce76d750a909bc83b5c5`. Round 10 strengthened the
 real-platform evidence set but did not create approval and did not make the
 real-platform gate pass.
@@ -39,7 +39,8 @@ real-platform gate pass.
 - Refresh Humanize2 primitives, boards, replay notes, manifest notes, status
   panel, cartridge draft, events, worker output, verification, tool-call JSON,
   and coordinator evidence artifacts.
-- Write `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md`.
+- Record `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md` as a
+  coordinator-owned control-plane artifact, not a worker-owned output.
 - Keep AC-16 blocked until explicit current-hash-bound human approval exists
   or stronger evidence resolves all 38 approval-bound risks.
 
@@ -48,7 +49,6 @@ real-platform gate pass.
 Allowed write set:
 
 - `results/common/agentic_flow/**`
-- `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md`
 - `results/common/real_platform_risk_acceptance_request.json` only if metadata
   wording is necessary while preserving pending/not-approved/not-gate-input
   semantics.
@@ -60,7 +60,8 @@ Forbidden write set:
 - generated experiments
 - trace results and profile sidecars
 - search, field-status, inventory, quality, or mismatch artifacts
-- goal-tracker or RLCR state files other than the Round 10 summary
+- any `.humanize/rlcr/**` control-plane file, including summaries, tracker,
+  review results, and state
 - any approval artifact under `results/common`
 
 ## Required Validation

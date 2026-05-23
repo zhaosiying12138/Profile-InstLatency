@@ -1,5 +1,5 @@
 schema_version: 1
-status: t12_exactness_fixed_real_platform_gate_not_ready
+status: control_plane_ownership_repaired_real_platform_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -55,6 +55,14 @@ round12_t12_exactness_fix:
   partial_stall_regression: cadence-2 stalls [3, 1, 0, 0] infer Latency 3
   disagreement_regression: disagreeing positive-stall equations fail closed as non_identifiable
   search_reproducibility: /tmp output still matches checked-in search_model_real_platform.json byte-for-byte
+round13_control_plane_ownership:
+  owner: CoordinatorAndCodexReviewer
+  decision: results/common/agentic_flow/artifacts/decisions/round-13-control-plane-ownership.md
+  worker_owned_write_set_excludes_humanize_rlcr: true
+  coordinator_owned_rlcr_summary: .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+  codex_reviewer_owned_control_files:
+    - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+    - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
 replay_commands:
   real_search: python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-current-review-search-fixed.json --format json
   compare_search: cmp /tmp/profile-inst-latency-current-review-search-fixed.json results/common/search_model_real_platform.json

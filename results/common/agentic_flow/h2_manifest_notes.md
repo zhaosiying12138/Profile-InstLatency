@@ -1,6 +1,6 @@
 # Humanize2 Manifest Notes
 
-Status: Round 12 T12 exactness fix capture package after commit
+Status: Round 13 control-plane ownership repair after commit
 `91201d20`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
@@ -91,6 +91,11 @@ Round 6 ownership:
   disagreement fails closed. The cadence-2 partial-stall regression now infers
   `Latency = 3`; real-platform search remains byte-reproducible against the
   checked-in artifact, so request-bound hashes are unchanged.
+- Round 13 repairs replay ownership: worker write scopes no longer include
+  `.humanize/rlcr/**`. The Round 10 summary is coordinator-owned, while
+  `goal-tracker.md` and `round-10-review-result.md` are Codex-reviewer-owned
+  control-plane files. `.humanize/rlcr/**` may still appear as read-only
+  lineage evidence.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

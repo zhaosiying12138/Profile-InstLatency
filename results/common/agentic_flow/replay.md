@@ -700,6 +700,25 @@ above did not change. The real-platform gate still fails closed for AC-16
 because no approval artifact exists and the same 9 unresolved
 `non_identifiable` rows remain approval-bound.
 
+### Round 13 Control-Plane Ownership Repair
+
+Round 10 review found that some replay artifacts granted workers write scope
+over `.humanize/rlcr/**`. The repaired model is:
+
+- Workers may read `.humanize/rlcr/**` as lineage input.
+- Worker prompts, worker contracts, cartridge agent nodes, and
+  `h2_primitives.yaml` worker `owned_write_set` entries must not grant
+  `.humanize/rlcr/**` write scope.
+- `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md` is
+  coordinator-owned control-plane output.
+- `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` and
+  `.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md` are
+  Codex-reviewer-owned control-plane outputs.
+
+The decision artifact is
+`results/common/agentic_flow/artifacts/decisions/round-13-control-plane-ownership.md`.
+Timing/search artifacts and the pending risk request are unchanged.
+
 ## Humanize2 Hub Path
 
 If a Humanize2 hub is available, load:

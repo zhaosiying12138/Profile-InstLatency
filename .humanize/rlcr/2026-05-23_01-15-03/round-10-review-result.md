@@ -69,6 +69,25 @@ T12 matched_control_convergence;...;stalls=[3, 1, 0, 0];...;converged_gap=2;posi
 
 Regression coverage also includes a cadence-2 positive-stall disagreement case, which now fails closed as `non_identifiable`. The real-platform `/tmp` search output remains byte-for-byte identical to `results/common/search_model_real_platform.json`, so the checked-in real artifacts did not need regeneration.
 
+### Accepted: Humanize2 control-plane ownership is fixed
+
+The replay write-scope issue found during review is now fixed in the Round 13
+capture update. Worker prompts/contracts, cartridge agent nodes, and
+`h2_primitives.yaml` worker `owned_write_set` entries no longer grant
+`.humanize/rlcr/**` write scope.
+
+Ownership is now explicit:
+
+- `.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md` is
+  coordinator-owned.
+- `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` and
+  `.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md` are
+  Codex-reviewer-owned.
+- `results/common/agentic_flow/artifacts/decisions/round-13-control-plane-ownership.md`
+  records the policy.
+
+References to `.humanize/rlcr/**` remain allowed as read-only lineage evidence.
+
 ### BLOCKER 1. AC-16 remains incomplete
 
 The original plan requires the real Paladin/platform flow to stop only on coverage, stability, confidence, documented assumptions, and explicit human approval before LLVM implementation. Current artifacts still fail closed:
@@ -139,16 +158,17 @@ Claude's Round 10 tracker request is approved as a progress update, not a comple
 
 Changes applied to `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md`:
 
-- Updated Plan Version to 20 for current-head capture verification plus the matched-control T12 exactness fix.
+- Updated Plan Version to 22 for current-head capture verification, the matched-control T12 exactness fix, and the replay write-scope repair.
 - Kept the Round 10 progress entries for `f3bb4552`, `cd71b7ed`, `c1032a2c`, `73b99c2e`, and `7a7da5d2`.
 - Kept the current-head search reproducibility fix entry for `8ec7a8a8`.
 - Added a current-head capture verification entry for `77d181af`, `6ff16b7c`, `88c9e6e5`, and `8ec7a8a8`.
-- Marked T6 and T12 completed for current-head Humanize2 capture/replay after parse checks passed.
+- Marked T6 and T12 completed for current-head Humanize2 capture/replay after parse checks and ownership grep checks passed.
 - Marked T10 completed again after `91201d20` fixed matched-control exactness and tests/search byte-repro passed.
 - Kept T9 and T11 as `needs_changes` because AC-16 still lacks either explicit current-hash-bound human approval or stronger evidence resolving the 9 risks.
 - Removed the now-resolved open issue for missing current-head Humanize2 capture.
 - Kept the open AC-16 issue for 9 non-identifiable real-platform LLVM-facing rows.
 - Removed the resolved AC-9 issue for matched-control T12 exact-latency overclaim.
+- Recorded the Round 13 control-plane ownership decision.
 - Did not modify the immutable goal or acceptance criteria section.
 
 ## Reviewer Verification Commands
@@ -161,6 +181,7 @@ Changes applied to `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md`:
 - `cmp /tmp/profile-inst-latency-r10-review-current-search.json results/common/search_model_real_platform.json`: passed.
 - Adversarial matched-control probe now reports `exact_fit 3` for cadence-2 stalls `[3, 1, 0, 0]`.
 - YAML/JSON/JSONL parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, and `events.jsonl`: passed.
+- Ownership grep check confirmed no worker prompt/contract or worker `owned_write_set` grants `.humanize/rlcr/**` write scope.
 - Request risk IDs match inventory unresolved risk IDs exactly.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no output.
 - `git diff --check` and `git diff --cached --check`: passed during review.

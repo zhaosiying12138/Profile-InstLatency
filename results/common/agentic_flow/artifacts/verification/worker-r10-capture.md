@@ -56,6 +56,7 @@ assert not list(Path('results/common').glob('*approval*'))
 PY
 python3 - <<'PY'
 from pathlib import Path
+# Read-only coordinator-owned control-plane summary check.
 summary = Path('.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md').read_text()
 required = [
     '## Work Completed',
@@ -82,7 +83,8 @@ git diff --cached --check
 - Structural check confirms field-status `blocking_total` is 38, request
   hashes match live files, request risk IDs match inventory order, request is
   not approved, and no approval artifact exists.
-- Summary formatting includes the required sections and BitLesson Delta.
+- The read-only coordinator-owned summary formatting check includes the
+  required sections and BitLesson Delta.
 - `git diff --check` and `git diff --cached --check` pass.
 
 This verification intentionally treats a passing real-platform gate as outside

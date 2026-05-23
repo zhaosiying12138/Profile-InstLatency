@@ -1,5 +1,5 @@
 schema_version: 1
-round: 12
+round: 13
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,12 +12,13 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 12
-  status: awaiting_human_risk_decision_after_t12_exactness_fix
-  task: capture_t12_matched_control_exactness_fix
+  round: 13
+  status: awaiting_human_risk_decision_after_control_plane_ownership_repair
+  task: repair_humanize_control_plane_worker_write_scope
   request_worker: Round11VcpopM4IssueFieldDiagnostics
   current_head_capture_worker: Round11CurrentHeadCapture
   t12_exactness_fix_worker: Round12T12ExactnessFix
+  control_plane_owner: CoordinatorAndCodexReviewer
   commits:
     proc_resource_mirror_canonicalization: 77d181af
     t12_matched_controls: 6ff16b7c
@@ -32,6 +33,7 @@ phase_status:
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_9_unresolved_risks
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
   humanize2_capture: round12_t12_exactness_fix_captured_without_ac16_completion_claim
+  control_plane_ownership: worker_write_scopes_exclude_humanize_rlcr
   t12_matched_control_exactness: fixed_by_positive_stall_equations
 real_platform_evidence:
   real_platform_traces: 7660

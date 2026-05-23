@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 12
-  status: awaiting_human_risk_decision_after_t12_exactness_fix
+  round: 13
+  status: awaiting_human_risk_decision_after_control_plane_ownership_repair
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -343,6 +343,10 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/worker-r12-t12-exactness-fix-normalized.json
+  - id: round-13-control-plane-ownership-decision
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: artifacts/decisions/round-13-control-plane-ownership.md
   - id: rlcr-round-10-summary
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
@@ -422,6 +426,8 @@ events:
   - type: round12.t12_exactness_fix.completed
   - type: round12.search_reproducibility.confirmed
   - type: round12.real_gate.fail_closed
+  - type: round13.control_plane_ownership.corrected
+  - type: round13.worker_scope_verified
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -587,14 +593,17 @@ flow_nodes:
     prompt: artifacts/prompts/round-10-focused-evidence-capture-worker.md
     owned_write_set:
       - results/common/agentic_flow/**
-      - .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
     artifacts:
       request: ../real_platform_risk_acceptance_request.json
       contract: artifacts/worker_contracts/worker-r10-capture.md
       output: artifacts/worker_outputs/worker-r10-capture.md
       verification: artifacts/verification/worker-r10-capture.md
       tool_call: artifacts/tool_calls/worker-r10-capture-normalized.json
-      summary: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+    control_plane_references:
+      round10_summary:
+        owner: RLCRCoordinator
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+        worker_write_scope: false
     request_boundary:
       status: pending_not_approved
       request_status: not_approved
@@ -629,8 +638,15 @@ flow_nodes:
     prompt: artifacts/prompts/round-11-current-head-capture-worker.md
     owned_write_set:
       - results/common/agentic_flow/**
-      - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
-      - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+    control_plane_references:
+      goal_tracker:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+        worker_write_scope: false
+      review_result:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+        worker_write_scope: false
     artifacts:
       request: ../real_platform_risk_acceptance_request.json
       contract: artifacts/worker_contracts/worker-r11-current-head-capture.md
@@ -675,9 +691,16 @@ flow_nodes:
     owned_write_set:
       - scripts/search_model_impl.py
       - tests/test_search_model_candidate_sim.py
-      - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
-      - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
       - results/common/agentic_flow/**
+    control_plane_references:
+      goal_tracker:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+        worker_write_scope: false
+      review_result:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+        worker_write_scope: false
     forbidden_write_set:
       - results/common/*approval*
       - results/common/real_platform_risk_acceptance_request.json
@@ -727,6 +750,25 @@ flow_nodes:
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
       next_human_step: present_request_before_creating_human_approval_json
     status: t12_exactness_fixed_pending_human_decision
+  - id: round13-control-plane-ownership-repair
+    primitive: h2-control
+    owner: CoordinatorAndCodexReviewer
+    decision: artifacts/decisions/round-13-control-plane-ownership.md
+    control_plane_owners:
+      round10_summary:
+        owner: RLCRCoordinator
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+      goal_tracker:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+      review_result:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+    verification:
+      worker_owned_write_set_excludes_humanize: true
+      worker_prompts_and_contracts_exclude_humanize_write_scope: true
+      humanize_read_only_lineage_allowed: true
+    status: worker_scope_repaired_pending_ac16_human_decision
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
