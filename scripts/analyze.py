@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -54,6 +55,7 @@ QUALITY_ASSUMPTIONS = (
     "Repeated measurements mean at least two real gem5 traces for the same template/instruction/LMUL/body signature with identical corrected primary deltas.",
     "Zero-cost timestamp-marker assumptions remain documented in per-trace metadata and are not revalidated by this analyzer.",
 )
+RUN_RESULT_DIR_RE = re.compile(r"r\d+$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -1729,6 +1731,32 @@ def find_traces(root: Path) -> list[Path]:
     return sorted(root.glob("**/trace.json"), key=lambda path: path.as_posix())
 
 
+def is_run_result_branch(trace_path: Path, root: Path) -> bool:
+    try:
+        relative = trace_path.relative_to(root)
+    except ValueError:
+        return False
+    return bool(relative.parts and RUN_RESULT_DIR_RE.fullmatch(relative.parts[0]))
+
+
+def is_main_synthetic_calibration_trace(item: ExperimentAnalysis, root: Path) -> bool:
+    return (
+        item.mode.lower() == "synthetic_calibration"
+        and item.backend.lower() == "synthetic_cmodel"
+        and not is_run_result_branch(item.trace_path, root)
+    )
+
+
+def build_instruction_index(analyses: Iterable[ExperimentAnalysis]) -> dict[str, list[ExperimentAnalysis]]:
+    by_instruction: dict[str, list[ExperimentAnalysis]] = {}
+    for item in analyses:
+        if item.instruction_id:
+            by_instruction.setdefault(item.instruction_id, []).append(item)
+        if item.pair_instruction_id:
+            by_instruction.setdefault(item.pair_instruction_id, []).append(item)
+    return by_instruction
+
+
 def load_timing_config(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
@@ -1764,15 +1792,13 @@ def main() -> int:
     root = Path(args.root)
     trace_paths = find_traces(root)
     analyses = [analyze_trace(path) for path in trace_paths]
+    synthetic_profile_analyses = [
+        item for item in analyses if is_main_synthetic_calibration_trace(item, root)
+    ]
     timing_config = load_timing_config(Path(args.config))
     config_instructions = timing_config.get("instructions") if isinstance(timing_config.get("instructions"), dict) else {}
 
-    by_instruction: dict[str, list[ExperimentAnalysis]] = {}
-    for item in analyses:
-        if item.instruction_id:
-            by_instruction.setdefault(item.instruction_id, []).append(item)
-        if item.pair_instruction_id:
-            by_instruction.setdefault(item.pair_instruction_id, []).append(item)
+    by_instruction = build_instruction_index(synthetic_profile_analyses)
 
     instruction_order = list(config_instructions) if isinstance(config_instructions, dict) else sorted(by_instruction)
     profiles: dict[str, dict[str, Any]] = {}
