@@ -49,7 +49,7 @@ Source plan: docs/plan.md
 ## MUTABLE SECTION
 <!-- Update each round with justification for changes -->
 
-### Plan Version: 3 (Updated: Round 0 review recheck)
+### Plan Version: 4 (Updated: Round 1 review)
 
 #### Plan Evolution Log
 <!-- Document any changes to the plan with justification -->
@@ -60,6 +60,7 @@ Source plan: docs/plan.md
 | 0-review | Completion claim rejected by Codex review. | Fresh review found the kill-check and all suite traces are synthetic cmodel outputs, generated assembly still contains assembler-illegal `TIMESTAMP_MARK` pseudo-ops, analyzer/search copy configured synthetic metadata rather than inferring from raw marker evidence, and Humanize2 state is stale. | AC-3, AC-6, AC-9, AC-10, AC-12, AC-13, AC-14, AC-15, AC-16, and AC-17 remain blocked or invalidly gated. |
 | 1 | Review findings corrected and rerun end-to-end. | Marker pseudo-ops are lowered to assembler-legal zero-cost labels; gem5 MinorCPU T01 kill-check passes; analyzer infers claimed fields from raw marker deltas; synthetic gate passes; LLVM mca checks now cover all 30 profiled rows. | AC-1 through AC-17 are verified for the synthetic calibration branch; AC-16 remains the required gate for future real-platform expansion. |
 | 0-review-recheck | Completion claim rejected by fresh Codex review. | The corrected state satisfies the synthetic calibration branch and gem5 T01 kill-check, but the original plan still requires completing non-deferred real-platform coverage/gating and a parameter search that enumerates candidate timing parameters against raw observations. | AC-9 and AC-16 remain incomplete; AC-6 remains weak until the marker baseline is checked as real gem5 evidence rather than only synthetic/label-PC inference. |
+| 1-review | Round 1 completion request partially rejected. | Repeated gem5 traces now exist, but `search_model.py --profile results` mixes synthetic cmodel and real gem5 observations, reports conflicts/insufficient evidence for all 30 instruction/LMUL field rows, and the real-platform gate inventory does not consume those search/profile confidence results. | AC-9 remains incomplete; AC-16 remains blocked by missing approval and by unresolved real-platform confidence/conflict integration. |
 
 #### Active Tasks
 <!-- Map each task to its target Acceptance Criterion and routing tag -->
@@ -74,9 +75,9 @@ Source plan: docs/plan.md
 | T6 Humanize2 primitive capture and replay cartridge | AC-11, AC-12, AC-13 | completed | coding | claude | Boards, events, replay notes, cartridge, tool-call artifacts, and coordinator Round 1 output updated under `results/common/agentic_flow/`. |
 | T7 LLVM 22.1.3 YuShuXin schedule-model implementation | AC-15, AC-17 | completed | coding | claude | LLVM worktree has schedule-model commit plus strengthened mca test commit; focused mca/codegen tests pass. |
 | T8 LLVM model draft export and mapping evidence | AC-8, AC-10, AC-15 | completed | coding | claude | Profiles, mismatch report, search output, and LLVM evidence are regenerated after non-circular synthetic calibration. |
-| T9 Real gem5 timing suite and approval-ready quality report | AC-3, AC-6, AC-16 | needs_changes | coding | claude | Run T00/T10/T11/T12/T20/T21/T30 under `backend: gem5_minor` with repeated measurements, then make `experiment_quality.md` data-derived and approval-ready. |
-| T10 Raw-observation parameter search | AC-9, AC-10 | needs_changes | coding | claude | Replace profile-only formula fitting with enumeration of latency, release, resource, NumMicroOps, and SingleIssue candidates against raw trace observations/template metadata. |
-| T11 Real-platform gate enforcement | AC-16 | needs_changes | coding | claude | `check_calibration_gate.py --mode real_platform_profile` must verify coverage, repeatability, confidence, assumptions, conflicts, and explicit approval from data, not just report text. |
+| T9 Real gem5 timing suite and approval-ready quality report | AC-3, AC-6, AC-16 | needs_changes | coding | claude | Repeated real gem5 traces exist under `results/r01` and `results/r02` with 6442 checked-in trace files, but the quality report is not approval-ready until real-platform field confidence/conflicts from search/profile artifacts are integrated. |
+| T10 Raw-observation parameter search | AC-9, AC-10 | needs_changes | coding | claude | Current search consumes raw traces, but it mixes synthetic and real observations and reports `Latency`/`ReleaseAtCycles` conflicts plus `ProcResource`/`NumMicroOps`/`SingleIssue` insufficient evidence for all 30 instruction/LMUL rows. |
+| T11 Real-platform gate enforcement | AC-16 | needs_changes | coding | claude | Current gate validates trace coverage/repeats from data, but it does not validate `search_model_summary.md` or real-platform LLVM-field profile confidence/conflict state before accepting approval. |
 
 ### Completed and Verified
 <!-- Only move tasks here after Codex verification -->
@@ -101,7 +102,10 @@ Source plan: docs/plan.md
 <!-- Issues discovered during implementation -->
 | Issue | Discovered Round | Blocking AC | Resolution Path |
 |-------|-----------------|-------------|-----------------|
-| Full real-platform timing suite is not complete; only T01 gem5 kill-check has real coverage. | Round 1 | AC-16 future expansion | Keep `real_platform_profile` gate NOT_READY until T10/T11/T12/T20/T30 have repeated real traces, confidence review, and human approval. |
+| Real-platform timing suite trace coverage exists, but field confidence is not approval-ready. | Round 1 review | AC-16 | Keep `real_platform_profile` gate NOT_READY until repeated real traces are connected to real-platform profile/search field statuses and unresolved conflicts are resolved or explicitly approved with documented risk. |
 | Parameter search does not implement the planned candidate-resimulation search. | Round 0 review recheck | AC-9 | Make `scripts/search_model.py` consume raw trace observations and enumerate `Latency`, `ReleaseAtCycles`, pipe/resource, `NumMicroOps`, and `SingleIssue` candidates against template timings. |
 | Real-platform gate is report-text based and cannot independently validate coverage or stability. | Round 0 review recheck | AC-16 | Derive the gate from trace inventory, repeat groups, confidence/conflict state, documented assumptions, and explicit human approval. |
 | Checked-in T00 marker baseline is synthetic, and gem5 marker entries are inferred from duplicate label PCs rather than explicit simulator marker events. | Round 0 review recheck | AC-6 | Add checked-in real gem5 T00 evidence and document or implement true simulator marker events before trusting gem5 timing measurements. |
+| Search model mixes synthetic cmodel traces with real gem5 traces when invoked on `results`. | Round 1 review | AC-9, AC-14, AC-16 | Add explicit mode/backend filtering or separate reports so real-platform search never treats synthetic golden-derived marker cycles as real evidence. |
+| Real-platform gate ignores search/profile field conflicts. | Round 1 review | AC-9, AC-16 | Gate must fail if required LLVM-facing real-platform fields are `conflict` or `insufficient_evidence`, unless a machine-readable human approval artifact explicitly accepts each unresolved risk. |
+| No real-platform per-instruction `profile.yaml` artifacts are produced. | Round 1 review | AC-8, AC-16 | Generate separate real-platform profiles or a machine-readable equivalent that records LLVM-facing field values, assumptions, non-identifiable fields, confidence, and evidence without overwriting synthetic calibration profiles. |
