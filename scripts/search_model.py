@@ -700,18 +700,14 @@ def enumerate_latency(items: list[RawObservation], max_value: int) -> dict[str, 
         shape = item.effective_template_id
         if shape == "T11_SELF_RAW_CHAIN":
             iterations = body_int(item, "iterations", "chain_length", "sample_count")
-            if iterations is None or iterations <= 0:
+            if iterations is None or iterations <= 1:
                 skipped.append(evidence_entry(item, "T11 skipped:missing_iterations"))
                 continue
-            candidates &= {value for value in candidates if item.delta_cycles == iterations * value}
-            used.append(evidence_entry(item, f"T11 expected delta=iterations*Latency;iterations={iterations}"))
+            intervals = iterations - 1
+            candidates &= {value for value in candidates if item.delta_cycles == intervals * value}
+            used.append(evidence_entry(item, f"T11 expected delta=(iterations-1)*Latency;iterations={iterations}"))
         elif shape == "T12_CONSUMER_RAW_GAP":
-            filler_count = body_int(item, "filler_count")
-            if filler_count is None:
-                skipped.append(evidence_entry(item, "T12 skipped:missing_filler_count"))
-                continue
-            candidates &= {value for value in candidates if item.delta_cycles == filler_count + value}
-            used.append(evidence_entry(item, f"T12 expected delta=filler_count+Latency;filler_count={filler_count}"))
+            skipped.append(evidence_entry(item, "T12 recorded:not_used_without_bypass_gap_simulator"))
 
     return bounded_integer_result(
         "Latency",
@@ -733,11 +729,12 @@ def enumerate_release(items: list[RawObservation], max_value: int) -> dict[str, 
         if shape != "T10_INDEPENDENT_STREAM_THROUGHPUT":
             continue
         iterations = body_int(item, "iterations", "stream_length", "sample_count")
-        if iterations is None or iterations <= 0:
+        if iterations is None or iterations <= 1:
             skipped.append(evidence_entry(item, "T10 skipped:missing_iterations"))
             continue
-        candidates &= {value for value in candidates if item.delta_cycles == iterations * value}
-        used.append(evidence_entry(item, f"T10 expected delta=iterations*ReleaseAtCycles;iterations={iterations}"))
+        intervals = iterations - 1
+        candidates &= {value for value in candidates if item.delta_cycles == intervals * value}
+        used.append(evidence_entry(item, f"T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations={iterations}"))
 
     return bounded_integer_result(
         "ReleaseAtCycles",

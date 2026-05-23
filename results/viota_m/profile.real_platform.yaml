@@ -5,35 +5,35 @@ instruction_id: "viota_m"
 llvm_facing_fields:
   m1:
     Latency:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 1
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t11-viota-m-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=11:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m1-n12/trace.json"
-        - "t11-viota-m-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=1:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m1-n2/trace.json"
-        - "t11-viota-m-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m1-n4/trace.json"
-        - "t11-viota-m-m1-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m1-n6/trace.json"
-        - "t11-viota-m-m1-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m1-n8/trace.json"
-        - "t12-viota-m-m1-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=4:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/viota_m/experiments/t12-viota-m-m1-k0-vadd-vv/trace.json"
-        - "t12-viota-m-m1-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=4:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/viota_m/experiments/t12-viota-m-m1-k1-vadd-vv/trace.json"
-        - "t12-viota-m-m1-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=11:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/viota_m/experiments/t12-viota-m-m1-k10-vadd-vv/trace.json"
+        - "t11-viota-m-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=11:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m1-n12/trace.json"
+        - "t11-viota-m-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=1:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m1-n2/trace.json"
+        - "t11-viota-m-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m1-n4/trace.json"
+        - "t11-viota-m-m1-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m1-n6/trace.json"
+        - "t11-viota-m-m1-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m1-n8/trace.json"
+        - "t30-viota-m-t11-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=11:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t11-m1-n12/trace.json"
+        - "t30-viota-m-t11-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=1:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t11-m1-n2/trace.json"
+        - "t30-viota-m-t11-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t11-m1-n4/trace.json"
     ReleaseAtCycles:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 1
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json"
-        - "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json"
-        - "t10-viota-m-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m1-n4/trace.json"
-        - "t10-viota-m-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m1-n6/trace.json"
-        - "t10-viota-m-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=8 @ results/r01/viota_m/experiments/t10-viota-m-m1-n8/trace.json"
-        - "t30-viota-m-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n12/trace.json"
-        - "t30-viota-m-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n2/trace.json"
-        - "t30-viota-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n4/trace.json"
+        - "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json"
+        - "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json"
+        - "t10-viota-m-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m1-n4/trace.json"
+        - "t10-viota-m-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m1-n6/trace.json"
+        - "t10-viota-m-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=8 @ results/r01/viota_m/experiments/t10-viota-m-m1-n8/trace.json"
+        - "t30-viota-m-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n12/trace.json"
+        - "t30-viota-m-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n2/trace.json"
+        - "t30-viota-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n4/trace.json"
     ProcResource:
       status: "insufficient_evidence"
       value: null
@@ -48,27 +48,23 @@ llvm_facing_fields:
         - "t20-viota-m-vrgather-vv-m1-n4:T20 relation=conflict"
         - "t20-viota-m-vslideup-vx-m1-n4:T20 relation=conflict"
     NumMicroOps:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
         - 1
-        - 2
-        - 3
-        - 4
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-viota-m-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-viota-m-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-viota-m-m1-n4:T21 status=checked:cycles_per_pair=1"
+        - "t21-viota-m-m1-n4:T21 status=checked:cycles_per_pair=1"
     SingleIssue:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: false
       candidates:
         - false
-        - true
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-viota-m-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-viota-m-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t21-viota-m-m1-n4:T21 status=checked:cycles_per_pair=1"
+        - "t21-viota-m-m1-n4:T21 status=checked:cycles_per_pair=1"
   m2:
     Latency:
       status: "conflict"
@@ -77,14 +73,14 @@ llvm_facing_fields:
         []
       reason: "No value in the bounded search range satisfies all raw marker constraints."
       evidence:
-        - "t11-viota-m-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m2-n12/trace.json"
-        - "t11-viota-m-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m2-n2/trace.json"
-        - "t11-viota-m-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m2-n4/trace.json"
-        - "t11-viota-m-m2-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=11:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m2-n6/trace.json"
-        - "t11-viota-m-m2-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m2-n8/trace.json"
-        - "t12-viota-m-m2-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=5:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/viota_m/experiments/t12-viota-m-m2-k0-vadd-vv/trace.json"
-        - "t12-viota-m-m2-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=5:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/viota_m/experiments/t12-viota-m-m2-k1-vadd-vv/trace.json"
-        - "t12-viota-m-m2-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=23:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/viota_m/experiments/t12-viota-m-m2-k10-vadd-vv/trace.json"
+        - "t11-viota-m-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m2-n12/trace.json"
+        - "t11-viota-m-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m2-n2/trace.json"
+        - "t11-viota-m-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m2-n4/trace.json"
+        - "t11-viota-m-m2-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=11:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m2-n6/trace.json"
+        - "t11-viota-m-m2-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m2-n8/trace.json"
+        - "t30-viota-m-t11-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t11-m2-n12/trace.json"
+        - "t30-viota-m-t11-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=3:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t11-m2-n2/trace.json"
+        - "t30-viota-m-t11-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t11-m2-n4/trace.json"
     ReleaseAtCycles:
       status: "conflict"
       value: null
@@ -92,14 +88,14 @@ llvm_facing_fields:
         []
       reason: "No value in the bounded search range satisfies all raw marker constraints."
       evidence:
-        - "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json"
-        - "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json"
-        - "t10-viota-m-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m2-n4/trace.json"
-        - "t10-viota-m-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m2-n6/trace.json"
-        - "t10-viota-m-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=iterations*ReleaseAtCycles;iterations=8 @ results/r01/viota_m/experiments/t10-viota-m-m2-n8/trace.json"
-        - "t30-viota-m-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=iterations*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n12/trace.json"
-        - "t30-viota-m-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n2/trace.json"
-        - "t30-viota-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n4/trace.json"
+        - "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json"
+        - "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json"
+        - "t10-viota-m-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m2-n4/trace.json"
+        - "t10-viota-m-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m2-n6/trace.json"
+        - "t10-viota-m-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=8 @ results/r01/viota_m/experiments/t10-viota-m-m2-n8/trace.json"
+        - "t30-viota-m-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n12/trace.json"
+        - "t30-viota-m-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n2/trace.json"
+        - "t30-viota-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n4/trace.json"
     ProcResource:
       status: "insufficient_evidence"
       value: null
@@ -143,14 +139,14 @@ llvm_facing_fields:
         []
       reason: "No value in the bounded search range satisfies all raw marker constraints."
       evidence:
-        - "t11-viota-m-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:T11 expected delta=iterations*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m4-n12/trace.json"
-        - "t11-viota-m-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=iterations*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m4-n2/trace.json"
-        - "t11-viota-m-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:T11 expected delta=iterations*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m4-n4/trace.json"
-        - "t11-viota-m-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:T11 expected delta=iterations*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m4-n6/trace.json"
-        - "t11-viota-m-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:T11 expected delta=iterations*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m4-n8/trace.json"
-        - "t12-viota-m-m4-k0-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=7:T12 expected delta=filler_count+Latency;filler_count=0 @ results/r01/viota_m/experiments/t12-viota-m-m4-k0-vadd-vv/trace.json"
-        - "t12-viota-m-m4-k1-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=11:T12 expected delta=filler_count+Latency;filler_count=1 @ results/r01/viota_m/experiments/t12-viota-m-m4-k1-vadd-vv/trace.json"
-        - "t12-viota-m-m4-k10-vadd-vv:T12_CONSUMER_RAW_GAP:pair=start/end:delta=47:T12 expected delta=filler_count+Latency;filler_count=10 @ results/r01/viota_m/experiments/t12-viota-m-m4-k10-vadd-vv/trace.json"
+        - "t11-viota-m-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t11-viota-m-m4-n12/trace.json"
+        - "t11-viota-m-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t11-viota-m-m4-n2/trace.json"
+        - "t11-viota-m-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t11-viota-m-m4-n4/trace.json"
+        - "t11-viota-m-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/viota_m/experiments/t11-viota-m-m4-n6/trace.json"
+        - "t11-viota-m-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/viota_m/experiments/t11-viota-m-m4-n8/trace.json"
+        - "t30-viota-m-t11-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/viota_m/experiments/t30-viota-m-t11-m4-n12/trace.json"
+        - "t30-viota-m-t11-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t11-m4-n2/trace.json"
+        - "t30-viota-m-t11-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t11-m4-n4/trace.json"
     ReleaseAtCycles:
       status: "conflict"
       value: null
@@ -158,14 +154,14 @@ llvm_facing_fields:
         []
       reason: "No value in the bounded search range satisfies all raw marker constraints."
       evidence:
-        - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
-        - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
-        - "t10-viota-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m4-n6/trace.json"
-        - "t30-viota-m-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n2/trace.json"
-        - "t30-viota-m-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n4/trace.json"
-        - "t30-viota-m-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=iterations*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n6/trace.json"
-        - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=iterations*ReleaseAtCycles;iterations=2 @ results/r02/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
-        - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=iterations*ReleaseAtCycles;iterations=4 @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
+        - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
+        - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
+        - "t10-viota-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t10-viota-m-m4-n6/trace.json"
+        - "t30-viota-m-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n2/trace.json"
+        - "t30-viota-m-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n4/trace.json"
+        - "t30-viota-m-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n6/trace.json"
+        - "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r02/viota_m/experiments/t10-viota-m-m4-n2/trace.json"
+        - "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
     ProcResource:
       status: "insufficient_evidence"
       value: null

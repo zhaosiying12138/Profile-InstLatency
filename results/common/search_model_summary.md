@@ -35,152 +35,152 @@ Status: raw_observation_parameter_search
 
 | Instruction | LMUL | Field | Status | Candidate | Evidence |
 | --- | --- | --- | --- | --- | ---: |
-| `vadd_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vadd_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vadd_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vadd_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vadd_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vadd_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vadd_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vadd_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vadd_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vadd_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vadd_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vadd_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vadd_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vadd_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vadd_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vadd_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vadd_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vadd_vv` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vcpop_m` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vcpop_m` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vcpop_m` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vcpop_m` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vcpop_m` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vcpop_m` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vcpop_m` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vcpop_m` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vcpop_m` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vcpop_m` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vcpop_m` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vcpop_m` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vcpop_m` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vdivu_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vdivu_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vdivu_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vdivu_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vdivu_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vdivu_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vdivu_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vdivu_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vdivu_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vdivu_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vdivu_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vdivu_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vdivu_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vdivu_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vdivu_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vdivu_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vdivu_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vdivu_vv` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `viota_m` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `viota_m` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `viota_m` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `viota_m` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `viota_m` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `viota_m` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `viota_m` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `viota_m` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `viota_m` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `viota_m` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `viota_m` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `viota_m` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `viota_m` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `viota_m` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `viota_m` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `viota_m` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `viota_m` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `viota_m` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmseq_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vmseq_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vmseq_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vmseq_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmseq_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmseq_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmseq_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vmseq_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vmseq_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vmseq_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmseq_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmseq_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmseq_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vmseq_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vmseq_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vmseq_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmseq_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmseq_vv` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmul_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vmul_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vmul_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vmul_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmul_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmul_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmul_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vmul_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vmul_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vmul_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmul_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmul_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vmul_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vmul_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vmul_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vmul_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vmul_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vmul_vv` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vredsum_vs` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vredsum_vs` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vredsum_vs` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vredsum_vs` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vredsum_vs` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vredsum_vs` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vredsum_vs` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vredsum_vs` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vredsum_vs` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vredsum_vs` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vredsum_vs` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vredsum_vs` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vredsum_vs` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vredsum_vs` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vredsum_vs` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vredsum_vs` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vredsum_vs` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vredsum_vs` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vrgather_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vrgather_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vrgather_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vrgather_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vrgather_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vrgather_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vrgather_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vrgather_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vrgather_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vrgather_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vrgather_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vrgather_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vrgather_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vrgather_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vrgather_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vrgather_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vrgather_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vrgather_vv` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vslideup_vx` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vslideup_vx` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vslideup_vx` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vslideup_vx` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vslideup_vx` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vslideup_vx` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vslideup_vx` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vslideup_vx` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vslideup_vx` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vslideup_vx` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vslideup_vx` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vslideup_vx` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vslideup_vx` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vslideup_vx` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vslideup_vx` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vslideup_vx` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vslideup_vx` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vslideup_vx` | `m4` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vsll_vv` | `m1` | `Latency` | conflict | `n/a` | 276 |
+| `vsll_vv` | `m1` | `Latency` | conflict | `n/a` | 30 |
 | `vsll_vv` | `m1` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vsll_vv` | `m1` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vsll_vv` | `m1` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vsll_vv` | `m1` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vsll_vv` | `m2` | `Latency` | conflict | `n/a` | 276 |
+| `vsll_vv` | `m2` | `Latency` | conflict | `n/a` | 30 |
 | `vsll_vv` | `m2` | `ReleaseAtCycles` | conflict | `n/a` | 30 |
 | `vsll_vv` | `m2` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vsll_vv` | `m2` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
 | `vsll_vv` | `m2` | `SingleIssue` | insufficient_evidence | `False, True` | 0 |
-| `vsll_vv` | `m4` | `Latency` | conflict | `n/a` | 276 |
+| `vsll_vv` | `m4` | `Latency` | conflict | `n/a` | 30 |
 | `vsll_vv` | `m4` | `ReleaseAtCycles` | conflict | `n/a` | 18 |
 | `vsll_vv` | `m4` | `ProcResource` | insufficient_evidence | `unknown` | 0 |
 | `vsll_vv` | `m4` | `NumMicroOps` | insufficient_evidence | `1, 2, 3, 4` | 0 |
