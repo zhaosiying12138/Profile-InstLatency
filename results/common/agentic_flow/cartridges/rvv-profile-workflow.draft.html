@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.10.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.11.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1,rvv.riskAcceptanceRequest.v1"></h2-capability>
@@ -33,6 +33,9 @@
   </h2-template>
   <h2-template id="round-10-focused-evidence-capture-worker" type="prompt" href="../artifacts/prompts/round-10-focused-evidence-capture-worker.md">
     Normalized reconstruction of the Round 10 capture worker that records focused T20/T12 evidence, current request hashes, 38 unresolved risks, and the fail-closed approval boundary.
+  </h2-template>
+  <h2-template id="round-11-current-head-capture-worker" type="prompt" href="../artifacts/prompts/round-11-current-head-capture-worker.md">
+    Capture current-head post-Round-10 evidence, search reproducibility, 9 unresolved risks, and the fail-closed approval boundary.
   </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
@@ -128,7 +131,7 @@
       <h2-expect artifact="coordinator-r10-focused-evidence-tool-call" schema="rvv.toolCall.v1"></h2-expect>
     </h2-check>
     <h2-agent id="round10-focused-evidence-capture-worker" role="worker" tool="codex" prompt="#round-10-focused-evidence-capture-worker" short-name="r10-capture" timeout="unknown">
-      <h2-current-status>pending-request-current-not-approved-not-gate-consumed</h2-current-status>
+      <h2-current-status>superseded-by-round11-current-head-capture</h2-current-status>
       <h2-commit>73b99c2e1e95ed7828c5ce76d750a909bc83b5c5</h2-commit>
       <h2-owned-write-set>results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md</h2-owned-write-set>
       <h2-expect artifact="round-10-risk-acceptance-request" schema="rvv.riskAcceptanceRequest.v1"></h2-expect>
@@ -139,11 +142,25 @@
       <h2-field-status-summary blocking-total="38" non-identifiable-blocking-count="38" inferred-count="112"></h2-field-status-summary>
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231" field-status-sha256="9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b" search-sha256="bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623" quality-sha256="1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae" unresolved-non-identifiable-risks="38"></h2-request-boundary>
     </h2-agent>
+    <h2-agent id="round11-current-head-capture-worker" role="worker" tool="codex" prompt="#round-11-current-head-capture-worker" short-name="r11-capture" timeout="unknown">
+      <h2-current-status>current-head-capture-refreshed-pending-human-decision</h2-current-status>
+      <h2-commit>77d181af</h2-commit>
+      <h2-commit>6ff16b7c</h2-commit>
+      <h2-commit>88c9e6e5</h2-commit>
+      <h2-commit>8ec7a8a8</h2-commit>
+      <h2-owned-write-set>results/common/agentic_flow/**,.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md,.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md</h2-owned-write-set>
+      <h2-expect artifact="round-11-current-head-capture-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-11-current-head-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-11-current-head-capture-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-11-current-head-capture-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-field-status-summary blocking-total="9" non-identifiable-blocking-count="9" inferred-count="141"></h2-field-status-summary>
+      <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
+    </h2-agent>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
-      <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 38 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>
+      <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 9 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>
     </h2-check>
-    <h2-human id="real-platform-approval" prompt="Present results/common/real_platform_risk_acceptance_request.json, then approve or reject explicit real-platform risk acceptance tied to inventory hash 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231, field-status hash 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b, and the 38 unresolved risk IDs before treating AC-16 as satisfied.">
+    <h2-human id="real-platform-approval" prompt="Present results/common/real_platform_risk_acceptance_request.json, then approve or reject explicit real-platform risk acceptance tied to inventory hash 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd, field-status hash 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432, and the 9 unresolved risk IDs before treating AC-16 as satisfied.">
       <h2-current-status>absent</h2-current-status>
       <h2-request-artifact>results/common/real_platform_risk_acceptance_request.json</h2-request-artifact>
       <h2-required-artifact>results/common/human_approval.json</h2-required-artifact>

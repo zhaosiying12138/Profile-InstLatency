@@ -1,5 +1,5 @@
 schema_version: 1
-round: 10
+round: 11
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,90 +12,50 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 10
-  status: awaiting_human_risk_decision_after_focused_evidence_refresh
-  owner_scope:
-    - results/common/real_platform_risk_acceptance_request.json
-    - results/common/agentic_flow/**
-    - .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
-  task: capture_round10_stronger_evidence_and_rlcr_summary
-  round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
-  round5_code_worker_review_status: accepted_for_candidate_simulator_scope
-  approval_gate_fixes_owned_by_round6_worker: true
-  round6_approval_gate_worker: Gibbs
-  round6_approval_gate_worker_commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
-  round6_approval_gate_review_status: accepted_for_approval_gate_behavior
-  round8_review_status: request_changes_ac16_blocked_and_field_status_summary_undercounted_non_identifiable
-  round9_code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
-  round9_code_worker_status: field_status_summary_counts_non_identifiable_as_blocking
-  round10_t20_resource_noreuse_commit: f3bb455245cce28b1f61fd7447e1056e5c9903b2
-  round10_run_suite_selection_commit: cd71b7ed3aa9d222306af23a51fe87efd76eddf9
-  round10_t12_scalar_filler_commit: c1032a2c01949ecb9d651473dec1aa88695bb484
-  round10_real_platform_refresh_commit: 73b99c2e1e95ed7828c5ce76d750a909bc83b5c5
-  round10_status: stronger_evidence_reduced_non_identifiable_risks_from_39_to_38
-  request_worker: Round10FocusedEvidenceRefresh
+  round: 11
+  status: awaiting_human_risk_decision_after_current_head_capture
+  task: capture_post_round10_current_head_evidence
+  request_worker: Round11VcpopM4IssueFieldDiagnostics
+  current_head_capture_worker: Round11CurrentHeadCapture
+  commits:
+    proc_resource_mirror_canonicalization: 77d181af
+    t12_matched_controls: 6ff16b7c
+    vcpop_m4_r11_diagnostics: 88c9e6e5
+    search_reproduction_fix: 8ec7a8a8
   forbidden_paths:
-    - scripts/run_suite.py
-    - scripts/gen_asm.py
-    - scripts/search_model.py
-    - scripts/analyze.py
-    - scripts/check_calibration_gate.py
-    - tests/test_search_model_candidate_sim.py
-    - tests/test_run_suite_selection.py
-    - tests/test_gen_asm_t20_coverage.py
-    - tests/test_gen_asm_t12_focused.py
-    - tests/test_check_calibration_gate_approval.py
-    - results/common/search_model_real_platform.json
-    - results/common/real_platform_field_status.json
-    - results/common/real_platform_inventory.json
-    - results/common/experiment_quality.md
-    - results/*/profile.real_platform.yaml
-    - experiments/generated/**
-    - results/r01/**
-    - results/r02/**
-    - .humanize/rlcr/** except .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+    - results/common/*approval*
+    - .humanize/rlcr/2026-05-23_01-15-03/state.md
 phase_status:
-  phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
-  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_38_unresolved_risks
+  phase_7_analyzer_and_search: current_head_search_reproducible
+  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_9_unresolved_risks
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round10_focused_evidence_refresh_captured_without_ac16_completion_claim
+  humanize2_capture: current_head_capture_refreshed_without_ac16_completion_claim
 real_platform_evidence:
-  checked_in_r01_r02_trace_files: 7514
+  real_platform_traces: 7660
   required_real_gem5_groups: 178
   covered_required_real_gem5_groups: 178
-  stable_repeat_groups: 3757
+  stable_repeat_groups: 3815
   unstable_repeat_groups: 0
   field_rows:
     total: 150
-    inferred: 112
-    non_identifiable: 38
+    inferred: 141
+    non_identifiable: 9
     conflict: 0
     insufficient_evidence: 0
-  resolved_in_round10:
-    instruction_id: viota_m
-    lmul: m4
-    field: Latency
-    status: inferred
-    candidate: 4
   artifact_hashes:
-    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
-    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
-    search_model_real_platform_json: bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623
-    experiment_quality_md: 1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae
+    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+    search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+    experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
   field_status_summary:
-    blocking_total: 38
+    blocking_total: 9
     blocking_status_counts:
-      non_identifiable: 38
-  round4_review_hashes:
-    real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
-    real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
-    search_model_real_platform_json: ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935
-    experiment_quality_md: 8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8
+      non_identifiable: 9
 gates:
   synthetic_calibration:
     status: pass
     report: results/common/mismatch_report.md
-    command: python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+    command: python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md
   real_platform_profile:
     status: not_ready
     report: results/common/experiment_quality.md
@@ -103,7 +63,7 @@ gates:
     expected_failure_reasons:
       - quality report lacks exact Gate status: PASS
       - machine-readable human approval file under results/common is absent
-      - 38 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
+      - 9 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
     request_artifact: results/common/real_platform_risk_acceptance_request.json
 approval_boundary:
   explicit_human_approval_required: true
@@ -112,21 +72,16 @@ approval_boundary:
   risk_acceptance_request:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
-    round: 10
-    request_worker: Round10FocusedEvidenceRefresh
+    round: 11
+    request_worker: Round11VcpopM4IssueFieldDiagnostics
     gate_consumed: false
     is_approval_artifact: false
     present_to_human_before_human_approval_json: true
-    human_choices:
-      - accept all current risks with a future human_approval.json
-      - reject and require stronger experiments or modeling
-      - accept selected listed risk IDs
-  note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
   must_bind_to_hashes:
-    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
-    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
+    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
   accepted_risk_scope_required: true
-  unresolved_non_identifiable_risks: 38
+  unresolved_non_identifiable_risks: 9
 remaining_blockers:
-  - 38 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
+  - 9 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
   - AC-16 remains blocked by missing explicit human approval.

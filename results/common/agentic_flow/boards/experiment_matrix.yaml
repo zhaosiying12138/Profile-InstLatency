@@ -12,136 +12,53 @@ templates:
   - T30_LMUL_SCALING
   - T40_COMMON_VLSU_LOAD_HIT
 instructions:
-  - id: vadd_vv
-    asm: vadd.vv
-    sched_write: WriteVIALUV
-  - id: vsll_vv
-    asm: vsll.vv
-    sched_write: WriteVShiftV
-  - id: vmul_vv
-    asm: vmul.vv
-    sched_write: WriteVIMulV
-  - id: vdivu_vv
-    asm: vdivu.vv
-    sched_write: WriteVIDivV
-  - id: vmseq_vv
-    asm: vmseq.vv
-    sched_write: WriteVICmpV
-  - id: vcpop_m
-    asm: vcpop.m
-    sched_write: WriteVMPopV
-  - id: viota_m
-    asm: viota.m
-    sched_write: WriteVIotaV
-  - id: vslideup_vx
-    asm: vslideup.vx
-    sched_write: WriteVSlideUpX
-  - id: vrgather_vv
-    asm: vrgather.vv
-    sched_write: WriteVRGatherVV
-  - id: vredsum_vs
-    asm: vredsum.vs
-    sched_write: WriteVIRedV_From
-round3_expansions:
-  t20_pair_counts: [2, 3, 4, 6]
-  vcpop_m_m4_diagnostics:
-    - rotated scalar destination T10 streams
-    - fixed scalar destination T10 streams
-  non_chainable_t11_suite_entries_removed: true
-round4_candidate_simulator:
-  t20_subject_side_checks: true
-  t12_clean_prefix_constraints: true
-  t12_upper_bound_rows_rendered_non_identifiable: true
-round5_code_worker_commit:
-  commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
-  t20_peer_side_constraints_targeted: true
-  t12_short_sweep_guard_targeted: true
-  review_status: accepted_for_candidate_simulator_scope
-  capture_package: artifacts/worker_outputs/worker-r5-code.md
-round6_approval_gate_worker_commit:
-  worker: Gibbs
-  commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
-  non_identifiable_rows_are_blocking_risks: true
-  approval_requires_inventory_hash: true
-  approval_requires_field_status_hash: true
-  approval_requires_accepted_risk_scope: true
-  review_status: accepted_for_approval_gate_behavior
-  capture_package: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md
-round7_risk_acceptance_request_worker:
-  worker: Round7RiskRequest
-  request_artifact: ../real_platform_risk_acceptance_request.json
-  request_status: pending_not_approved
-  gate_consumed: false
-  unresolved_non_identifiable_risks: 39
-  gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-  human_handoff: present_request_before_creating_human_approval_json
-round8_review:
-  recommendation: request_changes
-  ac16_status: blocked
-  field_status_summary_issue: non_identifiable_rows_were_not_counted_as_blocking
-round9_field_status_hash_refresh:
-  worker: Round9FieldStatusHashRefresh
-  code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
-  request_artifact: ../real_platform_risk_acceptance_request.json
-  request_status: pending_not_approved
-  decision_status: not_approved
-  gate_status: not_submitted
-  gate_consumed: false
-  approval_artifact_created: false
-  unresolved_non_identifiable_risks: 39
-  field_status_summary:
-    blocking_total: 39
-    blocking_status_counts:
-      non_identifiable: 39
-  current_hashes:
-    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
-    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
-    search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-    experiment_quality_md: b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e
-  gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-  human_handoff: present_request_before_creating_human_approval_json
-round10_focused_evidence_refresh:
-  worker: Round10FocusedEvidenceRefresh
-  commits:
-    t20_resource_noreuse: f3bb455245cce28b1f61fd7447e1056e5c9903b2
-    run_suite_selection_filters: cd71b7ed3aa9d222306af23a51fe87efd76eddf9
-    t12_scalar_filler: c1032a2c01949ecb9d651473dec1aa88695bb484
-    real_platform_refresh: 73b99c2e1e95ed7828c5ce76d750a909bc83b5c5
-  generated_evidence:
-    t20_resource_noreuse_experiments: 108
-    t12_scalar_filler_experiments: 54
-    real_gem5_incremental_repeat: 2
-    run_suite_selection:
-      t20_command: python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T20_PAIRWISE_PIPE_CLASSIFICATION --id-regex 'resource-noreuse$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor
-      t12_command: python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T12_CONSUMER_RAW_GAP --id-regex 'fscalar-add$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor
-  current_counts:
-    checked_in_r01_r02_trace_files: 7514
-    stable_repeat_groups: 3757
-    unstable_repeat_groups: 0
-    field_rows_total: 150
-    field_rows_inferred: 112
-    field_rows_non_identifiable: 38
-  resolved_field_row:
-    instruction_id: viota_m
-    lmul: m4
-    field: Latency
-    status: inferred
-    candidate: 4
-  request_artifact: ../real_platform_risk_acceptance_request.json
-  request_status: pending_not_approved
-  decision_status: not_approved
-  gate_status: not_submitted
-  gate_consumed: false
-  approval_artifact_created: false
-  unresolved_non_identifiable_risks: 38
-  field_status_summary:
-    blocking_total: 38
-    blocking_status_counts:
-      non_identifiable: 38
-  current_hashes:
-    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
-    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
-    search_model_real_platform_json: bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623
-    experiment_quality_md: 1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae
-  gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-  human_handoff: present_request_before_creating_human_approval_json
+  - vadd_vv
+  - vsll_vv
+  - vmul_vv
+  - vdivu_vv
+  - vmseq_vv
+  - vcpop_m
+  - viota_m
+  - vslideup_vx
+  - vrgather_vv
+  - vredsum_vs
+current_head_evidence:
+  proc_resource_mirror_canonicalization:
+    commit: 77d181af
+    effect: reduced ProcResource mirror ambiguity by deterministic global pipe-label symmetry breaking
+  t12_matched_controls:
+    commit: 6ff16b7c
+    effect: added matched controls but preserved fail-closed latency rows when controls were not discriminating
+  vcpop_m4_r11_diagnostics:
+    commit: 88c9e6e5
+    effect: falsified the tested boundary model and kept vcpop_m m4 issue/resource rows non-identifiable
+  search_reproduction_fix:
+    commit: 8ec7a8a8
+    effect: documented /tmp search command reproduces checked-in search artifact and does not mutate tracked artifacts
+current_counts:
+  real_platform_traces: 7660
+  stable_repeat_groups: 3815
+  unstable_repeat_groups: 0
+  field_rows_total: 150
+  field_rows_inferred: 141
+  field_rows_non_identifiable: 9
+  field_rows_conflict: 0
+  field_rows_insufficient_evidence: 0
+request_artifact: ../real_platform_risk_acceptance_request.json
+request_status: pending_not_approved
+decision_status: not_approved
+gate_status: not_submitted
+gate_consumed: false
+approval_artifact_created: false
+unresolved_non_identifiable_risks: 9
+field_status_summary:
+  blocking_total: 9
+  blocking_status_counts:
+    non_identifiable: 9
+current_hashes:
+  real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+  real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+  search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+  experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+human_handoff: present_request_before_creating_human_approval_json

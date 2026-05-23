@@ -1,11 +1,8 @@
 # Humanize2 Replay Notes
 
-Status: Round 10 focused-evidence refresh package after commit
-`73b99c2e1e95ed7828c5ce76d750a909bc83b5c5`. This is intentionally not a
-completion claim: Round 5 review accepted commit `773f27d6` for the
-candidate-simulator scope and Round 6 review accepted commit `ea7c0aca` for
-approval-gate behavior, but the real-platform gate still lacks explicit
-machine-readable human approval or stronger evidence for 38 unresolved
+Status: Round 11 current-head capture package after commit `8ec7a8a8`. This
+is intentionally not a completion claim: the real-platform gate still lacks
+explicit machine-readable human approval or stronger evidence for 9 unresolved
 `non_identifiable` rows.
 
 ## Checkout
@@ -76,6 +73,9 @@ Important files for replay:
   capture worker to update Humanize2 state and write this Round 10 summary.
 - `round-10-summary.md`: records the focused evidence refresh and keeps the
   real-platform gate fail-closed.
+- `round-10-review-result.md`: current-head review found stale Humanize2
+  capture and search reproduction drift; commit `8ec7a8a8` fixed the search
+  reproduction path while leaving AC-16 fail-closed.
 
 Do not edit `.humanize/rlcr/**` from worker tasks. This replay records where
 those files are read, not a modification of RLCR state.
@@ -99,28 +99,26 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 10 approval-bound hashes after focused evidence commit
-`73b99c2e`:
+Current Round 11 approval-bound hashes after current-head capture:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `results/common/real_platform_inventory.json` | `728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231` |
-| `results/common/real_platform_field_status.json` | `9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b` |
-| `results/common/search_model_real_platform.json` | `bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623` |
-| `results/common/experiment_quality.md` | `1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae` |
+| `results/common/real_platform_inventory.json` | `197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd` |
+| `results/common/real_platform_field_status.json` | `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432` |
+| `results/common/search_model_real_platform.json` | `2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6` |
+| `results/common/experiment_quality.md` | `d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a` |
 
 Current source-backed counts:
 
-- `find results/r01 results/r02 -name trace.json | wc -l` returns `7514`.
-- `results/common/experiment_quality.md` reports 178/178 required real gem5
-  groups, 3757 stable repeat groups, and 0 unstable repeat groups.
-- `results/common/real_platform_field_status.json` has 150 rows: 112
-  `inferred`, 38 `non_identifiable`, 0 `conflict`, and 0
+- `results/common/experiment_quality.md` reports 7660 real-platform traces,
+  178/178 required real gem5 groups, 3815 stable repeat groups, and 0 unstable
+  repeat groups.
+- `results/common/real_platform_field_status.json` has 150 rows: 141
+  `inferred`, 9 `non_identifiable`, 0 `conflict`, and 0
   `insufficient_evidence`.
 - `results/common/real_platform_field_status.json` now reports
-  `summary.blocking_total = 38` and
-  `summary.blocking_status_counts.non_identifiable = 38`.
-- `viota_m` `m4` `Latency` is inferred with candidate `4`.
+  `summary.blocking_total = 9` and
+  `summary.blocking_status_counts.non_identifiable = 9`.
 - `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
   `Confidence: unresolved_llvm_field_status`, and `Human approval status:
   absent`.
@@ -320,7 +318,7 @@ The Round 9 capture worker is a normalized reconstruction:
 - Tool calls:
   `artifacts/tool_calls/worker-r9-field-status-hash-refresh-normalized.json`
 
-Current approval-bound hashes:
+Round 10 approval-bound hashes, preserved as historical context:
 
 | Artifact | SHA-256 |
 | --- | --- |
@@ -472,10 +470,10 @@ python3 -m pytest -q
 ```
 
 The unit-test and pytest commands passed with 33 tests. Synthetic gate passed.
-The real-platform gate remains expected to return nonzero until a current,
-machine-readable human approval artifact exists, covers the 38 unresolved
-field-status risks, binds the current inventory and field-status hashes, and
-the quality report says `Gate status: PASS`.
+At the Round 10 boundary, the real-platform gate remained expected to return
+nonzero until a machine-readable human approval artifact covered the 38
+unresolved field-status risks and bound the then-current inventory and
+field-status hashes.
 
 ## Replay Commands
 
@@ -645,6 +643,46 @@ real-platform artifacts. The unresolved field-status risk count fell from 39
 to 38 because `viota_m` `m4` `Latency` is now inferred as candidate `4`.
 The active request metadata is `Round10FocusedEvidenceRefresh`; it remains
 pending, not approved, not a gate input, and not gate-consumed.
+
+### Round 11 Current-Head Capture
+
+Post-Round-10 commits changed the real-platform evidence boundary again:
+
+- `77d181af` canonicalized pure global ProcResource mirror assignments.
+- `6ff16b7c` added matched T12 control experiments, but the controls did not
+  justify exact latency claims.
+- `88c9e6e5` added focused `vcpop_m` `m4` R11 diagnostics; the proposed
+  boundary model was falsified, so issue/resource rows remain fail-closed.
+- `8ec7a8a8` fixed real-platform search reproduction: the documented `/tmp`
+  output command now matches the checked-in search artifact byte-for-byte and
+  does not mutate tracked `results/common` files.
+
+Current artifacts report 150 field rows: 141 inferred and 9
+`non_identifiable`, with 0 conflict and 0 insufficient-evidence rows. The
+pending request is now Round 11 / `Round11VcpopM4IssueFieldDiagnostics`; it is
+not approved, not a gate input, not an approval artifact, and not gate-consumed.
+
+Current hashes:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `results/common/real_platform_inventory.json` | `197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd` |
+| `results/common/real_platform_field_status.json` | `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432` |
+| `results/common/search_model_real_platform.json` | `2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6` |
+| `results/common/experiment_quality.md` | `d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a` |
+
+Reproduction commands:
+
+```bash
+python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-current-review-search-fixed.json --format json
+cmp /tmp/profile-inst-latency-current-review-search-fixed.json results/common/search_model_real_platform.json
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+```
+
+The real-platform gate is expected to fail closed until the human explicitly
+approves the current hashes and exact 9-risk scope, or stronger evidence
+resolves those rows.
 
 ## Humanize2 Hub Path
 

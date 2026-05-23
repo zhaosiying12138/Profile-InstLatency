@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 10
-  status: awaiting_human_risk_decision_after_focused_evidence_refresh
+  round: 11
+  status: awaiting_human_risk_decision_after_current_head_capture
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -52,6 +52,9 @@ templates:
   - id: round-10-focused-evidence-capture-worker
     primitive: h2-template
     path: artifacts/prompts/round-10-focused-evidence-capture-worker.md
+  - id: round-11-current-head-capture-worker
+    primitive: h2-template
+    path: artifacts/prompts/round-11-current-head-capture-worker.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -305,6 +308,22 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/worker-r10-capture-normalized.json
+  - id: round-11-current-head-capture-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r11-current-head-capture.md
+  - id: round-11-current-head-capture-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r11-current-head-capture.md
+  - id: round-11-current-head-capture-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r11-current-head-capture.md
+  - id: round-11-current-head-capture-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r11-current-head-capture-normalized.json
   - id: rlcr-round-10-summary
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
@@ -377,6 +396,10 @@ events:
   - type: round10.capture_worker.completed
   - type: round10.capture_worker.verification.captured
   - type: round10.real_gate.fail_closed
+  - type: round11.current_head.commits.captured
+  - type: round11.search_reproducibility.fixed
+  - type: round11.current_head.capture.completed
+  - type: round11.real_gate.fail_closed
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -572,7 +595,56 @@ flow_nodes:
         search_model_real_platform_json: bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623
         experiment_quality_md: 1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae
       next_human_step: present_request_before_creating_human_approval_json
-    status: pending_human_decision_focused_evidence_captured
+    status: superseded_by_round11_current_head_capture
+  - id: round11-current-head-capture-worker
+    primitive: h2-agent
+    worker: Round11CurrentHeadCapture
+    commits:
+      - 77d181af
+      - 6ff16b7c
+      - 88c9e6e5
+      - 8ec7a8a8
+    prompt: artifacts/prompts/round-11-current-head-capture-worker.md
+    owned_write_set:
+      - results/common/agentic_flow/**
+      - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+      - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+    artifacts:
+      request: ../real_platform_risk_acceptance_request.json
+      contract: artifacts/worker_contracts/worker-r11-current-head-capture.md
+      output: artifacts/worker_outputs/worker-r11-current-head-capture.md
+      verification: artifacts/verification/worker-r11-current-head-capture.md
+      tool_call: artifacts/tool_calls/worker-r11-current-head-capture-normalized.json
+    field_status_summary:
+      total: 150
+      inferred: 141
+      non_identifiable: 9
+      conflict: 0
+      insufficient_evidence: 0
+      blocking_total: 9
+    request_boundary:
+      status: pending_not_approved
+      request_status: not_approved
+      decision_status: not_approved
+      gate_status: not_submitted
+      approved: false
+      is_gate_input: false
+      is_approval_artifact: false
+      gate_consumed: false
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 9
+      gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+      expected_fail_closed_reasons:
+        - missing Gate status PASS
+        - missing machine-readable human approval
+        - 9 unresolved non_identifiable risks
+      current_hashes:
+        real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+        real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+        search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+        experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+      next_human_step: present_request_before_creating_human_approval_json
+    status: current_head_capture_refreshed_pending_human_decision
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
@@ -583,15 +655,15 @@ approval_boundary:
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   risk_acceptance_request:
     path: ../real_platform_risk_acceptance_request.json
-    round: 10
-    request_worker: Round10FocusedEvidenceRefresh
+    round: 11
+    request_worker: Round11VcpopM4IssueFieldDiagnostics
     status: pending_not_approved
     gate_consumed: false
     present_to_human_before_human_approval_json: true
   must_bind_to_hashes:
-    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
-    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
-  unresolved_non_identifiable_risks: 38
+    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+  unresolved_non_identifiable_risks: 9
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
