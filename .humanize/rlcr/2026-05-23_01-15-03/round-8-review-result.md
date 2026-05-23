@@ -84,8 +84,8 @@ Requested next tracker update:
 
 ## Reviewer Verification Commands
 
-- `git status --short --branch`: clean before reviewer edits; Round 8 commit `7a2315c7` only changed `round-8-summary.md`.
-- `git show --stat --oneline --name-only HEAD`: confirmed the only Round 8 committed file is `.humanize/rlcr/2026-05-23_01-15-03/round-8-summary.md`.
+- `git status --short --branch`: clean before reviewer edits; Round 8 implementation commit `7a2315c7` only changed `round-8-summary.md`.
+- `git show --stat --oneline --name-only 7a2315c7`: confirmed the only Claude Round 8 committed file is `.humanize/rlcr/2026-05-23_01-15-03/round-8-summary.md`.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no approval artifact found.
 - Risk request versus inventory comparison: 39 request risk IDs, 39 inventory unresolved IDs, same order; request remains pending and not gate-consumed; current request hashes are inventory `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b` and field status `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`.
 - `python3 -m unittest tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval`: passed, 17 tests.
@@ -96,5 +96,6 @@ Requested next tracker update:
 - `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results`: passed.
 - `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results`: failed closed on missing `Gate status: PASS`, missing machine-readable approval, and 39 unresolved `non_identifiable` risks.
 - `git diff --check HEAD~1..HEAD`: passed.
+- `git diff --check`: passed after the reviewer note refresh.
 
 REQUEST CHANGES
