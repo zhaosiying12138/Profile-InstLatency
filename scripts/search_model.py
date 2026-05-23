@@ -107,6 +107,15 @@ class CandidateSearchResult:
     conflict_examples: tuple[dict[str, Any], ...]
 
 
+@dataclass(frozen=True)
+class CandidateCheck:
+    observation: RawObservation
+    status: str
+    reason: str
+    expected_delta: int | None = None
+    observed_delta: int | None = None
+
+
 def parse_scalar(text: str) -> Any:
     text = text.strip()
     if text in ("", "null", "None", "~"):
@@ -632,6 +641,24 @@ def evidence_entry(observation: RawObservation, detail: str) -> str:
     )
 
 
+def unique_observations(items: Iterable[RawObservation]) -> tuple[RawObservation, ...]:
+    seen: set[tuple[str, str, str, str, int]] = set()
+    result: list[RawObservation] = []
+    for item in items:
+        key = (
+            item.trace_path.as_posix(),
+            item.experiment_id,
+            item.effective_template_id,
+            item.marker_pair,
+            item.delta_cycles,
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(item)
+    return tuple(result)
+
+
 def bounded_integer_result(
     field: str,
     candidates: set[int],
@@ -755,6 +782,476 @@ def release_value(release_results: dict[tuple[str, str], dict[str, Any]], instru
     if not result or result.get("status") != "exact_fit":
         return None
     return int_or_none(result.get("value"))
+
+
+def same_resource(left: str, right: str) -> bool:
+    if "any" in (left, right):
+        return True
+    return left == right
+
+
+def issue_occupancy(candidate: TimingCandidate) -> int:
+    return max(candidate.release_at_cycles, candidate.num_micro_ops)
+
+
+def expected_t20_pair_cycles(left: TimingCandidate, right: TimingCandidate) -> int:
+    if same_resource(left.proc_resource, right.proc_resource):
+        return issue_occupancy(left) + issue_occupancy(right)
+    return max(issue_occupancy(left), issue_occupancy(right))
+
+
+def expected_t21_pair_cycles(candidate: TimingCandidate) -> int:
+    vector_issue_cycles = issue_occupancy(candidate)
+    if candidate.single_issue:
+        return vector_issue_cycles + 1
+    return max(vector_issue_cycles, 1)
+
+
+def candidate_to_dict(candidate: TimingCandidate) -> dict[str, Any]:
+    return {
+        "Latency": candidate.latency,
+        "ReleaseAtCycles": candidate.release_at_cycles,
+        "ProcResource": proc_resource_for_label(candidate.proc_resource),
+        "NumMicroOps": candidate.num_micro_ops,
+        "SingleIssue": candidate.single_issue,
+    }
+
+
+def candidate_field_value(candidate: TimingCandidate, field: str) -> Any:
+    if field == "Latency":
+        return candidate.latency
+    if field == "ReleaseAtCycles":
+        return candidate.release_at_cycles
+    if field == "ProcResource":
+        return proc_resource_for_label(candidate.proc_resource)
+    if field == "NumMicroOps":
+        return candidate.num_micro_ops
+    if field == "SingleIssue":
+        return candidate.single_issue
+    raise KeyError(field)
+
+
+def candidate_sort_key(candidate: TimingCandidate) -> tuple[int, int, str, int, int]:
+    return (
+        candidate.latency,
+        candidate.release_at_cycles,
+        candidate.proc_resource,
+        candidate.num_micro_ops,
+        int(candidate.single_issue),
+    )
+
+
+def candidate_cost(candidate: TimingCandidate) -> tuple[int, int, int, int, int]:
+    return (
+        candidate.release_at_cycles + candidate.latency + candidate.num_micro_ops + int(candidate.single_issue),
+        candidate.release_at_cycles,
+        candidate.latency,
+        candidate.num_micro_ops,
+        int(candidate.single_issue),
+    )
+
+
+def direct_interval_candidates(
+    items: list[RawObservation],
+    shape: str,
+    body_keys: tuple[str, ...],
+    max_value: int,
+) -> set[int]:
+    points: list[tuple[int, int]] = []
+    for item in items:
+        if item.effective_template_id != shape:
+            continue
+        iterations = body_int(item, *body_keys)
+        if iterations is None or iterations <= 1:
+            continue
+        intervals = iterations - 1
+        points.append((intervals, item.delta_cycles))
+    if not points:
+        return set(range(max_value + 1))
+    candidates: set[int] = set()
+    for value in range(max_value + 1):
+        offsets = {delta - intervals * value for intervals, delta in points}
+        if len(offsets) == 1:
+            candidates.add(value)
+    return candidates
+
+
+def all_timing_candidates(
+    max_value: int,
+    *,
+    latencies: set[int] | None = None,
+    releases: set[int] | None = None,
+) -> tuple[TimingCandidate, ...]:
+    candidates: list[TimingCandidate] = []
+    latency_values = sorted(latencies if latencies is not None else set(range(max_value + 1)))
+    release_values = sorted(releases if releases is not None else set(range(max_value + 1)))
+    for latency in latency_values:
+        for release in release_values:
+            for proc_resource in PROC_RESOURCE_DOMAIN:
+                for num_micro_ops in range(1, 5):
+                    for single_issue in (False, True):
+                        candidates.append(TimingCandidate(latency, release, proc_resource, num_micro_ops, single_issue))
+    return tuple(candidates)
+
+
+def t20_per_pair_observed(item: RawObservation) -> int | None:
+    iterations = body_int(item, "iterations", "pair_count", "sample_count")
+    if iterations is None or iterations <= 0:
+        return None
+    if item.delta_cycles % iterations != 0:
+        return None
+    return item.delta_cycles // iterations
+
+
+def t21_per_pair_observed(item: RawObservation) -> int | None:
+    iterations = body_int(item, "iterations", "pair_count", "sample_count")
+    if iterations is None or iterations <= 0:
+        return None
+    if item.delta_cycles % iterations != 0:
+        return None
+    return item.delta_cycles // iterations
+
+
+def expected_delta_for_observation(
+    item: RawObservation,
+    candidate: TimingCandidate,
+    candidate_lookup: dict[tuple[str, str], TimingCandidate],
+) -> tuple[int | None, str]:
+    shape = item.effective_template_id
+    if shape == "T10_INDEPENDENT_STREAM_THROUGHPUT":
+        iterations = body_int(item, "iterations", "stream_length", "sample_count")
+        if iterations is None or iterations <= 1:
+            return None, "T10 skipped:missing_iterations"
+        return None, (
+            "T10 constrained collectively by delta=startup+(iterations-1)*ReleaseAtCycles;"
+            f"iterations={iterations}"
+        )
+    if shape == "T11_SELF_RAW_CHAIN":
+        iterations = body_int(item, "iterations", "chain_length", "sample_count")
+        if iterations is None or iterations <= 1:
+            return None, "T11 skipped:missing_iterations"
+        return None, (
+            "T11 constrained collectively by delta=startup+(iterations-1)*Latency;"
+            f"iterations={iterations}"
+        )
+    if shape == "T12_CONSUMER_RAW_GAP":
+        return None, "T12 non_identifiable:current template lacks bypass/read-advance marker contract"
+    if shape == "T20_PAIRWISE_PIPE_CLASSIFICATION":
+        iterations = body_int(item, "iterations", "pair_count", "sample_count")
+        if item.pair_instruction_id is None or iterations is None or iterations <= 0:
+            return None, "T20 skipped:missing_pair_or_iterations"
+        return None, (
+            "T20 non_identifiable:single pair-count marker delta cannot separate startup "
+            f"from pipe overlap;iterations={iterations};other={item.pair_instruction_id}"
+        )
+    if shape == "T21_PAIR_WITH_SCALAR":
+        iterations = body_int(item, "iterations", "pair_count", "sample_count")
+        if iterations is None or iterations <= 0:
+            return None, "T21 skipped:missing_iterations"
+        if item.delta_cycles % iterations != 0:
+            return None, (
+                "T21 non_identifiable:marker delta is not divisible by pair count, "
+                "so scalar-pair issue occupancy cannot be used as a hard constraint"
+            )
+        return iterations * expected_t21_pair_cycles(candidate), (
+            f"T21 expected delta=iterations*scalar_pair_cycles;iterations={iterations}"
+        )
+    return None, f"{shape} recorded:not_used_by_candidate_simulator"
+
+
+def check_candidate(
+    item: RawObservation,
+    candidate: TimingCandidate,
+    candidate_lookup: dict[tuple[str, str], TimingCandidate],
+) -> CandidateCheck:
+    expected, reason = expected_delta_for_observation(item, candidate, candidate_lookup)
+    if expected is None:
+        return CandidateCheck(item, "skipped", reason, None, item.delta_cycles)
+    if expected == item.delta_cycles:
+        return CandidateCheck(item, "match", reason, expected, item.delta_cycles)
+    return CandidateCheck(item, "mismatch", reason, expected, item.delta_cycles)
+
+
+def check_candidate_against_options(
+    item: RawObservation,
+    candidate: TimingCandidate,
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+) -> CandidateCheck:
+    local_lookup = dict(fixed_candidates)
+    local_lookup[(item.instruction_id, item.lmul)] = candidate
+    return check_candidate(item, candidate, local_lookup)
+
+
+def select_minimal_candidates(candidates: Iterable[TimingCandidate]) -> tuple[TimingCandidate, ...]:
+    ordered = sorted(candidates, key=lambda item: (candidate_cost(item), candidate_sort_key(item)))
+    if not ordered:
+        return ()
+    best_cost = candidate_cost(ordered[0])
+    return tuple(candidate for candidate in ordered if candidate_cost(candidate) == best_cost)
+
+
+def candidate_result_for_group(
+    key: tuple[str, str],
+    items: list[RawObservation],
+    all_group_items: dict[tuple[str, str], list[RawObservation]],
+    max_value: int,
+    base_candidates: dict[tuple[str, str], tuple[TimingCandidate, ...]] | None = None,
+) -> CandidateSearchResult:
+    if base_candidates is None:
+        base_candidates = {key: all_timing_candidates(max_value)}
+    candidate_lookup: dict[tuple[str, str], TimingCandidate] = {}
+    viable: list[TimingCandidate] = []
+    evidence: list[RawObservation] = []
+    skipped: list[str] = []
+    conflicts: list[dict[str, Any]] = []
+
+    for candidate in base_candidates.get(key, ()):
+        candidate_lookup[key] = candidate
+        ok = True
+        for item in items:
+            check = check_candidate(item, candidate, candidate_lookup)
+            if check.status == "skipped":
+                skipped.append(evidence_entry(item, check.reason))
+                continue
+            evidence.append(item)
+            if check.status == "mismatch":
+                ok = False
+                if len(conflicts) < 16:
+                    conflicts.append(
+                        {
+                            "experiment_id": item.experiment_id,
+                            "template_id": item.effective_template_id,
+                            "trace": item.trace_path.as_posix(),
+                            "candidate": candidate_to_dict(candidate),
+                            "expected_delta": check.expected_delta,
+                            "observed_delta": check.observed_delta,
+                            "reason": check.reason,
+                        }
+                    )
+                break
+        if ok:
+            viable.append(candidate)
+    return CandidateSearchResult(
+        candidates=select_minimal_candidates(viable),
+        evidence=unique_observations(evidence),
+        skipped=tuple(dict.fromkeys(skipped)),
+        conflict_examples=tuple(conflicts),
+    )
+
+
+def solve_candidate_sets(
+    grouped: dict[tuple[str, str], list[RawObservation]],
+    max_value: int,
+    *,
+    max_passes: int = 8,
+) -> dict[tuple[str, str], CandidateSearchResult]:
+    base: dict[tuple[str, str], tuple[TimingCandidate, ...]] = {
+        key: all_timing_candidates(
+            max_value,
+            latencies=direct_interval_candidates(
+                items,
+                "T11_SELF_RAW_CHAIN",
+                ("iterations", "chain_length", "sample_count"),
+                max_value,
+            ),
+            releases=direct_interval_candidates(
+                items,
+                "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                ("iterations", "stream_length", "sample_count"),
+                max_value,
+            ),
+        )
+        for key, items in grouped.items()
+    }
+    results: dict[tuple[str, str], CandidateSearchResult] = {}
+    for _pass in range(max_passes):
+        changed = False
+        candidate_lookup = {
+            key: candidates[0]
+            for key, candidates in base.items()
+            if len(candidates) == 1
+        }
+        next_base: dict[tuple[str, str], tuple[TimingCandidate, ...]] = {}
+        for key, items in grouped.items():
+            viable: list[TimingCandidate] = []
+            evidence: list[RawObservation] = [
+                item
+                for item in items
+                if item.effective_template_id
+                in {"T10_INDEPENDENT_STREAM_THROUGHPUT", "T11_SELF_RAW_CHAIN"}
+            ]
+            skipped: list[str] = []
+            conflicts: list[dict[str, Any]] = []
+            if not base[key]:
+                constrained_items = [
+                    item
+                    for item in items
+                    if item.effective_template_id
+                    in {
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        "T11_SELF_RAW_CHAIN",
+                        "T20_PAIRWISE_PIPE_CLASSIFICATION",
+                        "T21_PAIR_WITH_SCALAR",
+                    }
+                ]
+                results[key] = CandidateSearchResult(
+                    candidates=(),
+                    evidence=tuple(constrained_items),
+                    skipped=(),
+                    conflict_examples=(
+                        {
+                            "experiment_id": constrained_items[0].experiment_id,
+                            "template_id": constrained_items[0].effective_template_id,
+                            "trace": constrained_items[0].trace_path.as_posix(),
+                            "reason": "Direct interval constraints produced an empty candidate domain.",
+                        },
+                    )
+                    if constrained_items
+                    else (),
+                )
+                next_base[key] = ()
+                continue
+            for candidate in base[key]:
+                ok = True
+                for item in items:
+                    check = check_candidate_against_options(item, candidate, base, candidate_lookup)
+                    if check.status == "skipped":
+                        skipped.append(evidence_entry(item, check.reason))
+                        continue
+                    evidence.append(item)
+                    if check.status == "mismatch":
+                        ok = False
+                        if len(conflicts) < 16:
+                            conflicts.append(
+                                {
+                                    "experiment_id": item.experiment_id,
+                                    "template_id": item.effective_template_id,
+                                    "trace": item.trace_path.as_posix(),
+                                    "candidate": candidate_to_dict(candidate),
+                                    "expected_delta": check.expected_delta,
+                                    "observed_delta": check.observed_delta,
+                                    "reason": check.reason,
+                                }
+                            )
+                        break
+                if ok:
+                    viable.append(candidate)
+            minimal = select_minimal_candidates(viable)
+            next_base[key] = minimal
+            results[key] = CandidateSearchResult(
+                candidates=minimal,
+                evidence=unique_observations(evidence),
+                skipped=tuple(dict.fromkeys(skipped)),
+                conflict_examples=tuple(conflicts),
+            )
+            if set(minimal) != set(base[key]):
+                changed = True
+        base = next_base
+        if not changed:
+            break
+    return results
+
+
+def candidate_field_result(
+    field: str,
+    result: CandidateSearchResult,
+    *,
+    max_value: int,
+    non_identifiable: bool = False,
+) -> dict[str, Any]:
+    evidence = [
+        evidence_entry(item, f"candidate_simulator:{field}")
+        for item in result.evidence
+        if item.effective_template_id != "T12_CONSUMER_RAW_GAP"
+    ]
+    evidence.extend(result.skipped[:16])
+    values = sorted(
+        {candidate_field_value(candidate, field) for candidate in result.candidates},
+        key=lambda item: str(item),
+    )
+    if field in {"Latency", "ReleaseAtCycles"}:
+        candidate_domain: Any = f"0..{max_value}"
+    elif field == "ProcResource":
+        candidate_domain = [proc_resource_for_label(label) for label in PROC_RESOURCE_DOMAIN]
+    elif field == "NumMicroOps":
+        candidate_domain = [1, 2, 3, 4]
+    else:
+        candidate_domain = [False, True]
+
+    record: dict[str, Any] = {
+        "field": field,
+        "candidate_domain": candidate_domain,
+        "evidence": evidence,
+        "constraint_count": len(result.evidence),
+        "candidate_count": len(values),
+        "candidates": values,
+    }
+    if field in {"Latency", "ReleaseAtCycles"}:
+        record["range"] = f"0..{max_value}"
+
+    if non_identifiable:
+        record.update(
+            {
+                "status": "non_identifiable",
+                "value": None,
+                "reason": (
+                    "Current T12 consumer-gap templates are recorded by the shared simulator, "
+                    "but they do not identify bypass/read-advance latency without an explicit "
+                    "bypass-gap model."
+                ),
+            }
+        )
+        return record
+
+    if field == "ProcResource" and len(values) > 1 and result.candidates:
+        record.update(
+            {
+                "status": "non_identifiable",
+                "value": None,
+                "reason": (
+                    "The current real-platform T20 pair template records pipe-interaction timing, "
+                    "but with one pair-count it cannot uniquely identify which RVV pipe resource "
+                    "executes this instruction. Add a T20 sweep with multiple pair counts or a "
+                    "simulator pipe-label trace to distinguish resources."
+                ),
+                "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
+            }
+        )
+        return record
+
+    if not result.evidence:
+        record.update(
+            {
+                "status": "insufficient_evidence",
+                "value": None,
+                "reason": "No usable marker observation constrained this field in the shared candidate simulator.",
+            }
+        )
+    elif not result.candidates:
+        record.update(
+            {
+                "status": "conflict",
+                "value": None,
+                "reason": "No candidate tuple explains all real-platform marker observations in the shared simulator.",
+                "conflict_examples": list(result.conflict_examples),
+            }
+        )
+    elif len(values) == 1:
+        record.update({"status": "exact_fit", "value": values[0]})
+    else:
+        record.update(
+            {
+                "status": "insufficient_evidence",
+                "value": None,
+                "reason": (
+                    "Multiple minimal candidate tuples explain the observations; add a focused "
+                    "experiment that separates issue occupancy, pipe identity, and RAW readiness."
+                ),
+                "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
+            }
+        )
+    return record
 
 
 def pairwise_checks(
@@ -1108,11 +1605,7 @@ def build_report(
     filters: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     grouped = group_observations(observations)
-    latency_results: dict[tuple[str, str], dict[str, Any]] = {}
-    release_results: dict[tuple[str, str], dict[str, Any]] = {}
-    for key, items in grouped.items():
-        latency_results[key] = enumerate_latency(items, max_value)
-        release_results[key] = enumerate_release(items, max_value)
+    candidate_results = solve_candidate_sets(grouped, max_value)
 
     instructions: dict[str, Any] = {}
     instruction_ids = sorted({instruction_id for instruction_id, _lmul in grouped})
@@ -1124,23 +1617,43 @@ def build_report(
         for lmul in lmuls:
             key = (instruction_id, lmul)
             items = grouped[key]
-            proc_resource, t20_checks = enumerate_proc_resource(items, release_results)
-            num_micro_ops, single_issue, t21_checks = enumerate_issue_fields(items, release_results[key])
+            candidate_result = candidate_results[key]
+            latency = candidate_field_result("Latency", candidate_result, max_value=max_value)
+            release = candidate_field_result("ReleaseAtCycles", candidate_result, max_value=max_value)
+            proc_resource = candidate_field_result("ProcResource", candidate_result, max_value=max_value)
+            num_micro_ops = candidate_field_result("NumMicroOps", candidate_result, max_value=max_value)
+            single_issue = candidate_field_result("SingleIssue", candidate_result, max_value=max_value)
             fields = {
-                "Latency": latency_results[key],
-                "ReleaseAtCycles": release_results[key],
+                "Latency": latency,
+                "ReleaseAtCycles": release,
                 "ProcResource": proc_resource,
                 "NumMicroOps": num_micro_ops,
                 "SingleIssue": single_issue,
             }
-            latency_by_lmul[lmul] = latency_results[key]
-            release_by_lmul[lmul] = release_results[key]
+            latency_by_lmul[lmul] = latency
+            release_by_lmul[lmul] = release
             lmul_results[lmul] = {
                 "observation_summary": observation_summary(items),
                 "fields": fields,
+                "candidate_search": {
+                    "candidate_count": len(candidate_result.candidates),
+                    "minimal_candidate_tuples": [
+                        candidate_to_dict(candidate)
+                        for candidate in sorted(candidate_result.candidates, key=candidate_sort_key)[:32]
+                    ],
+                    "conflict_examples": list(candidate_result.conflict_examples),
+                    "skipped": list(candidate_result.skipped[:32]),
+                },
                 "template_checks": {
-                    "T20_PAIRWISE_PIPE_CLASSIFICATION": t20_checks,
-                    "T21_PAIR_WITH_SCALAR": t21_checks,
+                    "shared_candidate_simulator": [
+                        {
+                            "experiment_id": item.experiment_id,
+                            "template_id": item.effective_template_id,
+                            "delta_cycles": item.delta_cycles,
+                            "trace": item.trace_path.as_posix(),
+                        }
+                        for item in candidate_result.evidence
+                    ],
                 },
             }
         instructions[instruction_id] = {
@@ -1164,11 +1677,11 @@ def build_report(
         "global_assumptions": [
             "Only marker deltas from trace entries are used as calibration evidence.",
             "Known marker pairs are t0/t1, before/after, start/end, and begin/end; marker_baseline_cycles is subtracted.",
-            "T10/T30 throughput check: delta_cycles == iterations * ReleaseAtCycles.",
-            "T11/T30 RAW-chain check: delta_cycles == iterations * Latency.",
-            "T12/T30 consumer-gap check: delta_cycles == filler_count + Latency.",
-            "T20 pair checks compare pair cycles with already identified per-instruction ReleaseAtCycles.",
-            "T21 scalar-pair checks assume a one-cycle scalar issue companion; ambiguous NumMicroOps/SingleIssue cases stay insufficient_evidence.",
+            "T10/T30 throughput check: marker deltas across repeated stream lengths fit startup + (N - 1) * ReleaseAtCycles.",
+            "T11/T30 RAW-chain check: marker deltas across repeated chain lengths fit startup + (N - 1) * Latency.",
+            "T12/T30 consumer-gap checks are recorded by the shared simulator but remain non-identifiable without an explicit bypass/read-advance model.",
+            "T20 pair checks are recorded by the shared simulator, but the current single pair-count template cannot separate startup from pipe overlap.",
+            "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
             "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
         ],
         "source_profiles_reference_only": [path.as_posix() for path in profile_paths],

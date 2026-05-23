@@ -5,196 +5,238 @@ instruction_id: "vslideup_vx"
 llvm_facing_fields:
   m1:
     Latency:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 5
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 5
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
-        - "t11-vslideup-vx-m1-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=29:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n6/trace.json"
-        - "t11-vslideup-vx-m1-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n8/trace.json"
-        - "t30-vslideup-vx-t11-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m1-n12/trace.json"
-        - "t30-vslideup-vx-t11-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m1-n2/trace.json"
-        - "t30-vslideup-vx-t11-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
+        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
+        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
+        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
+        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
+        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
+        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
     ReleaseAtCycles:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 5
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 5
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
-        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
-        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
-        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
-        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=8 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
-        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
-        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
+        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
+        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
+        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
+        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
+        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
+        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
     ProcResource:
-      status: "insufficient_evidence"
+      status: "non_identifiable"
       value: null
       candidates:
-        - "unknown"
-      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+        - "YuShuXinAnyVPipe"
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
+      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
       evidence:
-        - "t20-vslideup-vx-vredsum-vs-m1-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m1-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vredsum-vs-m1-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m1-n4:T20 relation=conflict"
+        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
+        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
+        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
+        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
+        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
+        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
+        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
     NumMicroOps:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
         - 1
-        - 2
-        - 3
-        - 4
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
+        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
+        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
+        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
+        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
+        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
+        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
     SingleIssue:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: false
       candidates:
         - false
-        - true
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m1-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
+        - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
+        - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
+        - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
+        - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
+        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
+        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
+        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
   m2:
     Latency:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 7
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 7
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
-        - "t11-vslideup-vx-m2-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=41:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n6/trace.json"
-        - "t11-vslideup-vx-m2-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=55:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n8/trace.json"
-        - "t30-vslideup-vx-t11-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m2-n12/trace.json"
-        - "t30-vslideup-vx-t11-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m2-n2/trace.json"
-        - "t30-vslideup-vx-t11-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
+        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
+        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
+        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
+        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
+        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
+        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
     ReleaseAtCycles:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 7
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 7
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
-        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
-        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
-        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
-        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=8 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=12 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
-        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
-        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
+        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
+        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
+        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
+        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
+        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
+        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
     ProcResource:
-      status: "insufficient_evidence"
+      status: "non_identifiable"
       value: null
       candidates:
-        - "unknown"
-      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+        - "YuShuXinAnyVPipe"
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
+      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
       evidence:
-        - "t20-vslideup-vx-vredsum-vs-m2-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m2-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vredsum-vs-m2-n4:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m2-n4:T20 relation=conflict"
+        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
+        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
+        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
+        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
+        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
+        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
+        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
     NumMicroOps:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
         - 1
-        - 2
-        - 3
-        - 4
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m2-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m2-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
+        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
+        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
+        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
+        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
+        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
+        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
     SingleIssue:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: false
       candidates:
         - false
-        - true
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m2-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m2-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
+        - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
+        - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
+        - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
+        - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
+        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
+        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
+        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
   m4:
     Latency:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 18
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 18
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:T11 expected delta=(iterations-1)*Latency;iterations=6 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:T11 expected delta=(iterations-1)*Latency;iterations=8 @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
-        - "t30-vslideup-vx-t11-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:T11 expected delta=(iterations-1)*Latency;iterations=12 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m4-n12/trace.json"
-        - "t30-vslideup-vx-t11-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:T11 expected delta=(iterations-1)*Latency;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m4-n2/trace.json"
-        - "t30-vslideup-vx-t11-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:T11 expected delta=(iterations-1)*Latency;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t11-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
+        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
+        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
+        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
     ReleaseAtCycles:
-      status: "conflict"
-      value: null
+      status: "inferred"
+      value: 18
       candidates:
-        []
-      reason: "No value in the bounded search range satisfies all raw marker constraints."
+        - 18
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
-        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
-        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
-        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
-        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=6 @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
-        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=2 @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
-        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:T10 expected delta=(iterations-1)*ReleaseAtCycles;iterations=4 @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
+        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
+        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
+        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
     ProcResource:
-      status: "insufficient_evidence"
+      status: "non_identifiable"
       value: null
       candidates:
-        - "unknown"
-      reason: "No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves."
+        - "YuShuXinAnyVPipe"
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
+      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
       evidence:
-        - "t20-vslideup-vx-vredsum-vs-m4-n3:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m4-n3:T20 relation=conflict"
-        - "t20-vslideup-vx-vredsum-vs-m4-n3:T20 relation=conflict"
-        - "t20-vslideup-vx-vrgather-vv-m4-n3:T20 relation=conflict"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
+        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
+        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
+        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
     NumMicroOps:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: 1
       candidates:
         - 1
-        - 2
-        - 3
-        - 4
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
+        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
+        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
+        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
     SingleIssue:
-      status: "insufficient_evidence"
-      value: null
+      status: "inferred"
+      value: false
       candidates:
         - false
-        - true
-      reason: "ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields."
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
-        - "t21-vslideup-vx-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
-        - "t21-vslideup-vx-m4-n4:T21 status=insufficient_evidence:cycles_per_pair=None"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
+        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
+        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
+        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
+        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
 hardware_interpretation:
   issue_width: 2
   issue_order: "in_order"

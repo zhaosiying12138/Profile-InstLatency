@@ -9,7 +9,7 @@ This report is generated from trace inventory. Synthetic calibration traces rema
 
 ## Approval Blockers
 
-- LLVM field-status unresolved risks: 118 (insufficient_evidence=74, conflict=44).
+- LLVM field-status unresolved risks: 5 (conflict=5).
 - Explicit human approval artifact: absent or not approved.
 
 ## Trace Inventory
@@ -3275,139 +3275,26 @@ Failed gate checks:
 
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
-Artifact sha256: `372206d9822fe794ab63cbbebc25fc923938a898dbe060476a8e8993e5e68593`
+Artifact sha256: `5df1890a706eb583879064a4180f6f528cfbc856ac0957ef9340375ee28fc84e`
 Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150
 
 | Field status | Count |
 | --- | ---: |
-| `conflict` | 44 |
-| `inferred` | 32 |
-| `insufficient_evidence` | 74 |
+| `conflict` | 5 |
+| `inferred` | 116 |
+| `non_identifiable` | 29 |
 
 Unresolved field-status risks:
 
 | Risk ID | Instruction | LMUL | Field | Status | Reason |
 | --- | --- | --- | --- | --- | --- |
-| `llvm_field_status:vadd_vv:m1:ProcResource:insufficient_evidence` | `vadd_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vadd_vv:m2:Latency:conflict` | `vadd_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vadd_vv:m2:ReleaseAtCycles:conflict` | `vadd_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vadd_vv:m2:ProcResource:insufficient_evidence` | `vadd_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vadd_vv:m2:NumMicroOps:insufficient_evidence` | `vadd_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vadd_vv:m2:SingleIssue:insufficient_evidence` | `vadd_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vadd_vv:m4:Latency:conflict` | `vadd_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vadd_vv:m4:ReleaseAtCycles:conflict` | `vadd_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vadd_vv:m4:ProcResource:insufficient_evidence` | `vadd_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vadd_vv:m4:NumMicroOps:insufficient_evidence` | `vadd_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vadd_vv:m4:SingleIssue:insufficient_evidence` | `vadd_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vcpop_m:m1:ProcResource:insufficient_evidence` | `vcpop_m` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vcpop_m:m2:ProcResource:insufficient_evidence` | `vcpop_m` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vcpop_m:m4:Latency:conflict` | `vcpop_m` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vcpop_m:m4:ReleaseAtCycles:conflict` | `vcpop_m` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vcpop_m:m4:ProcResource:insufficient_evidence` | `vcpop_m` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vcpop_m:m4:NumMicroOps:insufficient_evidence` | `vcpop_m` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vcpop_m:m4:SingleIssue:insufficient_evidence` | `vcpop_m` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vdivu_vv:m1:ProcResource:insufficient_evidence` | `vdivu_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vdivu_vv:m2:Latency:conflict` | `vdivu_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vdivu_vv:m2:ReleaseAtCycles:conflict` | `vdivu_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vdivu_vv:m2:ProcResource:insufficient_evidence` | `vdivu_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vdivu_vv:m2:NumMicroOps:insufficient_evidence` | `vdivu_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vdivu_vv:m2:SingleIssue:insufficient_evidence` | `vdivu_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vdivu_vv:m4:Latency:conflict` | `vdivu_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vdivu_vv:m4:ReleaseAtCycles:conflict` | `vdivu_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vdivu_vv:m4:ProcResource:insufficient_evidence` | `vdivu_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vdivu_vv:m4:NumMicroOps:insufficient_evidence` | `vdivu_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vdivu_vv:m4:SingleIssue:insufficient_evidence` | `vdivu_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:viota_m:m1:ProcResource:insufficient_evidence` | `viota_m` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:viota_m:m2:Latency:conflict` | `viota_m` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:viota_m:m2:ReleaseAtCycles:conflict` | `viota_m` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:viota_m:m2:ProcResource:insufficient_evidence` | `viota_m` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:viota_m:m2:NumMicroOps:insufficient_evidence` | `viota_m` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:viota_m:m2:SingleIssue:insufficient_evidence` | `viota_m` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:viota_m:m4:Latency:conflict` | `viota_m` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:viota_m:m4:ReleaseAtCycles:conflict` | `viota_m` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:viota_m:m4:ProcResource:insufficient_evidence` | `viota_m` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:viota_m:m4:NumMicroOps:insufficient_evidence` | `viota_m` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:viota_m:m4:SingleIssue:insufficient_evidence` | `viota_m` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m1:Latency:conflict` | `vmseq_vv` | `m1` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m1:ReleaseAtCycles:conflict` | `vmseq_vv` | `m1` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m1:ProcResource:insufficient_evidence` | `vmseq_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmseq_vv:m1:NumMicroOps:insufficient_evidence` | `vmseq_vv` | `m1` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m1:SingleIssue:insufficient_evidence` | `vmseq_vv` | `m1` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m2:Latency:conflict` | `vmseq_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m2:ReleaseAtCycles:conflict` | `vmseq_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m2:ProcResource:insufficient_evidence` | `vmseq_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmseq_vv:m2:NumMicroOps:insufficient_evidence` | `vmseq_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m2:SingleIssue:insufficient_evidence` | `vmseq_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m4:Latency:conflict` | `vmseq_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m4:ReleaseAtCycles:conflict` | `vmseq_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmseq_vv:m4:ProcResource:insufficient_evidence` | `vmseq_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmseq_vv:m4:NumMicroOps:insufficient_evidence` | `vmseq_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmseq_vv:m4:SingleIssue:insufficient_evidence` | `vmseq_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmul_vv:m1:ProcResource:insufficient_evidence` | `vmul_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmul_vv:m2:Latency:conflict` | `vmul_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmul_vv:m2:ReleaseAtCycles:conflict` | `vmul_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmul_vv:m2:ProcResource:insufficient_evidence` | `vmul_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmul_vv:m2:NumMicroOps:insufficient_evidence` | `vmul_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmul_vv:m2:SingleIssue:insufficient_evidence` | `vmul_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmul_vv:m4:Latency:conflict` | `vmul_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmul_vv:m4:ReleaseAtCycles:conflict` | `vmul_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vmul_vv:m4:ProcResource:insufficient_evidence` | `vmul_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vmul_vv:m4:NumMicroOps:insufficient_evidence` | `vmul_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vmul_vv:m4:SingleIssue:insufficient_evidence` | `vmul_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vredsum_vs:m1:ProcResource:insufficient_evidence` | `vredsum_vs` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vredsum_vs:m2:Latency:conflict` | `vredsum_vs` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vredsum_vs:m2:ReleaseAtCycles:conflict` | `vredsum_vs` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vredsum_vs:m2:ProcResource:insufficient_evidence` | `vredsum_vs` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vredsum_vs:m2:NumMicroOps:insufficient_evidence` | `vredsum_vs` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vredsum_vs:m2:SingleIssue:insufficient_evidence` | `vredsum_vs` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vredsum_vs:m4:Latency:conflict` | `vredsum_vs` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vredsum_vs:m4:ReleaseAtCycles:conflict` | `vredsum_vs` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vredsum_vs:m4:ProcResource:insufficient_evidence` | `vredsum_vs` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vredsum_vs:m4:NumMicroOps:insufficient_evidence` | `vredsum_vs` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vredsum_vs:m4:SingleIssue:insufficient_evidence` | `vredsum_vs` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m1:Latency:conflict` | `vrgather_vv` | `m1` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m1:ReleaseAtCycles:conflict` | `vrgather_vv` | `m1` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m1:ProcResource:insufficient_evidence` | `vrgather_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vrgather_vv:m1:NumMicroOps:insufficient_evidence` | `vrgather_vv` | `m1` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m1:SingleIssue:insufficient_evidence` | `vrgather_vv` | `m1` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m2:Latency:conflict` | `vrgather_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m2:ReleaseAtCycles:conflict` | `vrgather_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m2:ProcResource:insufficient_evidence` | `vrgather_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vrgather_vv:m2:NumMicroOps:insufficient_evidence` | `vrgather_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m2:SingleIssue:insufficient_evidence` | `vrgather_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m4:Latency:conflict` | `vrgather_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m4:ReleaseAtCycles:conflict` | `vrgather_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vrgather_vv:m4:ProcResource:insufficient_evidence` | `vrgather_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vrgather_vv:m4:NumMicroOps:insufficient_evidence` | `vrgather_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vrgather_vv:m4:SingleIssue:insufficient_evidence` | `vrgather_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m1:Latency:conflict` | `vslideup_vx` | `m1` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m1:ReleaseAtCycles:conflict` | `vslideup_vx` | `m1` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m1:ProcResource:insufficient_evidence` | `vslideup_vx` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vslideup_vx:m1:NumMicroOps:insufficient_evidence` | `vslideup_vx` | `m1` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m1:SingleIssue:insufficient_evidence` | `vslideup_vx` | `m1` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m2:Latency:conflict` | `vslideup_vx` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m2:ReleaseAtCycles:conflict` | `vslideup_vx` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m2:ProcResource:insufficient_evidence` | `vslideup_vx` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vslideup_vx:m2:NumMicroOps:insufficient_evidence` | `vslideup_vx` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m2:SingleIssue:insufficient_evidence` | `vslideup_vx` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m4:Latency:conflict` | `vslideup_vx` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m4:ReleaseAtCycles:conflict` | `vslideup_vx` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vslideup_vx:m4:ProcResource:insufficient_evidence` | `vslideup_vx` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vslideup_vx:m4:NumMicroOps:insufficient_evidence` | `vslideup_vx` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vslideup_vx:m4:SingleIssue:insufficient_evidence` | `vslideup_vx` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vsll_vv:m1:ProcResource:insufficient_evidence` | `vsll_vv` | `m1` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vsll_vv:m2:Latency:conflict` | `vsll_vv` | `m2` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vsll_vv:m2:ReleaseAtCycles:conflict` | `vsll_vv` | `m2` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vsll_vv:m2:ProcResource:insufficient_evidence` | `vsll_vv` | `m2` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vsll_vv:m2:NumMicroOps:insufficient_evidence` | `vsll_vv` | `m2` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vsll_vv:m2:SingleIssue:insufficient_evidence` | `vsll_vv` | `m2` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vsll_vv:m4:Latency:conflict` | `vsll_vv` | `m4` | `Latency` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vsll_vv:m4:ReleaseAtCycles:conflict` | `vsll_vv` | `m4` | `ReleaseAtCycles` | `conflict` | No value in the bounded search range satisfies all raw marker constraints. |
-| `llvm_field_status:vsll_vv:m4:ProcResource:insufficient_evidence` | `vsll_vv` | `m4` | `ProcResource` | `insufficient_evidence` | No non-synthetic trace entry carries a pipe/proc_resource label. T20 timing checks are recorded, but they do not name a ProcResource by themselves. |
-| `llvm_field_status:vsll_vv:m4:NumMicroOps:insufficient_evidence` | `vsll_vv` | `m4` | `NumMicroOps` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
-| `llvm_field_status:vsll_vv:m4:SingleIssue:insufficient_evidence` | `vsll_vv` | `m4` | `SingleIssue` | `insufficient_evidence` | ReleaseAtCycles is not uniquely identified, so T21 scalar-pair checks cannot distinguish issue fields. |
+| `llvm_field_status:vcpop_m:m4:Latency:conflict` | `vcpop_m` | `m4` | `Latency` | `conflict` | No candidate tuple explains all real-platform marker observations in the shared simulator. |
+| `llvm_field_status:vcpop_m:m4:ReleaseAtCycles:conflict` | `vcpop_m` | `m4` | `ReleaseAtCycles` | `conflict` | No candidate tuple explains all real-platform marker observations in the shared simulator. |
+| `llvm_field_status:vcpop_m:m4:ProcResource:conflict` | `vcpop_m` | `m4` | `ProcResource` | `conflict` | No candidate tuple explains all real-platform marker observations in the shared simulator. |
+| `llvm_field_status:vcpop_m:m4:NumMicroOps:conflict` | `vcpop_m` | `m4` | `NumMicroOps` | `conflict` | No candidate tuple explains all real-platform marker observations in the shared simulator. |
+| `llvm_field_status:vcpop_m:m4:SingleIssue:conflict` | `vcpop_m` | `m4` | `SingleIssue` | `conflict` | No candidate tuple explains all real-platform marker observations in the shared simulator. |
 
 ## Marker Contract
 
