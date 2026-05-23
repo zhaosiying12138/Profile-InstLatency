@@ -9,7 +9,8 @@ llvm_facing_fields:
       value: null
       candidates:
         - 0
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 1
+      reason: "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 1); the shared simulator filters candidate tuples with that bound but does not render a fake exact value."
       evidence:
         - "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json"
         - "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json"
@@ -38,10 +39,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json"
         - "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json"
@@ -87,7 +87,9 @@ llvm_facing_fields:
       value: null
       candidates:
         - 0
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 1
+        - 2
+      reason: "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 2); the shared simulator filters candidate tuples with that bound but does not render a fake exact value."
       evidence:
         - "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json"
         - "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json"
@@ -116,10 +118,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json"
         - "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json"
@@ -164,8 +165,12 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        []
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      reason: "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value."
       evidence:
         - "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json"
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"

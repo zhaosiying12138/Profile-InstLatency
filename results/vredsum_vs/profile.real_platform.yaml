@@ -41,7 +41,7 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json"
         - "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json"
@@ -119,7 +119,7 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json"
         - "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json"
@@ -197,7 +197,7 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json"
         - "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json"

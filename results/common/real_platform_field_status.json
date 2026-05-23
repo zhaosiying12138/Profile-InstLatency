@@ -28908,7 +28908,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -28933,7 +28933,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -28954,13 +28954,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -28975,7 +28974,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m1 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -28985,7 +28984,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -29010,7 +29009,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -29035,7 +29034,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29060,7 +29059,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29081,13 +29080,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29102,7 +29100,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m2 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29112,7 +29110,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29137,7 +29135,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 166,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29162,7 +29160,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29187,7 +29185,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29214,7 +29212,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29229,7 +29227,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m4 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29239,7 +29237,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29264,7 +29262,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
         "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
@@ -29285,11 +29283,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 1,
+      "candidate_count": 2,
       "candidates": [
-        0
+        0,
+        1
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29301,10 +29300,10 @@
         "t30-vcpop-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m1 consumer=scalar_add gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m1 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "vcpop_m",
       "lmul": "m1",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 1); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29314,7 +29313,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29335,13 +29334,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29356,7 +29354,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vcpop_m lmul=m1 pairs=viota_m,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vcpop-m-viota-m-m1-{n2,n3,n4,n6}, t20-vcpop-m-vredsum-vs-m1-{n2,n3,n4,n6}, t20-vcpop-m-vrgather-vv-m1-{n2,n3,n4,n6}, t20-vcpop-m-vslideup-vx-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vcpop_m",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29366,7 +29364,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29391,7 +29389,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29412,11 +29410,13 @@
     },
     {
       "candidate": null,
-      "candidate_count": 1,
+      "candidate_count": 3,
       "candidates": [
-        0
+        0,
+        1,
+        2
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29428,10 +29428,10 @@
         "t30-vcpop-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m2 consumer=scalar_add gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m2 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "vcpop_m",
       "lmul": "m2",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 2); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29441,7 +29441,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29462,13 +29462,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29483,7 +29482,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vcpop_m lmul=m2 pairs=viota_m,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vcpop-m-viota-m-m2-{n2,n3,n4,n6}, t20-vcpop-m-vredsum-vs-m2-{n2,n3,n4,n6}, t20-vcpop-m-vrgather-vv-m2-{n2,n3,n4,n6}, t20-vcpop-m-vslideup-vx-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vcpop_m",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29493,7 +29492,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29518,7 +29517,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 106,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29539,9 +29538,15 @@
     },
     {
       "candidate": null,
-      "candidate_count": 0,
-      "candidates": [],
-      "constraint_count": 84,
+      "candidate_count": 5,
+      "candidates": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "constraint_count": 248,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29553,10 +29558,10 @@
         "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m4 consumer=scalar_add gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "vcpop_m",
       "lmul": "m4",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29564,7 +29569,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 84,
+      "constraint_count": 248,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29587,7 +29592,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 84,
+      "constraint_count": 248,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29610,7 +29615,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 84,
+      "constraint_count": 248,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29633,7 +29638,7 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 84,
+      "constraint_count": 248,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
@@ -29658,7 +29663,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29683,7 +29688,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29704,13 +29709,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29725,7 +29729,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m1 pairs=vcpop_m,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m1-{n2,n3,n4,n6}, t20-vdivu-vv-vredsum-vs-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29735,7 +29739,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29760,7 +29764,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29785,7 +29789,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29810,7 +29814,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29831,13 +29835,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29852,7 +29855,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m2 pairs=vcpop_m,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m2-{n2,n3,n4,n6}, t20-vdivu-vv-vredsum-vs-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29862,7 +29865,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29887,7 +29890,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 142,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29912,7 +29915,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29937,7 +29940,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29964,7 +29967,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -29979,7 +29982,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m4 pairs=vcpop_m,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m4-{n2,n3,n4,n6}, t20-vdivu-vv-vredsum-vs-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29989,7 +29992,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -30014,7 +30017,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
         "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
@@ -30034,12 +30037,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30051,12 +30054,12 @@
         "t30-viota-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=viota_m lmul=m1 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "viota_m",
       "lmul": "m1",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 1,
@@ -30064,7 +30067,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30085,13 +30088,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30106,7 +30108,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m1 pairs=vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vredsum-vs-m1-{n2,n3,n4,n6}, t20-viota-m-vrgather-vv-m1-{n2,n3,n4,n6}, t20-viota-m-vslideup-vx-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30116,7 +30118,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30141,7 +30143,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30161,12 +30163,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30178,12 +30180,12 @@
         "t30-viota-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=viota_m lmul=m2 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "viota_m",
       "lmul": "m2",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 2,
@@ -30191,7 +30193,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30212,13 +30214,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30233,7 +30234,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m2 pairs=vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vredsum-vs-m2-{n2,n3,n4,n6}, t20-viota-m-vrgather-vv-m2-{n2,n3,n4,n6}, t20-viota-m-vslideup-vx-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30243,7 +30244,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30268,7 +30269,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 98,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30289,11 +30290,15 @@
     },
     {
       "candidate": null,
-      "candidate_count": 1,
+      "candidate_count": 5,
       "candidates": [
-        0
+        0,
+        1,
+        2,
+        3,
+        4
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30305,10 +30310,10 @@
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=viota_m lmul=m4 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=viota_m lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "viota_m",
       "lmul": "m4",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30318,7 +30323,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30345,7 +30350,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30360,7 +30365,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m4 pairs=vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vredsum-vs-m4-{n2,n3,n4,n6}, t20-viota-m-vrgather-vv-m4-{n2,n3,n4,n6}, t20-viota-m-vslideup-vx-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30370,7 +30375,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30395,7 +30400,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
         "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
@@ -30415,12 +30420,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30432,12 +30437,12 @@
         "t30-vmseq-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m1-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vmseq_vv lmul=m1 consumer=vcpop_m gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vmseq_vv",
       "lmul": "m1",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 5,
@@ -30445,7 +30450,7 @@
       "candidates": [
         5
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30466,13 +30471,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30487,7 +30491,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m1 pairs=vcpop_m,viota_m,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vmseq-vv-vredsum-vs-m1-{n2,n3,n4,n6}, t20-vmseq-vv-vrgather-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30497,7 +30501,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30522,7 +30526,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30542,12 +30546,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 5,
       "candidate_count": 1,
       "candidates": [
-        0
+        5
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30559,12 +30563,12 @@
         "t30-vmseq-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m2-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vmseq_vv lmul=m2 consumer=vcpop_m gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vmseq_vv",
       "lmul": "m2",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 6,
@@ -30572,7 +30576,7 @@
       "candidates": [
         6
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30593,13 +30597,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30614,7 +30617,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m2 pairs=vcpop_m,viota_m,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vmseq-vv-vredsum-vs-m2-{n2,n3,n4,n6}, t20-vmseq-vv-vrgather-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30624,7 +30627,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30649,7 +30652,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 114,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30669,12 +30672,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 7,
       "candidate_count": 1,
       "candidates": [
-        0
+        7
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30686,12 +30689,12 @@
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:Latency @ results/r02/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vmseq_vv lmul=m4 consumer=vcpop_m gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vmseq_vv",
       "lmul": "m4",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 8,
@@ -30699,7 +30702,7 @@
       "candidates": [
         8
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ReleaseAtCycles @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30726,7 +30729,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30741,7 +30744,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m4 pairs=vcpop_m,viota_m,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vredsum-vs-m4-{n2,n3,n4,n6}, t20-vmseq-vv-vrgather-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30751,7 +30754,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:NumMicroOps @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30776,7 +30779,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
         "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
@@ -30801,7 +30804,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30826,7 +30829,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30847,13 +30850,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30868,7 +30870,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m1 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vmul-vv-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30878,7 +30880,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30903,7 +30905,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30928,7 +30930,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -30953,7 +30955,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -30974,13 +30976,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -30995,7 +30996,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m2 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vmul-vv-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31005,7 +31006,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -31030,7 +31031,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 150,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -31055,7 +31056,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31080,7 +31081,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31107,7 +31108,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31122,7 +31123,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m4 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vmul-vv-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31132,7 +31133,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31157,7 +31158,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
         "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
@@ -31182,7 +31183,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31207,7 +31208,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31234,7 +31235,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31249,7 +31250,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m1 pairs=peer-instruction observed_counts=[] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-peer-instruction-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31259,7 +31260,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31284,7 +31285,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31309,7 +31310,7 @@
       "candidates": [
         5
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31334,7 +31335,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31361,7 +31362,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31376,7 +31377,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m2 pairs=peer-instruction observed_counts=[] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-peer-instruction-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31386,7 +31387,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31411,7 +31412,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 94,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31436,7 +31437,7 @@
       "candidates": [
         7
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31461,7 +31462,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31488,7 +31489,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31503,7 +31504,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m4 pairs=peer-instruction observed_counts=[] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-peer-instruction-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31513,7 +31514,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31538,7 +31539,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
         "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
@@ -31558,12 +31559,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31575,12 +31576,12 @@
         "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vrgather_vv lmul=m1 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vrgather_vv",
       "lmul": "m1",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 2,
@@ -31588,7 +31589,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31609,13 +31610,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31630,7 +31630,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m1 pairs=vredsum_vs observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vredsum-vs-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31640,7 +31640,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31665,7 +31665,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31685,12 +31685,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31702,12 +31702,12 @@
         "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vrgather_vv lmul=m2 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vrgather_vv",
       "lmul": "m2",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 6,
@@ -31715,7 +31715,7 @@
       "candidates": [
         6
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31736,13 +31736,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31757,7 +31756,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m2 pairs=vredsum_vs observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vredsum-vs-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31767,7 +31766,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31792,7 +31791,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 20,
+      "constraint_count": 80,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31813,11 +31812,15 @@
     },
     {
       "candidate": null,
-      "candidate_count": 1,
+      "candidate_count": 5,
       "candidates": [
-        0
+        0,
+        1,
+        2,
+        3,
+        4
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31829,10 +31832,10 @@
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vrgather_vv lmul=m4 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vrgather_vv lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "vrgather_vv",
       "lmul": "m4",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31842,7 +31845,7 @@
       "candidates": [
         20
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31869,7 +31872,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31884,7 +31887,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m4 pairs=vredsum_vs observed_counts=[2,3,4] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vredsum-vs-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31894,7 +31897,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31919,7 +31922,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
         "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
@@ -31939,12 +31942,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -31956,12 +31959,12 @@
         "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vslideup_vx lmul=m1 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vslideup_vx",
       "lmul": "m1",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 5,
@@ -31969,7 +31972,7 @@
       "candidates": [
         5
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -31990,13 +31993,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -32011,7 +32013,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m1 pairs=vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vredsum-vs-m1-{n2,n3,n4,n6}, t20-vslideup-vx-vrgather-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32021,7 +32023,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -32046,7 +32048,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -32066,12 +32068,12 @@
       "status": "inferred"
     },
     {
-      "candidate": null,
+      "candidate": 4,
       "candidate_count": 1,
       "candidates": [
-        0
+        4
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32083,12 +32085,12 @@
         "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vslideup_vx lmul=m2 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": null,
       "instruction_id": "vslideup_vx",
       "lmul": "m2",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
-      "source_status": "non_identifiable",
-      "status": "non_identifiable"
+      "reason": "Unique candidate inferred from real-platform marker observations.",
+      "source_status": "exact_fit",
+      "status": "inferred"
     },
     {
       "candidate": 7,
@@ -32096,7 +32098,7 @@
       "candidates": [
         7
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32117,13 +32119,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32138,7 +32139,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m2 pairs=vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vredsum-vs-m2-{n2,n3,n4,n6}, t20-vslideup-vx-vrgather-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32148,7 +32149,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32173,7 +32174,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 22,
+      "constraint_count": 90,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32194,11 +32195,15 @@
     },
     {
       "candidate": null,
-      "candidate_count": 1,
+      "candidate_count": 5,
       "candidates": [
-        0
+        0,
+        1,
+        2,
+        3,
+        4
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32210,10 +32215,10 @@
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
       ],
       "field": "Latency",
-      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vslideup_vx lmul=m4 consumer=vadd_vv gaps=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]; register_policy=producer destination from metadata with independent vadd_vv fillers; implement bypass/read-advance readiness model before claiming Latency.",
+      "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vslideup_vx lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
       "instruction_id": "vslideup_vx",
       "lmul": "m4",
-      "reason": "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable.",
+      "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32223,7 +32228,7 @@
       "candidates": [
         18
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32250,7 +32255,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32265,7 +32270,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m4 pairs=vredsum_vs,vrgather_vv observed_counts=[2,3,4] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vredsum-vs-m4-{n2,n3,n4,n6}, t20-vslideup-vx-vrgather-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32275,7 +32280,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32300,7 +32305,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 14,
+      "constraint_count": 178,
       "evidence": [
         "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
         "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
@@ -32325,7 +32330,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32350,7 +32355,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32371,13 +32376,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32392,7 +32396,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m1 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vsll-vv-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32402,7 +32406,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32427,7 +32431,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32452,7 +32456,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32477,7 +32481,7 @@
       "candidates": [
         2
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32498,13 +32502,12 @@
     },
     {
       "candidate": null,
-      "candidate_count": 3,
+      "candidate_count": 2,
       "candidates": [
-        "YuShuXinAnyVPipe",
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32519,7 +32522,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m2 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vsll-vv-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32529,7 +32532,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32554,7 +32557,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 42,
+      "constraint_count": 158,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32579,7 +32582,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32604,7 +32607,7 @@
       "candidates": [
         4
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32631,7 +32634,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32646,7 +32649,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m4 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vcpop-m-m4-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m4-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m4-{n2,n3,n4,n6}, t20-vsll-vv-vmseq-vv-m4-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m4",
-      "reason": "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe.",
+      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32656,7 +32659,7 @@
       "candidates": [
         1
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32681,7 +32684,7 @@
       "candidates": [
         false
       ],
-      "constraint_count": 34,
+      "constraint_count": 198,
       "evidence": [
         "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
         "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
@@ -32713,8 +32716,8 @@
       "SingleIssue"
     ],
     "status_counts": {
-      "inferred": 102,
-      "non_identifiable": 48
+      "inferred": 111,
+      "non_identifiable": 39
     },
     "total_rows": 150
   }

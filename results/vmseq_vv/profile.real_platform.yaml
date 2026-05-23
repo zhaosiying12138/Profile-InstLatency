@@ -5,11 +5,11 @@ instruction_id: "vmseq_vv"
 llvm_facing_fields:
   m1:
     Latency:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: 4
       candidates:
-        - 0
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 4
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
         - "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json"
         - "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json"
@@ -38,10 +38,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json"
         - "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json"
@@ -83,11 +82,11 @@ llvm_facing_fields:
         - "t30-vmseq-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m1-n4/trace.json"
   m2:
     Latency:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: 5
       candidates:
-        - 0
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 5
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
         - "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json"
         - "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json"
@@ -116,10 +115,9 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json"
         - "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json"
@@ -161,11 +159,11 @@ llvm_facing_fields:
         - "t30-vmseq-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:SingleIssue @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m2-n4/trace.json"
   m4:
     Latency:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: 7
       candidates:
-        - 0
-      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
+        - 7
+      reason: "Unique candidate inferred from real-platform marker observations."
       evidence:
         - "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json"
         - "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:Latency @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json"
@@ -197,7 +195,7 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
+      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
       evidence:
         - "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json"
         - "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json"
