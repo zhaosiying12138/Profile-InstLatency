@@ -100,60 +100,73 @@ body:
       destination: "v2"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 1
       destination: "v3"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 2
       destination: "v4"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 3
       destination: "v5"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 4
       destination: "v6"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 5
       destination: "v7"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 6
       destination: "v8"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 7
       destination: "v9"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 8
       destination: "v10"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 9
       destination: "v11"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 10
       destination: "v12"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 11
       destination: "v13"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
   register_reuse: false
+  destination_policy: "rotated_vector"
   scaling_shape: "T10_INDEPENDENT_STREAM_THROUGHPUT"

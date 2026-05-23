@@ -74,13 +74,13 @@ _start:
     __rvv_profile_marker_t20_vcpop_m_viota_m_m1_n4_start:
     .Lrvv_profile_marker_t20_vcpop_m_viota_m_m1_n4_start:
     vcpop.m x10, v0
+    viota.m v2, v0
+    vcpop.m x11, v0
     viota.m v3, v0
     vcpop.m x12, v0
+    viota.m v4, v0
+    vcpop.m x13, v0
     viota.m v5, v0
-    vcpop.m x14, v0
-    viota.m v7, v0
-    vcpop.m x16, v0
-    viota.m v9, v0
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vcpop_m_viota_m_m1_n4_end
     __rvv_profile_marker_t20_vcpop_m_viota_m_m1_n4_end:

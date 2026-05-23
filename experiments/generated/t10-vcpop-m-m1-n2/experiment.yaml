@@ -89,9 +89,13 @@ body:
       destination: "x10"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 1
       destination: "x11"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
   register_reuse: false
+  destination_policy: "scalar_rotated"
+  scalar_dest_policy: "rotated"

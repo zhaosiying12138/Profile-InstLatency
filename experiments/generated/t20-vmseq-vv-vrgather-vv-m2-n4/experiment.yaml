@@ -69,11 +69,13 @@ generation:
       - "m2"
       - "--other-instr"
       - "vrgather_vv"
+      - "--iterations"
+      - "4"
       - "--output-root"
       - "experiments/generated"
       - "--experiment-id"
       - "t20-vmseq-vv-vrgather-vv-m2-n4"
-    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmseq_vv --lmul m2 --other-instr vrgather_vv --output-root experiments/generated --experiment-id t20-vmseq-vv-vrgather-vv-m2-n4"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmseq_vv --lmul m2 --other-instr vrgather_vv --iterations 4 --output-root experiments/generated --experiment-id t20-vmseq-vv-vrgather-vv-m2-n4"
 instruction:
   id: "vmseq_vv"
   asm: "vmseq.vv"
@@ -90,45 +92,89 @@ pair_instruction:
   notes: "Vector gather using vector indices; assembler forbids destination/source overlap."
 body:
   iterations: 4
+  pair_count: 4
+  instruction_pair:
+    A: "vmseq_vv"
+    B: "vrgather_vv"
   instances:
     -
       index: 0
       side: "A"
       instruction: "vmseq_vv"
       destination: "v4"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 0
       side: "B"
       instruction: "vrgather_vv"
       destination: "v6"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 1
       side: "A"
       instruction: "vmseq_vv"
       destination: "v8"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 1
       side: "B"
       instruction: "vrgather_vv"
       destination: "v10"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 2
       side: "A"
       instruction: "vmseq_vv"
       destination: "v12"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 2
       side: "B"
       instruction: "vrgather_vv"
       destination: "v14"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 3
       side: "A"
       instruction: "vmseq_vv"
       destination: "v16"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 3
       side: "B"
       instruction: "vrgather_vv"
       destination: "v18"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+  destinations:
+    - "v4"
+    - "v6"
+    - "v8"
+    - "v10"
+    - "v12"
+    - "v14"
+    - "v16"
+    - "v18"
   register_reuse: false
+  destination_allocation:
+    vector_destination_count: 8
+    scalar_destination_count: 0
+    available_vector_output_groups: 14
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

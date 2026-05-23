@@ -52,7 +52,7 @@ _start:
     # Establish a reusable all-true mask input for mask instructions.
     vmseq.vi v0, v0, 1
 
-    # Independent stream: sources are read-only and destinations rotate.
+    # Independent stream: sources are read-only and scalar destinations are rotated.
     # marker start: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t30_vcpop_m_t10_m2_n8_start
     __rvv_profile_marker_t30_vcpop_m_t10_m2_n8_start:

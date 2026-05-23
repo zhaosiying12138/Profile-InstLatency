@@ -50,11 +50,11 @@ _start:
     __rvv_profile_marker_t20_vdivu_vv_vcpop_m_m4_n3_start:
     .Lrvv_profile_marker_t20_vdivu_vv_vcpop_m_m4_n3_start:
     vdivu.vv v8, v0, v4
+    vcpop.m x10, v0
+    vdivu.vv v12, v0, v4
     vcpop.m x11, v0
     vdivu.vv v16, v0, v4
-    vcpop.m x13, v0
-    vdivu.vv v24, v0, v4
-    vcpop.m x15, v0
+    vcpop.m x12, v0
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vdivu_vv_vcpop_m_m4_n3_end
     __rvv_profile_marker_t20_vdivu_vv_vcpop_m_m4_n3_end:

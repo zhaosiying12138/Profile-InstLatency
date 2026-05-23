@@ -98,6 +98,15 @@ scaling:
 body:
   filler_count: 21
   producer_destination: "x10"
+  producer_result_kind: "scalar"
   consumer: "scalar_add"
+  consumer_kind: "scalar_add"
   consumer_destination: "x11"
+  consumer_reads_producer: true
+  raw_path: "scalar_result_to_scalar_add"
+  gap_sweep:
+    parameter: "filler_count"
+    value: 21
+    independent_filler_instruction: "vadd_vv"
+    independent_filler_count: 21
   scaling_shape: "T12_CONSUMER_RAW_GAP"

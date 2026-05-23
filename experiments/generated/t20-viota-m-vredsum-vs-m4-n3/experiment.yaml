@@ -69,11 +69,13 @@ generation:
       - "m4"
       - "--other-instr"
       - "vredsum_vs"
+      - "--iterations"
+      - "3"
       - "--output-root"
       - "experiments/generated"
       - "--experiment-id"
       - "t20-viota-m-vredsum-vs-m4-n3"
-    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr viota_m --lmul m4 --other-instr vredsum_vs --output-root experiments/generated --experiment-id t20-viota-m-vredsum-vs-m4-n3"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr viota_m --lmul m4 --other-instr vredsum_vs --iterations 3 --output-root experiments/generated --experiment-id t20-viota-m-vredsum-vs-m4-n3"
 instruction:
   id: "viota_m"
   asm: "viota.m"
@@ -90,36 +92,71 @@ pair_instruction:
   notes: "Vector reduction into a scalar element held in a vector register."
 body:
   iterations: 3
+  pair_count: 3
+  instruction_pair:
+    A: "viota_m"
+    B: "vredsum_vs"
   instances:
     -
       index: 0
       side: "A"
       instruction: "viota_m"
       destination: "v8"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 0
       side: "B"
       instruction: "vredsum_vs"
       destination: "v12"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 1
       side: "A"
       instruction: "viota_m"
       destination: "v16"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 1
       side: "B"
       instruction: "vredsum_vs"
       destination: "v20"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 2
       side: "A"
       instruction: "viota_m"
       destination: "v24"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 2
       side: "B"
       instruction: "vredsum_vs"
       destination: "v28"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+  destinations:
+    - "v8"
+    - "v12"
+    - "v16"
+    - "v20"
+    - "v24"
+    - "v28"
   register_reuse: false
-  iteration_note: "reduced from 4 because LMUL m4 exposes only six independent output groups"
+  destination_allocation:
+    vector_destination_count: 6
+    scalar_destination_count: 0
+    available_vector_output_groups: 6
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

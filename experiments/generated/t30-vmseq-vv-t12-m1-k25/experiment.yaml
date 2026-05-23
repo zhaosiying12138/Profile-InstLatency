@@ -98,6 +98,15 @@ scaling:
 body:
   filler_count: 25
   producer_destination: "v2"
+  producer_result_kind: "mask"
   consumer: "vcpop_m"
+  consumer_kind: "mask_popcount"
   consumer_destination: "x11"
+  consumer_reads_producer: true
+  raw_path: "mask_result_to_mask_popcount"
+  gap_sweep:
+    parameter: "filler_count"
+    value: 25
+    independent_filler_instruction: "vadd_vv"
+    independent_filler_count: 25
   scaling_shape: "T12_CONSUMER_RAW_GAP"

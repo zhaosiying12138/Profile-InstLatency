@@ -34,6 +34,10 @@ LMUL_FACTORS = {
 BASE_STREAM_ITERATIONS = (2, 4, 6)
 EXTENDED_STREAM_ITERATIONS = (8, 12)
 T12_FILLER_COUNTS = tuple(range(41))
+T20_BASE_PAIR_COUNTS = (2, 3, 4)
+T20_EXTENDED_PAIR_COUNTS = (6,)
+DEFAULT_SCALAR_DEST_POLICY = "rotated"
+SCALAR_DEST_POLICIES = (DEFAULT_SCALAR_DEST_POLICY, "fixed")
 
 
 TEMPLATE_IDS = (
@@ -354,6 +358,49 @@ def scalar_outputs(count: int, start: int = 10) -> list[str]:
     return regs
 
 
+def scalar_output_sequence(count: int, policy: str, start: int = 10) -> tuple[list[str], bool]:
+    if count <= 0:
+        return [], False
+    if policy == "fixed":
+        return [scalar_reg(start)] * count, count > 1
+    if policy == "rotated":
+        regs = scalar_outputs(count, start=start)
+        return regs, len(set(regs)) != len(regs)
+    valid = ", ".join(SCALAR_DEST_POLICIES)
+    raise SystemExit(f"unknown scalar destination policy {policy!r}; valid values: {valid}")
+
+
+def scalar_dest_policy(args: argparse.Namespace) -> str:
+    return getattr(args, "scalar_dest_policy", None) or DEFAULT_SCALAR_DEST_POLICY
+
+
+def vector_destination_slots(specs: Iterable[InstructionSpec]) -> int:
+    return sum(1 for spec in specs if spec.result_kind != "scalar")
+
+
+def supports_t20_extended_pair_count(
+    spec_a: InstructionSpec,
+    spec_b: InstructionSpec,
+    lmul: str,
+    pair_count: int,
+) -> bool:
+    vector_slots = pair_count * vector_destination_slots((spec_a, spec_b))
+    scalar_slots = (pair_count * 2) - vector_slots
+    return vector_slots <= len(output_groups(lmul)) and scalar_slots <= 22
+
+
+def suite_t20_pair_counts(left: str, right: str, lmul: str) -> tuple[int, ...]:
+    spec_a = require_instruction(left)
+    spec_b = require_instruction(right)
+    counts = list(T20_BASE_PAIR_COUNTS)
+    counts.extend(
+        count
+        for count in T20_EXTENDED_PAIR_COUNTS
+        if supports_t20_extended_pair_count(spec_a, spec_b, lmul, count)
+    )
+    return tuple(dict.fromkeys(counts))
+
+
 def emit_instruction(
     spec: InstructionSpec,
     *,
@@ -467,6 +514,9 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
         argv += ["--consumer", args.consumer]
     if args.template == "T30_LMUL_SCALING" and getattr(args, "shape", None):
         argv += ["--shape", args.shape]
+    policy = scalar_dest_policy(args)
+    if policy != DEFAULT_SCALAR_DEST_POLICY:
+        argv += ["--scalar-dest-policy", policy]
     if getattr(args, "iterations", None) is not None:
         argv += ["--iterations", str(args.iterations)]
     if getattr(args, "filler_count", None) is not None:
@@ -561,7 +611,7 @@ def default_iterations(template_id: str, lmul: str, requested: int | None) -> tu
 def supports_stream_iterations(template_id: str, instr: str, lmul: str, iterations: int) -> bool:
     spec = require_instruction(instr)
     if template_id == "T11_SELF_RAW_CHAIN":
-        return True
+        return spec.chainable
     if template_id != "T10_INDEPENDENT_STREAM_THROUGHPUT":
         raise AssertionError(f"unhandled stream template {template_id}")
     if spec.result_kind == "scalar":
@@ -570,7 +620,11 @@ def supports_stream_iterations(template_id: str, instr: str, lmul: str, iteratio
 
 
 def suite_stream_iterations(template_id: str, instr: str, lmul: str) -> tuple[int, ...]:
-    values = list(BASE_STREAM_ITERATIONS)
+    values = [
+        iterations
+        for iterations in BASE_STREAM_ITERATIONS
+        if supports_stream_iterations(template_id, instr, lmul, iterations)
+    ]
     values.extend(
         iterations
         for iterations in EXTENDED_STREAM_ITERATIONS
@@ -591,11 +645,21 @@ def make_experiment_id(args: argparse.Namespace) -> str:
         parts.extend([args.instr, other, args.lmul])
     elif template_id == "T30_LMUL_SCALING":
         parts.extend([args.instr, short_template(args.shape), args.lmul])
+        if (
+            args.shape == "T10_INDEPENDENT_STREAM_THROUGHPUT"
+            and scalar_dest_policy(args) != DEFAULT_SCALAR_DEST_POLICY
+        ):
+            parts.append(f"scalar-{scalar_dest_policy(args)}")
     else:
         if getattr(args, "instr", None):
             parts.append(args.instr)
         if getattr(args, "lmul", None):
             parts.append(args.lmul)
+    if (
+        template_id == "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        and scalar_dest_policy(args) != DEFAULT_SCALAR_DEST_POLICY
+    ):
+        parts.append(f"scalar-{scalar_dest_policy(args)}")
     if template_id in {
         "T10_INDEPENDENT_STREAM_THROUGHPUT",
         "T11_SELF_RAW_CHAIN",
@@ -644,25 +708,49 @@ def body_t10(
     spec: InstructionSpec,
     lmul: str,
     iterations: int,
+    scalar_policy: str = DEFAULT_SCALAR_DEST_POLICY,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
-    vector_dests, reused = output_vectors(
-        lmul,
-        iterations if spec.result_kind != "scalar" else 1,
-        allow_reuse=False,
+    if spec.result_kind == "scalar":
+        vector_dests: list[str] = []
+        vector_reused = False
+        scalar_dests, scalar_reused = scalar_output_sequence(iterations, scalar_policy)
+    else:
+        vector_dests, vector_reused = output_vectors(lmul, iterations, allow_reuse=False)
+        scalar_dests = []
+        scalar_reused = False
+    stream_note = (
+        f"# Independent stream: sources are read-only and scalar destinations are {scalar_policy}."
+        if spec.result_kind == "scalar"
+        else "# Independent stream: sources are read-only and destinations rotate."
     )
-    scalar_dests = scalar_outputs(iterations)
     lines = [
-        "# Independent stream: sources are read-only and destinations rotate.",
+        stream_note,
         "TIMESTAMP_MARK start",
     ]
     instances = []
     for index in range(iterations):
         dest = scalar_dests[index] if spec.result_kind == "scalar" else vector_dests[index]
         lines.append(emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"))
-        instances.append({"index": index, "destination": dest, "source_a": src_a, "source_b": src_b})
+        instances.append(
+            {
+                "index": index,
+                "destination": dest,
+                "source_a": src_a,
+                "source_b": src_b,
+                "destination_reused": scalar_reused if spec.result_kind == "scalar" else vector_reused,
+            }
+        )
     lines.append("TIMESTAMP_MARK end")
-    return ["start", "end"], lines, {"iterations": iterations, "instances": instances, "register_reuse": reused}
+    body_meta: dict[str, Any] = {
+        "iterations": iterations,
+        "instances": instances,
+        "register_reuse": vector_reused or scalar_reused,
+        "destination_policy": "scalar_" + scalar_policy if spec.result_kind == "scalar" else "rotated_vector",
+    }
+    if spec.result_kind == "scalar":
+        body_meta["scalar_dest_policy"] = scalar_policy
+    return ["start", "end"], lines, body_meta
 
 
 def body_t11(
@@ -691,6 +779,9 @@ def body_t11(
         "iterations": iterations,
         "destination": dest,
         "chainable": spec.chainable,
+        "true_raw_chain": spec.chainable,
+        "scalar_raw_chain": spec.result_kind == "scalar" and spec.chainable,
+        "latency_evidence": spec.chainable,
         "dependency_note": "direct self RAW chain" if spec.chainable else "not directly self-chainable; prefer T12",
         "instances": instances,
     }
@@ -715,22 +806,36 @@ def body_t12(
     for index in range(filler_count):
         filler_dest = filler_destinations[index]
         lines.append(f"vadd.vv {filler_dest}, {src_a}, {src_b}  # independent filler {index}")
+    consumer_kind = "scalar_add"
     if consumer == "scalar_add" or spec.result_kind == "scalar":
         lines.append(emit_consumer("scalar", producer_dest, consumer_dest, src_b))
     elif consumer == "vcpop_m" or spec.result_kind == "mask":
+        consumer_kind = "mask_popcount"
         lines.append(emit_consumer("mask", producer_dest, consumer_dest, src_b))
     else:
         consumer_spec = require_instruction(consumer)
+        consumer_kind = consumer_spec.result_kind
         if consumer_spec.result_kind == "scalar":
             lines.append(emit_instruction(consumer_spec, dest=consumer_dest, src_a=producer_dest, src_b=src_b, scalar="x6"))
         else:
             lines.append(emit_consumer("vector", producer_dest, consumer_dest, src_b))
     lines.append("TIMESTAMP_MARK end")
+    raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
     return ["start", "end"], lines, {
         "filler_count": filler_count,
         "producer_destination": producer_dest,
+        "producer_result_kind": spec.result_kind,
         "consumer": consumer,
+        "consumer_kind": consumer_kind,
         "consumer_destination": consumer_dest,
+        "consumer_reads_producer": True,
+        "raw_path": raw_path,
+        "gap_sweep": {
+            "parameter": "filler_count",
+            "value": filler_count,
+            "independent_filler_instruction": "vadd_vv",
+            "independent_filler_count": filler_count,
+        },
     }
 
 
@@ -741,28 +846,64 @@ def body_t20(
     iterations: int,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
-    vector_dests, reused = output_vectors(lmul, iterations * 2, allow_reuse=True)
-    scalar_dests = scalar_outputs(iterations * 2)
+    schedule = [
+        (index, side, spec)
+        for index in range(iterations)
+        for side, spec in (("A", spec_a), ("B", spec_b))
+    ]
+    vector_slots = vector_destination_slots(spec for _, _, spec in schedule)
+    scalar_slots = len(schedule) - vector_slots
+    vector_dests, vector_reused = output_vectors(lmul, vector_slots, allow_reuse=True)
+    scalar_dests, scalar_reused = scalar_output_sequence(scalar_slots, DEFAULT_SCALAR_DEST_POLICY)
+    vector_index = 0
+    scalar_index = 0
     lines = [
         "# Pairwise pipe classification. A and B share read-only sources.",
         "TIMESTAMP_MARK start",
     ]
     instances = []
-    for index in range(iterations):
-        for side, spec in (("A", spec_a), ("B", spec_b)):
-            slot = (index * 2) + (0 if side == "A" else 1)
-            dest = scalar_dests[slot] if spec.result_kind == "scalar" else vector_dests[slot]
-            lines.append(emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"))
-            instances.append(
-                {
-                    "index": index,
-                    "side": side,
-                    "instruction": spec.instr_id,
-                    "destination": dest,
-                }
-            )
+    for index, side, spec in schedule:
+        if spec.result_kind == "scalar":
+            dest = scalar_dests[scalar_index]
+            scalar_index += 1
+        else:
+            dest = vector_dests[vector_index]
+            vector_index += 1
+        lines.append(emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"))
+        instances.append(
+            {
+                "index": index,
+                "side": side,
+                "instruction": spec.instr_id,
+                "destination": dest,
+                "source_a": src_a,
+                "source_b": src_b,
+            }
+        )
     lines.append("TIMESTAMP_MARK end")
-    return ["start", "end"], lines, {"iterations": iterations, "instances": instances, "register_reuse": reused}
+    destinations = [str(instance["destination"]) for instance in instances]
+    for instance in instances:
+        instance["destination_reused"] = destinations.count(str(instance["destination"])) > 1
+    register_reuse = vector_reused or scalar_reused
+    return ["start", "end"], lines, {
+        "iterations": iterations,
+        "pair_count": iterations,
+        "instruction_pair": {
+            "A": spec_a.instr_id,
+            "B": spec_b.instr_id,
+        },
+        "instances": instances,
+        "destinations": destinations,
+        "register_reuse": register_reuse,
+        "destination_allocation": {
+            "vector_destination_count": vector_slots,
+            "scalar_destination_count": scalar_slots,
+            "available_vector_output_groups": len(output_groups(lmul)),
+            "available_scalar_outputs": 22,
+            "vector_register_reuse": vector_reused,
+            "scalar_register_reuse": scalar_reused,
+        },
+    }
 
 
 def body_t21(
@@ -826,7 +967,7 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
         return body_t01(spec, args.lmul)
     if template_id == "T10_INDEPENDENT_STREAM_THROUGHPUT":
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
-        markers, lines, meta = body_t10(spec, args.lmul, iterations)
+        markers, lines, meta = body_t10(spec, args.lmul, iterations, scalar_dest_policy(args))
         if note:
             meta["iteration_note"] = note
         return markers, lines, meta
@@ -857,7 +998,7 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
         shape = args.shape
         if shape == "T10_INDEPENDENT_STREAM_THROUGHPUT":
             iterations, note = default_iterations(shape, args.lmul, args.iterations)
-            markers, lines, meta = body_t10(spec, args.lmul, iterations)
+            markers, lines, meta = body_t10(spec, args.lmul, iterations, scalar_dest_policy(args))
         elif shape == "T11_SELF_RAW_CHAIN":
             iterations, note = default_iterations(shape, args.lmul, args.iterations)
             markers, lines, meta = body_t11(spec, args.lmul, iterations)
@@ -1005,6 +1146,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             other_instr=extra.get("other_instr"),
             consumer=extra.get("consumer"),
             shape=extra.get("shape", "T10_INDEPENDENT_STREAM_THROUGHPUT"),
+            scalar_dest_policy=extra.get("scalar_dest_policy"),
             iterations=extra.get("iterations"),
             filler_count=extra.get("filler_count"),
             output_root=args.output_root,
@@ -1024,7 +1166,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             "lmul": lmul,
             "argv": command_argv(ns, experiment_id),
         }
-        for key in ("other_instr", "consumer", "shape", "iterations", "filler_count"):
+        for key in ("other_instr", "consumer", "shape", "scalar_dest_policy", "iterations", "filler_count"):
             value = getattr(ns, key)
             if value is not None:
                 entry[key] = value
@@ -1037,6 +1179,15 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             add("T01_DECODE_EXEC_KILLCHECK", instr, lmul)
             for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
                 add("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul, iterations=iterations)
+            if instr == "vcpop_m" and lmul == "m4":
+                for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
+                    add(
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        instr,
+                        lmul,
+                        iterations=iterations,
+                        scalar_dest_policy="fixed",
+                    )
             for iterations in suite_stream_iterations("T11_SELF_RAW_CHAIN", instr, lmul):
                 add("T11_SELF_RAW_CHAIN", instr, lmul, iterations=iterations)
             for filler_count in T12_FILLER_COUNTS:
@@ -1060,7 +1211,8 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
     for left_index, left in enumerate(ids):
         for right in ids[left_index + 1 :]:
             for lmul in LMUL_FACTORS:
-                add("T20_PAIRWISE_PIPE_CLASSIFICATION", left, lmul, other_instr=right)
+                for pair_count in suite_t20_pair_counts(left, right, lmul):
+                    add("T20_PAIRWISE_PIPE_CLASSIFICATION", left, lmul, other_instr=right, iterations=pair_count)
     return entries
 
 
@@ -1136,6 +1288,12 @@ def build_parser() -> argparse.ArgumentParser:
     one.add_argument("--other-instr", choices=INSTRUCTION_IDS, help="second instruction for T20")
     one.add_argument("--consumer", help="consumer id for T12/T30; default is result-kind aware")
     one.add_argument("--shape", choices=T30_SHAPES, default="T10_INDEPENDENT_STREAM_THROUGHPUT", help="base shape for T30")
+    one.add_argument(
+        "--scalar-dest-policy",
+        choices=SCALAR_DEST_POLICIES,
+        default=DEFAULT_SCALAR_DEST_POLICY,
+        help="scalar-result destination allocation for T10/T30 throughput diagnostics",
+    )
     one.add_argument("--iterations", type=int, help="instance count for stream/chain/pair templates")
     one.add_argument("--filler-count", type=int, help="independent filler count for T12")
     one.add_argument("--experiment-id", help="override deterministic experiment id")

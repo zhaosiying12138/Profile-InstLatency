@@ -100,20 +100,25 @@ body:
       destination: "v8"
       source_a: "v0"
       source_b: "v4"
+      destination_reused: false
     -
       index: 1
       destination: "v12"
       source_a: "v0"
       source_b: "v4"
+      destination_reused: false
     -
       index: 2
       destination: "v16"
       source_a: "v0"
       source_b: "v4"
+      destination_reused: false
     -
       index: 3
       destination: "v20"
       source_a: "v0"
       source_b: "v4"
+      destination_reused: false
   register_reuse: false
+  destination_policy: "rotated_vector"
   scaling_shape: "T10_INDEPENDENT_STREAM_THROUGHPUT"

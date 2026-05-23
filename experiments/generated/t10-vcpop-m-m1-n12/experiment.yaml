@@ -89,59 +89,73 @@ body:
       destination: "x10"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 1
       destination: "x11"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 2
       destination: "x12"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 3
       destination: "x13"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 4
       destination: "x14"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 5
       destination: "x15"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 6
       destination: "x16"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 7
       destination: "x17"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 8
       destination: "x18"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 9
       destination: "x19"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 10
       destination: "x20"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
     -
       index: 11
       destination: "x21"
       source_a: "v0"
       source_b: "v1"
+      destination_reused: false
   register_reuse: false
+  destination_policy: "scalar_rotated"
+  scalar_dest_policy: "rotated"

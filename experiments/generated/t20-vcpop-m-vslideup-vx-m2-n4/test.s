@@ -58,13 +58,13 @@ _start:
     __rvv_profile_marker_t20_vcpop_m_vslideup_vx_m2_n4_start:
     .Lrvv_profile_marker_t20_vcpop_m_vslideup_vx_m2_n4_start:
     vcpop.m x10, v0
+    vslideup.vx v4, v0, x6
+    vcpop.m x11, v0
     vslideup.vx v6, v0, x6
     vcpop.m x12, v0
+    vslideup.vx v8, v0, x6
+    vcpop.m x13, v0
     vslideup.vx v10, v0, x6
-    vcpop.m x14, v0
-    vslideup.vx v14, v0, x6
-    vcpop.m x16, v0
-    vslideup.vx v18, v0, x6
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vcpop_m_vslideup_vx_m2_n4_end
     __rvv_profile_marker_t20_vcpop_m_vslideup_vx_m2_n4_end:

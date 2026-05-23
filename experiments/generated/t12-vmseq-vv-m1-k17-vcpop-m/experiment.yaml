@@ -86,5 +86,14 @@ instruction:
 body:
   filler_count: 17
   producer_destination: "v2"
+  producer_result_kind: "mask"
   consumer: "vcpop_m"
+  consumer_kind: "mask_popcount"
   consumer_destination: "x11"
+  consumer_reads_producer: true
+  raw_path: "mask_result_to_mask_popcount"
+  gap_sweep:
+    parameter: "filler_count"
+    value: 17
+    independent_filler_instruction: "vadd_vv"
+    independent_filler_count: 17

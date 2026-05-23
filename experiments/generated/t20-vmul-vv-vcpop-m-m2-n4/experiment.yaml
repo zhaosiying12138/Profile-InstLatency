@@ -69,11 +69,13 @@ generation:
       - "m2"
       - "--other-instr"
       - "vcpop_m"
+      - "--iterations"
+      - "4"
       - "--output-root"
       - "experiments/generated"
       - "--experiment-id"
       - "t20-vmul-vv-vcpop-m-m2-n4"
-    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmul_vv --lmul m2 --other-instr vcpop_m --output-root experiments/generated --experiment-id t20-vmul-vv-vcpop-m-m2-n4"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmul_vv --lmul m2 --other-instr vcpop_m --iterations 4 --output-root experiments/generated --experiment-id t20-vmul-vv-vcpop-m-m2-n4"
 instruction:
   id: "vmul_vv"
   asm: "vmul.vv"
@@ -90,45 +92,89 @@ pair_instruction:
   notes: "Mask population count producing a scalar integer result."
 body:
   iterations: 4
+  pair_count: 4
+  instruction_pair:
+    A: "vmul_vv"
+    B: "vcpop_m"
   instances:
     -
       index: 0
       side: "A"
       instruction: "vmul_vv"
       destination: "v4"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 0
       side: "B"
       instruction: "vcpop_m"
-      destination: "x11"
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
       index: 1
+      side: "A"
+      instruction: "vmul_vv"
+      destination: "v6"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+    -
+      index: 1
+      side: "B"
+      instruction: "vcpop_m"
+      destination: "x11"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+    -
+      index: 2
       side: "A"
       instruction: "vmul_vv"
       destination: "v8"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
     -
-      index: 1
+      index: 2
+      side: "B"
+      instruction: "vcpop_m"
+      destination: "x12"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+    -
+      index: 3
+      side: "A"
+      instruction: "vmul_vv"
+      destination: "v10"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+    -
+      index: 3
       side: "B"
       instruction: "vcpop_m"
       destination: "x13"
-    -
-      index: 2
-      side: "A"
-      instruction: "vmul_vv"
-      destination: "v12"
-    -
-      index: 2
-      side: "B"
-      instruction: "vcpop_m"
-      destination: "x15"
-    -
-      index: 3
-      side: "A"
-      instruction: "vmul_vv"
-      destination: "v16"
-    -
-      index: 3
-      side: "B"
-      instruction: "vcpop_m"
-      destination: "x17"
+      source_a: "v0"
+      source_b: "v2"
+      destination_reused: false
+  destinations:
+    - "v4"
+    - "x10"
+    - "v6"
+    - "x11"
+    - "v8"
+    - "x12"
+    - "v10"
+    - "x13"
   register_reuse: false
+  destination_allocation:
+    vector_destination_count: 4
+    scalar_destination_count: 4
+    available_vector_output_groups: 14
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

@@ -69,11 +69,13 @@ generation:
       - "m4"
       - "--other-instr"
       - "vcpop_m"
+      - "--iterations"
+      - "3"
       - "--output-root"
       - "experiments/generated"
       - "--experiment-id"
       - "t20-vmseq-vv-vcpop-m-m4-n3"
-    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmseq_vv --lmul m4 --other-instr vcpop_m --output-root experiments/generated --experiment-id t20-vmseq-vv-vcpop-m-m4-n3"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmseq_vv --lmul m4 --other-instr vcpop_m --iterations 3 --output-root experiments/generated --experiment-id t20-vmseq-vv-vcpop-m-m4-n3"
 instruction:
   id: "vmseq_vv"
   asm: "vmseq.vv"
@@ -90,36 +92,71 @@ pair_instruction:
   notes: "Mask population count producing a scalar integer result."
 body:
   iterations: 3
+  pair_count: 3
+  instruction_pair:
+    A: "vmseq_vv"
+    B: "vcpop_m"
   instances:
     -
       index: 0
       side: "A"
       instruction: "vmseq_vv"
       destination: "v8"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 0
       side: "B"
       instruction: "vcpop_m"
-      destination: "x11"
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 1
+      side: "A"
+      instruction: "vmseq_vv"
+      destination: "v12"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 1
+      side: "B"
+      instruction: "vcpop_m"
+      destination: "x11"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 2
       side: "A"
       instruction: "vmseq_vv"
       destination: "v16"
-    -
-      index: 1
-      side: "B"
-      instruction: "vcpop_m"
-      destination: "x13"
-    -
-      index: 2
-      side: "A"
-      instruction: "vmseq_vv"
-      destination: "v24"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
     -
       index: 2
       side: "B"
       instruction: "vcpop_m"
-      destination: "x15"
+      destination: "x12"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+  destinations:
+    - "v8"
+    - "x10"
+    - "v12"
+    - "x11"
+    - "v16"
+    - "x12"
   register_reuse: false
-  iteration_note: "reduced from 4 because LMUL m4 exposes only six independent output groups"
+  destination_allocation:
+    vector_destination_count: 3
+    scalar_destination_count: 3
+    available_vector_output_groups: 6
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

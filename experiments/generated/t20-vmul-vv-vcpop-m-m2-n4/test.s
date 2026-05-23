@@ -58,13 +58,13 @@ _start:
     __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start:
     .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_start:
     vmul.vv v4, v0, v2
+    vcpop.m x10, v0
+    vmul.vv v6, v0, v2
     vcpop.m x11, v0
     vmul.vv v8, v0, v2
+    vcpop.m x12, v0
+    vmul.vv v10, v0, v2
     vcpop.m x13, v0
-    vmul.vv v12, v0, v2
-    vcpop.m x15, v0
-    vmul.vv v16, v0, v2
-    vcpop.m x17, v0
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end
     __rvv_profile_marker_t20_vmul_vv_vcpop_m_m2_n4_end:

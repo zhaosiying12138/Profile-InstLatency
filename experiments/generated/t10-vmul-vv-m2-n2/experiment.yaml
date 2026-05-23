@@ -89,9 +89,12 @@ body:
       destination: "v4"
       source_a: "v0"
       source_b: "v2"
+      destination_reused: false
     -
       index: 1
       destination: "v6"
       source_a: "v0"
       source_b: "v2"
+      destination_reused: false
   register_reuse: false
+  destination_policy: "rotated_vector"

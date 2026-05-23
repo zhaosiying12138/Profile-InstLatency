@@ -74,13 +74,13 @@ _start:
     __rvv_profile_marker_t20_vcpop_m_vredsum_vs_m1_n4_start:
     .Lrvv_profile_marker_t20_vcpop_m_vredsum_vs_m1_n4_start:
     vcpop.m x10, v0
+    vredsum.vs v2, v0, v1
+    vcpop.m x11, v0
     vredsum.vs v3, v0, v1
     vcpop.m x12, v0
+    vredsum.vs v4, v0, v1
+    vcpop.m x13, v0
     vredsum.vs v5, v0, v1
-    vcpop.m x14, v0
-    vredsum.vs v7, v0, v1
-    vcpop.m x16, v0
-    vredsum.vs v9, v0, v1
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vcpop_m_vredsum_vs_m1_n4_end
     __rvv_profile_marker_t20_vcpop_m_vredsum_vs_m1_n4_end:

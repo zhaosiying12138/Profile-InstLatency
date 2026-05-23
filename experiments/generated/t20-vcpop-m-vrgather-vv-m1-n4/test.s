@@ -74,13 +74,13 @@ _start:
     __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m1_n4_start:
     .Lrvv_profile_marker_t20_vcpop_m_vrgather_vv_m1_n4_start:
     vcpop.m x10, v0
+    vrgather.vv v2, v0, v1
+    vcpop.m x11, v0
     vrgather.vv v3, v0, v1
     vcpop.m x12, v0
+    vrgather.vv v4, v0, v1
+    vcpop.m x13, v0
     vrgather.vv v5, v0, v1
-    vcpop.m x14, v0
-    vrgather.vv v7, v0, v1
-    vcpop.m x16, v0
-    vrgather.vv v9, v0, v1
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m1_n4_end
     __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m1_n4_end:
