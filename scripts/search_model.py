@@ -105,6 +105,7 @@ class CandidateSearchResult:
     evidence: tuple[RawObservation, ...]
     skipped: tuple[str, ...]
     conflict_examples: tuple[dict[str, Any], ...]
+    all_observations: tuple[RawObservation, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -413,6 +414,119 @@ def body_int(observation: RawObservation, *keys: str) -> int | None:
             if result is not None:
                 return result
     return None
+
+
+def body_bool(observation: RawObservation, *keys: str) -> bool | None:
+    for key in keys:
+        for container in (observation.parameters, observation.body):
+            if key in container:
+                return bool_or_false(container.get(key))
+    return None
+
+
+def t11_has_latency_evidence(observation: RawObservation) -> bool:
+    if observation.effective_template_id != "T11_SELF_RAW_CHAIN":
+        return False
+    return any(
+        value is True
+        for value in (
+            body_bool(observation, "latency_evidence"),
+            body_bool(observation, "true_raw_chain"),
+            body_bool(observation, "chainable"),
+        )
+    )
+
+
+def t11_latency_skip_reason(observation: RawObservation) -> str:
+    return (
+        "T11 skipped:not_latency_evidence;"
+        f"body.latency_evidence={body_bool(observation, 'latency_evidence')};"
+        f"body.true_raw_chain={body_bool(observation, 'true_raw_chain')};"
+        f"body.chainable={body_bool(observation, 'chainable')};"
+        "use T12_CONSUMER_RAW_GAP with an implemented bypass/read-advance model"
+    )
+
+
+def experiment_token(instruction_id: str) -> str:
+    return instruction_id.replace("_", "-")
+
+
+def summarize_counts(values: Iterable[int]) -> str:
+    ordered = sorted(dict.fromkeys(values))
+    return "[" + ",".join(str(value) for value in ordered) + "]"
+
+
+def t12_latency_follow_up(items: Iterable[RawObservation], instruction_id: str, lmul: str) -> str:
+    t12_items = [item for item in items if item.effective_template_id == "T12_CONSUMER_RAW_GAP"]
+    consumers = sorted({str(item.body.get("consumer") or item.pair_instruction_id or "unknown") for item in t12_items})
+    gaps = [gap for item in t12_items if (gap := body_int(item, "filler_count")) is not None]
+    consumer_text = ",".join(consumers) if consumers else "result-kind-default-consumer"
+    gap_text = summarize_counts(gaps) if gaps else "k0..k40"
+    return (
+        "Run/interpret template=T12_CONSUMER_RAW_GAP "
+        f"instruction={instruction_id} lmul={lmul} consumer={consumer_text} gaps={gap_text}; "
+        "register_policy=producer destination from metadata with independent vadd_vv fillers; "
+        "implement bypass/read-advance readiness model before claiming Latency."
+    )
+
+
+def t20_startup_slope_groups(items: Iterable[RawObservation]) -> list[dict[str, Any]]:
+    grouped: dict[str, list[RawObservation]] = defaultdict(list)
+    for item in items:
+        if item.effective_template_id != "T20_PAIRWISE_PIPE_CLASSIFICATION" or item.pair_instruction_id is None:
+            continue
+        grouped[item.pair_instruction_id].append(item)
+    groups: list[dict[str, Any]] = []
+    for pair_instruction_id in sorted(grouped):
+        by_count: dict[int, list[int]] = defaultdict(list)
+        register_reuse = False
+        for item in grouped[pair_instruction_id]:
+            count = body_int(item, "iterations", "pair_count", "sample_count")
+            if count is None or count <= 0:
+                continue
+            by_count[count].append(item.delta_cycles)
+            register_reuse = register_reuse or bool_or_false(item.body.get("register_reuse"))
+        counts = sorted(by_count)
+        group: dict[str, Any] = {
+            "pair_instruction_id": pair_instruction_id,
+            "counts": counts,
+            "deltas_by_count": {str(count): sorted(by_count[count]) for count in counts},
+            "register_reuse": register_reuse,
+        }
+        if len(counts) >= 2:
+            left = counts[0]
+            right = counts[-1]
+            delta_left = min(by_count[left])
+            delta_right = min(by_count[right])
+            slope = (delta_right - delta_left) / (right - left)
+            group.update(
+                {
+                    "status": "startup_slope_recorded",
+                    "startup_cycles": delta_left - (left * slope),
+                    "slope_cycles_per_pair": slope,
+                }
+            )
+        else:
+            group["status"] = "single_count_non_identifiable"
+        groups.append(group)
+    return groups
+
+
+def t20_proc_resource_follow_up(items: Iterable[RawObservation], instruction_id: str, lmul: str) -> str:
+    groups = t20_startup_slope_groups(items)
+    pairs = [str(group["pair_instruction_id"]) for group in groups] or ["peer-instruction"]
+    counts = sorted({count for group in groups for count in group.get("counts", [])})
+    examples = ", ".join(
+        f"t20-{experiment_token(instruction_id)}-{experiment_token(pair)}-{lmul}-{{n2,n3,n4,n6}}"
+        for pair in pairs[:4]
+    )
+    return (
+        "Run generated T20 pair-count sweep "
+        f"template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction={instruction_id} lmul={lmul} "
+        f"pairs={','.join(pairs[:8])} observed_counts={summarize_counts(counts) if counts else '[]'} "
+        f"required_counts=n2,n3,n4,n6; experiment_ids={examples}; "
+        "register_policy=prefer register_reuse=false, annotate/exclude reused cases."
+    )
 
 
 def compact_parameters(
@@ -861,6 +975,8 @@ def direct_interval_candidates(
     for item in items:
         if item.effective_template_id != shape:
             continue
+        if shape == "T11_SELF_RAW_CHAIN" and not t11_has_latency_evidence(item):
+            continue
         iterations = body_int(item, *body_keys)
         if iterations is None or iterations <= 1:
             continue
@@ -898,9 +1014,7 @@ def t20_per_pair_observed(item: RawObservation) -> int | None:
     iterations = body_int(item, "iterations", "pair_count", "sample_count")
     if iterations is None or iterations <= 0:
         return None
-    if item.delta_cycles % iterations != 0:
-        return None
-    return item.delta_cycles // iterations
+    return item.delta_cycles
 
 
 def t21_per_pair_observed(item: RawObservation) -> int | None:
@@ -927,6 +1041,8 @@ def expected_delta_for_observation(
             f"iterations={iterations}"
         )
     if shape == "T11_SELF_RAW_CHAIN":
+        if not t11_has_latency_evidence(item):
+            return None, t11_latency_skip_reason(item)
         iterations = body_int(item, "iterations", "chain_length", "sample_count")
         if iterations is None or iterations <= 1:
             return None, "T11 skipped:missing_iterations"
@@ -935,14 +1051,26 @@ def expected_delta_for_observation(
             f"iterations={iterations}"
         )
     if shape == "T12_CONSUMER_RAW_GAP":
-        return None, "T12 non_identifiable:current template lacks bypass/read-advance marker contract"
+        consumer = item.body.get("consumer") or item.pair_instruction_id or "unknown"
+        gap = body_int(item, "filler_count")
+        return None, (
+            "T12 non_identifiable:no implemented bypass/read-advance model;"
+            f"template=T12_CONSUMER_RAW_GAP;instruction={item.instruction_id};"
+            f"lmul={item.lmul};consumer={consumer};gap={gap};"
+            "follow_up=run T12 consumer-gap sweep k=0..40 and implement "
+            "producer-result-to-consumer readiness model"
+        )
     if shape == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         iterations = body_int(item, "iterations", "pair_count", "sample_count")
         if item.pair_instruction_id is None or iterations is None or iterations <= 0:
             return None, "T20 skipped:missing_pair_or_iterations"
         return None, (
-            "T20 non_identifiable:single pair-count marker delta cannot separate startup "
-            f"from pipe overlap;iterations={iterations};other={item.pair_instruction_id}"
+            "T20 startup+slope recorded:current checked-in real traces have one usable "
+            "pair-count per instruction pair/LMUL, so startup cannot be separated from "
+            f"slope;template=T20_PAIRWISE_PIPE_CLASSIFICATION;instruction={item.instruction_id};"
+            f"lmul={item.lmul};pair={item.pair_instruction_id};counts=[{iterations}];"
+            "follow_up=run generated pair-count sweep n2,n3,n4,n6 with register_reuse=false "
+            "when available"
         )
     if shape == "T21_PAIR_WITH_SCALAR":
         iterations = body_int(item, "iterations", "pair_count", "sample_count")
@@ -1037,6 +1165,7 @@ def candidate_result_for_group(
         evidence=unique_observations(evidence),
         skipped=tuple(dict.fromkeys(skipped)),
         conflict_examples=tuple(conflicts),
+        all_observations=tuple(items),
     )
 
 
@@ -1080,6 +1209,7 @@ def solve_candidate_sets(
                 for item in items
                 if item.effective_template_id
                 in {"T10_INDEPENDENT_STREAM_THROUGHPUT", "T11_SELF_RAW_CHAIN"}
+                and (item.effective_template_id != "T11_SELF_RAW_CHAIN" or t11_has_latency_evidence(item))
             ]
             skipped: list[str] = []
             conflicts: list[dict[str, Any]] = []
@@ -1109,6 +1239,7 @@ def solve_candidate_sets(
                     )
                     if constrained_items
                     else (),
+                    all_observations=tuple(items),
                 )
                 next_base[key] = ()
                 continue
@@ -1144,6 +1275,7 @@ def solve_candidate_sets(
                 evidence=unique_observations(evidence),
                 skipped=tuple(dict.fromkeys(skipped)),
                 conflict_examples=tuple(conflicts),
+                all_observations=tuple(items),
             )
             if set(minimal) != set(base[key]):
                 changed = True
@@ -1190,6 +1322,32 @@ def candidate_field_result(
     if field in {"Latency", "ReleaseAtCycles"}:
         record["range"] = f"0..{max_value}"
 
+    if field == "Latency":
+        true_t11 = any(t11_has_latency_evidence(item) for item in result.all_observations)
+        has_t12 = any(item.effective_template_id == "T12_CONSUMER_RAW_GAP" for item in result.all_observations)
+        has_placeholder_t11 = any(
+            item.effective_template_id == "T11_SELF_RAW_CHAIN" and not t11_has_latency_evidence(item)
+            for item in result.all_observations
+        )
+        if not true_t11 and (has_t12 or has_placeholder_t11):
+            first = result.all_observations[0] if result.all_observations else None
+            instruction_id = first.instruction_id if first is not None else "unknown"
+            lmul = first.lmul if first is not None else "unknown"
+            record.update(
+                {
+                    "status": "non_identifiable",
+                    "value": None,
+                    "reason": (
+                        "T11 observations for this row are non-chainable placeholders or absent; "
+                        "T12 consumer-gap observations exist but the shared simulator has no "
+                        "implemented bypass/read-advance model, so Latency is not identifiable."
+                    ),
+                    "follow_up": t12_latency_follow_up(result.all_observations, instruction_id, lmul),
+                    "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
+                }
+            )
+            return record
+
     if non_identifiable:
         record.update(
             {
@@ -1200,21 +1358,26 @@ def candidate_field_result(
                     "but they do not identify bypass/read-advance latency without an explicit "
                     "bypass-gap model."
                 ),
+                "follow_up": "Implement a T12 bypass/read-advance readiness model before claiming Latency.",
             }
         )
         return record
 
     if field == "ProcResource" and len(values) > 1 and result.candidates:
+        first = result.all_observations[0] if result.all_observations else None
+        instruction_id = first.instruction_id if first is not None else "unknown"
+        lmul = first.lmul if first is not None else "unknown"
         record.update(
             {
                 "status": "non_identifiable",
                 "value": None,
                 "reason": (
-                    "The current real-platform T20 pair template records pipe-interaction timing, "
-                    "but with one pair-count it cannot uniquely identify which RVV pipe resource "
-                    "executes this instruction. Add a T20 sweep with multiple pair counts or a "
-                    "simulator pipe-label trace to distinguish resources."
+                    "T20 pair timing is recorded as startup+slope groups. Current checked-in "
+                    "real traces do not provide multiple usable pair counts per pair/LMUL, so "
+                    "ProcResource remains non-identifiable without overclaiming a pipe."
                 ),
+                "follow_up": t20_proc_resource_follow_up(result.all_observations, instruction_id, lmul),
+                "t20_startup_slope_groups": t20_startup_slope_groups(result.all_observations),
                 "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
             }
         )
@@ -1276,14 +1439,9 @@ def pairwise_checks(
             detail["reason"] = "missing pair instruction or iteration count"
             checks.append(detail)
             continue
-        if item.delta_cycles % iterations != 0:
-            detail["status"] = "conflict"
-            detail["reason"] = "delta is not divisible by pair iteration count"
-            checks.append(detail)
-            continue
         subject_release = release_value(release_results, item.instruction_id, item.lmul)
         other_release = release_value(release_results, other, item.lmul)
-        detail["cycles_per_pair"] = item.delta_cycles // iterations
+        detail["cycles_per_pair"] = item.delta_cycles / iterations
         detail["subject_release"] = subject_release
         detail["other_release"] = other_release
         if subject_release is None or other_release is None:
@@ -1291,7 +1449,7 @@ def pairwise_checks(
             detail["reason"] = "release candidates are required before T20 pair timing can be interpreted"
             checks.append(detail)
             continue
-        pair_cycles = int(detail["cycles_per_pair"])
+        pair_cycles = float(detail["cycles_per_pair"])
         if pair_cycles <= max(subject_release, other_release) and pair_cycles < subject_release + other_release:
             relation = "overlap"
         elif pair_cycles >= subject_release + other_release:
@@ -1643,6 +1801,7 @@ def build_report(
                     ],
                     "conflict_examples": list(candidate_result.conflict_examples),
                     "skipped": list(candidate_result.skipped[:32]),
+                    "t20_startup_slope_groups": t20_startup_slope_groups(candidate_result.all_observations),
                 },
                 "template_checks": {
                     "shared_candidate_simulator": [
@@ -1678,9 +1837,9 @@ def build_report(
             "Only marker deltas from trace entries are used as calibration evidence.",
             "Known marker pairs are t0/t1, before/after, start/end, and begin/end; marker_baseline_cycles is subtracted.",
             "T10/T30 throughput check: marker deltas across repeated stream lengths fit startup + (N - 1) * ReleaseAtCycles.",
-            "T11/T30 RAW-chain check: marker deltas across repeated chain lengths fit startup + (N - 1) * Latency.",
+            "T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.",
             "T12/T30 consumer-gap checks are recorded by the shared simulator but remain non-identifiable without an explicit bypass/read-advance model.",
-            "T20 pair checks are recorded by the shared simulator, but the current single pair-count template cannot separate startup from pipe overlap.",
+            "T20 pair checks are interpreted as startup+slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
             "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
             "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
         ],
@@ -1734,6 +1893,17 @@ def field_status_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
                     reason = "No bounded candidate explains all real-platform marker observations for this field."
                 elif not reason and status == "inferred":
                     reason = "Unique candidate inferred from real-platform marker observations."
+                follow_up = item.get("follow_up")
+                if not follow_up and status in {"conflict", "insufficient_evidence", "non_identifiable", "missing", "unknown"}:
+                    if field == "Latency":
+                        follow_up = t12_latency_follow_up((), instruction_id, lmul)
+                    elif field == "ProcResource":
+                        follow_up = t20_proc_resource_follow_up((), instruction_id, lmul)
+                    else:
+                        follow_up = (
+                            f"Add focused template coverage for instruction={instruction_id} "
+                            f"lmul={lmul} field={field}; keep register policy explicit in metadata."
+                        )
                 row = {
                     "instruction_id": instruction_id,
                     "lmul": lmul,
@@ -1745,11 +1915,7 @@ def field_status_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
                     "candidate_count": item.get("candidate_count"),
                     "constraint_count": item.get("constraint_count", 0),
                     "reason": reason,
-                    "follow_up": (
-                        "Add a focused experiment that separates issue occupancy, pipe identity, and RAW readiness."
-                        if status in {"conflict", "insufficient_evidence", "missing", "unknown"}
-                        else None
-                    ),
+                    "follow_up": follow_up,
                     "evidence": first_evidence(item),
                 }
                 rows.append(row)
