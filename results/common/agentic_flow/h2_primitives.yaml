@@ -2,7 +2,7 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 6
+  round: 7
   status: in_progress
 manifest:
   capabilities:
@@ -39,6 +39,9 @@ templates:
   - id: round-5-code-worker-candidate-simulator
     primitive: h2-template
     path: artifacts/prompts/round-5-code-worker-candidate-simulator.md
+  - id: round-6-approval-gate-worker-gibbs
+    primitive: h2-template
+    path: artifacts/prompts/round-6-approval-gate-worker-gibbs.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -204,6 +207,22 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/worker-r5-code-normalized.json
+  - id: round-6-gibbs-approval-gate-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r6-gibbs-approval-gate.md
+  - id: round-6-gibbs-approval-gate-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md
+  - id: round-6-gibbs-approval-gate-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r6-gibbs-approval-gate.md
+  - id: round-6-gibbs-approval-gate-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r6-gibbs-approval-gate-normalized.json
   - id: round-5-capture-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -242,11 +261,18 @@ events:
   - type: real_platform.gate.fail_closed
   - type: approval.artifact.absent
   - type: round5.boundary.recorded
+  - type: round5.other_worker.commit.observed
   - type: round5.code_worker.dispatched
   - type: round5.code_worker.completed
   - type: round5.code_worker.artifacts.regenerated
   - type: round5.code_worker.verification.captured
   - type: round5.review.outcome.captured
+  - type: round6.approval_gate_worker.dispatched
+  - type: round6.approval_gate_worker.completed
+  - type: round6.approval_gate_worker.artifacts.regenerated
+  - type: round6.approval_gate_worker.verification.captured
+  - type: round6.real_gate.fail_closed
+  - type: round6.review.outcome.captured
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -286,6 +312,31 @@ flow_nodes:
     worker: Kepler
     owned_write_set: results/common/agentic_flow/**
     status: superseded_by_round6_code_worker_capture_package
+  - id: round6-approval-gate-worker-gibbs
+    primitive: h2-agent
+    worker: Gibbs
+    commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
+    uses: [analyze, check_calibration_gate]
+    prompt: artifacts/prompts/round-6-approval-gate-worker-gibbs.md
+    owned_write_set:
+      - scripts/analyze.py
+      - scripts/check_calibration_gate.py
+      - tests/test_check_calibration_gate_approval.py
+      - results/common/real_platform_inventory.json
+      - results/common/experiment_quality.md
+    artifacts:
+      contract: artifacts/worker_contracts/worker-r6-gibbs-approval-gate.md
+      output: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md
+      verification: artifacts/verification/worker-r6-gibbs-approval-gate.md
+      tool_call: artifacts/tool_calls/worker-r6-gibbs-approval-gate-normalized.json
+    approval_boundary:
+      fail_closed_without_approval: true
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 39
+      must_bind_to_hashes:
+        real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
+        real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+    status: reviewed_accepted_for_approval_gate_behavior_capture_added
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
@@ -295,8 +346,9 @@ approval_boundary:
   artifact_exists: false
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   must_bind_to_hashes:
-    real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
     real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  unresolved_non_identifiable_risks: 39
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8

@@ -1,5 +1,5 @@
 schema_version: 1
-round: 6
+round: 7
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,13 +12,17 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 6
+  round: 7
   status: in_progress
   owner_scope: results/common/agentic_flow/**
-  task: complete_missing_round5_code_worker_capture_package
+  task: complete_round6_gibbs_approval_gate_capture_package
   code_and_generated_result_fixes_owned_by_round5_worker: true
   round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   round5_code_worker_review_status: accepted_for_candidate_simulator_scope
+  approval_gate_fixes_owned_by_round6_worker: true
+  round6_approval_gate_worker: Gibbs
+  round6_approval_gate_worker_commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
+  round6_approval_gate_review_status: accepted_for_approval_gate_behavior
   forbidden_paths:
     - scripts/search_model.py
     - tests/test_search_model_candidate_sim.py
@@ -32,7 +36,7 @@ phase_status:
   phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round5_code_worker_package_added_by_round6_without_ac16_completion_claim
+  humanize2_capture: round5_code_worker_and_round6_gibbs_packages_added_by_round7_without_ac16_completion_claim
 real_platform_evidence:
   checked_in_r01_r02_trace_files: 7190
   required_real_gem5_groups: 178
@@ -46,10 +50,10 @@ real_platform_evidence:
     conflict: 0
     insufficient_evidence: 0
   artifact_hashes:
-    real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
     real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
     search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-    experiment_quality_md: 6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307
+    experiment_quality_md: b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
@@ -67,12 +71,17 @@ gates:
     expected_failure_reasons:
       - quality report lacks exact Gate status: PASS
       - machine-readable human approval file under results/common is absent
+      - 39 non-identifiable real-platform LLVM field-status risks remain unresolved
 approval_boundary:
   explicit_human_approval_required: true
   approval_artifact_exists: false
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
+  must_bind_to_hashes:
+    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
+    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  accepted_risk_scope_required: true
+  unresolved_non_identifiable_risks: 39
 remaining_blockers:
   - 39 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
-  - Approval validation still needs hardening before AC-16 can accept the 39 non-identifiable rows.
   - AC-16 remains blocked by missing explicit human approval.

@@ -45,7 +45,7 @@ git diff --check
 - All primitive manifest paths in `templates`, `boards`, and `artifacts` exist.
 - The exact stale-claim grep returned no matches.
 - Trace-count check returned `7190`.
-- Current Round 5 boundary hashes:
+- Historical Round 5 boundary hashes:
   - `results/common/real_platform_inventory.json`: `d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d`
   - `results/common/real_platform_field_status.json`: `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`
   - `results/common/search_model_real_platform.json`: `d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73`

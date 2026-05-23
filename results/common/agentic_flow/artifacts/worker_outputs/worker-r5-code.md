@@ -43,10 +43,11 @@ Round 5 review accepted the candidate-simulator code fixes:
 
 Round 5 review did not mark the full workflow complete. AC-12 and AC-13 were
 partial before this capture package because the code worker's Humanize2
-artifacts were missing. AC-16 remains blocked by approval validation and absent
-machine-readable human approval.
+artifacts were missing. AC-16 remained blocked by absent machine-readable human
+approval and by unresolved `non_identifiable` risk handling that was later
+hardened in Round 6.
 
-## Current Artifact Hashes After Commit 773f27d6
+## Historical Round 5 Artifact Hashes After Commit 773f27d6
 
 - `results/common/real_platform_inventory.json`:
   `d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d`
@@ -64,7 +65,8 @@ machine-readable human approval.
   machine-readable approval artifact exists.
 - The 39 `non_identifiable` rows still require stronger evidence/modeling or
   explicit human risk acceptance tied to current artifact hashes.
-- Approval-gate hardening is outside this capture worker's owned tree.
+- Round 6 approval-gate hardening is recorded separately in the Gibbs capture
+  package.
 
 ## BitLesson Delta
 

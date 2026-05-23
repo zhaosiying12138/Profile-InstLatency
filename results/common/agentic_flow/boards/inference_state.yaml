@@ -1,5 +1,5 @@
 schema_version: 1
-status: real_platform_artifacts_round5_code_worker_capture_added_gate_not_ready
+status: real_platform_artifacts_round6_gibbs_capture_added_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -30,10 +30,10 @@ current_counts:
   field_rows_conflict: 0
   field_rows_insufficient_evidence: 0
 artifact_hashes:
-  real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+  real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
   real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
   search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-  experiment_quality_md: 6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307
+  experiment_quality_md: b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6
 round4_review_hashes:
   real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
   real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
@@ -54,10 +54,15 @@ calibration_gates:
     report: results/common/experiment_quality.md
     pass_condition: coverage_stability_confidence_assumptions_conflict_resolution_and_human_approval
     command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-    current_status: fail_closed_awaiting_human_approval
+    current_status: fail_closed_missing_pass_missing_approval_39_unresolved_non_identifiable
 approval:
   artifact_exists: false
   search_command: find results/common -maxdepth 1 -iname '*approval*' -print
+  must_bind_to_hashes:
+    real_platform_inventory_json: 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b
+    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  accepted_risk_scope_required: true
+  unresolved_non_identifiable_risks: 39
 llvm_worktree_helper:
   script: scripts/prepare_llvm_yushuxin_worktree.py
   default: tag_verified_worktree

@@ -58,3 +58,12 @@ round5_code_worker_commit:
   t12_short_sweep_guard_targeted: true
   review_status: accepted_for_candidate_simulator_scope
   capture_package: artifacts/worker_outputs/worker-r5-code.md
+round6_approval_gate_worker_commit:
+  worker: Gibbs
+  commit: ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac
+  non_identifiable_rows_are_blocking_risks: true
+  approval_requires_inventory_hash: true
+  approval_requires_field_status_hash: true
+  approval_requires_accepted_risk_scope: true
+  review_status: accepted_for_approval_gate_behavior
+  capture_package: artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md

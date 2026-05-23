@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.5.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.6.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1"></h2-capability>
@@ -21,6 +21,9 @@
   </h2-template>
   <h2-template id="round-5-code-worker-candidate-simulator" type="prompt" href="../artifacts/prompts/round-5-code-worker-candidate-simulator.md">
     Normalized reconstruction of Worker Anscombe's Round 5 candidate-simulator scope for peer-side T20 constraints, short T12 exactness, artifact regeneration, and fail-closed approval handling.
+  </h2-template>
+  <h2-template id="round-6-approval-gate-worker-gibbs" type="prompt" href="../artifacts/prompts/round-6-approval-gate-worker-gibbs.md">
+    Normalized reconstruction of Worker Gibbs' Round 6 approval-gate scope for current hash binding, accepted risk scope, artifact regeneration, gate checks, hash checks, and no-approval search.
   </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
@@ -71,11 +74,21 @@
       <h2-expect artifact="round-5-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
       <h2-expect artifact="round-5-capture-verification" schema="rvv.verification.v1"></h2-expect>
     </h2-agent>
+    <h2-agent id="round6-approval-gate-worker-gibbs" role="worker" tool="codex" prompt="#round-6-approval-gate-worker-gibbs" short-name="approval-gate" timeout="unknown">
+      <h2-current-status>reviewed-accepted-for-approval-gate-behavior-capture-added</h2-current-status>
+      <h2-commit>ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac</h2-commit>
+      <h2-owned-write-set>scripts/analyze.py,scripts/check_calibration_gate.py,tests/test_check_calibration_gate_approval.py,results/common/real_platform_inventory.json,results/common/experiment_quality.md</h2-owned-write-set>
+      <h2-expect artifact="round-6-gibbs-approval-gate-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-6-gibbs-approval-gate-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-6-gibbs-approval-gate-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-6-gibbs-approval-gate-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-approval-boundary status="fail-closed" inventory-sha256="4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b" field-status-sha256="904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179" unresolved-non-identifiable-risks="39"></h2-approval-boundary>
+    </h2-agent>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
-      <h2-current-status>fail-closed: Gate status PASS and machine-readable approval artifact are absent</h2-current-status>
+      <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 39 unresolved risks are absent</h2-current-status>
     </h2-check>
-    <h2-human id="real-platform-approval" prompt="Approve or reject explicit real-platform risk acceptance tied to real_platform_inventory.json and real_platform_field_status.json hashes before treating AC-16 as satisfied.">
+    <h2-human id="real-platform-approval" prompt="Approve or reject explicit real-platform risk acceptance tied to inventory hash 4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b, field-status hash 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179, and the 39 unresolved risk IDs before treating AC-16 as satisfied.">
       <h2-current-status>absent</h2-current-status>
       <h2-required-artifact>results/common/human_approval.json</h2-required-artifact>
     </h2-human>

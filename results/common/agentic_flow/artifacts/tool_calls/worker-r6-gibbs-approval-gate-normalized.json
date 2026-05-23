@@ -1,0 +1,155 @@
+{
+  "id": "tool-worker-r6-gibbs-approval-gate-normalized",
+  "round": 6,
+  "worker": "Gibbs",
+  "primitive": "h2-agent",
+  "tool_surface": "shell",
+  "capture_type": "normalized_reconstruction",
+  "source_commit": "ea7c0acaa5d144ffd8aa5bb0ac3f8f17b8b156ac",
+  "sources": [
+    ".humanize/rlcr/2026-05-23_01-15-03/round-6-summary.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-6-review-result.md",
+    "git show --format=fuller --name-only ea7c0aca"
+  ],
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "state_changes": [
+    {
+      "kind": "code_edit",
+      "summary": "Treat non_identifiable real-platform field-status rows as blocking unresolved risks in the analyzer inventory.",
+      "paths": [
+        "scripts/analyze.py"
+      ]
+    },
+    {
+      "kind": "code_edit",
+      "summary": "Require human approval to bind current inventory and field-status hashes and accepted unresolved risk scope before the real-platform gate can pass.",
+      "paths": [
+        "scripts/check_calibration_gate.py"
+      ]
+    },
+    {
+      "kind": "test_edit",
+      "summary": "Add focused approval-gate regression tests for missing hashes, stale hashes, missing risk scope, and valid all-risk acceptance.",
+      "paths": [
+        "tests/test_check_calibration_gate_approval.py"
+      ]
+    },
+    {
+      "kind": "artifact_regeneration",
+      "summary": "Regenerate inventory and quality artifacts so the 39 non_identifiable rows remain NOT_READY without approval.",
+      "paths": [
+        "results/common/real_platform_inventory.json",
+        "results/common/experiment_quality.md"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "worker-r6-gibbs-unit-tests",
+      "category": "tests",
+      "command": "python3 -m unittest tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval",
+      "exit_code": 0,
+      "reported_result": "passed, 17 tests"
+    },
+    {
+      "id": "worker-r6-gibbs-pytest",
+      "category": "tests",
+      "command": "python3 -m pytest -q",
+      "exit_code": 0,
+      "reported_result": "passed, 17 tests in Round 6 runs"
+    },
+    {
+      "id": "worker-r6-gibbs-pycompile",
+      "category": "verification",
+      "command": "python3 -m py_compile scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/gen_asm.py scripts/run_experiment.py scripts/run_suite.py",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r6-gibbs-real-search-temp",
+      "category": "artifact_regeneration",
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r6-approval-search.json --format json",
+      "exit_code": 0,
+      "outputs": [
+        "/tmp/profile-inst-latency-r6-approval-search.json"
+      ],
+      "reported_result": "completed"
+    },
+    {
+      "id": "worker-r6-gibbs-inventory-json-parse",
+      "category": "json",
+      "command": "python3 -m json.tool results/common/real_platform_inventory.json >/dev/null",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r6-gibbs-temp-search-json-parse",
+      "category": "json",
+      "command": "python3 -m json.tool /tmp/profile-inst-latency-r6-approval-search.json >/dev/null",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r6-gibbs-synthetic-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r6-gibbs-real-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "exit_code": 1,
+      "expected_failure": true,
+      "reported_result": "failed closed because Gate status PASS, machine-readable approval, and accepted scope for 39 non_identifiable risks are absent",
+      "expected_failure_reasons": [
+        "quality report must contain exact line `Gate status: PASS`",
+        "missing machine-readable human approval file under results/common",
+        "unresolved real-platform LLVM field-status risks=39 status_counts={\"non_identifiable\": 39}"
+      ]
+    },
+    {
+      "id": "worker-r6-gibbs-approval-search",
+      "category": "approval_boundary",
+      "command": "find results/common -maxdepth 1 -iname '*approval*' -print",
+      "exit_code": 0,
+      "reported_result": "empty"
+    },
+    {
+      "id": "worker-r6-gibbs-hashes",
+      "category": "hash",
+      "command": "sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md",
+      "exit_code": 0,
+      "reported_hashes": {
+        "results/common/real_platform_inventory.json": "4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b",
+        "results/common/real_platform_field_status.json": "904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179",
+        "results/common/search_model_real_platform.json": "d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73",
+        "results/common/experiment_quality.md": "b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6"
+      }
+    },
+    {
+      "id": "worker-r6-gibbs-review-regeneration-cmp",
+      "category": "review_verification",
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r6-review-search.json --format json && cmp /tmp/profile-inst-latency-r6-review-search.json results/common/search_model_real_platform.json",
+      "exit_code": 0,
+      "reported_result": "review reproduced byte-for-byte regenerated search JSON"
+    },
+    {
+      "id": "worker-r6-gibbs-diff-check",
+      "category": "whitespace",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "reported_result": "passed"
+    }
+  ],
+  "outputs": [
+    "results/common/agentic_flow/artifacts/prompts/round-6-approval-gate-worker-gibbs.md",
+    "results/common/agentic_flow/artifacts/worker_contracts/worker-r6-gibbs-approval-gate.md",
+    "results/common/agentic_flow/artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md",
+    "results/common/agentic_flow/artifacts/verification/worker-r6-gibbs-approval-gate.md",
+    "results/common/agentic_flow/artifacts/tool_calls/worker-r6-gibbs-approval-gate-normalized.json"
+  ],
+  "approval_artifact_created": false,
+  "status": "captured_after_round6_review"
+}

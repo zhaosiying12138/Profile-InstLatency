@@ -1,10 +1,12 @@
 # Humanize2 Replay Notes
 
-Status: Round 6 capture package for the Round 5 candidate-simulator code
-worker, preserving the Rounds 2-4 lineage and Round 5 review outcome. This is
+Status: Round 7 capture package for the Round 6 approval-gate worker,
+preserving the Rounds 2-5 lineage and Round 6 review outcome. This is
 intentionally not a completion claim: Round 5 review accepted commit
-`773f27d6` for the candidate-simulator scope, but the real-platform gate still
-lacks explicit machine-readable human approval.
+`773f27d6` for the candidate-simulator scope and Round 6 review accepted
+commit `ea7c0aca` for approval-gate behavior, but the real-platform gate still
+lacks explicit machine-readable human approval or stronger evidence for 39
+unresolved `non_identifiable` rows.
 
 ## Checkout
 
@@ -55,7 +57,13 @@ Important files for replay:
   `773f27d6` and capture Worker Kepler at commit `cfd9a788`.
 - `round-5-review-result.md`: accepts the candidate-simulator fixes from
   `773f27d6`, finds the Round 5 code-worker capture package missing, and keeps
-  AC-16 blocked by absent explicit approval plus approval-validation risk.
+  AC-16 blocked by absent explicit approval and unresolved risk handling.
+- `round-6-summary.md`: records Round 5 code-worker capture backfill at commit
+  `7a76e62f` and approval-gate Worker Gibbs at commit `ea7c0aca`.
+- `round-6-review-result.md`: accepts the Round 6 approval-gate behavior,
+  finds the Gibbs capture package missing, updates the current hashes, and
+  keeps AC-16 blocked by absent explicit approval plus 39 unresolved
+  `non_identifiable` risks.
 
 Do not edit `.humanize/rlcr/**` from worker tasks. This replay records where
 those files are read, not a modification of RLCR state.
@@ -79,14 +87,14 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 5 boundary hashes at `main` commit `773f27d6`:
+Current Round 6 boundary hashes after approval-gate commit `ea7c0aca`:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `results/common/real_platform_inventory.json` | `d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d` |
+| `results/common/real_platform_inventory.json` | `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b` |
 | `results/common/real_platform_field_status.json` | `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179` |
 | `results/common/search_model_real_platform.json` | `d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73` |
-| `results/common/experiment_quality.md` | `6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307` |
+| `results/common/experiment_quality.md` | `b6b6b1dde2095c59b43b702cfc53ec075b45982a2ff6ea0ee9fba12ab30bb5f6` |
 
 Current source-backed counts:
 
@@ -97,7 +105,8 @@ Current source-backed counts:
   `inferred`, 39 `non_identifiable`, 0 `conflict`, and 0
   `insufficient_evidence`.
 - `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
-  `Confidence: awaiting_human_approval`, and `Human approval status: absent`.
+  `Confidence: unresolved_llvm_field_status`, and `Human approval status:
+  absent`.
 - `find results/common -maxdepth 1 -iname '*approval*' -print` is empty.
 
 ## Round 5 Code Worker Capture Package
@@ -159,8 +168,57 @@ git diff --check
 ```
 
 The real-platform gate command is expected to return nonzero until a current,
-machine-readable human approval artifact exists and the quality report says
-`Gate status: PASS`.
+machine-readable human approval artifact exists, covers the 39 unresolved
+field-status risks, binds the current inventory and field-status hashes, and
+the quality report says `Gate status: PASS`.
+
+## Round 6 Approval-Gate Capture Package
+
+Worker Gibbs' exact prompt transcript was not checked in. The replay therefore
+uses normalized reconstructed artifacts, explicitly labeled as such:
+
+- Prompt: `artifacts/prompts/round-6-approval-gate-worker-gibbs.md`
+- Contract: `artifacts/worker_contracts/worker-r6-gibbs-approval-gate.md`
+- Output: `artifacts/worker_outputs/worker-r6-gibbs-approval-gate.md`
+- Verification: `artifacts/verification/worker-r6-gibbs-approval-gate.md`
+- Tool calls:
+  `artifacts/tool_calls/worker-r6-gibbs-approval-gate-normalized.json`
+
+Allowed write scope reconstructed from commit `ea7c0aca`:
+
+- `scripts/analyze.py`
+- `scripts/check_calibration_gate.py`
+- `tests/test_check_calibration_gate_approval.py`
+- `results/common/real_platform_inventory.json`
+- `results/common/experiment_quality.md`
+
+Success criteria reconstructed from Round 6 review:
+
+- `non_identifiable` field-status rows are blocking unresolved risks.
+- Approval must record current `inventory_sha256`.
+- Approval must record current `real_platform_field_status_sha256`.
+- Approval must cover the unresolved field-status risk scope by accepted risk
+  IDs or all-risk acceptance.
+- Unit tests and review checks pass.
+- Synthetic gate passes.
+- Real-platform gate fails closed on missing `Gate status: PASS`, missing
+  approval, and 39 unresolved `non_identifiable` risks.
+
+Verification commands captured for replay:
+
+```bash
+python3 -m unittest tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval
+python3 -m pytest -q
+python3 -m py_compile scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/gen_asm.py scripts/run_experiment.py scripts/run_suite.py
+python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r6-approval-search.json --format json
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+python3 -m json.tool results/common/real_platform_inventory.json >/dev/null
+python3 -m json.tool /tmp/profile-inst-latency-r6-approval-search.json >/dev/null
+find results/common -maxdepth 1 -iname '*approval*' -print
+sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md
+git diff --check
+```
 
 ## Replay Commands
 
@@ -233,8 +291,9 @@ find results/common -maxdepth 1 -iname '*approval*' -print
 ```
 
 The real-platform gate is expected to fail closed until the report contains an
-exact `Gate status: PASS` line and a machine-readable human approval artifact is
-created under `results/common`. No approval artifact exists in this capture.
+exact `Gate status: PASS` line and a machine-readable human approval artifact
+is created under `results/common` with the current hashes and accepted risk
+scope. No approval artifact exists in this capture.
 
 ## Round History
 
@@ -281,10 +340,25 @@ common real-platform JSON/Markdown artifacts, and
 worker's commit `773f27d6`; Round 5 review accepted the candidate-simulator
 fixes for peer-side T20 mirroring and the T12 short-sweep guard.
 
-This Round 6 capture package owns only `results/common/agentic_flow/**`. It
-records the missing Round 5 code-worker control flow and replay commands, does
-not resolve the 39 non-identifiable rows by approval, and does not cross the
-explicit approval boundary.
+The Round 6 code-worker capture package owned only
+`results/common/agentic_flow/**`. It recorded the missing Round 5 code-worker
+control flow and replay commands, did not resolve the 39 non-identifiable rows
+by approval, and did not cross the explicit approval boundary.
+
+### Round 6 Approval Gate
+
+Worker Gibbs hardened the real-platform approval gate at commit `ea7c0aca`.
+Round 6 review accepted the code behavior and reproduced the expected
+fail-closed real-platform gate. The current approval boundary must bind the
+Round 6 inventory hash `4f25f066...`, field-status hash `904cca46...`, and
+accepted risk scope for the 39 unresolved `non_identifiable` rows.
+
+### Round 7 Capture
+
+This Round 7 capture package owns only `results/common/agentic_flow/**`. It
+records the missing Round 6 Gibbs control flow and replay commands, refreshes
+current hashes in boards and views, does not create approval, and does not
+cross the explicit approval boundary.
 
 ## Humanize2 Hub Path
 

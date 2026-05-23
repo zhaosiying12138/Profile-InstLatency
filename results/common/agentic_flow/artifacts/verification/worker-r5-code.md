@@ -56,7 +56,7 @@ cmp /tmp/profile-inst-latency-r5-review-search.json results/common/search_model_
   paths.
 - `git diff --check` passed for the Round 5 code-worker commit.
 
-## Current Hashes
+## Historical Round 5 Hashes
 
 - `results/common/real_platform_inventory.json`:
   `d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d`
@@ -71,5 +71,5 @@ cmp /tmp/profile-inst-latency-r5-review-search.json results/common/search_model_
 
 The Round 5 review accepted the code-worker candidate-simulator fixes, but the
 workflow remains blocked on capture completeness before this package and on
-AC-16 approval hardening plus absent explicit approval. This artifact does not
-mark AC-16 complete.
+AC-16 absent explicit approval plus unresolved approval-bound risk handling.
+This artifact does not mark AC-16 complete.

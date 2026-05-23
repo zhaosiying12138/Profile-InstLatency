@@ -10,18 +10,20 @@
   code { background: #f6f8fa; padding: 0.1rem 0.25rem; }
 </style>
 <h1>RVV Profile Workflow Status</h1>
-<p>Round 6 capture package for the Round 5 code worker. Active worker: <code>Round6CodeCapturePackage</code>. Scope: <code>results/common/agentic_flow/**</code>.</p>
+<p>Round 7 capture package for the Round 6 approval-gate worker. Active worker: <code>Round7GibbsCapturePackage</code>. Scope: <code>results/common/agentic_flow/**</code>.</p>
 <table>
   <tr><th>Area</th><th>Status</th></tr>
-  <tr><td>RLCR lineage</td><td>Rounds 2-4 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; Round 5 is in progress.</td></tr>
+  <tr><td>RLCR lineage</td><td>Rounds 2-6 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; Round 7 is the current capture task.</td></tr>
   <tr><td>Real-platform coverage</td><td>7190 checked-in <code>results/r01</code>/<code>results/r02</code> traces; 178/178 required real gem5 groups; 3595 stable repeat groups; 0 unstable.</td></tr>
   <tr><td>Field status</td><td>150 rows: 111 inferred, 39 non-identifiable, 0 conflict, 0 insufficient-evidence.</td></tr>
   <tr><td>Round 4 simulator state</td><td>Subject-side T20 pair constraints and T12 clean-prefix constraints are reflected in regenerated artifacts.</td></tr>
   <tr><td>Round 5 code worker</td><td>Worker Anscombe commit <code>773f27d6</code> is accepted by Round 5 review for the candidate-simulator scope: peer-side T20 constraints and the T12 short-sweep guard.</td></tr>
+  <tr><td>Round 6 approval gate</td><td>Worker Gibbs commit <code>ea7c0aca</code> is accepted by Round 6 review for approval-gate behavior: current hash binding and accepted risk scope are required.</td></tr>
   <tr><td>Code-worker capture</td><td>Normalized prompt, contract, output, verification, and tool-call artifacts are registered for empty-context replay.</td></tr>
-  <tr><td>Round 5 remaining blockers</td><td>39 non-identifiable rows and explicit approval are not resolved by this capture refresh.</td></tr>
-  <tr><td>Real-platform gate</td><td><code>NOT_READY</code>; fail-closed because <code>Gate status: PASS</code> and a machine-readable approval artifact are absent.</td></tr>
-  <tr><td>Approval boundary</td><td>No <code>results/common/*approval*</code> artifact exists. One must not be created without explicit user approval tied to current hashes.</td></tr>
-  <tr><td>Humanize2 capture</td><td>Replay, boards, events, cartridge, worker contract, worker output, and verification artifacts refreshed for the Round 5 boundary.</td></tr>
+  <tr><td>Current hashes</td><td>Inventory <code>4f25f066...</code>; field status <code>904cca46...</code>; search <code>d31ef890...</code>; quality <code>b6b6b1dd...</code>.</td></tr>
+  <tr><td>Remaining blockers</td><td>39 non-identifiable rows require stronger evidence or explicit current-hash-bound human acceptance.</td></tr>
+  <tr><td>Real-platform gate</td><td><code>NOT_READY</code>; fail-closed because <code>Gate status: PASS</code>, a machine-readable approval artifact, and accepted scope for 39 unresolved risks are absent.</td></tr>
+  <tr><td>Approval boundary</td><td>No <code>results/common/*approval*</code> artifact exists. One must not be created without explicit user approval tied to current inventory and field-status hashes.</td></tr>
+  <tr><td>Humanize2 capture</td><td>Replay, boards, events, cartridge, worker contract, worker output, and verification artifacts refreshed through the Round 6 Gibbs boundary.</td></tr>
 </table>
 </html>

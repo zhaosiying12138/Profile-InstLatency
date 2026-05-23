@@ -141,6 +141,7 @@
       "category": "hash",
       "command": "sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md",
       "exit_code": 0,
+      "reported_hashes_scope": "historical_round5_after_commit_773f27d6",
       "reported_hashes": {
         "results/common/real_platform_inventory.json": "d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d",
         "results/common/real_platform_field_status.json": "904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179",
