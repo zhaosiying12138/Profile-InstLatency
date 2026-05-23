@@ -117,6 +117,17 @@ class CandidateCheck:
     observed_delta: int | None = None
 
 
+@dataclass(frozen=True)
+class T12LatencyConstraint:
+    status: str
+    reason: str
+    evidence: tuple[RawObservation, ...]
+    latency: int | None = None
+    upper_bound: int | None = None
+    filler_cadence: int | None = None
+    clean_gaps: tuple[int, ...] = ()
+
+
 def parse_scalar(text: str) -> Any:
     text = text.strip()
     if text in ("", "null", "None", "~"):
@@ -466,21 +477,21 @@ def t12_latency_follow_up(items: Iterable[RawObservation], instruction_id: str, 
         "Run/interpret template=T12_CONSUMER_RAW_GAP "
         f"instruction={instruction_id} lmul={lmul} consumer={consumer_text} gaps={gap_text}; "
         "register_policy=producer destination from metadata with independent vadd_vv fillers; "
-        "implement bypass/read-advance readiness model before claiming Latency."
+        "collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency."
     )
 
 
 def t20_startup_slope_groups(items: Iterable[RawObservation]) -> list[dict[str, Any]]:
-    grouped: dict[str, list[RawObservation]] = defaultdict(list)
+    grouped: dict[tuple[str, str], list[RawObservation]] = defaultdict(list)
     for item in items:
         if item.effective_template_id != "T20_PAIRWISE_PIPE_CLASSIFICATION" or item.pair_instruction_id is None:
             continue
-        grouped[item.pair_instruction_id].append(item)
+        grouped[(item.pair_instruction_id, t20_register_policy(item))].append(item)
     groups: list[dict[str, Any]] = []
-    for pair_instruction_id in sorted(grouped):
+    for pair_instruction_id, register_policy in sorted(grouped):
         by_count: dict[int, list[int]] = defaultdict(list)
         register_reuse = False
-        for item in grouped[pair_instruction_id]:
+        for item in grouped[(pair_instruction_id, register_policy)]:
             count = body_int(item, "iterations", "pair_count", "sample_count")
             if count is None or count <= 0:
                 continue
@@ -489,10 +500,15 @@ def t20_startup_slope_groups(items: Iterable[RawObservation]) -> list[dict[str, 
         counts = sorted(by_count)
         group: dict[str, Any] = {
             "pair_instruction_id": pair_instruction_id,
+            "register_policy": register_policy,
             "counts": counts,
             "deltas_by_count": {str(count): sorted(by_count[count]) for count in counts},
             "register_reuse": register_reuse,
         }
+        if register_reuse:
+            group["status"] = "skipped_register_reuse"
+            groups.append(group)
+            continue
         if len(counts) >= 2:
             left = counts[0]
             right = counts[-1]
@@ -848,7 +864,7 @@ def enumerate_latency(items: list[RawObservation], max_value: int) -> dict[str, 
             candidates &= {value for value in candidates if item.delta_cycles == intervals * value}
             used.append(evidence_entry(item, f"T11 expected delta=(iterations-1)*Latency;iterations={iterations}"))
         elif shape == "T12_CONSUMER_RAW_GAP":
-            skipped.append(evidence_entry(item, "T12 recorded:not_used_without_bypass_gap_simulator"))
+            skipped.append(evidence_entry(item, "T12 recorded:handled_by_shared_candidate_simulator"))
 
     return bounded_integer_result(
         "Latency",
@@ -898,20 +914,49 @@ def release_value(release_results: dict[tuple[str, str], dict[str, Any]], instru
     return int_or_none(result.get("value"))
 
 
+def pipe_choices(label: str) -> tuple[int, ...]:
+    if label == "pipe0":
+        return (0,)
+    if label == "pipe1":
+        return (1,)
+    if label == "any":
+        return (0, 1)
+    return (0, 1)
+
+
 def same_resource(left: str, right: str) -> bool:
-    if "any" in (left, right):
-        return True
-    return left == right
+    return left == right and left in {"pipe0", "pipe1"}
 
 
 def issue_occupancy(candidate: TimingCandidate) -> int:
     return max(candidate.release_at_cycles, candidate.num_micro_ops)
 
 
+def t20_resource_cycles(left: TimingCandidate, right: TimingCandidate, left_pipe: int, right_pipe: int) -> int:
+    left_release = max(1, left.release_at_cycles)
+    right_release = max(1, right.release_at_cycles)
+    if left_pipe == right_pipe:
+        return left_release + right_release
+    return max(left_release, right_release)
+
+
+def t20_issue_cycles(left: TimingCandidate, right: TimingCandidate) -> int:
+    left_ops = max(1, left.num_micro_ops)
+    right_ops = max(1, right.num_micro_ops)
+    if left.single_issue or right.single_issue:
+        return left_ops + right_ops
+    return max(left_ops, right_ops)
+
+
 def expected_t20_pair_cycles(left: TimingCandidate, right: TimingCandidate) -> int:
-    if same_resource(left.proc_resource, right.proc_resource):
-        return issue_occupancy(left) + issue_occupancy(right)
-    return max(issue_occupancy(left), issue_occupancy(right))
+    issue_cycles = t20_issue_cycles(left, right)
+    best: int | None = None
+    for left_pipe in pipe_choices(left.proc_resource):
+        for right_pipe in pipe_choices(right.proc_resource):
+            pair_cycles = max(t20_resource_cycles(left, right, left_pipe, right_pipe), issue_cycles)
+            if best is None or pair_cycles < best:
+                best = pair_cycles
+    return best if best is not None else issue_cycles
 
 
 def expected_t21_pair_cycles(candidate: TimingCandidate) -> int:
@@ -1026,6 +1071,356 @@ def t21_per_pair_observed(item: RawObservation) -> int | None:
     return item.delta_cycles // iterations
 
 
+def first_metadata_value(item: RawObservation, *keys: str) -> Any:
+    for key in keys:
+        for container in (item.body, item.parameters):
+            if key in container and container.get(key) is not None:
+                return container.get(key)
+    return None
+
+
+def t20_register_policy(item: RawObservation) -> str:
+    policy = first_metadata_value(
+        item,
+        "register_policy",
+        "source_register_policy",
+        "src_register_policy",
+        "destination_register_policy",
+        "dst_register_policy",
+        "register_allocation_policy",
+    )
+    return str(policy) if policy is not None else "unspecified"
+
+
+def t20_observation_group_key(item: RawObservation) -> tuple[str, str, str | None, str]:
+    return (item.instruction_id, item.lmul, item.pair_instruction_id, t20_register_policy(item))
+
+
+def matching_t20_group(item: RawObservation, group_items: Iterable[RawObservation]) -> tuple[RawObservation, ...]:
+    key = t20_observation_group_key(item)
+    return tuple(
+        candidate
+        for candidate in group_items
+        if candidate.effective_template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION"
+        and t20_observation_group_key(candidate) == key
+    )
+
+
+def t20_min_delta_by_count(items: Iterable[RawObservation]) -> dict[int, int]:
+    by_count: dict[int, list[int]] = defaultdict(list)
+    for item in items:
+        count = body_int(item, "iterations", "pair_count", "sample_count")
+        if count is None or count <= 0:
+            continue
+        by_count[count].append(item.delta_cycles)
+    return {count: min(deltas) for count, deltas in by_count.items()}
+
+
+def t20_slope_matches(count_to_delta: dict[int, int], slope: int) -> bool:
+    if len(count_to_delta) < 2:
+        return False
+    offsets = {delta - count * slope for count, delta in count_to_delta.items()}
+    return len(offsets) == 1
+
+
+def t20_peer_candidates(
+    item: RawObservation,
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+) -> tuple[TimingCandidate, ...]:
+    if item.pair_instruction_id is None:
+        return ()
+    key = (item.pair_instruction_id, item.lmul)
+    fixed = fixed_candidates.get(key)
+    if fixed is not None:
+        return (fixed,)
+    return candidate_options.get(key, ())
+
+
+def check_t20_candidate_group(
+    item: RawObservation,
+    candidate: TimingCandidate,
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+    group_items: Iterable[RawObservation],
+) -> CandidateCheck:
+    if item.pair_instruction_id is None:
+        return CandidateCheck(item, "skipped", "T20 skipped:missing_pair_instruction", None, item.delta_cycles)
+    group = matching_t20_group(item, group_items)
+    if any(bool_or_false(member.body.get("register_reuse")) for member in group):
+        return CandidateCheck(
+            item,
+            "skipped",
+            (
+                "T20 skipped:register_reuse_true_without_model;"
+                f"instruction={item.instruction_id};lmul={item.lmul};pair={item.pair_instruction_id};"
+                f"register_policy={t20_register_policy(item)}"
+            ),
+            None,
+            item.delta_cycles,
+        )
+    count_to_delta = t20_min_delta_by_count(group)
+    counts = sorted(count_to_delta)
+    if len(counts) < 2:
+        return CandidateCheck(
+            item,
+            "skipped",
+            (
+                "T20 skipped:single_count_non_identifiable;"
+                f"instruction={item.instruction_id};lmul={item.lmul};pair={item.pair_instruction_id};"
+                f"register_policy={t20_register_policy(item)};counts={counts}"
+            ),
+            None,
+            item.delta_cycles,
+        )
+    peers = t20_peer_candidates(item, candidate_options, fixed_candidates)
+    if not peers:
+        return CandidateCheck(
+            item,
+            "skipped",
+            (
+                "T20 skipped:missing_peer_candidate_options;"
+                f"instruction={item.instruction_id};lmul={item.lmul};pair={item.pair_instruction_id};"
+                f"counts={counts}"
+            ),
+            None,
+            item.delta_cycles,
+        )
+    matching_slopes = sorted(
+        {
+            expected_t20_pair_cycles(candidate, peer)
+            for peer in peers
+            if t20_slope_matches(count_to_delta, expected_t20_pair_cycles(candidate, peer))
+        }
+    )
+    if matching_slopes:
+        return CandidateCheck(
+            item,
+            "match",
+            (
+                "T20 startup_free_slope matched;"
+                f"instruction={item.instruction_id};lmul={item.lmul};pair={item.pair_instruction_id};"
+                f"register_policy={t20_register_policy(item)};counts={counts};"
+                f"expected_slopes={matching_slopes}"
+            ),
+            matching_slopes[0],
+            item.delta_cycles,
+        )
+    expected_slopes = sorted({expected_t20_pair_cycles(candidate, peer) for peer in peers})
+    return CandidateCheck(
+        item,
+        "mismatch",
+        (
+            "T20 startup_free_slope mismatch;"
+            f"instruction={item.instruction_id};lmul={item.lmul};pair={item.pair_instruction_id};"
+            f"register_policy={t20_register_policy(item)};counts={counts};"
+            f"min_deltas={[count_to_delta[count] for count in counts]};expected_slopes={expected_slopes}"
+        ),
+        expected_slopes[0] if expected_slopes else None,
+        item.delta_cycles,
+    )
+
+
+def t12_consumer_key(item: RawObservation) -> str:
+    consumer = first_metadata_value(item, "consumer", "consumer_instruction_id", "consumer_instruction")
+    if consumer is None:
+        consumer = item.pair_instruction_id
+    return str(consumer) if consumer is not None else "unknown"
+
+
+def t12_filler_instruction(item: RawObservation) -> str:
+    filler = first_metadata_value(item, "filler_instruction_id", "filler_instruction", "filler", "filler_op")
+    return str(filler) if filler is not None else "vadd_vv"
+
+
+def t12_register_policy(item: RawObservation) -> str:
+    policy = first_metadata_value(item, "register_policy", "source_register_policy", "dst_register_policy")
+    return str(policy) if policy is not None else "unspecified"
+
+
+def t12_observation_group_key(item: RawObservation) -> tuple[str, str, str, str, str]:
+    return (
+        item.instruction_id,
+        item.lmul,
+        t12_consumer_key(item),
+        t12_filler_instruction(item),
+        t12_register_policy(item),
+    )
+
+
+def matching_t12_group(item: RawObservation, group_items: Iterable[RawObservation]) -> tuple[RawObservation, ...]:
+    key = t12_observation_group_key(item)
+    return tuple(
+        candidate
+        for candidate in group_items
+        if candidate.effective_template_id == "T12_CONSUMER_RAW_GAP" and t12_observation_group_key(candidate) == key
+    )
+
+
+def unique_release_from_options(candidates: Iterable[TimingCandidate]) -> int | None:
+    releases = {candidate.release_at_cycles for candidate in candidates}
+    if len(releases) != 1:
+        return None
+    return max(1, next(iter(releases)))
+
+
+def t12_filler_cadence(
+    item: RawObservation,
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+) -> tuple[int | None, str]:
+    filler = t12_filler_instruction(item)
+    key = (filler, item.lmul)
+    fixed = fixed_candidates.get(key)
+    if fixed is not None:
+        return max(1, fixed.release_at_cycles), f"fixed_candidate:{filler}"
+    option_release = unique_release_from_options(candidate_options.get(key, ()))
+    if option_release is not None:
+        return option_release, f"candidate_options:{filler}"
+    if filler == "vadd_vv" and item.lmul in {"m1", "m2", "m4"}:
+        return LMUL_VALUE[item.lmul], "known_vadd_vv_lmul_cadence"
+    return None, f"missing_filler_cadence:{filler}"
+
+
+def t12_constraint_for_group(
+    item: RawObservation,
+    group_items: Iterable[RawObservation],
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+) -> T12LatencyConstraint:
+    group = matching_t12_group(item, group_items)
+    cadence, cadence_source = t12_filler_cadence(item, candidate_options, fixed_candidates)
+    if cadence is None:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:missing_filler_cadence;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"source={cadence_source}"
+            ),
+            group,
+        )
+    deltas_by_gap: dict[int, set[int]] = defaultdict(set)
+    observations_by_gap: dict[int, list[RawObservation]] = defaultdict(list)
+    for member in group:
+        gap = body_int(member, "filler_count")
+        if gap is None or gap < 0:
+            continue
+        deltas_by_gap[gap].add(member.delta_cycles)
+        observations_by_gap[gap].append(member)
+    if not deltas_by_gap or 0 not in deltas_by_gap:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:missing_gap0;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)}"
+            ),
+            group,
+            filler_cadence=cadence,
+        )
+    disagreeing_gaps = sorted(gap for gap, deltas in deltas_by_gap.items() if len(deltas) != 1)
+    if disagreeing_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:repeated_gap_delta_disagreement;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"gaps={disagreeing_gaps}"
+            ),
+            tuple(member for gap in disagreeing_gaps for member in observations_by_gap[gap]),
+            filler_cadence=cadence,
+        )
+    gap_to_delta = {gap: next(iter(deltas)) for gap, deltas in deltas_by_gap.items()}
+    clean_gaps = [0]
+    next_gap = 1
+    while next_gap in gap_to_delta:
+        previous_delta = gap_to_delta[next_gap - 1]
+        current_delta = gap_to_delta[next_gap]
+        diff = current_delta - previous_delta
+        if diff < 0 or diff > cadence:
+            break
+        clean_gaps.append(next_gap)
+        next_gap += 1
+    if len(clean_gaps) < 2:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                "T12 skipped:no_stable_clean_prefix;"
+                f"instruction={item.instruction_id};lmul={item.lmul};consumer={t12_consumer_key(item)};"
+                f"clean_gaps={clean_gaps};filler_cadence={cadence}"
+            ),
+            group,
+            filler_cadence=cadence,
+            clean_gaps=tuple(clean_gaps),
+        )
+    residuals = {gap: gap_to_delta[gap] - gap * cadence for gap in clean_gaps}
+    residual0 = residuals[0]
+    minimum_residual = min(residuals.values())
+    reason_prefix = (
+        f"T12 clean_prefix;instruction={item.instruction_id};lmul={item.lmul};"
+        f"consumer={t12_consumer_key(item)};filler_cadence={cadence};"
+        f"cadence_source={cadence_source};clean_gaps={clean_gaps}"
+    )
+    evidence = tuple(member for gap in clean_gaps for member in observations_by_gap[gap])
+    if residual0 > minimum_residual:
+        latency = cadence + residual0 - minimum_residual
+        return T12LatencyConstraint(
+            "exact",
+            f"{reason_prefix};exact_latency={latency}",
+            evidence,
+            latency=latency,
+            filler_cadence=cadence,
+            clean_gaps=tuple(clean_gaps),
+        )
+    return T12LatencyConstraint(
+        "upper_bound",
+        f"{reason_prefix};latency_upper_bound={cadence}",
+        evidence,
+        upper_bound=cadence,
+        filler_cadence=cadence,
+        clean_gaps=tuple(clean_gaps),
+    )
+
+
+def t12_constraints_for_items(
+    items: Iterable[RawObservation],
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]] | None = None,
+    fixed_candidates: dict[tuple[str, str], TimingCandidate] | None = None,
+) -> tuple[T12LatencyConstraint, ...]:
+    candidate_options = candidate_options or {}
+    fixed_candidates = fixed_candidates or {}
+    t12_items = [item for item in items if item.effective_template_id == "T12_CONSUMER_RAW_GAP"]
+    seen: set[tuple[str, str, str, str, str]] = set()
+    constraints: list[T12LatencyConstraint] = []
+    for item in t12_items:
+        key = t12_observation_group_key(item)
+        if key in seen:
+            continue
+        seen.add(key)
+        constraints.append(t12_constraint_for_group(item, t12_items, candidate_options, fixed_candidates))
+    return tuple(constraints)
+
+
+def check_t12_candidate_group(
+    item: RawObservation,
+    candidate: TimingCandidate,
+    candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
+    fixed_candidates: dict[tuple[str, str], TimingCandidate],
+    group_items: Iterable[RawObservation],
+) -> CandidateCheck:
+    constraint = t12_constraint_for_group(item, group_items, candidate_options, fixed_candidates)
+    if constraint.status == "exact":
+        if candidate.latency == constraint.latency:
+            return CandidateCheck(item, "match", constraint.reason, constraint.latency, item.delta_cycles)
+        return CandidateCheck(item, "mismatch", constraint.reason, constraint.latency, item.delta_cycles)
+    if constraint.status == "upper_bound":
+        assert constraint.upper_bound is not None
+        if candidate.latency <= constraint.upper_bound:
+            return CandidateCheck(item, "match", constraint.reason, constraint.upper_bound, item.delta_cycles)
+        return CandidateCheck(item, "mismatch", constraint.reason, constraint.upper_bound, item.delta_cycles)
+    return CandidateCheck(item, "skipped", constraint.reason, None, item.delta_cycles)
+
+
 def expected_delta_for_observation(
     item: RawObservation,
     candidate: TimingCandidate,
@@ -1054,23 +1449,20 @@ def expected_delta_for_observation(
         consumer = item.body.get("consumer") or item.pair_instruction_id or "unknown"
         gap = body_int(item, "filler_count")
         return None, (
-            "T12 non_identifiable:no implemented bypass/read-advance model;"
+            "T12 grouped_constraint_requires_candidate_context;"
             f"template=T12_CONSUMER_RAW_GAP;instruction={item.instruction_id};"
             f"lmul={item.lmul};consumer={consumer};gap={gap};"
-            "follow_up=run T12 consumer-gap sweep k=0..40 and implement "
-            "producer-result-to-consumer readiness model"
+            "use solve_candidate_sets/check_candidate_against_options for conservative latency bounds"
         )
     if shape == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         iterations = body_int(item, "iterations", "pair_count", "sample_count")
         if item.pair_instruction_id is None or iterations is None or iterations <= 0:
             return None, "T20 skipped:missing_pair_or_iterations"
         return None, (
-            "T20 startup+slope recorded:current checked-in real traces have one usable "
-            "pair-count per instruction pair/LMUL, so startup cannot be separated from "
+            "T20 grouped_startup_free_slope_requires_peer_candidate_options;"
             f"slope;template=T20_PAIRWISE_PIPE_CLASSIFICATION;instruction={item.instruction_id};"
             f"lmul={item.lmul};pair={item.pair_instruction_id};counts=[{iterations}];"
-            "follow_up=run generated pair-count sweep n2,n3,n4,n6 with register_reuse=false "
-            "when available"
+            "use solve_candidate_sets/check_candidate_against_options for hard pair-slope constraints"
         )
     if shape == "T21_PAIR_WITH_SCALAR":
         iterations = body_int(item, "iterations", "pair_count", "sample_count")
@@ -1105,7 +1497,14 @@ def check_candidate_against_options(
     candidate: TimingCandidate,
     candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
     fixed_candidates: dict[tuple[str, str], TimingCandidate],
+    *,
+    group_items: Iterable[RawObservation] | None = None,
 ) -> CandidateCheck:
+    group_items = tuple(group_items) if group_items is not None else (item,)
+    if item.effective_template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
+        return check_t20_candidate_group(item, candidate, candidate_options, fixed_candidates, group_items)
+    if item.effective_template_id == "T12_CONSUMER_RAW_GAP":
+        return check_t12_candidate_group(item, candidate, candidate_options, fixed_candidates, group_items)
     local_lookup = dict(fixed_candidates)
     local_lookup[(item.instruction_id, item.lmul)] = candidate
     return check_candidate(item, candidate, local_lookup)
@@ -1138,7 +1537,13 @@ def candidate_result_for_group(
         candidate_lookup[key] = candidate
         ok = True
         for item in items:
-            check = check_candidate(item, candidate, candidate_lookup)
+            check = check_candidate_against_options(
+                item,
+                candidate,
+                base_candidates,
+                candidate_lookup,
+                group_items=items,
+            )
             if check.status == "skipped":
                 skipped.append(evidence_entry(item, check.reason))
                 continue
@@ -1221,6 +1626,7 @@ def solve_candidate_sets(
                     in {
                         "T10_INDEPENDENT_STREAM_THROUGHPUT",
                         "T11_SELF_RAW_CHAIN",
+                        "T12_CONSUMER_RAW_GAP",
                         "T20_PAIRWISE_PIPE_CLASSIFICATION",
                         "T21_PAIR_WITH_SCALAR",
                     }
@@ -1246,7 +1652,13 @@ def solve_candidate_sets(
             for candidate in base[key]:
                 ok = True
                 for item in items:
-                    check = check_candidate_against_options(item, candidate, base, candidate_lookup)
+                    check = check_candidate_against_options(
+                        item,
+                        candidate,
+                        base,
+                        candidate_lookup,
+                        group_items=items,
+                    )
                     if check.status == "skipped":
                         skipped.append(evidence_entry(item, check.reason))
                         continue
@@ -1320,7 +1732,6 @@ def candidate_field_result(
     evidence = [
         evidence_entry(item, f"candidate_simulator:{field}")
         for item in result.evidence
-        if item.effective_template_id != "T12_CONSUMER_RAW_GAP"
     ]
     evidence.extend(result.skipped[:16])
     values = sorted(
@@ -1354,7 +1765,45 @@ def candidate_field_result(
             item.effective_template_id == "T11_SELF_RAW_CHAIN" and not t11_has_latency_evidence(item)
             for item in result.all_observations
         )
-        if not true_t11 and (has_t12 or has_placeholder_t11):
+        t12_constraints = t12_constraints_for_items(result.all_observations)
+        exact_t12_latencies = {
+            constraint.latency
+            for constraint in t12_constraints
+            if constraint.status == "exact" and constraint.latency is not None
+        }
+        t12_upper_bounds = [
+            constraint.upper_bound
+            for constraint in t12_constraints
+            if constraint.status == "upper_bound" and constraint.upper_bound is not None
+        ]
+        if not true_t11 and has_t12 and not exact_t12_latencies and t12_upper_bounds:
+            upper_bound = min(t12_upper_bounds)
+            record.update(
+                {
+                    "status": "insufficient_evidence",
+                    "value": None,
+                    "reason": (
+                        "T12 consumer-gap observations provide only a conservative upper bound "
+                        f"for Latency (Latency <= {upper_bound}); the shared simulator filters "
+                        "candidate tuples with that bound but does not render a fake exact value."
+                    ),
+                    "upper_bound": upper_bound,
+                    "t12_latency_constraints": [
+                        {
+                            "status": constraint.status,
+                            "reason": constraint.reason,
+                            "latency": constraint.latency,
+                            "upper_bound": constraint.upper_bound,
+                            "filler_cadence": constraint.filler_cadence,
+                            "clean_gaps": list(constraint.clean_gaps),
+                        }
+                        for constraint in t12_constraints
+                    ],
+                    "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
+                }
+            )
+            return record
+        if not true_t11 and (has_t12 or has_placeholder_t11) and not exact_t12_latencies:
             first = result.all_observations[0] if result.all_observations else None
             instruction_id = first.instruction_id if first is not None else "unknown"
             lmul = first.lmul if first is not None else "unknown"
@@ -1364,10 +1813,21 @@ def candidate_field_result(
                     "value": None,
                     "reason": (
                         "T11 observations for this row are non-chainable placeholders or absent; "
-                        "T12 consumer-gap observations exist but the shared simulator has no "
-                        "implemented bypass/read-advance model, so Latency is not identifiable."
+                        "T12 consumer-gap observations do not provide a stable exact latency or "
+                        "upper-bound constraint for this row, so Latency is not identifiable."
                     ),
                     "follow_up": t12_latency_follow_up(result.all_observations, instruction_id, lmul),
+                    "t12_latency_constraints": [
+                        {
+                            "status": constraint.status,
+                            "reason": constraint.reason,
+                            "latency": constraint.latency,
+                            "upper_bound": constraint.upper_bound,
+                            "filler_cadence": constraint.filler_cadence,
+                            "clean_gaps": list(constraint.clean_gaps),
+                        }
+                        for constraint in t12_constraints
+                    ],
                     "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
                 }
             )
@@ -1415,9 +1875,9 @@ def candidate_field_result(
                 "status": "non_identifiable",
                 "value": None,
                 "reason": (
-                    "T20 pair timing is recorded as startup+slope groups. Current checked-in "
-                    "real traces do not provide multiple usable pair counts per pair/LMUL, so "
-                    "ProcResource remains non-identifiable without overclaiming a pipe."
+                    "T20 pair timing is checked as startup-free slope groups, but the available "
+                    "pair groups are underdetermined or contradictory for an exact ProcResource "
+                    "claim without overclaiming a pipe."
                 ),
                 "follow_up": t20_proc_resource_follow_up(result.all_observations, instruction_id, lmul),
                 "t20_startup_slope_groups": t20_startup_slope_groups(result.all_observations),
@@ -1881,8 +2341,8 @@ def build_report(
             "Known marker pairs are t0/t1, before/after, start/end, and begin/end; marker_baseline_cycles is subtracted.",
             "T10/T30 throughput check: marker deltas across repeated stream lengths fit startup + (N - 1) * ReleaseAtCycles.",
             "T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.",
-            "T12/T30 consumer-gap checks are recorded by the shared simulator but remain non-identifiable without an explicit bypass/read-advance model.",
-            "T20 pair checks are interpreted as startup+slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
+            "T12/T30 consumer-gap checks use a conservative clean-prefix filler-cadence model to infer exact latency or upper-bound constraints.",
+            "T20 pair checks are interpreted as startup-free slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
             "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
             "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
         ],
