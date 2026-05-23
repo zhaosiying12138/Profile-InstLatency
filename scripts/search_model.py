@@ -1358,6 +1358,53 @@ def proc_resource_solution_dict(solution: dict[tuple[str, str], str]) -> dict[st
     }
 
 
+def mirror_proc_resource_label(label: str) -> str:
+    if label == "pipe0":
+        return "pipe1"
+    if label == "pipe1":
+        return "pipe0"
+    return label
+
+
+def mirror_proc_resource_solution(solution: dict[tuple[str, str], str]) -> dict[tuple[str, str], str]:
+    return {key: mirror_proc_resource_label(label) for key, label in solution.items()}
+
+
+def proc_resource_solution_sort_key(solution: dict[tuple[str, str], str]) -> tuple[tuple[str, str], ...]:
+    return tuple((format_observation_key(key), solution[key]) for key in sorted(solution))
+
+
+def pure_global_pipe_mirror_solutions(
+    solutions: list[dict[tuple[str, str], str]],
+    solution_count: int,
+) -> tuple[dict[tuple[str, str], str], list[dict[tuple[str, str], str]]] | None:
+    if solution_count != 2 or len(solutions) != 2:
+        return None
+    first, second = solutions
+    if mirror_proc_resource_solution(first) != second:
+        return None
+    ordered = sorted(solutions, key=proc_resource_solution_sort_key)
+    return ordered[0], ordered[1:]
+
+
+def proc_resource_mirror_assumption(
+    canonical_solution: dict[tuple[str, str], str],
+    alternate_solutions: list[dict[tuple[str, str], str]],
+    solution_count: int,
+) -> dict[str, Any]:
+    return {
+        "type": "global_pipe_label_mirror",
+        "equivalence": "pipe0_pipe1_global_swap",
+        "scope": "connected_t20_component",
+        "canonicalization": "lexicographically_smallest_internal_assignment",
+        "solution_count_before_canonicalization": solution_count,
+        "canonical_assignment": proc_resource_solution_dict(canonical_solution),
+        "alternate_assignments": [
+            proc_resource_solution_dict(solution) for solution in alternate_solutions
+        ],
+    }
+
+
 def solve_global_proc_resources(
     observations: Iterable[RawObservation],
     release_values: dict[tuple[str, str], int],
@@ -1372,6 +1419,7 @@ def solve_global_proc_resources(
     constraints, skipped = t20_proc_resource_constraints(observations, release_values, normalized_domains)
     rows: dict[tuple[str, str], dict[str, Any]] = {}
     conflict_constraints: list[dict[str, Any]] = []
+    symmetry_breaking_assumptions: list[dict[str, Any]] = []
 
     for component in proc_resource_components(constraints):
         component_constraints = [
@@ -1435,11 +1483,43 @@ def solve_global_proc_resources(
                 }
             continue
 
+        mirror_solution = pure_global_pipe_mirror_solutions(solutions, solution_count)
+        canonical_solution: dict[tuple[str, str], str] | None = None
+        mirror_assumption: dict[str, Any] | None = None
+        if mirror_solution is not None:
+            canonical_solution, alternate_solutions = mirror_solution
+            mirror_assumption = proc_resource_mirror_assumption(
+                canonical_solution,
+                alternate_solutions,
+                solution_count,
+            )
+            symmetry_breaking_assumptions.append(mirror_assumption)
+
         for key in nodes:
-            surviving = tuple(label for label in PROC_RESOURCE_DOMAIN if label in survivors[key])
+            pre_canonical_surviving = tuple(label for label in PROC_RESOURCE_DOMAIN if label in survivors[key])
+            if canonical_solution is not None:
+                surviving = (canonical_solution[key],)
+            else:
+                surviving = pre_canonical_surviving
             public_surviving = public_proc_resource_labels(surviving)
             exact = len(surviving) == 1
-            rows[key] = {
+            if exact and mirror_assumption is not None:
+                reason = (
+                    "Pure global ProcResource pipe-label mirror assignments satisfy the usable "
+                    "startup-free T20 pair slopes; a deterministic pipe0/pipe1 orientation was "
+                    "canonicalized as a symmetry-breaking assumption."
+                )
+            elif exact:
+                reason = (
+                    "Unique global ProcResource assignment satisfies usable startup-free T20 "
+                    "pair slopes and exact ReleaseAtCycles values."
+                )
+            else:
+                reason = (
+                    "Multiple mirror/global ProcResource assignments satisfy the usable "
+                    "startup-free T20 pair slopes, so the row remains non-identifiable."
+                )
+            row = {
                 "status": "exact_fit" if exact else "non_identifiable",
                 "value": proc_resource_for_label(surviving[0]) if exact else None,
                 "candidates": public_surviving,
@@ -1450,17 +1530,16 @@ def solve_global_proc_resources(
                     if key in {constraint["left_key"], constraint["right_key"]}
                 ),
                 "evidence": evidence,
-                "reason": (
-                    "Unique global ProcResource assignment satisfies usable startup-free T20 "
-                    "pair slopes and exact ReleaseAtCycles values."
-                    if exact
-                    else "Multiple mirror/global ProcResource assignments satisfy the usable "
-                    "startup-free T20 pair slopes, so the row remains non-identifiable."
-                ),
+                "reason": reason,
                 "global_solution_count": solution_count,
                 "global_candidates": public_solutions,
                 "surviving_candidates": public_surviving,
             }
+            pre_canonical_public = public_proc_resource_labels(pre_canonical_surviving)
+            if mirror_assumption is not None:
+                row["symmetry_breaking_assumption"] = mirror_assumption
+                row["pre_canonical_surviving_candidates"] = pre_canonical_public
+            rows[key] = row
 
     public_constraints = [
         {
@@ -1478,6 +1557,7 @@ def solve_global_proc_resources(
         "usable_constraints": public_constraints,
         "skipped_constraints": skipped,
         "conflict_constraints": conflict_constraints,
+        "symmetry_breaking_assumptions": symmetry_breaking_assumptions,
     }
 
 
@@ -2696,6 +2776,9 @@ def merge_global_proc_resource_field(base: dict[str, Any], global_row: dict[str,
     )
     if global_row.get("conflict_constraints"):
         merged["conflict_constraints"] = global_row["conflict_constraints"]
+    for key in ("symmetry_breaking_assumption", "pre_canonical_surviving_candidates"):
+        if key in global_row:
+            merged[key] = global_row[key]
     return merged
 
 
@@ -2829,6 +2912,23 @@ def build_report(
             },
         }
 
+    global_assumptions = [
+        "Only marker deltas from trace entries are used as calibration evidence.",
+        "Known marker pairs are t0/t1, before/after, start/end, and begin/end; marker_baseline_cycles is subtracted.",
+        "T10/T30 throughput check: marker deltas across repeated stream lengths fit startup + (N - 1) * ReleaseAtCycles.",
+        "T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.",
+        "T12/T30 consumer-gap checks use a conservative clean-prefix filler-cadence model to infer exact latency or upper-bound constraints.",
+        "T20 pair checks are interpreted as startup-free slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
+        "Global ProcResource solving uses only clean startup-free T20 pair slopes plus exact ReleaseAtCycles values; constraints with missing or empty peer domains are skipped.",
+        "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
+        "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
+    ]
+    if global_proc_resources.get("symmetry_breaking_assumptions"):
+        global_assumptions.append(
+            "ProcResource components with exactly two pure global pipe0/pipe1 mirror assignments "
+            "are reported under a deterministic pipe-label symmetry-breaking assumption."
+        )
+
     return {
         "schema_version": 2,
         "status": "raw_observation_parameter_search",
@@ -2839,17 +2939,7 @@ def build_report(
             "NumMicroOps": [1, 2, 3, 4],
             "SingleIssue": [False, True],
         },
-        "global_assumptions": [
-            "Only marker deltas from trace entries are used as calibration evidence.",
-            "Known marker pairs are t0/t1, before/after, start/end, and begin/end; marker_baseline_cycles is subtracted.",
-            "T10/T30 throughput check: marker deltas across repeated stream lengths fit startup + (N - 1) * ReleaseAtCycles.",
-            "T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.",
-            "T12/T30 consumer-gap checks use a conservative clean-prefix filler-cadence model to infer exact latency or upper-bound constraints.",
-            "T20 pair checks are interpreted as startup-free slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
-            "Global ProcResource solving uses only clean startup-free T20 pair slopes plus exact ReleaseAtCycles values; constraints with missing or empty peer domains are skipped.",
-            "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
-            "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
-        ],
+        "global_assumptions": global_assumptions,
         "source_profiles_reference_only": [path.as_posix() for path in profile_paths],
         "source_trace_files": [path.as_posix() for path in trace_paths],
         "config_files_reference_only": [path.as_posix() for path, _data in configs],
@@ -2858,6 +2948,7 @@ def build_report(
             "usable_constraints": global_proc_resources["usable_constraints"],
             "skipped_constraints": global_proc_resources["skipped_constraints"],
             "conflict_constraints": global_proc_resources["conflict_constraints"],
+            "symmetry_breaking_assumptions": global_proc_resources["symmetry_breaking_assumptions"],
         },
         "input_counts": input_counts or {
             "trace_files_before_filter": len(trace_paths),
@@ -2930,6 +3021,10 @@ def field_status_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
                     "follow_up": follow_up,
                     "evidence": first_evidence(item),
                 }
+                if "symmetry_breaking_assumption" in item:
+                    row["symmetry_breaking_assumption"] = item["symmetry_breaking_assumption"]
+                if "pre_canonical_surviving_candidates" in item:
+                    row["pre_canonical_surviving_candidates"] = item["pre_canonical_surviving_candidates"]
                 rows.append(row)
     return rows
 
@@ -2978,6 +3073,14 @@ def profile_for_instruction(instruction_id: str, rows: list[dict[str, Any]], rep
             "reason": row["reason"],
             "evidence": row["evidence"],
         }
+        if "symmetry_breaking_assumption" in row:
+            by_lmul[row["lmul"]][row["field"]]["symmetry_breaking_assumption"] = row[
+                "symmetry_breaking_assumption"
+            ]
+        if "pre_canonical_surviving_candidates" in row:
+            by_lmul[row["lmul"]][row["field"]]["pre_canonical_surviving_candidates"] = row[
+                "pre_canonical_surviving_candidates"
+            ]
     return {
         "schema_version": 1,
         "mode": "real_platform_profile",

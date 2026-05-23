@@ -35,12 +35,11 @@ llvm_facing_fields:
         - "t11-vadd-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n2/trace.json"
         - "t11-vadd-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n4/trace.json"
     ProcResource:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: "YuShuXinVPipe0"
       candidates:
         - "YuShuXinVPipe0"
-        - "YuShuXinVPipe1"
-      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
+      reason: "Pure global ProcResource pipe-label mirror assignments satisfy the usable startup-free T20 pair slopes; a deterministic pipe0/pipe1 orientation was canonicalized as a symmetry-breaking assumption."
       evidence:
         - "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json"
         - "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json"
@@ -50,6 +49,38 @@ llvm_facing_fields:
         - "t11-vadd-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n12/trace.json"
         - "t11-vadd-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n2/trace.json"
         - "t11-vadd-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n4/trace.json"
+      symmetry_breaking_assumption:
+        type: "global_pipe_label_mirror"
+        equivalence: "pipe0_pipe1_global_swap"
+        scope: "connected_t20_component"
+        canonicalization: "lexicographically_smallest_internal_assignment"
+        solution_count_before_canonicalization: 2
+        canonical_assignment:
+          vadd_vv:m1: "YuShuXinVPipe0"
+          vcpop_m:m1: "YuShuXinVPipe0"
+          vdivu_vv:m1: "YuShuXinVPipe0"
+          viota_m:m1: "YuShuXinVPipe0"
+          vmseq_vv:m1: "YuShuXinVPipe0"
+          vmul_vv:m1: "YuShuXinVPipe0"
+          vredsum_vs:m1: "YuShuXinVPipe0"
+          vrgather_vv:m1: "YuShuXinVPipe0"
+          vslideup_vx:m1: "YuShuXinVPipe0"
+          vsll_vv:m1: "YuShuXinVPipe0"
+        alternate_assignments:
+          -
+            vadd_vv:m1: "YuShuXinVPipe1"
+            vcpop_m:m1: "YuShuXinVPipe1"
+            vdivu_vv:m1: "YuShuXinVPipe1"
+            viota_m:m1: "YuShuXinVPipe1"
+            vmseq_vv:m1: "YuShuXinVPipe1"
+            vmul_vv:m1: "YuShuXinVPipe1"
+            vredsum_vs:m1: "YuShuXinVPipe1"
+            vrgather_vv:m1: "YuShuXinVPipe1"
+            vslideup_vx:m1: "YuShuXinVPipe1"
+            vsll_vv:m1: "YuShuXinVPipe1"
+      pre_canonical_surviving_candidates:
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -112,12 +143,11 @@ llvm_facing_fields:
         - "t11-vadd-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n2/trace.json"
         - "t11-vadd-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n4/trace.json"
     ProcResource:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: "YuShuXinVPipe0"
       candidates:
         - "YuShuXinVPipe0"
-        - "YuShuXinVPipe1"
-      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
+      reason: "Pure global ProcResource pipe-label mirror assignments satisfy the usable startup-free T20 pair slopes; a deterministic pipe0/pipe1 orientation was canonicalized as a symmetry-breaking assumption."
       evidence:
         - "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json"
         - "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json"
@@ -127,6 +157,38 @@ llvm_facing_fields:
         - "t11-vadd-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=45:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n12/trace.json"
         - "t11-vadd-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n2/trace.json"
         - "t11-vadd-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n4/trace.json"
+      symmetry_breaking_assumption:
+        type: "global_pipe_label_mirror"
+        equivalence: "pipe0_pipe1_global_swap"
+        scope: "connected_t20_component"
+        canonicalization: "lexicographically_smallest_internal_assignment"
+        solution_count_before_canonicalization: 2
+        canonical_assignment:
+          vadd_vv:m2: "YuShuXinVPipe0"
+          vcpop_m:m2: "YuShuXinVPipe0"
+          vdivu_vv:m2: "YuShuXinVPipe0"
+          viota_m:m2: "YuShuXinVPipe0"
+          vmseq_vv:m2: "YuShuXinVPipe0"
+          vmul_vv:m2: "YuShuXinVPipe0"
+          vredsum_vs:m2: "YuShuXinVPipe0"
+          vrgather_vv:m2: "YuShuXinVPipe0"
+          vslideup_vx:m2: "YuShuXinVPipe0"
+          vsll_vv:m2: "YuShuXinVPipe0"
+        alternate_assignments:
+          -
+            vadd_vv:m2: "YuShuXinVPipe1"
+            vcpop_m:m2: "YuShuXinVPipe1"
+            vdivu_vv:m2: "YuShuXinVPipe1"
+            viota_m:m2: "YuShuXinVPipe1"
+            vmseq_vv:m2: "YuShuXinVPipe1"
+            vmul_vv:m2: "YuShuXinVPipe1"
+            vredsum_vs:m2: "YuShuXinVPipe1"
+            vrgather_vv:m2: "YuShuXinVPipe1"
+            vslideup_vx:m2: "YuShuXinVPipe1"
+            vsll_vv:m2: "YuShuXinVPipe1"
+      pre_canonical_surviving_candidates:
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -189,12 +251,11 @@ llvm_facing_fields:
         - "t11-vadd-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n6/trace.json"
         - "t11-vadd-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ReleaseAtCycles @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n8/trace.json"
     ProcResource:
-      status: "non_identifiable"
-      value: null
+      status: "inferred"
+      value: "YuShuXinVPipe0"
       candidates:
         - "YuShuXinVPipe0"
-        - "YuShuXinVPipe1"
-      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
+      reason: "Pure global ProcResource pipe-label mirror assignments satisfy the usable startup-free T20 pair slopes; a deterministic pipe0/pipe1 orientation was canonicalized as a symmetry-breaking assumption."
       evidence:
         - "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json"
         - "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json"
@@ -204,6 +265,36 @@ llvm_facing_fields:
         - "t11-vadd-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n4/trace.json"
         - "t11-vadd-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n6/trace.json"
         - "t11-vadd-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n8/trace.json"
+      symmetry_breaking_assumption:
+        type: "global_pipe_label_mirror"
+        equivalence: "pipe0_pipe1_global_swap"
+        scope: "connected_t20_component"
+        canonicalization: "lexicographically_smallest_internal_assignment"
+        solution_count_before_canonicalization: 2
+        canonical_assignment:
+          vadd_vv:m4: "YuShuXinVPipe0"
+          vdivu_vv:m4: "YuShuXinVPipe0"
+          viota_m:m4: "YuShuXinVPipe0"
+          vmseq_vv:m4: "YuShuXinVPipe0"
+          vmul_vv:m4: "YuShuXinVPipe0"
+          vredsum_vs:m4: "YuShuXinVPipe0"
+          vrgather_vv:m4: "YuShuXinVPipe0"
+          vslideup_vx:m4: "YuShuXinVPipe0"
+          vsll_vv:m4: "YuShuXinVPipe0"
+        alternate_assignments:
+          -
+            vadd_vv:m4: "YuShuXinVPipe1"
+            vdivu_vv:m4: "YuShuXinVPipe1"
+            viota_m:m4: "YuShuXinVPipe1"
+            vmseq_vv:m4: "YuShuXinVPipe1"
+            vmul_vv:m4: "YuShuXinVPipe1"
+            vredsum_vs:m4: "YuShuXinVPipe1"
+            vrgather_vv:m4: "YuShuXinVPipe1"
+            vslideup_vx:m4: "YuShuXinVPipe1"
+            vsll_vv:m4: "YuShuXinVPipe1"
+      pre_canonical_surviving_candidates:
+        - "YuShuXinVPipe0"
+        - "YuShuXinVPipe1"
     NumMicroOps:
       status: "inferred"
       value: 1

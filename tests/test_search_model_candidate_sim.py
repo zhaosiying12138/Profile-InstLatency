@@ -452,7 +452,7 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
             any(item["status"] == "skipped_register_reuse" for item in result["skipped_constraints"])
         )
 
-    def test_global_proc_mirror_solutions_remain_non_identifiable(self):
+    def test_global_proc_mirror_solutions_canonicalize_to_exact(self):
         observations = t20_proc_observations(
             [(1, 4), (2, 6), (3, 8)],
             subject="vleft",
@@ -467,13 +467,63 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
 
         row = result["rows"][("vleft", "m4")]
 
-        self.assertEqual(row["status"], "non_identifiable")
-        self.assertEqual(row["candidates"], ["YuShuXinVPipe0", "YuShuXinVPipe1"])
+        self.assertEqual(row["status"], "exact_fit")
+        self.assertEqual(row["value"], "YuShuXinVPipe0")
+        self.assertEqual(row["candidates"], ["YuShuXinVPipe0"])
         self.assertEqual(row["global_solution_count"], 2)
+        self.assertEqual(row["surviving_candidates"], ["YuShuXinVPipe0"])
         self.assertEqual(
-            row["surviving_candidates"],
-            ["YuShuXinVPipe0", "YuShuXinVPipe1"],
+            row["symmetry_breaking_assumption"]["type"],
+            "global_pipe_label_mirror",
         )
+        self.assertEqual(
+            row["symmetry_breaking_assumption"]["canonical_assignment"],
+            {
+                "vleft:m4": "YuShuXinVPipe0",
+                "vright:m4": "YuShuXinVPipe0",
+            },
+        )
+
+    def test_global_proc_non_mirror_ambiguity_remains_non_identifiable(self):
+        observations = t20_proc_observations(
+            [(1, 3), (2, 4), (3, 5)],
+            subject="vleft",
+            peer="vright",
+        )
+
+        result = solve_global_proc(
+            observations,
+            {("vleft", "m4"): 1, ("vright", "m4"): 1},
+            {("vleft", "m4"): ("pipe0", "pipe1"), ("vright", "m4"): ("any", "pipe0", "pipe1")},
+        )
+
+        row = result["rows"][("vright", "m4")]
+
+        self.assertEqual(row["status"], "non_identifiable")
+        self.assertIsNone(row["value"])
+        self.assertEqual(row["global_solution_count"], 4)
+        self.assertNotIn("symmetry_breaking_assumption", row)
+
+    def test_global_proc_conflict_remains_fail_closed(self):
+        observations = t20_proc_observations(
+            [(1, 3), (2, 4), (3, 5)],
+            subject="vleft",
+            peer="vright",
+        )
+
+        result = solve_global_proc(
+            observations,
+            {("vleft", "m4"): 1, ("vright", "m4"): 1},
+            {("vleft", "m4"): ("pipe0",), ("vright", "m4"): ("pipe0",)},
+        )
+
+        row = result["rows"][("vleft", "m4")]
+
+        self.assertEqual(row["status"], "conflict")
+        self.assertIsNone(row["value"])
+        self.assertEqual(row["global_solution_count"], 0)
+        self.assertEqual(row["candidates"], [])
+        self.assertNotIn("symmetry_breaking_assumption", row)
 
     def test_global_proc_fixed_candidate_permits_exact_propagation(self):
         observations = t20_proc_observations(
@@ -514,6 +564,54 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
                 item["status"] == "skipped_empty_candidate_domain"
                 for item in result["skipped_constraints"]
             )
+        )
+
+    def test_field_status_and_profile_preserve_symmetry_breaking_assumption(self):
+        assumption = {
+            "type": "global_pipe_label_mirror",
+            "equivalence": "pipe0_pipe1_global_swap",
+            "canonical_assignment": {"vsubject:m4": "YuShuXinVPipe0"},
+            "alternate_assignments": [{"vsubject:m4": "YuShuXinVPipe1"}],
+        }
+        report = {
+            "filters": {"mode": "real_platform_profile", "backend": "gem5_minor"},
+            "instructions": {
+                "vsubject": {
+                    "lmuls": {
+                        "m4": {
+                            "fields": {
+                                "Latency": {"status": "exact_fit", "value": 4},
+                                "ReleaseAtCycles": {"status": "exact_fit", "value": 1},
+                                "ProcResource": {
+                                    "status": "exact_fit",
+                                    "value": "YuShuXinVPipe0",
+                                    "candidates": ["YuShuXinVPipe0"],
+                                    "candidate_count": 1,
+                                    "constraint_count": 1,
+                                    "reason": "unit test canonicalized mirror ambiguity",
+                                    "symmetry_breaking_assumption": assumption,
+                                },
+                                "NumMicroOps": {"status": "exact_fit", "value": 1},
+                                "SingleIssue": {"status": "exact_fit", "value": False},
+                            }
+                        }
+                    }
+                }
+            },
+        }
+
+        field_status = search_model.build_field_status(report)
+        proc_rows = [
+            row
+            for row in field_status["rows"]
+            if row["instruction_id"] == "vsubject" and row["field"] == "ProcResource"
+        ]
+        profile = search_model.profile_for_instruction("vsubject", field_status["rows"], report)
+
+        self.assertEqual(proc_rows[0]["symmetry_breaking_assumption"], assumption)
+        self.assertEqual(
+            profile["llvm_facing_fields"]["m4"]["ProcResource"]["symmetry_breaking_assumption"],
+            assumption,
         )
 
 
