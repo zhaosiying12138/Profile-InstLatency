@@ -836,5 +836,32 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         )
 
 
+class RealPlatformOutputSelectionTest(unittest.TestCase):
+    def test_default_reference_config_is_used_when_present(self):
+        self.assertEqual(
+            search_model.default_reference_config_args([]),
+            ["config/rvv_timing_model.yaml"],
+        )
+
+    def test_tmp_output_does_not_refresh_common_artifacts(self):
+        self.assertFalse(
+            search_model.should_write_real_platform_artifacts(
+                "/tmp/profile-inst-latency-review.json",
+                Path("results/common"),
+            )
+        )
+
+    def test_common_output_refreshes_common_artifacts(self):
+        self.assertTrue(
+            search_model.should_write_real_platform_artifacts(
+                "results/common/search_model_real_platform.json",
+                Path("results/common"),
+            )
+        )
+
+    def test_stdout_refreshes_common_artifacts(self):
+        self.assertTrue(search_model.should_write_real_platform_artifacts(None, Path("results/common")))
+
+
 if __name__ == "__main__":
     unittest.main()
