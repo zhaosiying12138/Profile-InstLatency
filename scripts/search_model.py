@@ -106,6 +106,7 @@ class CandidateSearchResult:
     skipped: tuple[str, ...]
     conflict_examples: tuple[dict[str, Any], ...]
     all_observations: tuple[RawObservation, ...] = ()
+    t12_latency_constraints: tuple[T12LatencyConstraint, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -126,6 +127,17 @@ class T12LatencyConstraint:
     upper_bound: int | None = None
     filler_cadence: int | None = None
     clean_gaps: tuple[int, ...] = ()
+
+
+def t12_constraint_to_dict(constraint: T12LatencyConstraint) -> dict[str, Any]:
+    return {
+        "status": constraint.status,
+        "reason": constraint.reason,
+        "latency": constraint.latency,
+        "upper_bound": constraint.upper_bound,
+        "filler_cadence": constraint.filler_cadence,
+        "clean_gaps": list(constraint.clean_gaps),
+    }
 
 
 def parse_scalar(text: str) -> Any:
@@ -1409,6 +1421,14 @@ def check_t12_candidate_group(
     group_items: Iterable[RawObservation],
 ) -> CandidateCheck:
     constraint = t12_constraint_for_group(item, group_items, candidate_options, fixed_candidates)
+    if constraint.status in {"exact", "upper_bound"} and item not in constraint.evidence:
+        return CandidateCheck(
+            item,
+            "skipped",
+            f"T12 skipped:outside_clean_prefix;{constraint.reason}",
+            None,
+            item.delta_cycles,
+        )
     if constraint.status == "exact":
         if candidate.latency == constraint.latency:
             return CandidateCheck(item, "match", constraint.reason, constraint.latency, item.delta_cycles)
@@ -1571,6 +1591,7 @@ def candidate_result_for_group(
         skipped=tuple(dict.fromkeys(skipped)),
         conflict_examples=tuple(conflicts),
         all_observations=tuple(items),
+        t12_latency_constraints=t12_constraints_for_items(items, base_candidates, candidate_lookup),
     )
 
 
@@ -1646,6 +1667,7 @@ def solve_candidate_sets(
                     if constrained_items
                     else (),
                     all_observations=tuple(items),
+                    t12_latency_constraints=t12_constraints_for_items(items, base, candidate_lookup),
                 )
                 next_base[key] = ()
                 continue
@@ -1688,6 +1710,7 @@ def solve_candidate_sets(
                 skipped=tuple(dict.fromkeys(skipped)),
                 conflict_examples=tuple(conflicts),
                 all_observations=tuple(items),
+                t12_latency_constraints=t12_constraints_for_items(items, base, candidate_lookup),
             )
             if set(minimal) != set(base[key]):
                 changed = True
@@ -1765,7 +1788,11 @@ def candidate_field_result(
             item.effective_template_id == "T11_SELF_RAW_CHAIN" and not t11_has_latency_evidence(item)
             for item in result.all_observations
         )
-        t12_constraints = t12_constraints_for_items(result.all_observations)
+        t12_constraints = result.t12_latency_constraints or t12_constraints_for_items(result.all_observations)
+        if has_t12 and t12_constraints:
+            record["t12_latency_constraints"] = [
+                t12_constraint_to_dict(constraint) for constraint in t12_constraints
+            ]
         exact_t12_latencies = {
             constraint.latency
             for constraint in t12_constraints
@@ -1780,7 +1807,7 @@ def candidate_field_result(
             upper_bound = min(t12_upper_bounds)
             record.update(
                 {
-                    "status": "insufficient_evidence",
+                    "status": "non_identifiable",
                     "value": None,
                     "reason": (
                         "T12 consumer-gap observations provide only a conservative upper bound "
@@ -1788,18 +1815,14 @@ def candidate_field_result(
                         "candidate tuples with that bound but does not render a fake exact value."
                     ),
                     "upper_bound": upper_bound,
+                    "candidate_domain": f"0..{upper_bound}",
+                    "candidate_count": upper_bound + 1,
+                    "candidates": list(range(upper_bound + 1)),
                     "t12_latency_constraints": [
-                        {
-                            "status": constraint.status,
-                            "reason": constraint.reason,
-                            "latency": constraint.latency,
-                            "upper_bound": constraint.upper_bound,
-                            "filler_cadence": constraint.filler_cadence,
-                            "clean_gaps": list(constraint.clean_gaps),
-                        }
-                        for constraint in t12_constraints
+                        t12_constraint_to_dict(constraint) for constraint in t12_constraints
                     ],
                     "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
+                    "candidate_tuple_count": len(result.candidates),
                 }
             )
             return record
@@ -1818,15 +1841,7 @@ def candidate_field_result(
                     ),
                     "follow_up": t12_latency_follow_up(result.all_observations, instruction_id, lmul),
                     "t12_latency_constraints": [
-                        {
-                            "status": constraint.status,
-                            "reason": constraint.reason,
-                            "latency": constraint.latency,
-                            "upper_bound": constraint.upper_bound,
-                            "filler_cadence": constraint.filler_cadence,
-                            "clean_gaps": list(constraint.clean_gaps),
-                        }
-                        for constraint in t12_constraints
+                        t12_constraint_to_dict(constraint) for constraint in t12_constraints
                     ],
                     "candidate_tuples": [candidate_to_dict(candidate) for candidate in result.candidates[:32]],
                 }

@@ -71,7 +71,27 @@ def t20_observations(deltas_by_count, *, subject="vsubject", peer="vpeer", lmul=
     ]
 
 
-def t12_observations(deltas_by_gap, *, instruction_id="vproducer", lmul="m1"):
+def t10_observations(deltas_by_iterations, *, instruction_id="vfiller", lmul="m1"):
+    return [
+        raw_observation(
+            instruction_id=instruction_id,
+            lmul=lmul,
+            template_id="T10_INDEPENDENT_STREAM_THROUGHPUT",
+            delta_cycles=delta,
+            experiment_id=f"t10-{instruction_id}-{lmul}-n{iterations}",
+            body={"iterations": iterations},
+        )
+        for iterations, delta in deltas_by_iterations
+    ]
+
+
+def t12_observations(
+    deltas_by_gap,
+    *,
+    instruction_id="vproducer",
+    lmul="m1",
+    filler_instruction_id="vadd_vv",
+):
     return [
         raw_observation(
             instruction_id=instruction_id,
@@ -79,7 +99,11 @@ def t12_observations(deltas_by_gap, *, instruction_id="vproducer", lmul="m1"):
             template_id="T12_CONSUMER_RAW_GAP",
             delta_cycles=delta,
             experiment_id=f"t12-{instruction_id}-{lmul}-k{gap}",
-            body={"filler_count": gap, "consumer": "vconsumer", "filler_instruction_id": "vadd_vv"},
+            body={
+                "filler_count": gap,
+                "consumer": "vconsumer",
+                "filler_instruction_id": filler_instruction_id,
+            },
         )
         for gap, delta in deltas_by_gap
     ]
@@ -109,6 +133,11 @@ def check_t20(observations, subject_candidate, peer_candidate):
 def solve_latency_field(observations, *, max_value=8):
     key = (observations[0].instruction_id, observations[0].lmul)
     result = search_model.solve_candidate_sets({key: list(observations)}, max_value)[key]
+    return search_model.candidate_field_result("Latency", result, max_value=max_value)
+
+
+def solve_latency_field_from_groups(grouped, key, *, max_value=8):
+    result = search_model.solve_candidate_sets(grouped, max_value)[key]
     return search_model.candidate_field_result("Latency", result, max_value=max_value)
 
 
@@ -151,9 +180,11 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
     def test_t12_upper_bound_does_not_render_fake_exact_zero(self):
         field = solve_latency_field(t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4"))
 
-        self.assertIn(field["status"], {"insufficient_evidence", "non_identifiable"})
+        self.assertEqual(field["status"], "non_identifiable")
         self.assertIsNone(field["value"])
-        self.assertNotEqual(field.get("value"), 0)
+        self.assertEqual(field["upper_bound"], 4)
+        self.assertEqual(field["candidates"], [0, 1, 2, 3, 4])
+        self.assertEqual(field["candidate_count"], 5)
 
     def test_t12_regime_break_uses_clean_prefix(self):
         deltas = [(0, 4), (1, 4), (2, 4), (3, 4)]
@@ -164,6 +195,29 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
 
         self.assertEqual(field["status"], "exact_fit")
         self.assertEqual(field["value"], 4)
+        self.assertIn("t12_latency_constraints", field)
+        for entry in field["evidence"]:
+            if "k13" in entry:
+                self.assertNotIn("candidate_simulator:Latency", entry)
+
+    def test_t12_report_uses_solver_candidate_context_for_filler_cadence(self):
+        producer = t12_observations(
+            [(0, 4), (1, 4), (2, 6)],
+            instruction_id="vproducer",
+            filler_instruction_id="vfiller",
+        )
+        filler = t10_observations([(2, 10), (3, 12)], instruction_id="vfiller")
+        grouped = {
+            ("vproducer", "m1"): producer,
+            ("vfiller", "m1"): filler,
+        }
+
+        field = solve_latency_field_from_groups(grouped, ("vproducer", "m1"))
+
+        self.assertEqual(field["status"], "exact_fit")
+        self.assertEqual(field["value"], 4)
+        self.assertEqual(field["t12_latency_constraints"][0]["filler_cadence"], 2)
+        self.assertIn("candidate_options:vfiller", field["t12_latency_constraints"][0]["reason"])
 
 
 if __name__ == "__main__":
