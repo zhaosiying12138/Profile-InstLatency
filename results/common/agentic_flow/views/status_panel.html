@@ -10,23 +10,24 @@
   code { background: #f6f8fa; padding: 0.1rem 0.25rem; }
 </style>
 <h1>RVV Profile Workflow Status</h1>
-<p>Round 9 field-status hash refresh package. Active worker: <code>Round9FieldStatusHashRefresh</code>. Scope: <code>results/common/real_platform_risk_acceptance_request.json</code> and <code>results/common/agentic_flow/**</code>.</p>
+<p>Round 10 focused-evidence refresh package. Active worker: <code>Round10FocusedEvidenceRefresh</code>. Scope: <code>results/common/agentic_flow/**</code> and <code>.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md</code>.</p>
 <table>
   <tr><th>Area</th><th>Status</th></tr>
-  <tr><td>RLCR lineage</td><td>Rounds 2-9 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; Round 9 is the current capture task.</td></tr>
-  <tr><td>Real-platform coverage</td><td>7190 checked-in <code>results/r01</code>/<code>results/r02</code> traces; 178/178 required real gem5 groups; 3595 stable repeat groups; 0 unstable.</td></tr>
-  <tr><td>Field status</td><td>150 rows: 111 inferred, 39 non-identifiable, 0 conflict, 0 insufficient-evidence.</td></tr>
+  <tr><td>RLCR lineage</td><td>Rounds 2-10 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; Round 10 is the current capture task.</td></tr>
+  <tr><td>Real-platform coverage</td><td>7514 checked-in <code>results/r01</code>/<code>results/r02</code> traces; 178/178 required real gem5 groups; 3757 stable repeat groups; 0 unstable.</td></tr>
+  <tr><td>Field status</td><td>150 rows: 112 inferred, 38 non-identifiable, 0 conflict, 0 insufficient-evidence.</td></tr>
   <tr><td>Round 4 simulator state</td><td>Subject-side T20 pair constraints and T12 clean-prefix constraints are reflected in regenerated artifacts.</td></tr>
   <tr><td>Round 5 code worker</td><td>Worker Anscombe commit <code>773f27d6</code> is accepted by Round 5 review for the candidate-simulator scope: peer-side T20 constraints and the T12 short-sweep guard.</td></tr>
   <tr><td>Round 6 approval gate</td><td>Worker Gibbs commit <code>ea7c0aca</code> is accepted by Round 6 review for approval-gate behavior: current hash binding and accepted risk scope are required.</td></tr>
   <tr><td>Round 8 review</td><td>AC-16 remained blocked. The review also found the pre-Round-9 field-status sidecar undercounted approval-bound <code>non_identifiable</code> rows.</td></tr>
   <tr><td>Round 9 refresh</td><td>Code-worker commit <code>f6614b00</code> fixed field-status blocking counts: <code>blocking_total</code> is 39 and <code>blocking_status_counts.non_identifiable</code> is 39.</td></tr>
-  <tr><td>Round 9 request</td><td><code>results/common/real_platform_risk_acceptance_request.json</code> is pending and not approved. It lists all 39 unresolved risk IDs, binds inventory <code>671f5ca4...</code> and field status <code>0146ac9c...</code>, and records the exact real-platform gate command.</td></tr>
-  <tr><td>Code-worker capture</td><td>Normalized prompt, contract, output, verification, and tool-call artifacts are registered for empty-context replay.</td></tr>
-  <tr><td>Current hashes</td><td>Inventory <code>671f5ca4...</code>; field status <code>0146ac9c...</code>; search <code>d31ef890...</code>; quality <code>b63c3bfa...</code>.</td></tr>
-  <tr><td>Remaining blockers</td><td>39 unresolved non-identifiable rows require stronger evidence or explicit current-hash-bound human acceptance.</td></tr>
-  <tr><td>Real-platform gate</td><td><code>NOT_READY</code>; fail-closed because <code>Gate status: PASS</code>, a machine-readable approval artifact, and accepted scope for 39 unresolved risks are absent.</td></tr>
+  <tr><td>Round 10 refresh</td><td>Commits <code>f3bb4552</code>, <code>cd71b7ed</code>, <code>c1032a2c</code>, and <code>73b99c2e</code> add T20 m4 no-reuse evidence, incremental run-suite filters, focused T12 scalar-filler evidence, and refreshed real-platform artifacts. <code>viota_m</code> <code>m4</code> <code>Latency</code> is now inferred as <code>4</code>.</td></tr>
+  <tr><td>Round 10 request</td><td><code>results/common/real_platform_risk_acceptance_request.json</code> is pending and not approved. It lists all 38 unresolved risk IDs, binds inventory <code>728e0fd4...</code> and field status <code>9669b1f7...</code>, and records the exact real-platform gate command.</td></tr>
+  <tr><td>Capture artifacts</td><td>Normalized prompt, contract, output, verification, tool-call, and coordinator artifacts are registered for empty-context replay.</td></tr>
+  <tr><td>Current hashes</td><td>Inventory <code>728e0fd4...</code>; field status <code>9669b1f7...</code>; search <code>bf06a095...</code>; quality <code>1a46e7eb...</code>.</td></tr>
+  <tr><td>Remaining blockers</td><td>38 unresolved non-identifiable rows require stronger evidence or explicit current-hash-bound human acceptance.</td></tr>
+  <tr><td>Real-platform gate</td><td><code>NOT_READY</code>; fail-closed because <code>Gate status: PASS</code>, a machine-readable approval artifact, and accepted scope for 38 unresolved risks are absent.</td></tr>
   <tr><td>Approval boundary</td><td>No <code>results/common/*approval*</code> artifact exists. Present the pending request to the human before creating any future <code>human_approval.json</code>.</td></tr>
-  <tr><td>Humanize2 capture</td><td>Replay, boards, events, cartridge, prompt, contract, output, verification, and tool-call artifacts now include the Round 9 field-status hash refresh handoff.</td></tr>
+  <tr><td>Humanize2 capture</td><td>Replay, boards, events, cartridge, prompt, contract, output, verification, tool-call, coordinator artifacts, and the Round 10 RLCR summary now include the focused-evidence refresh handoff.</td></tr>
 </table>
 </html>

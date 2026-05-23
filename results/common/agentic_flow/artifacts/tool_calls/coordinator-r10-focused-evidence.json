@@ -1,0 +1,65 @@
+{
+  "id": "tool-coordinator-r10-focused-evidence",
+  "round": 10,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "capture_type": "normalized_reconstruction",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "source_commits": [
+    "f3bb455245cce28b1f61fd7447e1056e5c9903b2",
+    "cd71b7ed3aa9d222306af23a51fe87efd76eddf9",
+    "c1032a2c01949ecb9d651473dec1aa88695bb484",
+    "73b99c2e1e95ed7828c5ce76d750a909bc83b5c5"
+  ],
+  "commands": [
+    "python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T20_PAIRWISE_PIPE_CLASSIFICATION --id-regex 'resource-noreuse$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor",
+    "python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T12_CONSUMER_RAW_GAP --id-regex 'fscalar-add$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor",
+    "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output results/common/search_model_real_platform.json --format json",
+    "python3 scripts/analyze.py --all --root results --aggregate results/common/experiment_quality.md --mismatch-report results/common/mismatch_report.md --inventory results/common/real_platform_inventory.json",
+    "python3 -m unittest tests.test_run_suite_selection tests.test_gen_asm_t20_coverage tests.test_gen_asm_t12_focused tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval",
+    "python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py",
+    "python3 -m pytest -q",
+    "git diff --check",
+    "git diff --cached --check"
+  ],
+  "outputs": [
+    "results/common/search_model_real_platform.json",
+    "results/common/real_platform_field_status.json",
+    "results/common/real_platform_inventory.json",
+    "results/common/experiment_quality.md",
+    "results/common/real_platform_risk_acceptance_request.json",
+    "results/*/profile.real_platform.yaml",
+    "results/r01/**/trace.json",
+    "results/r02/**/trace.json"
+  ],
+  "evidence_delta": {
+    "t20_resource_noreuse_experiments": 108,
+    "t12_scalar_filler_experiments": 54,
+    "checked_in_r01_r02_trace_files": 7514,
+    "stable_repeat_groups": 3757,
+    "unstable_repeat_groups": 0,
+    "field_rows": {
+      "total": 150,
+      "inferred": 112,
+      "non_identifiable": 38,
+      "conflict": 0,
+      "insufficient_evidence": 0
+    },
+    "resolved_row": {
+      "instruction_id": "viota_m",
+      "lmul": "m4",
+      "field": "Latency",
+      "status": "inferred",
+      "candidate": 4
+    }
+  },
+  "hashes": {
+    "results/common/real_platform_inventory.json": "728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231",
+    "results/common/real_platform_field_status.json": "9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b",
+    "results/common/search_model_real_platform.json": "bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623",
+    "results/common/experiment_quality.md": "1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae"
+  },
+  "approval_artifact_created": false,
+  "real_platform_gate": "fail_closed_missing_pass_missing_approval_38_unresolved_non_identifiable",
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/coordinator-r10-focused-evidence.md"
+}

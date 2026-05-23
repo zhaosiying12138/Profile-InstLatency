@@ -1,11 +1,11 @@
 # Humanize2 Replay Notes
 
-Status: Round 9 field-status hash refresh package after code-worker commit
-`f6614b00177e4139c8cfcf53b349b69478942b66`. This is intentionally not a
+Status: Round 10 focused-evidence refresh package after commit
+`73b99c2e1e95ed7828c5ce76d750a909bc83b5c5`. This is intentionally not a
 completion claim: Round 5 review accepted commit `773f27d6` for the
 candidate-simulator scope and Round 6 review accepted commit `ea7c0aca` for
 approval-gate behavior, but the real-platform gate still lacks explicit
-machine-readable human approval or stronger evidence for 39 unresolved
+machine-readable human approval or stronger evidence for 38 unresolved
 `non_identifiable` rows.
 
 ## Checkout
@@ -72,6 +72,10 @@ Important files for replay:
 - `round-9-prompt.md`: dispatches the fix for the field-status summary
   undercount and requires refreshed request hashes and Humanize2 capture.
 - `round-9-summary.md`: records the Round 9 code-worker result.
+- `round-10-prompt.md`: dispatches stronger T20/T12 evidence work and asks the
+  capture worker to update Humanize2 state and write this Round 10 summary.
+- `round-10-summary.md`: records the focused evidence refresh and keeps the
+  real-platform gate fail-closed.
 
 Do not edit `.humanize/rlcr/**` from worker tasks. This replay records where
 those files are read, not a modification of RLCR state.
@@ -95,27 +99,28 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 9 approval-bound hashes after field-status summary commit
-`f6614b00`:
+Current Round 10 approval-bound hashes after focused evidence commit
+`73b99c2e`:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `results/common/real_platform_inventory.json` | `671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37` |
-| `results/common/real_platform_field_status.json` | `0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195` |
-| `results/common/search_model_real_platform.json` | `d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73` |
-| `results/common/experiment_quality.md` | `b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e` |
+| `results/common/real_platform_inventory.json` | `728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231` |
+| `results/common/real_platform_field_status.json` | `9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b` |
+| `results/common/search_model_real_platform.json` | `bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623` |
+| `results/common/experiment_quality.md` | `1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae` |
 
 Current source-backed counts:
 
-- `find results/r01 results/r02 -name trace.json | wc -l` returns `7190`.
+- `find results/r01 results/r02 -name trace.json | wc -l` returns `7514`.
 - `results/common/experiment_quality.md` reports 178/178 required real gem5
-  groups, 3595 stable repeat groups, and 0 unstable repeat groups.
-- `results/common/real_platform_field_status.json` has 150 rows: 111
-  `inferred`, 39 `non_identifiable`, 0 `conflict`, and 0
+  groups, 3757 stable repeat groups, and 0 unstable repeat groups.
+- `results/common/real_platform_field_status.json` has 150 rows: 112
+  `inferred`, 38 `non_identifiable`, 0 `conflict`, and 0
   `insufficient_evidence`.
 - `results/common/real_platform_field_status.json` now reports
-  `summary.blocking_total = 39` and
-  `summary.blocking_status_counts.non_identifiable = 39`.
+  `summary.blocking_total = 38` and
+  `summary.blocking_status_counts.non_identifiable = 38`.
+- `viota_m` `m4` `Latency` is inferred with candidate `4`.
 - `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
   `Confidence: unresolved_llvm_field_status`, and `Human approval status:
   absent`.
@@ -182,10 +187,10 @@ sha256sum results/common/real_platform_inventory.json results/common/real_platfo
 git diff --check
 ```
 
-The real-platform gate command is expected to return nonzero until a current,
-machine-readable human approval artifact exists, covers the 39 unresolved
-field-status risks, binds the current inventory and field-status hashes, and
-the quality report says `Gate status: PASS`.
+At the Round 5 boundary, the real-platform gate command was expected to return
+nonzero until a machine-readable human approval artifact existed, covered the
+39 unresolved field-status risks, bound the then-current inventory and
+field-status hashes, and the quality report said `Gate status: PASS`.
 
 ## Round 6 Approval-Gate Capture Package
 
@@ -261,15 +266,15 @@ Forbidden write scope:
 - any new file under `results/common` whose name contains `approval`
 
 At the Round 7 boundary, the request was bound to the then-current Round 6
-hashes. The active request metadata has since been superseded by the Round 9
-hash refresh below:
+hashes. The active request metadata has since been superseded by the Round 10
+focused-evidence refresh below:
 
 - Inventory:
   `4f25f066db09e0212200d48a181fd582e685701c16d18ca045dbc4738e4fb54b`
 - Field status:
   `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`
 
-It lists all 39 unresolved risk IDs from
+It listed all 39 unresolved risk IDs from
 `results/common/real_platform_inventory.json` `field_status.unresolved`.
 
 Human decision choices:
@@ -392,8 +397,83 @@ python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile
 git diff --check
 ```
 
+At the Round 9 boundary, the real-platform gate remained expected to return
+nonzero until a machine-readable human approval artifact existed, covered the
+39 unresolved field-status risks, bound the then-current inventory and
+field-status hashes, and the quality report said `Gate status: PASS`.
+
+## Round 10 Focused Evidence Refresh Package
+
+Round 10 evidence commits:
+
+```text
+f3bb455245cce28b1f61fd7447e1056e5c9903b2  Add T20 m4 no-reuse ProcResource evidence
+cd71b7ed3aa9d222306af23a51fe87efd76eddf9  Add targeted run_suite selection filters
+c1032a2c01949ecb9d651473dec1aa88695bb484  Add focused T12 scalar-filler evidence path
+73b99c2e1e95ed7828c5ce76d750a909bc83b5c5  Refresh real-platform focused evidence
+```
+
+The Round 10 capture worker is a normalized reconstruction:
+
+- Prompt:
+  `artifacts/prompts/round-10-focused-evidence-capture-worker.md`
+- Contract:
+  `artifacts/worker_contracts/worker-r10-capture.md`
+- Output:
+  `artifacts/worker_outputs/worker-r10-capture.md`
+- Verification:
+  `artifacts/verification/worker-r10-capture.md`
+- Tool calls:
+  `artifacts/tool_calls/worker-r10-capture-normalized.json`
+- Coordinator output:
+  `artifacts/worker_outputs/coordinator-r10-focused-evidence.md`
+- Coordinator verification:
+  `artifacts/verification/coordinator-r10-focused-evidence.md`
+- Coordinator tool calls:
+  `artifacts/tool_calls/coordinator-r10-focused-evidence.json`
+
+Current approval-bound hashes:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `results/common/real_platform_inventory.json` | `728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231` |
+| `results/common/real_platform_field_status.json` | `9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b` |
+| `results/common/search_model_real_platform.json` | `bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623` |
+| `results/common/experiment_quality.md` | `1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae` |
+
+Request state:
+
+- `round`: 10
+- `request_worker`: `Round10FocusedEvidenceRefresh`
+- `status`: pending
+- `request_status`: not approved
+- `decision_status`: not approved
+- `gate_status`: not submitted
+- `approved`, `is_gate_input`, `is_approval_artifact`, and `gate_consumed`:
+  false
+- `risk_ids` and `risk_scope.risk_ids`: the exact 38 IDs from
+  `results/common/real_platform_inventory.json` `field_status.unresolved`
+
+Round 10 incremental real gem5 commands:
+
+```bash
+python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T20_PAIRWISE_PIPE_CLASSIFICATION --id-regex 'resource-noreuse$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor
+python3 scripts/run_suite.py --all --generated-root experiments/generated --results-root results --template-id T12_CONSUMER_RAW_GAP --id-regex 'fscalar-add$' --missing --repeat 2 --mode real_platform_profile --backend gem5_minor
+```
+
+Round 10 regeneration and verification commands captured from the coordinator:
+
+```bash
+python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output results/common/search_model_real_platform.json --format json
+python3 scripts/analyze.py --all --root results --aggregate results/common/experiment_quality.md --mismatch-report results/common/mismatch_report.md --inventory results/common/real_platform_inventory.json
+python3 -m unittest tests.test_run_suite_selection tests.test_gen_asm_t20_coverage tests.test_gen_asm_t12_focused tests.test_search_model_candidate_sim tests.test_check_calibration_gate_approval
+python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py
+python3 -m pytest -q
+```
+
+The unit-test and pytest commands passed with 33 tests. Synthetic gate passed.
 The real-platform gate remains expected to return nonzero until a current,
-machine-readable human approval artifact exists, covers the 39 unresolved
+machine-readable human approval artifact exists, covers the 38 unresolved
 field-status risks, binds the current inventory and field-status hashes, and
 the quality report says `Gate status: PASS`.
 
@@ -556,6 +636,15 @@ Round 9 code-worker commit `f6614b00` fixed the field-status summary so
 real-platform artifacts, and refreshed request hashes. This capture package
 updates the request metadata to `Round9FieldStatusHashRefresh`, records current
 hashes, and keeps the request pending, not approved, and not gate-consumed.
+
+### Round 10 Focused Evidence Refresh
+
+Round 10 added T20 m4 no-reuse ProcResource evidence, targeted run-suite
+selection filters, focused T12 scalar-filler evidence, and refreshed checked-in
+real-platform artifacts. The unresolved field-status risk count fell from 39
+to 38 because `viota_m` `m4` `Latency` is now inferred as candidate `4`.
+The active request metadata is `Round10FocusedEvidenceRefresh`; it remains
+pending, not approved, not a gate input, and not gate-consumed.
 
 ## Humanize2 Hub Path
 

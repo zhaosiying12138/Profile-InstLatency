@@ -1,7 +1,7 @@
 # Humanize2 Manifest Notes
 
-Status: Round 9 refreshed package after the Round 8 review blocker and Round
-9 code-worker commit `f6614b00177e4139c8cfcf53b349b69478942b66`.
+Status: Round 10 focused-evidence refresh package after commit
+`73b99c2e1e95ed7828c5ce76d750a909bc83b5c5`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -18,20 +18,20 @@ Current mode labels:
 Current gate state:
 
 - Synthetic calibration: pass, see `results/common/mismatch_report.md`.
-- Real gem5 checked-in r01/r02 traces: 7190, with 178/178 required groups and
-  3595 stable repeat groups.
-- Real-platform field status: 150 rows, 111 inferred, 39 non-identifiable, 0
+- Real gem5 checked-in r01/r02 traces: 7514, with 178/178 required groups and
+  3757 stable repeat groups.
+- Real-platform field status: 150 rows, 112 inferred, 38 non-identifiable, 0
   conflict, 0 insufficient-evidence.
 - Real-platform gate: `NOT_READY`, see `results/common/experiment_quality.md`.
   The approval artifact is absent and must not be created without explicit
   user approval tied to current risk IDs and hashes.
-- Field-status blocking summary: `blocking_total: 39` and
-  `blocking_status_counts.non_identifiable: 39`.
+- Field-status blocking summary: `blocking_total: 38` and
+  `blocking_status_counts.non_identifiable: 38`.
 - Risk request: `results/common/real_platform_risk_acceptance_request.json`
-  exists as a Round 9 pending, not-approved request for human decision. It is
+  exists as a Round 10 pending, not-approved request for human decision. It is
   not consumed by the gate and is not an approval artifact.
-- Current Round 9 hashes are `671f5ca4...` for inventory, `0146ac9c...` for
-  field status, `d31ef890...` for real search, and `b63c3bfa...` for
+- Current Round 10 hashes are `728e0fd4...` for inventory, `9669b1f7...` for
+  field status, `bf06a095...` for real search, and `1a46e7eb...` for
   experiment quality. Future approval must bind at least the current inventory
   and field-status hashes and must accept the current unresolved risk scope.
   Older Round 4 through Round 7 hashes remain only in explicitly historical
@@ -72,6 +72,13 @@ Round 6 ownership:
 - Round 9 code-worker commit `f6614b00` fixed that sidecar inconsistency,
   regenerated current hashes, and left the approval boundary intact. This
   capture worker refreshes only the request metadata and Humanize2 state.
+- Round 10 commits `f3bb4552`, `cd71b7ed`, `c1032a2c`, and `73b99c2e`
+  added stronger T20 m4 no-reuse ProcResource evidence, targeted incremental
+  suite selection, focused T12 scalar-filler evidence, and refreshed checked-in
+  real-platform artifacts. The field status is now 112 inferred and 38
+  non-identifiable; `viota_m` `m4` `Latency` is the newly resolved inferred
+  row. The request remains pending, not approved, not a gate input, and not
+  gate-consumed.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

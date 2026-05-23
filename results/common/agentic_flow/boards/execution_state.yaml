@@ -1,5 +1,5 @@
 schema_version: 1
-round: 9
+round: 10
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,12 +12,13 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 9
-  status: awaiting_human_risk_decision_after_field_status_hash_refresh
+  round: 10
+  status: awaiting_human_risk_decision_after_focused_evidence_refresh
   owner_scope:
     - results/common/real_platform_risk_acceptance_request.json
     - results/common/agentic_flow/**
-  task: refresh_round9_request_semantics_and_humanize2_capture
+    - .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
+  task: capture_round10_stronger_evidence_and_rlcr_summary
   round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   round5_code_worker_review_status: accepted_for_candidate_simulator_scope
   approval_gate_fixes_owned_by_round6_worker: true
@@ -27,42 +28,64 @@ current_boundary:
   round8_review_status: request_changes_ac16_blocked_and_field_status_summary_undercounted_non_identifiable
   round9_code_worker_commit: f6614b00177e4139c8cfcf53b349b69478942b66
   round9_code_worker_status: field_status_summary_counts_non_identifiable_as_blocking
-  request_worker: Round9FieldStatusHashRefresh
+  round10_t20_resource_noreuse_commit: f3bb455245cce28b1f61fd7447e1056e5c9903b2
+  round10_run_suite_selection_commit: cd71b7ed3aa9d222306af23a51fe87efd76eddf9
+  round10_t12_scalar_filler_commit: c1032a2c01949ecb9d651473dec1aa88695bb484
+  round10_real_platform_refresh_commit: 73b99c2e1e95ed7828c5ce76d750a909bc83b5c5
+  round10_status: stronger_evidence_reduced_non_identifiable_risks_from_39_to_38
+  request_worker: Round10FocusedEvidenceRefresh
   forbidden_paths:
+    - scripts/run_suite.py
+    - scripts/gen_asm.py
     - scripts/search_model.py
+    - scripts/analyze.py
+    - scripts/check_calibration_gate.py
     - tests/test_search_model_candidate_sim.py
+    - tests/test_run_suite_selection.py
+    - tests/test_gen_asm_t20_coverage.py
+    - tests/test_gen_asm_t12_focused.py
+    - tests/test_check_calibration_gate_approval.py
     - results/common/search_model_real_platform.json
     - results/common/real_platform_field_status.json
     - results/common/real_platform_inventory.json
     - results/common/experiment_quality.md
     - results/*/profile.real_platform.yaml
-    - .humanize/rlcr/**
+    - experiments/generated/**
+    - results/r01/**
+    - results/r02/**
+    - .humanize/rlcr/** except .humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md
 phase_status:
   phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
-  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
+  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_38_unresolved_risks
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round9_hash_refresh_captured_without_ac16_completion_claim
+  humanize2_capture: round10_focused_evidence_refresh_captured_without_ac16_completion_claim
 real_platform_evidence:
-  checked_in_r01_r02_trace_files: 7190
+  checked_in_r01_r02_trace_files: 7514
   required_real_gem5_groups: 178
   covered_required_real_gem5_groups: 178
-  stable_repeat_groups: 3595
+  stable_repeat_groups: 3757
   unstable_repeat_groups: 0
   field_rows:
     total: 150
-    inferred: 111
-    non_identifiable: 39
+    inferred: 112
+    non_identifiable: 38
     conflict: 0
     insufficient_evidence: 0
+  resolved_in_round10:
+    instruction_id: viota_m
+    lmul: m4
+    field: Latency
+    status: inferred
+    candidate: 4
   artifact_hashes:
-    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
-    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
-    search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
-    experiment_quality_md: b63c3bfa1d9c943660a21b3427bc3b9f3402ee6fe6fc5d7a8af5014e197ebb1e
+    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
+    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
+    search_model_real_platform_json: bf06a095edff3a56d03e3cb4223b590834783964ec7c19eaf2f876facdf9d623
+    experiment_quality_md: 1a46e7ebfdbe692b3be557cad5c05bcbbc89812cf5c6f886f98a6b314f492fae
   field_status_summary:
-    blocking_total: 39
+    blocking_total: 38
     blocking_status_counts:
-      non_identifiable: 39
+      non_identifiable: 38
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
@@ -80,7 +103,7 @@ gates:
     expected_failure_reasons:
       - quality report lacks exact Gate status: PASS
       - machine-readable human approval file under results/common is absent
-      - 39 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
+      - 38 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
     request_artifact: results/common/real_platform_risk_acceptance_request.json
 approval_boundary:
   explicit_human_approval_required: true
@@ -89,8 +112,8 @@ approval_boundary:
   risk_acceptance_request:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
-    round: 9
-    request_worker: Round9FieldStatusHashRefresh
+    round: 10
+    request_worker: Round10FocusedEvidenceRefresh
     gate_consumed: false
     is_approval_artifact: false
     present_to_human_before_human_approval_json: true
@@ -100,10 +123,10 @@ approval_boundary:
       - accept selected listed risk IDs
   note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
   must_bind_to_hashes:
-    real_platform_inventory_json: 671f5ca4a295aca29a62ee6027b4f6cd756cc49572f0558a98ee8dbf786fbe37
-    real_platform_field_status_json: 0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195
+    real_platform_inventory_json: 728e0fd4570dc92e28f1683123bfde3e07d3903dbe026abc745766c0e06e0231
+    real_platform_field_status_json: 9669b1f7ab8881d22d9a3072d0a9fe8fbe70654f8d1b6a3d75c9a37e184eed6b
   accepted_risk_scope_required: true
-  unresolved_non_identifiable_risks: 39
+  unresolved_non_identifiable_risks: 38
 remaining_blockers:
-  - 39 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
+  - 38 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
   - AC-16 remains blocked by missing explicit human approval.

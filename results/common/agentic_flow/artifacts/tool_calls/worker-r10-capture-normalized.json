@@ -1,0 +1,102 @@
+{
+  "id": "tool-worker-r10-capture-normalized",
+  "round": 10,
+  "worker": "Round10FocusedEvidenceRefresh",
+  "primitive": "h2-agent",
+  "tool_surface": "shell",
+  "capture_type": "normalized_reconstruction",
+  "source_commit": "73b99c2e1e95ed7828c5ce76d750a909bc83b5c5",
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "sources": [
+    ".humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md",
+    "git show --format=fuller --name-only f3bb4552 cd71b7ed c1032a2c 73b99c2e",
+    "results/common/real_platform_inventory.json",
+    "results/common/real_platform_field_status.json",
+    "results/common/real_platform_risk_acceptance_request.json",
+    "results/common/experiment_quality.md"
+  ],
+  "state_changes": [
+    {
+      "kind": "humanize2_capture",
+      "summary": "Register the Round 10 focused-evidence refresh in boards, events, replay, cartridge, status view, manifest notes, worker/coordinator outputs, verification, and tool-call capture.",
+      "paths": [
+        "results/common/agentic_flow/h2_primitives.yaml",
+        "results/common/agentic_flow/events.jsonl",
+        "results/common/agentic_flow/replay.md",
+        "results/common/agentic_flow/h2_manifest_notes.md",
+        "results/common/agentic_flow/boards/execution_state.yaml",
+        "results/common/agentic_flow/boards/experiment_matrix.yaml",
+        "results/common/agentic_flow/boards/goal_tracker.yaml",
+        "results/common/agentic_flow/boards/inference_state.yaml",
+        "results/common/agentic_flow/boards/simulator_selection.yaml",
+        "results/common/agentic_flow/views/status_panel.html",
+        "results/common/agentic_flow/cartridges/rvv-profile-workflow.draft.html"
+      ]
+    },
+    {
+      "kind": "rlcr_summary",
+      "summary": "Write the Round 10 RLCR summary while requesting goal-tracker updates instead of editing goal-tracker state.",
+      "paths": [
+        ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "worker-r10-parse-h2-json-yaml-jsonl",
+      "category": "parse",
+      "command": "python3 - <<'PY'\nimport glob, json\nfrom pathlib import Path\nimport yaml\nfor path in ['results/common/agentic_flow/h2_primitives.yaml'] + glob.glob('results/common/agentic_flow/boards/*.yaml'):\n    with open(path, 'r', encoding='utf-8') as f:\n        yaml.safe_load(f)\nfor path in glob.glob('results/common/agentic_flow/artifacts/tool_calls/*.json') + ['results/common/real_platform_risk_acceptance_request.json']:\n    with open(path, 'r', encoding='utf-8') as f:\n        json.load(f)\nwith open('results/common/agentic_flow/events.jsonl', 'r', encoding='utf-8') as f:\n    for line in f:\n        if line.strip():\n            json.loads(line)\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "parse ok: yaml=6 json=17 events=60"
+    },
+    {
+      "id": "worker-r10-structural-request-and-blocking",
+      "category": "structural",
+      "command": "python3 - <<'PY'\nimport hashlib, json\nfrom pathlib import Path\ninv = json.loads(Path('results/common/real_platform_inventory.json').read_text())\nstatus = json.loads(Path('results/common/real_platform_field_status.json').read_text())\nreq = json.loads(Path('results/common/real_platform_risk_acceptance_request.json').read_text())\nexpected_hashes = {\n    'inventory_sha256': hashlib.sha256(Path('results/common/real_platform_inventory.json').read_bytes()).hexdigest(),\n    'real_platform_field_status_sha256': hashlib.sha256(Path('results/common/real_platform_field_status.json').read_bytes()).hexdigest(),\n    'search_model_real_platform_sha256': hashlib.sha256(Path('results/common/search_model_real_platform.json').read_bytes()).hexdigest(),\n    'experiment_quality_sha256': hashlib.sha256(Path('results/common/experiment_quality.md').read_bytes()).hexdigest(),\n}\nids = [row['risk_id'] for row in inv['field_status']['unresolved']]\nassert status['summary']['blocking_total'] == 38\nassert status['summary']['blocking_status_counts']['non_identifiable'] == 38\nassert req['round'] == 10\nassert req['request_worker'] == 'Round10FocusedEvidenceRefresh'\nassert req['status'] == 'pending'\nassert req['request_status'] == 'not_approved'\nassert req['decision_status'] == 'not_approved'\nassert req['gate_status'] == 'not_submitted'\nassert req['approved'] is False\nassert req['is_gate_input'] is False\nassert req['is_approval_artifact'] is False\nassert req['gate_consumed'] is False\nassert req['current_hashes'] == expected_hashes\nassert req['risk_ids'] == ids\nassert req['risk_scope']['risk_ids'] == ids\nassert len(ids) == 38\nassert not list(Path('results/common').glob('*approval*'))\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "structural ok: blocking_total=38 non_identifiable=38 risk_ids=38 hashes=current human_approval_files=0"
+    },
+    {
+      "id": "worker-r10-summary-format",
+      "category": "markdown",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nsummary = Path('.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md').read_text()\nfor marker in ['## Work Completed','## Files Changed','## Validation','## Remaining Items','## Goal Tracker Update Request','## BitLesson Delta','- Action: none','- Lesson ID(s): NONE']:\n    assert marker in summary, marker\nPY",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "summary format ok"
+    },
+    {
+      "id": "worker-r10-diff-check",
+      "category": "whitespace",
+      "command": "git diff --check",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r10-cached-diff-check",
+      "category": "whitespace",
+      "command": "git diff --cached --check",
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "reported_result": "passed"
+    }
+  ],
+  "outputs": [
+    "results/common/agentic_flow/artifacts/prompts/round-10-focused-evidence-capture-worker.md",
+    "results/common/agentic_flow/artifacts/worker_contracts/worker-r10-capture.md",
+    "results/common/agentic_flow/artifacts/worker_outputs/worker-r10-capture.md",
+    "results/common/agentic_flow/artifacts/verification/worker-r10-capture.md",
+    "results/common/agentic_flow/artifacts/tool_calls/worker-r10-capture-normalized.json",
+    "results/common/agentic_flow/artifacts/worker_outputs/coordinator-r10-focused-evidence.md",
+    "results/common/agentic_flow/artifacts/verification/coordinator-r10-focused-evidence.md",
+    "results/common/agentic_flow/artifacts/tool_calls/coordinator-r10-focused-evidence.json",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"
+  ],
+  "request_status": "not_approved",
+  "approval_artifact_created": false,
+  "gate_consumed": false,
+  "status": "capture_pending_validation_fail_closed_pending_human_decision"
+}

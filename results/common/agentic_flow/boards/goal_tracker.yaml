@@ -1,14 +1,14 @@
 schema_version: 1
-round: 9
+round: 10
 source_plan: docs/plan.md
 rlcr_goal_tracker: .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
 ultimate_goal: profile selected non-memory RVV instruction timing and preserve LLVM schedule-model evidence
 lesson_ids: NONE
 acceptance_focus:
-  - AC-9 candidate-simulator scope was accepted by Round 5 review for peer-side T20 constraints and the T12 short-sweep guard in commit 773f27d6.
-  - AC-12 now includes the normalized Round 5 code-worker package, the Round 6 Gibbs approval-gate package, the Round 7 request-worker package, and the Round 9 field-status hash refresh package with prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
-  - AC-13 now makes empty-context replay reconstruct the Round 5 code-worker scope, Round 6 approval-gate scope, Round 7 pending request scope, and Round 9 current hash refresh, including the request path, gate command, current hashes, 39 unresolved risk IDs, field-status blocking counts, and approval boundary.
-  - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 39 non-identifiable risks.
+  - AC-9 candidate-simulator scope was accepted by Round 5 review for peer-side T20 constraints and the T12 short-sweep guard in commit 773f27d6; Round 10 adds stronger T20 m4 resource-noreuse evidence.
+  - AC-12 now includes the normalized Round 5 code-worker package, the Round 6 Gibbs approval-gate package, the Round 7 request-worker package, the Round 9 field-status hash refresh package, and the Round 10 focused-evidence capture package with prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, status view, and coordinator artifacts.
+  - AC-13 now makes empty-context replay reconstruct the Round 5 code-worker scope, Round 6 approval-gate scope, Round 7 pending request scope, Round 9 hash refresh, and Round 10 stronger-evidence refresh, including the request path, gate command, current hashes, 38 unresolved risk IDs, field-status blocking counts, and approval boundary.
+  - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 38 non-identifiable risks.
 worker_split:
   A: LLVM read-only extractor and mapping docs
   B: gem5 RVV kill-check assembly and runner
@@ -27,8 +27,9 @@ worker_split:
   Round7RiskRequest: Round 7 pending risk-acceptance request artifact and Humanize2 capture
   Round8Review: Round 8 review kept AC-16 blocked and identified field-status blocking-count drift
   Round9FieldStatusHashRefresh: Round 9 pending request hash refresh and Humanize2 capture after field-status blocking-count fix
-active_worker: Round9FieldStatusHashRefresh
-status: round9_request_hashes_refreshed_pending_human_decision
+  Round10FocusedEvidenceRefresh: Round 10 focused T20/T12 evidence refresh, current request metadata, and Humanize2 capture after commit 73b99c2e
+active_worker: Round10FocusedEvidenceRefresh
+status: round10_focused_evidence_refreshed_pending_human_decision
 round_status:
   round_2: shared_candidate_search_introduced_but_t20_t12_and_approval_blocked
   round_3: expanded_real_t20_coverage_and_regenerated_artifacts_but_t20_t12_modeling_blocked
@@ -38,8 +39,9 @@ round_status:
   round_7: pending_risk_acceptance_request_created_and_human_handoff_captured
   round_8: review_blocked_ac16_and_identified_field_status_summary_undercount
   round_9: field_status_summary_counts_non_identifiable_as_blocking_request_hashes_refreshed_capture_updated
+  round_10: stronger_t20_t12_evidence_refreshed_real_artifacts_38_unresolved_risks_gate_fail_closed
 remaining_open_items:
   - Present results/common/real_platform_risk_acceptance_request.json to the human before creating any future human_approval.json.
   - Explicit human approval or stronger evidence is still required before the real-platform gate can pass.
-  - 39 unresolved non_identifiable real-platform field rows remain approval-bound risks.
-  - AC-16 remains blocked until the real-platform gate passes with explicit current-hash-bound approval or the 39 rows are resolved by stronger evidence.
+  - 38 unresolved non_identifiable real-platform field rows remain approval-bound risks.
+  - AC-16 remains blocked until the real-platform gate passes with explicit current-hash-bound approval or the 38 rows are resolved by stronger evidence.
