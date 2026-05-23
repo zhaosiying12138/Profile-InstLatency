@@ -13,7 +13,7 @@ import argparse
 import hashlib
 import json
 from collections import Counter, defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -771,6 +771,18 @@ def observation_key(observation: RawObservation) -> tuple[str, str]:
     return observation.instruction_id, observation.lmul
 
 
+def mirrored_t20_peer_observation(observation: RawObservation) -> RawObservation | None:
+    if observation.effective_template_id != "T20_PAIRWISE_PIPE_CLASSIFICATION":
+        return None
+    if observation.pair_instruction_id is None or observation.pair_instruction_id == observation.instruction_id:
+        return None
+    return replace(
+        observation,
+        instruction_id=observation.pair_instruction_id,
+        pair_instruction_id=observation.instruction_id,
+    )
+
+
 def lmul_sort_key(lmul: str) -> tuple[int, str]:
     return LMUL_VALUE.get(lmul, 999), lmul
 
@@ -1250,6 +1262,18 @@ def t12_register_policy(item: RawObservation) -> str:
     return str(policy) if policy is not None else "unspecified"
 
 
+def t12_trailing_min_residual_gaps(clean_gaps: list[int], residuals: dict[int, int]) -> tuple[int, ...]:
+    if not clean_gaps:
+        return ()
+    minimum_residual = min(residuals.values())
+    plateau: list[int] = []
+    for gap in reversed(clean_gaps):
+        if residuals[gap] != minimum_residual:
+            break
+        plateau.append(gap)
+    return tuple(reversed(plateau))
+
+
 def t12_observation_group_key(item: RawObservation) -> tuple[str, str, str, str, str]:
     return (
         item.instruction_id,
@@ -1376,9 +1400,22 @@ def t12_constraint_for_group(
     evidence = tuple(member for gap in clean_gaps for member in observations_by_gap[gap])
     if residual0 > minimum_residual:
         latency = cadence + residual0 - minimum_residual
+        plateau_gaps = t12_trailing_min_residual_gaps(clean_gaps, residuals)
+        if len(plateau_gaps) < 2:
+            return T12LatencyConstraint(
+                "skipped",
+                (
+                    f"{reason_prefix};insufficient_post_transition_coverage;"
+                    f"candidate_latency={latency};minimum_residual={minimum_residual};"
+                    f"no_stall_plateau_gaps={list(plateau_gaps)}"
+                ),
+                evidence,
+                filler_cadence=cadence,
+                clean_gaps=tuple(clean_gaps),
+            )
         return T12LatencyConstraint(
             "exact",
-            f"{reason_prefix};exact_latency={latency}",
+            f"{reason_prefix};exact_latency={latency};no_stall_plateau_gaps={list(plateau_gaps)}",
             evidence,
             latency=latency,
             filler_cadence=cadence,
@@ -2248,8 +2285,17 @@ def observation_summary(items: list[RawObservation]) -> dict[str, Any]:
 
 def group_observations(observations: list[RawObservation]) -> dict[tuple[str, str], list[RawObservation]]:
     grouped: dict[tuple[str, str], list[RawObservation]] = defaultdict(list)
+    original_keys = {observation_key(observation) for observation in observations}
     for observation in observations:
         grouped[observation_key(observation)].append(observation)
+    for observation in observations:
+        mirrored = mirrored_t20_peer_observation(observation)
+        if mirrored is None:
+            continue
+        key = observation_key(mirrored)
+        if key not in original_keys:
+            continue
+        grouped[key].append(mirrored)
     return dict(grouped)
 
 

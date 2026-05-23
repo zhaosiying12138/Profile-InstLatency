@@ -38,7 +38,6 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
       reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
@@ -116,7 +115,6 @@ llvm_facing_fields:
       status: "non_identifiable"
       value: null
       candidates:
-        - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
       reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."

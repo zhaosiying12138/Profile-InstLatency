@@ -171,11 +171,65 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(check.status, "skipped")
         self.assertIn("single_count", check.reason)
 
+    def test_t20_peer_side_observation_constrains_peer_only_row(self):
+        observations = t20_observations([(2, 3), (3, 5), (4, 7)], subject="vsubject", peer="vpeer")
+        observations.append(
+            raw_observation(
+                instruction_id="vpeer",
+                template_id="T11_SELF_RAW_CHAIN",
+                delta_cycles=0,
+                experiment_id="t11-vpeer-placeholder",
+                body={"iterations": 2, "latency_evidence": False},
+            )
+        )
+        grouped = search_model.group_observations(observations)
+        peer_items = grouped[("vpeer", "m1")]
+        mirrored_t20_items = [
+            item
+            for item in peer_items
+            if item.effective_template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION"
+        ]
+
+        self.assertEqual(len(mirrored_t20_items), 3)
+        self.assertTrue(all(item.instruction_id == "vpeer" for item in mirrored_t20_items))
+        self.assertTrue(all(item.pair_instruction_id == "vsubject" for item in mirrored_t20_items))
+
+        subject = candidate(proc_resource="pipe0")
+        matching_peer = candidate(proc_resource="pipe0")
+        mismatching_peer = candidate(proc_resource="pipe1")
+        result = search_model.candidate_result_for_group(
+            ("vpeer", "m1"),
+            peer_items,
+            grouped,
+            4,
+            base_candidates={
+                ("vsubject", "m1"): (subject,),
+                ("vpeer", "m1"): (matching_peer, mismatching_peer),
+            },
+        )
+
+        self.assertEqual(result.candidates, (matching_peer,))
+        self.assertTrue(
+            any(
+                item.effective_template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION"
+                for item in result.evidence
+            )
+        )
+
     def test_t12_clean_threshold_infers_exact_latency(self):
         field = solve_latency_field(t12_observations([(0, 4), (1, 4), (2, 4), (3, 4), (4, 5), (5, 6)]))
 
         self.assertEqual(field["status"], "exact_fit")
         self.assertEqual(field["value"], 4)
+
+    def test_t12_two_point_short_sweep_does_not_claim_exact_latency(self):
+        field = solve_latency_field(t12_observations([(0, 4), (1, 4)]))
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        self.assertNotEqual(field.get("value"), 2)
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("insufficient_post_transition_coverage", field["t12_latency_constraints"][0]["reason"])
 
     def test_t12_upper_bound_does_not_render_fake_exact_zero(self):
         field = solve_latency_field(t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4"))

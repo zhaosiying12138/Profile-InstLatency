@@ -48,136 +48,136 @@ Status: raw_observation_parameter_search
 | `vadd_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 198 |
 | `vadd_vv` | `m4` | `NumMicroOps` | exact_fit | `1` | 198 |
 | `vadd_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
-| `vcpop_m` | `m1` | `Latency` | non_identifiable | `0, 1` | 106 |
-| `vcpop_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 106 |
-| `vcpop_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 106 |
-| `vcpop_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 106 |
-| `vcpop_m` | `m1` | `SingleIssue` | exact_fit | `False` | 106 |
-| `vcpop_m` | `m2` | `Latency` | non_identifiable | `0, 1, 2` | 106 |
-| `vcpop_m` | `m2` | `ReleaseAtCycles` | exact_fit | `1` | 106 |
-| `vcpop_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 106 |
-| `vcpop_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 106 |
-| `vcpop_m` | `m2` | `SingleIssue` | exact_fit | `False` | 106 |
-| `vcpop_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 248 |
-| `vcpop_m` | `m4` | `ReleaseAtCycles` | non_identifiable | `n/a` | 248 |
-| `vcpop_m` | `m4` | `ProcResource` | non_identifiable | `n/a` | 248 |
-| `vcpop_m` | `m4` | `NumMicroOps` | non_identifiable | `n/a` | 248 |
-| `vcpop_m` | `m4` | `SingleIssue` | non_identifiable | `n/a` | 248 |
-| `vdivu_vv` | `m1` | `Latency` | exact_fit | `4` | 142 |
-| `vdivu_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 142 |
-| `vdivu_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 142 |
-| `vdivu_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 142 |
-| `vdivu_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 142 |
-| `vdivu_vv` | `m2` | `Latency` | exact_fit | `4` | 142 |
-| `vdivu_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 142 |
-| `vdivu_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 142 |
-| `vdivu_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 142 |
-| `vdivu_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 142 |
+| `vcpop_m` | `m1` | `Latency` | non_identifiable | `0, 1` | 146 |
+| `vcpop_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
+| `vcpop_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vcpop_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vcpop_m` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
+| `vcpop_m` | `m2` | `Latency` | non_identifiable | `0, 1, 2` | 146 |
+| `vcpop_m` | `m2` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
+| `vcpop_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vcpop_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vcpop_m` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
+| `vcpop_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 288 |
+| `vcpop_m` | `m4` | `ReleaseAtCycles` | non_identifiable | `n/a` | 288 |
+| `vcpop_m` | `m4` | `ProcResource` | non_identifiable | `n/a` | 288 |
+| `vcpop_m` | `m4` | `NumMicroOps` | non_identifiable | `n/a` | 288 |
+| `vcpop_m` | `m4` | `SingleIssue` | non_identifiable | `n/a` | 288 |
+| `vdivu_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
+| `vdivu_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
+| `vdivu_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vdivu_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vdivu_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
+| `vdivu_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
+| `vdivu_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
+| `vdivu_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vdivu_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vdivu_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vdivu_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
 | `vdivu_vv` | `m4` | `ReleaseAtCycles` | exact_fit | `4` | 198 |
 | `vdivu_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 198 |
 | `vdivu_vv` | `m4` | `NumMicroOps` | exact_fit | `1` | 198 |
 | `vdivu_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
-| `viota_m` | `m1` | `Latency` | exact_fit | `4` | 98 |
-| `viota_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 98 |
-| `viota_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 98 |
-| `viota_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 98 |
-| `viota_m` | `m1` | `SingleIssue` | exact_fit | `False` | 98 |
-| `viota_m` | `m2` | `Latency` | exact_fit | `4` | 98 |
-| `viota_m` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 98 |
-| `viota_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 98 |
-| `viota_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 98 |
-| `viota_m` | `m2` | `SingleIssue` | exact_fit | `False` | 98 |
+| `viota_m` | `m1` | `Latency` | exact_fit | `4` | 146 |
+| `viota_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
+| `viota_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `viota_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `viota_m` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
+| `viota_m` | `m2` | `Latency` | exact_fit | `4` | 146 |
+| `viota_m` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 146 |
+| `viota_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `viota_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `viota_m` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `viota_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
 | `viota_m` | `m4` | `ReleaseAtCycles` | exact_fit | `4` | 178 |
 | `viota_m` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 178 |
 | `viota_m` | `m4` | `NumMicroOps` | exact_fit | `1` | 178 |
 | `viota_m` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
-| `vmseq_vv` | `m1` | `Latency` | exact_fit | `4` | 114 |
-| `vmseq_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 114 |
-| `vmseq_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 114 |
-| `vmseq_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 114 |
-| `vmseq_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 114 |
-| `vmseq_vv` | `m2` | `Latency` | exact_fit | `5` | 114 |
-| `vmseq_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 114 |
-| `vmseq_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 114 |
-| `vmseq_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 114 |
-| `vmseq_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 114 |
+| `vmseq_vv` | `m1` | `Latency` | exact_fit | `4` | 146 |
+| `vmseq_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 146 |
+| `vmseq_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vmseq_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vmseq_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
+| `vmseq_vv` | `m2` | `Latency` | exact_fit | `5` | 146 |
+| `vmseq_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 146 |
+| `vmseq_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vmseq_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vmseq_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vmseq_vv` | `m4` | `Latency` | exact_fit | `7` | 178 |
 | `vmseq_vv` | `m4` | `ReleaseAtCycles` | exact_fit | `8` | 178 |
 | `vmseq_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 178 |
 | `vmseq_vv` | `m4` | `NumMicroOps` | exact_fit | `1` | 178 |
 | `vmseq_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
-| `vmul_vv` | `m1` | `Latency` | exact_fit | `4` | 150 |
-| `vmul_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 150 |
-| `vmul_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 150 |
-| `vmul_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 150 |
-| `vmul_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 150 |
-| `vmul_vv` | `m2` | `Latency` | exact_fit | `4` | 150 |
-| `vmul_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 150 |
-| `vmul_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 150 |
-| `vmul_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 150 |
-| `vmul_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 150 |
+| `vmul_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
+| `vmul_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
+| `vmul_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vmul_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vmul_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
+| `vmul_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
+| `vmul_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
+| `vmul_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vmul_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vmul_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vmul_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
 | `vmul_vv` | `m4` | `ReleaseAtCycles` | exact_fit | `4` | 198 |
 | `vmul_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 198 |
 | `vmul_vv` | `m4` | `NumMicroOps` | exact_fit | `1` | 198 |
 | `vmul_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
-| `vredsum_vs` | `m1` | `Latency` | exact_fit | `4` | 94 |
-| `vredsum_vs` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 94 |
-| `vredsum_vs` | `m1` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 94 |
-| `vredsum_vs` | `m1` | `NumMicroOps` | exact_fit | `1` | 94 |
-| `vredsum_vs` | `m1` | `SingleIssue` | exact_fit | `False` | 94 |
-| `vredsum_vs` | `m2` | `Latency` | exact_fit | `5` | 94 |
-| `vredsum_vs` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 94 |
-| `vredsum_vs` | `m2` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 94 |
-| `vredsum_vs` | `m2` | `NumMicroOps` | exact_fit | `1` | 94 |
-| `vredsum_vs` | `m2` | `SingleIssue` | exact_fit | `False` | 94 |
+| `vredsum_vs` | `m1` | `Latency` | exact_fit | `4` | 166 |
+| `vredsum_vs` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
+| `vredsum_vs` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vredsum_vs` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vredsum_vs` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
+| `vredsum_vs` | `m2` | `Latency` | exact_fit | `5` | 166 |
+| `vredsum_vs` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
+| `vredsum_vs` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vredsum_vs` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vredsum_vs` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vredsum_vs` | `m4` | `Latency` | exact_fit | `7` | 198 |
 | `vredsum_vs` | `m4` | `ReleaseAtCycles` | exact_fit | `4` | 198 |
 | `vredsum_vs` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 198 |
 | `vredsum_vs` | `m4` | `NumMicroOps` | exact_fit | `1` | 198 |
 | `vredsum_vs` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
-| `vrgather_vv` | `m1` | `Latency` | exact_fit | `4` | 80 |
-| `vrgather_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `2` | 80 |
-| `vrgather_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 80 |
-| `vrgather_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 80 |
-| `vrgather_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 80 |
-| `vrgather_vv` | `m2` | `Latency` | exact_fit | `4` | 80 |
-| `vrgather_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 80 |
-| `vrgather_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 80 |
-| `vrgather_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 80 |
-| `vrgather_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 80 |
+| `vrgather_vv` | `m1` | `Latency` | exact_fit | `4` | 144 |
+| `vrgather_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `2` | 144 |
+| `vrgather_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 144 |
+| `vrgather_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 144 |
+| `vrgather_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 144 |
+| `vrgather_vv` | `m2` | `Latency` | exact_fit | `4` | 144 |
+| `vrgather_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 144 |
+| `vrgather_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 144 |
+| `vrgather_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 144 |
+| `vrgather_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 144 |
 | `vrgather_vv` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
 | `vrgather_vv` | `m4` | `ReleaseAtCycles` | exact_fit | `20` | 178 |
 | `vrgather_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 178 |
 | `vrgather_vv` | `m4` | `NumMicroOps` | exact_fit | `1` | 178 |
 | `vrgather_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
-| `vslideup_vx` | `m1` | `Latency` | exact_fit | `4` | 90 |
-| `vslideup_vx` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 90 |
-| `vslideup_vx` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 90 |
-| `vslideup_vx` | `m1` | `NumMicroOps` | exact_fit | `1` | 90 |
-| `vslideup_vx` | `m1` | `SingleIssue` | exact_fit | `False` | 90 |
-| `vslideup_vx` | `m2` | `Latency` | exact_fit | `4` | 90 |
-| `vslideup_vx` | `m2` | `ReleaseAtCycles` | exact_fit | `7` | 90 |
-| `vslideup_vx` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 90 |
-| `vslideup_vx` | `m2` | `NumMicroOps` | exact_fit | `1` | 90 |
-| `vslideup_vx` | `m2` | `SingleIssue` | exact_fit | `False` | 90 |
+| `vslideup_vx` | `m1` | `Latency` | exact_fit | `4` | 146 |
+| `vslideup_vx` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 146 |
+| `vslideup_vx` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vslideup_vx` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vslideup_vx` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
+| `vslideup_vx` | `m2` | `Latency` | exact_fit | `4` | 146 |
+| `vslideup_vx` | `m2` | `ReleaseAtCycles` | exact_fit | `7` | 146 |
+| `vslideup_vx` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vslideup_vx` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
+| `vslideup_vx` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vslideup_vx` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
 | `vslideup_vx` | `m4` | `ReleaseAtCycles` | exact_fit | `18` | 178 |
 | `vslideup_vx` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 178 |
 | `vslideup_vx` | `m4` | `NumMicroOps` | exact_fit | `1` | 178 |
 | `vslideup_vx` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
-| `vsll_vv` | `m1` | `Latency` | exact_fit | `4` | 158 |
-| `vsll_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 158 |
-| `vsll_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 158 |
-| `vsll_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 158 |
-| `vsll_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 158 |
-| `vsll_vv` | `m2` | `Latency` | exact_fit | `4` | 158 |
-| `vsll_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 158 |
-| `vsll_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 158 |
-| `vsll_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 158 |
-| `vsll_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 158 |
+| `vsll_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
+| `vsll_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
+| `vsll_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vsll_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vsll_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
+| `vsll_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
+| `vsll_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
+| `vsll_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vsll_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
+| `vsll_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vsll_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
 | `vsll_vv` | `m4` | `ReleaseAtCycles` | exact_fit | `4` | 198 |
 | `vsll_vv` | `m4` | `ProcResource` | non_identifiable | `YuShuXinAnyVPipe, YuShuXinVPipe0, YuShuXinVPipe1` | 198 |
