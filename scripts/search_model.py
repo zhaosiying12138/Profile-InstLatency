@@ -14,6 +14,8 @@ import hashlib
 import json
 from collections import Counter, defaultdict
 from dataclasses import dataclass, replace
+from fractions import Fraction
+from itertools import product
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -1157,6 +1159,326 @@ def t20_slope_matches(count_to_delta: dict[int, int], slope: int) -> bool:
     return len(offsets) == 1
 
 
+def internal_proc_resource_label(value: Any) -> str | None:
+    label = normalize_pipe_label(value)
+    if label in PROC_RESOURCE_DOMAIN:
+        return label
+    return None
+
+
+def proc_resource_domain_labels(values: Iterable[Any]) -> tuple[str, ...]:
+    labels = {label for value in values if (label := internal_proc_resource_label(value)) is not None}
+    return tuple(label for label in PROC_RESOURCE_DOMAIN if label in labels)
+
+
+def format_observation_key(key: tuple[str, str]) -> str:
+    return f"{key[0]}:{key[1]}"
+
+
+def public_proc_resource_labels(labels: Iterable[str]) -> list[str]:
+    return [proc_resource_for_label(label) for label in labels]
+
+
+def t20_usable_for_proc_resource(item: RawObservation) -> bool:
+    disambiguation = item.body.get("resource_disambiguation")
+    if isinstance(disambiguation, dict) and "usable_for_proc_resource" in disambiguation:
+        return bool_or_false(disambiguation.get("usable_for_proc_resource"))
+    return True
+
+
+def canonical_t20_proc_group_key(item: RawObservation) -> tuple[tuple[str, str], tuple[str, str], str] | None:
+    if item.effective_template_id != "T20_PAIRWISE_PIPE_CLASSIFICATION" or item.pair_instruction_id is None:
+        return None
+    left = (item.instruction_id, item.lmul)
+    right = (item.pair_instruction_id, item.lmul)
+    if right < left:
+        left, right = right, left
+    return left, right, t20_register_policy(item)
+
+
+def t20_proc_resource_constraints(
+    observations: Iterable[RawObservation],
+    release_values: dict[tuple[str, str], int],
+    candidate_domains: dict[tuple[str, str], tuple[str, ...]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    grouped: dict[tuple[tuple[str, str], tuple[str, str], str], list[RawObservation]] = defaultdict(list)
+    for item in observations:
+        key = canonical_t20_proc_group_key(item)
+        if key is not None:
+            grouped[key].append(item)
+
+    usable: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
+    for (left_key, right_key, register_policy), group in sorted(
+        grouped.items(),
+        key=lambda entry: (
+            format_observation_key(entry[0][0]),
+            format_observation_key(entry[0][1]),
+            entry[0][2],
+        ),
+    ):
+        evidence = [evidence_entry(item, "global_proc_resource:T20") for item in unique_observations(group)]
+        base_detail: dict[str, Any] = {
+            "left": format_observation_key(left_key),
+            "right": format_observation_key(right_key),
+            "register_policy": register_policy,
+            "evidence": evidence,
+        }
+        if not all(t20_usable_for_proc_resource(item) for item in group):
+            skipped.append({**base_detail, "status": "skipped_metadata_not_usable"})
+            continue
+        if any(bool_or_false(item.body.get("register_reuse")) for item in group):
+            skipped.append({**base_detail, "status": "skipped_register_reuse"})
+            continue
+        count_to_delta = t20_min_delta_by_count(group)
+        counts = sorted(count_to_delta)
+        if len(counts) < 2:
+            skipped.append({**base_detail, "status": "skipped_single_count", "counts": counts})
+            continue
+        empty_domains = [
+            format_observation_key(key)
+            for key in (left_key, right_key)
+            if not candidate_domains.get(key)
+        ]
+        if empty_domains:
+            skipped.append(
+                {
+                    **base_detail,
+                    "status": "skipped_empty_candidate_domain",
+                    "empty_candidate_domains": empty_domains,
+                    "counts": counts,
+                }
+            )
+            continue
+        missing_releases = [
+            format_observation_key(key)
+            for key in (left_key, right_key)
+            if release_values.get(key) is None
+        ]
+        if missing_releases:
+            skipped.append(
+                {
+                    **base_detail,
+                    "status": "skipped_missing_release",
+                    "missing_release_values": missing_releases,
+                    "counts": counts,
+                }
+            )
+            continue
+
+        first_count = counts[0]
+        last_count = counts[-1]
+        slope = Fraction(
+            count_to_delta[last_count] - count_to_delta[first_count],
+            last_count - first_count,
+        )
+        offsets = {Fraction(count_to_delta[count]) - count * slope for count in counts}
+        usable.append(
+            {
+                **base_detail,
+                "status": "usable",
+                "left_key": left_key,
+                "right_key": right_key,
+                "counts": counts,
+                "min_deltas_by_count": {str(count): count_to_delta[count] for count in counts},
+                "slope": slope,
+                "slope_cycles_per_pair": int(slope) if slope.denominator == 1 else float(slope),
+                "startup_affine": len(offsets) == 1,
+                "startup_cycles": (
+                    int(next(iter(offsets))) if len(offsets) == 1 and next(iter(offsets)).denominator == 1 else None
+                ),
+                "left_release": release_values[left_key],
+                "right_release": release_values[right_key],
+            }
+        )
+    return usable, skipped
+
+
+def expected_t20_proc_resource_slope(
+    left_label: str,
+    right_label: str,
+    left_release: int,
+    right_release: int,
+) -> int:
+    left = TimingCandidate(0, left_release, left_label, 1, False)
+    right = TimingCandidate(0, right_release, right_label, 1, False)
+    return expected_t20_pair_cycles(left, right)
+
+
+def proc_resource_constraint_matches(
+    constraint: dict[str, Any],
+    assignment: dict[tuple[str, str], str],
+) -> bool:
+    if not constraint.get("startup_affine"):
+        return False
+    left_key = constraint["left_key"]
+    right_key = constraint["right_key"]
+    expected = expected_t20_proc_resource_slope(
+        assignment[left_key],
+        assignment[right_key],
+        int(constraint["left_release"]),
+        int(constraint["right_release"]),
+    )
+    return Fraction(expected) == constraint["slope"]
+
+
+def proc_resource_components(
+    constraints: list[dict[str, Any]],
+) -> list[set[tuple[str, str]]]:
+    graph: dict[tuple[str, str], set[tuple[str, str]]] = defaultdict(set)
+    for constraint in constraints:
+        left = constraint["left_key"]
+        right = constraint["right_key"]
+        graph[left].add(right)
+        graph[right].add(left)
+    components: list[set[tuple[str, str]]] = []
+    seen: set[tuple[str, str]] = set()
+    for root in sorted(graph):
+        if root in seen:
+            continue
+        stack = [root]
+        component: set[tuple[str, str]] = set()
+        while stack:
+            key = stack.pop()
+            if key in component:
+                continue
+            component.add(key)
+            stack.extend(sorted(graph[key] - component))
+        seen.update(component)
+        components.append(component)
+    return components
+
+
+def proc_resource_solution_dict(solution: dict[tuple[str, str], str]) -> dict[str, str]:
+    return {
+        format_observation_key(key): proc_resource_for_label(solution[key])
+        for key in sorted(solution)
+    }
+
+
+def solve_global_proc_resources(
+    observations: Iterable[RawObservation],
+    release_values: dict[tuple[str, str], int],
+    candidate_domains: dict[tuple[str, str], tuple[str, ...]],
+    *,
+    max_reported_solutions: int = 32,
+) -> dict[str, Any]:
+    normalized_domains = {
+        key: proc_resource_domain_labels(values)
+        for key, values in candidate_domains.items()
+    }
+    constraints, skipped = t20_proc_resource_constraints(observations, release_values, normalized_domains)
+    rows: dict[tuple[str, str], dict[str, Any]] = {}
+    conflict_constraints: list[dict[str, Any]] = []
+
+    for component in proc_resource_components(constraints):
+        component_constraints = [
+            constraint
+            for constraint in constraints
+            if constraint["left_key"] in component and constraint["right_key"] in component
+        ]
+        nodes = sorted(component)
+        solutions: list[dict[tuple[str, str], str]] = []
+        survivors: dict[tuple[str, str], set[str]] = {key: set() for key in nodes}
+        domain_product = product(*(normalized_domains[key] for key in nodes))
+        solution_count = 0
+        for values in domain_product:
+            assignment = dict(zip(nodes, values))
+            if not all(proc_resource_constraint_matches(constraint, assignment) for constraint in component_constraints):
+                continue
+            solution_count += 1
+            for key, label in assignment.items():
+                survivors[key].add(label)
+            if len(solutions) < max_reported_solutions:
+                solutions.append(dict(assignment))
+
+        evidence = [
+            entry
+            for constraint in component_constraints
+            for entry in constraint.get("evidence", [])
+        ]
+        public_solutions = [proc_resource_solution_dict(solution) for solution in solutions]
+        if solution_count == 0:
+            public_constraints = [
+                {
+                    "left": constraint["left"],
+                    "right": constraint["right"],
+                    "register_policy": constraint["register_policy"],
+                    "counts": constraint["counts"],
+                    "slope_cycles_per_pair": constraint["slope_cycles_per_pair"],
+                }
+                for constraint in component_constraints
+            ]
+            conflict_constraints.extend(public_constraints)
+            for key in nodes:
+                rows[key] = {
+                    "status": "conflict",
+                    "value": None,
+                    "candidates": [],
+                    "candidate_count": 0,
+                    "constraint_count": sum(
+                        1
+                        for constraint in component_constraints
+                        if key in {constraint["left_key"], constraint["right_key"]}
+                    ),
+                    "evidence": evidence,
+                    "reason": (
+                        "No global ProcResource assignment satisfies all usable startup-free "
+                        "T20 pair slopes and exact ReleaseAtCycles values."
+                    ),
+                    "global_solution_count": 0,
+                    "global_candidates": [],
+                    "surviving_candidates": [],
+                    "conflict_constraints": public_constraints,
+                }
+            continue
+
+        for key in nodes:
+            surviving = tuple(label for label in PROC_RESOURCE_DOMAIN if label in survivors[key])
+            public_surviving = public_proc_resource_labels(surviving)
+            exact = len(surviving) == 1
+            rows[key] = {
+                "status": "exact_fit" if exact else "non_identifiable",
+                "value": proc_resource_for_label(surviving[0]) if exact else None,
+                "candidates": public_surviving,
+                "candidate_count": len(public_surviving),
+                "constraint_count": sum(
+                    1
+                    for constraint in component_constraints
+                    if key in {constraint["left_key"], constraint["right_key"]}
+                ),
+                "evidence": evidence,
+                "reason": (
+                    "Unique global ProcResource assignment satisfies usable startup-free T20 "
+                    "pair slopes and exact ReleaseAtCycles values."
+                    if exact
+                    else "Multiple mirror/global ProcResource assignments satisfy the usable "
+                    "startup-free T20 pair slopes, so the row remains non-identifiable."
+                ),
+                "global_solution_count": solution_count,
+                "global_candidates": public_solutions,
+                "surviving_candidates": public_surviving,
+            }
+
+    public_constraints = [
+        {
+            "left": constraint["left"],
+            "right": constraint["right"],
+            "register_policy": constraint["register_policy"],
+            "counts": constraint["counts"],
+            "slope_cycles_per_pair": constraint["slope_cycles_per_pair"],
+            "startup_affine": constraint["startup_affine"],
+        }
+        for constraint in constraints
+    ]
+    return {
+        "rows": rows,
+        "usable_constraints": public_constraints,
+        "skipped_constraints": skipped,
+        "conflict_constraints": conflict_constraints,
+    }
+
+
 def t20_peer_candidates(
     item: RawObservation,
     candidate_options: dict[tuple[str, str], tuple[TimingCandidate, ...]],
@@ -2293,6 +2615,38 @@ def observation_summary(items: list[RawObservation]) -> dict[str, Any]:
     }
 
 
+def proc_resource_domains_from_candidate_results(
+    candidate_results: dict[tuple[str, str], CandidateSearchResult],
+) -> dict[tuple[str, str], tuple[str, ...]]:
+    return {
+        key: proc_resource_domain_labels(candidate.proc_resource for candidate in result.candidates)
+        for key, result in candidate_results.items()
+    }
+
+
+def merge_global_proc_resource_field(base: dict[str, Any], global_row: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    evidence = list(base.get("evidence", []))
+    evidence.extend(entry for entry in global_row.get("evidence", []) if entry not in evidence)
+    merged.update(
+        {
+            "status": global_row["status"],
+            "value": global_row["value"],
+            "candidates": global_row["candidates"],
+            "candidate_count": global_row["candidate_count"],
+            "constraint_count": global_row["constraint_count"],
+            "evidence": evidence[:64],
+            "reason": global_row["reason"],
+            "global_solution_count": global_row["global_solution_count"],
+            "global_candidates": global_row["global_candidates"],
+            "surviving_candidates": global_row["surviving_candidates"],
+        }
+    )
+    if global_row.get("conflict_constraints"):
+        merged["conflict_constraints"] = global_row["conflict_constraints"]
+    return merged
+
+
 def group_observations(observations: list[RawObservation]) -> dict[tuple[str, str], list[RawObservation]]:
     grouped: dict[tuple[str, str], list[RawObservation]] = defaultdict(list)
     original_keys = {observation_key(observation) for observation in observations}
@@ -2338,6 +2692,32 @@ def build_report(
 ) -> dict[str, Any]:
     grouped = group_observations(observations)
     candidate_results = solve_candidate_sets(grouped, max_value)
+    field_results_by_key: dict[tuple[str, str], dict[str, dict[str, Any]]] = {}
+    for key, candidate_result in candidate_results.items():
+        field_results_by_key[key] = {
+            "Latency": candidate_field_result("Latency", candidate_result, max_value=max_value),
+            "ReleaseAtCycles": candidate_field_result("ReleaseAtCycles", candidate_result, max_value=max_value),
+            "ProcResource": candidate_field_result("ProcResource", candidate_result, max_value=max_value),
+            "NumMicroOps": candidate_field_result("NumMicroOps", candidate_result, max_value=max_value),
+            "SingleIssue": candidate_field_result("SingleIssue", candidate_result, max_value=max_value),
+        }
+    release_values = {
+        key: int(result["ReleaseAtCycles"]["value"])
+        for key, result in field_results_by_key.items()
+        if result["ReleaseAtCycles"].get("status") == "exact_fit"
+        and int_or_none(result["ReleaseAtCycles"].get("value")) is not None
+    }
+    global_proc_resources = solve_global_proc_resources(
+        observations,
+        release_values,
+        proc_resource_domains_from_candidate_results(candidate_results),
+    )
+    for key, global_row in global_proc_resources["rows"].items():
+        if key in field_results_by_key:
+            field_results_by_key[key]["ProcResource"] = merge_global_proc_resource_field(
+                field_results_by_key[key]["ProcResource"],
+                global_row,
+            )
 
     instructions: dict[str, Any] = {}
     instruction_ids = sorted({instruction_id for instruction_id, _lmul in grouped})
@@ -2350,11 +2730,11 @@ def build_report(
             key = (instruction_id, lmul)
             items = grouped[key]
             candidate_result = candidate_results[key]
-            latency = candidate_field_result("Latency", candidate_result, max_value=max_value)
-            release = candidate_field_result("ReleaseAtCycles", candidate_result, max_value=max_value)
-            proc_resource = candidate_field_result("ProcResource", candidate_result, max_value=max_value)
-            num_micro_ops = candidate_field_result("NumMicroOps", candidate_result, max_value=max_value)
-            single_issue = candidate_field_result("SingleIssue", candidate_result, max_value=max_value)
+            latency = field_results_by_key[key]["Latency"]
+            release = field_results_by_key[key]["ReleaseAtCycles"]
+            proc_resource = field_results_by_key[key]["ProcResource"]
+            num_micro_ops = field_results_by_key[key]["NumMicroOps"]
+            single_issue = field_results_by_key[key]["SingleIssue"]
             fields = {
                 "Latency": latency,
                 "ReleaseAtCycles": release,
@@ -2414,6 +2794,7 @@ def build_report(
             "T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.",
             "T12/T30 consumer-gap checks use a conservative clean-prefix filler-cadence model to infer exact latency or upper-bound constraints.",
             "T20 pair checks are interpreted as startup-free slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.",
+            "Global ProcResource solving uses only clean startup-free T20 pair slopes plus exact ReleaseAtCycles values; constraints with missing or empty peer domains are skipped.",
             "T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.",
             "trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.",
         ],
@@ -2421,6 +2802,11 @@ def build_report(
         "source_trace_files": [path.as_posix() for path in trace_paths],
         "config_files_reference_only": [path.as_posix() for path, _data in configs],
         "filters": filters or filter_description(None, None, False),
+        "global_proc_resource_solver": {
+            "usable_constraints": global_proc_resources["usable_constraints"],
+            "skipped_constraints": global_proc_resources["skipped_constraints"],
+            "conflict_constraints": global_proc_resources["conflict_constraints"],
+        },
         "input_counts": input_counts or {
             "trace_files_before_filter": len(trace_paths),
             "trace_files_after_filter": len(trace_paths),

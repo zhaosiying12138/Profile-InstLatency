@@ -19,6 +19,7 @@ Status: raw_observation_parameter_search
 - T11/T30 RAW-chain check: marker deltas constrain Latency only when body.latency_evidence, body.true_raw_chain, or body.chainable is true.
 - T12/T30 consumer-gap checks use a conservative clean-prefix filler-cadence model to infer exact latency or upper-bound constraints.
 - T20 pair checks are interpreted as startup-free slope groups; a single usable pair count per pair/LMUL cannot identify ProcResource.
+- Global ProcResource solving uses only clean startup-free T20 pair slopes plus exact ReleaseAtCycles values; constraints with missing or empty peer domains are skipped.
 - T21 scalar-pair checks are evaluated inside the same candidate tuple and assume a one-cycle scalar issue companion.
 - trace.synthetic and generated profile.yaml timing claims are reference-only and are not used as evidence.
 
@@ -35,12 +36,12 @@ Status: raw_observation_parameter_search
 | --- | --- | --- | --- | --- | ---: |
 | `vadd_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vadd_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
-| `vadd_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vadd_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vadd_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vadd_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vadd_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
 | `vadd_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
-| `vadd_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vadd_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vadd_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vadd_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vadd_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
@@ -50,12 +51,12 @@ Status: raw_observation_parameter_search
 | `vadd_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
 | `vcpop_m` | `m1` | `Latency` | non_identifiable | `0, 1` | 146 |
 | `vcpop_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
-| `vcpop_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vcpop_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vcpop_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vcpop_m` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vcpop_m` | `m2` | `Latency` | non_identifiable | `0, 1, 2` | 146 |
 | `vcpop_m` | `m2` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
-| `vcpop_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vcpop_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vcpop_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vcpop_m` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vcpop_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 288 |
@@ -65,12 +66,12 @@ Status: raw_observation_parameter_search
 | `vcpop_m` | `m4` | `SingleIssue` | non_identifiable | `n/a` | 288 |
 | `vdivu_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vdivu_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
-| `vdivu_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vdivu_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vdivu_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vdivu_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vdivu_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
 | `vdivu_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
-| `vdivu_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vdivu_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vdivu_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vdivu_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vdivu_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
@@ -80,12 +81,12 @@ Status: raw_observation_parameter_search
 | `vdivu_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
 | `viota_m` | `m1` | `Latency` | exact_fit | `4` | 146 |
 | `viota_m` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 146 |
-| `viota_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `viota_m` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `viota_m` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `viota_m` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
 | `viota_m` | `m2` | `Latency` | exact_fit | `4` | 146 |
 | `viota_m` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 146 |
-| `viota_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `viota_m` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `viota_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `viota_m` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `viota_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
@@ -95,12 +96,12 @@ Status: raw_observation_parameter_search
 | `viota_m` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
 | `vmseq_vv` | `m1` | `Latency` | exact_fit | `4` | 146 |
 | `vmseq_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 146 |
-| `vmseq_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vmseq_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vmseq_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vmseq_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vmseq_vv` | `m2` | `Latency` | exact_fit | `5` | 146 |
 | `vmseq_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 146 |
-| `vmseq_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vmseq_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vmseq_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vmseq_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vmseq_vv` | `m4` | `Latency` | exact_fit | `7` | 178 |
@@ -110,12 +111,12 @@ Status: raw_observation_parameter_search
 | `vmseq_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
 | `vmul_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vmul_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
-| `vmul_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vmul_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vmul_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vmul_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vmul_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
 | `vmul_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
-| `vmul_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vmul_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vmul_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vmul_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vmul_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |
@@ -125,12 +126,12 @@ Status: raw_observation_parameter_search
 | `vmul_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
 | `vredsum_vs` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vredsum_vs` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
-| `vredsum_vs` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vredsum_vs` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vredsum_vs` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vredsum_vs` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vredsum_vs` | `m2` | `Latency` | exact_fit | `5` | 166 |
 | `vredsum_vs` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
-| `vredsum_vs` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vredsum_vs` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vredsum_vs` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vredsum_vs` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vredsum_vs` | `m4` | `Latency` | exact_fit | `7` | 198 |
@@ -140,12 +141,12 @@ Status: raw_observation_parameter_search
 | `vredsum_vs` | `m4` | `SingleIssue` | exact_fit | `False` | 198 |
 | `vrgather_vv` | `m1` | `Latency` | exact_fit | `4` | 144 |
 | `vrgather_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `2` | 144 |
-| `vrgather_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 144 |
+| `vrgather_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vrgather_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 144 |
 | `vrgather_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 144 |
 | `vrgather_vv` | `m2` | `Latency` | exact_fit | `4` | 144 |
 | `vrgather_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `6` | 144 |
-| `vrgather_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 144 |
+| `vrgather_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vrgather_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 144 |
 | `vrgather_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 144 |
 | `vrgather_vv` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
@@ -155,12 +156,12 @@ Status: raw_observation_parameter_search
 | `vrgather_vv` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
 | `vslideup_vx` | `m1` | `Latency` | exact_fit | `4` | 146 |
 | `vslideup_vx` | `m1` | `ReleaseAtCycles` | exact_fit | `5` | 146 |
-| `vslideup_vx` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vslideup_vx` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vslideup_vx` | `m1` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vslideup_vx` | `m1` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vslideup_vx` | `m2` | `Latency` | exact_fit | `4` | 146 |
 | `vslideup_vx` | `m2` | `ReleaseAtCycles` | exact_fit | `7` | 146 |
-| `vslideup_vx` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 146 |
+| `vslideup_vx` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vslideup_vx` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vslideup_vx` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
 | `vslideup_vx` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 178 |
@@ -170,12 +171,12 @@ Status: raw_observation_parameter_search
 | `vslideup_vx` | `m4` | `SingleIssue` | exact_fit | `False` | 178 |
 | `vsll_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vsll_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
-| `vsll_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vsll_vv` | `m1` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vsll_vv` | `m1` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vsll_vv` | `m1` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vsll_vv` | `m2` | `Latency` | exact_fit | `4` | 166 |
 | `vsll_vv` | `m2` | `ReleaseAtCycles` | exact_fit | `2` | 166 |
-| `vsll_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 166 |
+| `vsll_vv` | `m2` | `ProcResource` | non_identifiable | `YuShuXinVPipe0, YuShuXinVPipe1` | 9 |
 | `vsll_vv` | `m2` | `NumMicroOps` | exact_fit | `1` | 166 |
 | `vsll_vv` | `m2` | `SingleIssue` | exact_fit | `False` | 166 |
 | `vsll_vv` | `m4` | `Latency` | exact_fit | `4` | 198 |

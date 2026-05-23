@@ -71,6 +71,39 @@ def t20_observations(deltas_by_count, *, subject="vsubject", peer="vpeer", lmul=
     ]
 
 
+def t20_proc_observations(
+    deltas_by_count,
+    *,
+    subject="vsubject",
+    peer="vpeer",
+    lmul="m4",
+    register_policy="resource_noreuse_prefix",
+    register_reuse=False,
+    suffix="resource-noreuse",
+):
+    return [
+        raw_observation(
+            instruction_id=subject,
+            lmul=lmul,
+            template_id="T20_PAIRWISE_PIPE_CLASSIFICATION",
+            delta_cycles=delta,
+            experiment_id=f"t20-{subject}-{peer}-{lmul}-n{count}-{suffix}",
+            body={
+                "pair_count": count,
+                "register_policy": register_policy,
+                "register_reuse": register_reuse,
+                "resource_disambiguation": {
+                    "usable_for_proc_resource": True,
+                    "count_set_id": "m4_vector_vector_noreuse",
+                    "symmetry_breaker": False,
+                },
+            },
+            pair_instruction_id=peer,
+        )
+        for count, delta in deltas_by_count
+    ]
+
+
 def t10_observations(deltas_by_iterations, *, instruction_id="vfiller", lmul="m1"):
     return [
         raw_observation(
@@ -139,6 +172,14 @@ def solve_latency_field(observations, *, max_value=8):
 def solve_latency_field_from_groups(grouped, key, *, max_value=8):
     result = search_model.solve_candidate_sets(grouped, max_value)[key]
     return search_model.candidate_field_result("Latency", result, max_value=max_value)
+
+
+def solve_global_proc(observations, release_values, candidate_domains):
+    return search_model.solve_global_proc_resources(
+        observations,
+        release_values,
+        candidate_domains,
+    )
 
 
 class SearchModelCandidateSimulatorTest(unittest.TestCase):
@@ -304,6 +345,99 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
             1,
         )
         self.assertEqual(field_status["summary"]["blocking_total"], 1)
+
+    def test_global_proc_uses_clean_t20_subset_amid_reused_observations(self):
+        reused = t20_proc_observations(
+            [(2, 9), (3, 11), (4, 13)],
+            subject="vanchor",
+            peer="vtarget",
+            register_policy="prefer",
+            register_reuse=True,
+            suffix="old-reused",
+        )
+        clean = t20_proc_observations(
+            [(1, 5), (2, 7), (3, 9)],
+            subject="vanchor",
+            peer="vtarget",
+        )
+        result = solve_global_proc(
+            reused + clean,
+            {("vanchor", "m4"): 1, ("vtarget", "m4"): 1},
+            {("vanchor", "m4"): ("pipe0",), ("vtarget", "m4"): ("pipe0", "pipe1")},
+        )
+
+        row = result["rows"][("vtarget", "m4")]
+
+        self.assertEqual(row["status"], "exact_fit")
+        self.assertEqual(row["value"], "YuShuXinVPipe0")
+        self.assertEqual(row["global_solution_count"], 1)
+        self.assertTrue(
+            any(item["status"] == "skipped_register_reuse" for item in result["skipped_constraints"])
+        )
+
+    def test_global_proc_mirror_solutions_remain_non_identifiable(self):
+        observations = t20_proc_observations(
+            [(1, 4), (2, 6), (3, 8)],
+            subject="vleft",
+            peer="vright",
+        )
+
+        result = solve_global_proc(
+            observations,
+            {("vleft", "m4"): 1, ("vright", "m4"): 1},
+            {("vleft", "m4"): ("pipe0", "pipe1"), ("vright", "m4"): ("pipe0", "pipe1")},
+        )
+
+        row = result["rows"][("vleft", "m4")]
+
+        self.assertEqual(row["status"], "non_identifiable")
+        self.assertEqual(row["candidates"], ["YuShuXinVPipe0", "YuShuXinVPipe1"])
+        self.assertEqual(row["global_solution_count"], 2)
+        self.assertEqual(
+            row["surviving_candidates"],
+            ["YuShuXinVPipe0", "YuShuXinVPipe1"],
+        )
+
+    def test_global_proc_fixed_candidate_permits_exact_propagation(self):
+        observations = t20_proc_observations(
+            [(1, 4), (2, 6), (3, 8)],
+            subject="vanchor",
+            peer="vtarget",
+        )
+
+        result = solve_global_proc(
+            observations,
+            {("vanchor", "m4"): 1, ("vtarget", "m4"): 1},
+            {("vanchor", "m4"): ("pipe1",), ("vtarget", "m4"): ("pipe0", "pipe1")},
+        )
+
+        row = result["rows"][("vtarget", "m4")]
+
+        self.assertEqual(row["status"], "exact_fit")
+        self.assertEqual(row["value"], "YuShuXinVPipe1")
+        self.assertEqual(row["candidates"], ["YuShuXinVPipe1"])
+
+    def test_global_proc_empty_peer_domain_does_not_create_false_conflict(self):
+        observations = t20_proc_observations(
+            [(1, 4), (2, 6), (3, 8)],
+            subject="vsubject",
+            peer="vempty",
+        )
+
+        result = solve_global_proc(
+            observations,
+            {("vsubject", "m4"): 1, ("vempty", "m4"): 1},
+            {("vsubject", "m4"): ("pipe0", "pipe1"), ("vempty", "m4"): ()},
+        )
+
+        self.assertNotIn(("vsubject", "m4"), result["rows"])
+        self.assertEqual(result["conflict_constraints"], [])
+        self.assertTrue(
+            any(
+                item["status"] == "skipped_empty_candidate_domain"
+                for item in result["skipped_constraints"]
+            )
+        )
 
 
 if __name__ == "__main__":

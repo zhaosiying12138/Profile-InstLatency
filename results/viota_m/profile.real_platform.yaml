@@ -40,7 +40,7 @@ llvm_facing_fields:
       candidates:
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
+      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
       evidence:
         - "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json"
         - "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json"
@@ -117,7 +117,7 @@ llvm_facing_fields:
       candidates:
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe."
+      reason: "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable."
       evidence:
         - "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json"
         - "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json"

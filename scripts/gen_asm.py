@@ -36,8 +36,11 @@ EXTENDED_STREAM_ITERATIONS = (8, 12)
 T12_FILLER_COUNTS = tuple(range(41))
 T20_BASE_PAIR_COUNTS = (2, 3, 4)
 T20_EXTENDED_PAIR_COUNTS = (6,)
+T20_RESOURCE_NOREUSE_PAIR_COUNTS = (1, 2, 3)
+T20_RESOURCE_NOREUSE_POLICY = "resource_noreuse_prefix"
 DEFAULT_SCALAR_DEST_POLICY = "rotated"
 SCALAR_DEST_POLICIES = (DEFAULT_SCALAR_DEST_POLICY, "fixed")
+T20_REGISTER_POLICIES = ("default", T20_RESOURCE_NOREUSE_POLICY)
 
 
 TEMPLATE_IDS = (
@@ -401,6 +404,14 @@ def suite_t20_pair_counts(left: str, right: str, lmul: str) -> tuple[int, ...]:
     return tuple(dict.fromkeys(counts))
 
 
+def t20_register_policy(args: argparse.Namespace) -> str:
+    return getattr(args, "t20_register_policy", None) or "default"
+
+
+def is_t20_resource_noreuse(args: argparse.Namespace) -> bool:
+    return t20_register_policy(args) == T20_RESOURCE_NOREUSE_POLICY
+
+
 def emit_instruction(
     spec: InstructionSpec,
     *,
@@ -510,6 +521,8 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
         argv += ["--lmul", args.lmul]
     if args.template == "T20_PAIRWISE_PIPE_CLASSIFICATION" and getattr(args, "other_instr", None):
         argv += ["--other-instr", args.other_instr]
+    if args.template == "T20_PAIRWISE_PIPE_CLASSIFICATION" and is_t20_resource_noreuse(args):
+        argv += ["--t20-register-policy", T20_RESOURCE_NOREUSE_POLICY]
     if args.template in {"T12_CONSUMER_RAW_GAP", "T30_LMUL_SCALING"} and getattr(args, "consumer", None):
         argv += ["--consumer", args.consumer]
     if args.template == "T30_LMUL_SCALING" and getattr(args, "shape", None):
@@ -668,6 +681,8 @@ def make_experiment_id(args: argparse.Namespace) -> str:
     }:
         iterations, _ = default_iterations(template_id, args.lmul, args.iterations)
         parts.append(f"n{iterations}")
+    if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION" and is_t20_resource_noreuse(args):
+        parts.append("resource-noreuse")
     if template_id == "T12_CONSUMER_RAW_GAP":
         filler_count = args.filler_count if args.filler_count is not None else 0
         parts.extend([f"k{filler_count}", args.consumer or default_consumer(args.instr)])
@@ -844,6 +859,7 @@ def body_t20(
     spec_b: InstructionSpec,
     lmul: str,
     iterations: int,
+    register_policy: str = "default",
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
     schedule = [
@@ -853,7 +869,13 @@ def body_t20(
     ]
     vector_slots = vector_destination_slots(spec for _, _, spec in schedule)
     scalar_slots = len(schedule) - vector_slots
-    vector_dests, vector_reused = output_vectors(lmul, vector_slots, allow_reuse=True)
+    if register_policy == T20_RESOURCE_NOREUSE_POLICY and scalar_slots:
+        raise SystemExit(f"{T20_RESOURCE_NOREUSE_POLICY} requires two non-scalar-result T20 instructions")
+    vector_dests, vector_reused = output_vectors(
+        lmul,
+        vector_slots,
+        allow_reuse=register_policy != T20_RESOURCE_NOREUSE_POLICY,
+    )
     scalar_dests, scalar_reused = scalar_output_sequence(scalar_slots, DEFAULT_SCALAR_DEST_POLICY)
     vector_index = 0
     scalar_index = 0
@@ -885,7 +907,7 @@ def body_t20(
     for instance in instances:
         instance["destination_reused"] = destinations.count(str(instance["destination"])) > 1
     register_reuse = vector_reused or scalar_reused
-    return ["start", "end"], lines, {
+    body_meta: dict[str, Any] = {
         "iterations": iterations,
         "pair_count": iterations,
         "instruction_pair": {
@@ -904,6 +926,14 @@ def body_t20(
             "scalar_register_reuse": scalar_reused,
         },
     }
+    if register_policy == T20_RESOURCE_NOREUSE_POLICY:
+        body_meta["register_policy"] = T20_RESOURCE_NOREUSE_POLICY
+        body_meta["resource_disambiguation"] = {
+            "usable_for_proc_resource": True,
+            "count_set_id": "m4_vector_vector_noreuse",
+            "symmetry_breaker": False,
+        }
+    return ["start", "end"], lines, body_meta
 
 
 def body_t21(
@@ -984,7 +1014,7 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         other = require_instruction(args.other_instr or default_other_instr(args.instr))
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
-        markers, lines, meta = body_t20(spec, other, args.lmul, iterations)
+        markers, lines, meta = body_t20(spec, other, args.lmul, iterations, t20_register_policy(args))
         if note:
             meta["iteration_note"] = note
         return markers, lines, meta
@@ -1147,6 +1177,7 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             consumer=extra.get("consumer"),
             shape=extra.get("shape", "T10_INDEPENDENT_STREAM_THROUGHPUT"),
             scalar_dest_policy=extra.get("scalar_dest_policy"),
+            t20_register_policy=extra.get("t20_register_policy"),
             iterations=extra.get("iterations"),
             filler_count=extra.get("filler_count"),
             output_root=args.output_root,
@@ -1166,7 +1197,15 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             "lmul": lmul,
             "argv": command_argv(ns, experiment_id),
         }
-        for key in ("other_instr", "consumer", "shape", "scalar_dest_policy", "iterations", "filler_count"):
+        for key in (
+            "other_instr",
+            "consumer",
+            "shape",
+            "scalar_dest_policy",
+            "t20_register_policy",
+            "iterations",
+            "filler_count",
+        ):
             value = getattr(ns, key)
             if value is not None:
                 entry[key] = value
@@ -1213,6 +1252,19 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             for lmul in LMUL_FACTORS:
                 for pair_count in suite_t20_pair_counts(left, right, lmul):
                     add("T20_PAIRWISE_PIPE_CLASSIFICATION", left, lmul, other_instr=right, iterations=pair_count)
+
+    resource_ids = [instr for instr in INSTRUCTION_IDS if require_instruction(instr).result_kind != "scalar"]
+    for left_index, left in enumerate(resource_ids):
+        for right in resource_ids[left_index + 1 :]:
+            for pair_count in T20_RESOURCE_NOREUSE_PAIR_COUNTS:
+                add(
+                    "T20_PAIRWISE_PIPE_CLASSIFICATION",
+                    left,
+                    "m4",
+                    other_instr=right,
+                    iterations=pair_count,
+                    t20_register_policy=T20_RESOURCE_NOREUSE_POLICY,
+                )
     return entries
 
 
@@ -1286,6 +1338,12 @@ def build_parser() -> argparse.ArgumentParser:
     one.add_argument("--instr", choices=INSTRUCTION_IDS, help="instruction id from docs/plan.md")
     one.add_argument("--lmul", choices=tuple(LMUL_FACTORS), help="LMUL value; SEW is fixed at e32")
     one.add_argument("--other-instr", choices=INSTRUCTION_IDS, help="second instruction for T20")
+    one.add_argument(
+        "--t20-register-policy",
+        choices=T20_REGISTER_POLICIES,
+        default="default",
+        help="T20 register allocation policy; resource_noreuse_prefix uses distinct m4 vector destinations",
+    )
     one.add_argument("--consumer", help="consumer id for T12/T30; default is result-kind aware")
     one.add_argument("--shape", choices=T30_SHAPES, default="T10_INDEPENDENT_STREAM_THROUGHPUT", help="base shape for T30")
     one.add_argument(

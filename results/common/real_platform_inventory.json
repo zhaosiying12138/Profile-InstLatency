@@ -1151,7 +1151,7 @@
       "NumMicroOps",
       "SingleIssue"
     ],
-    "sha256": "0146ac9ce41185d776f70a8573f8792f7e14a4d58d3f29d36ac7faa1f9f82195",
+    "sha256": "2a80452bce6d1461f9208cad2ad7cff5a4ec40841e84fbc14c887d34100f559f",
     "status": "blocked",
     "status_counts": {
       "inferred": 111,
@@ -1173,7 +1173,7 @@
         "instruction_id": "vadd_vv",
         "json_path": "$.rows[2]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1193,7 +1193,7 @@
         "instruction_id": "vadd_vv",
         "json_path": "$.rows[7]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vadd_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1253,7 +1253,7 @@
         "instruction_id": "vcpop_m",
         "json_path": "$.rows[17]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vcpop_m:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1293,7 +1293,7 @@
         "instruction_id": "vcpop_m",
         "json_path": "$.rows[22]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vcpop_m:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1413,7 +1413,7 @@
         "instruction_id": "vdivu_vv",
         "json_path": "$.rows[32]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vdivu_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1433,7 +1433,7 @@
         "instruction_id": "vdivu_vv",
         "json_path": "$.rows[37]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vdivu_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1473,7 +1473,7 @@
         "instruction_id": "viota_m",
         "json_path": "$.rows[47]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:viota_m:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1493,7 +1493,7 @@
         "instruction_id": "viota_m",
         "json_path": "$.rows[52]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:viota_m:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1553,7 +1553,7 @@
         "instruction_id": "vmseq_vv",
         "json_path": "$.rows[62]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1573,7 +1573,7 @@
         "instruction_id": "vmseq_vv",
         "json_path": "$.rows[67]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1613,7 +1613,7 @@
         "instruction_id": "vmul_vv",
         "json_path": "$.rows[77]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vmul_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1633,7 +1633,7 @@
         "instruction_id": "vmul_vv",
         "json_path": "$.rows[82]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vmul_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1673,7 +1673,7 @@
         "instruction_id": "vredsum_vs",
         "json_path": "$.rows[92]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vredsum_vs:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1693,7 +1693,7 @@
         "instruction_id": "vredsum_vs",
         "json_path": "$.rows[97]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vredsum_vs:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1733,7 +1733,7 @@
         "instruction_id": "vrgather_vv",
         "json_path": "$.rows[107]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vrgather_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1753,7 +1753,7 @@
         "instruction_id": "vrgather_vv",
         "json_path": "$.rows[112]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vrgather_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1813,7 +1813,7 @@
         "instruction_id": "vslideup_vx",
         "json_path": "$.rows[122]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vslideup_vx:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1833,7 +1833,7 @@
         "instruction_id": "vslideup_vx",
         "json_path": "$.rows[127]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vslideup_vx:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1893,7 +1893,7 @@
         "instruction_id": "vsll_vv",
         "json_path": "$.rows[137]",
         "lmul": "m1",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vsll_vv:m1:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"
@@ -1913,7 +1913,7 @@
         "instruction_id": "vsll_vv",
         "json_path": "$.rows[142]",
         "lmul": "m2",
-        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
         "risk_id": "llvm_field_status:vsll_vv:m2:ProcResource:non_identifiable",
         "source_status": "non_identifiable",
         "status": "non_identifiable"

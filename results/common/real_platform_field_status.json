@@ -28959,7 +28959,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
         "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
@@ -28974,7 +28974,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m1 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29085,7 +29085,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
         "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
@@ -29100,7 +29100,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vadd_vv lmul=m2 pairs=vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vadd-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vadd-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vadd-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vadd-vv-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vadd_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29339,7 +29339,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
         "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
@@ -29354,7 +29354,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vcpop_m lmul=m1 pairs=vadd_vv,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vcpop-m-vadd-vv-m1-{n2,n3,n4,n6}, t20-vcpop-m-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vcpop-m-viota-m-m1-{n2,n3,n4,n6}, t20-vcpop-m-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vcpop_m",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29467,7 +29467,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
         "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
@@ -29482,7 +29482,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vcpop_m lmul=m2 pairs=vadd_vv,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vcpop-m-vadd-vv-m2-{n2,n3,n4,n6}, t20-vcpop-m-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vcpop-m-viota-m-m2-{n2,n3,n4,n6}, t20-vcpop-m-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vcpop_m",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29714,7 +29714,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
         "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
@@ -29729,7 +29729,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m1 pairs=vadd_vv,vcpop_m,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vadd-vv-m1-{n2,n3,n4,n6}, t20-vdivu-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m1-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -29840,7 +29840,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
         "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
@@ -29855,7 +29855,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vdivu_vv lmul=m2 pairs=vadd_vv,vcpop_m,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vdivu-vv-vadd-vv-m2-{n2,n3,n4,n6}, t20-vdivu-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vdivu-vv-viota-m-m2-{n2,n3,n4,n6}, t20-vdivu-vv-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vdivu_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30093,7 +30093,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
         "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
@@ -30108,7 +30108,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vadd-vv-m1-{n2,n3,n4,n6}, t20-viota-m-vcpop-m-m1-{n2,n3,n4,n6}, t20-viota-m-vdivu-vv-m1-{n2,n3,n4,n6}, t20-viota-m-vmseq-vv-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30219,7 +30219,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
         "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
@@ -30234,7 +30234,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=viota_m lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-viota-m-vadd-vv-m2-{n2,n3,n4,n6}, t20-viota-m-vcpop-m-m2-{n2,n3,n4,n6}, t20-viota-m-vdivu-vv-m2-{n2,n3,n4,n6}, t20-viota-m-vmseq-vv-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "viota_m",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30476,7 +30476,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
         "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
@@ -30491,7 +30491,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vadd-vv-m1-{n2,n3,n4,n6}, t20-vmseq-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vmseq-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30602,7 +30602,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
         "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
@@ -30617,7 +30617,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmseq_vv lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmul_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmseq-vv-vadd-vv-m2-{n2,n3,n4,n6}, t20-vmseq-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vmseq-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vmseq-vv-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmseq_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30855,7 +30855,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
         "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
@@ -30870,7 +30870,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vadd-vv-m1-{n2,n3,n4,n6}, t20-vmul-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -30981,7 +30981,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
         "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
@@ -30996,7 +30996,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vmul_vv lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vredsum_vs,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vmul-vv-vadd-vv-m2-{n2,n3,n4,n6}, t20-vmul-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vmul-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vmul-vv-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vmul_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31234,7 +31234,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
         "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
@@ -31249,7 +31249,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-vadd-vv-m1-{n2,n3,n4,n6}, t20-vredsum-vs-vcpop-m-m1-{n2,n3,n4,n6}, t20-vredsum-vs-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vredsum-vs-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31360,7 +31360,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
         "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
@@ -31375,7 +31375,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vredsum_vs lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vrgather_vv,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vredsum-vs-vadd-vv-m2-{n2,n3,n4,n6}, t20-vredsum-vs-vcpop-m-m2-{n2,n3,n4,n6}, t20-vredsum-vs-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vredsum-vs-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vredsum_vs",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31613,7 +31613,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 144,
+      "constraint_count": 9,
       "evidence": [
         "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
         "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
@@ -31628,7 +31628,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vadd-vv-m1-{n2,n3,n4,n6}, t20-vrgather-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vrgather-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vrgather-vv-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31739,7 +31739,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 144,
+      "constraint_count": 9,
       "evidence": [
         "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
         "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
@@ -31754,7 +31754,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vrgather_vv lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vslideup_vx observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vrgather-vv-vadd-vv-m2-{n2,n3,n4,n6}, t20-vrgather-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vrgather-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vrgather-vv-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vrgather_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -31996,7 +31996,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
         "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
@@ -32011,7 +32011,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vadd-vv-m1-{n2,n3,n4,n6}, t20-vslideup-vx-vcpop-m-m1-{n2,n3,n4,n6}, t20-vslideup-vx-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vslideup-vx-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32122,7 +32122,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 146,
+      "constraint_count": 9,
       "evidence": [
         "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
         "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
@@ -32137,7 +32137,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vslideup_vx lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vslideup-vx-vadd-vv-m2-{n2,n3,n4,n6}, t20-vslideup-vx-vcpop-m-m2-{n2,n3,n4,n6}, t20-vslideup-vx-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vslideup-vx-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vslideup_vx",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32379,7 +32379,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
         "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
@@ -32394,7 +32394,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m1 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vadd-vv-m1-{n2,n3,n4,n6}, t20-vsll-vv-vcpop-m-m1-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m1-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m1-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m1",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },
@@ -32505,7 +32505,7 @@
         "YuShuXinVPipe0",
         "YuShuXinVPipe1"
       ],
-      "constraint_count": 166,
+      "constraint_count": 9,
       "evidence": [
         "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
         "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
@@ -32520,7 +32520,7 @@
       "follow_up": "Run generated T20 pair-count sweep template=T20_PAIRWISE_PIPE_CLASSIFICATION instruction=vsll_vv lmul=m2 pairs=vadd_vv,vcpop_m,vdivu_vv,viota_m,vmseq_vv,vmul_vv,vredsum_vs,vrgather_vv observed_counts=[2,3,4,6] required_counts=n2,n3,n4,n6; experiment_ids=t20-vsll-vv-vadd-vv-m2-{n2,n3,n4,n6}, t20-vsll-vv-vcpop-m-m2-{n2,n3,n4,n6}, t20-vsll-vv-vdivu-vv-m2-{n2,n3,n4,n6}, t20-vsll-vv-viota-m-m2-{n2,n3,n4,n6}; register_policy=prefer register_reuse=false, annotate/exclude reused cases.",
       "instruction_id": "vsll_vv",
       "lmul": "m2",
-      "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+      "reason": "Multiple mirror/global ProcResource assignments satisfy the usable startup-free T20 pair slopes, so the row remains non-identifiable.",
       "source_status": "non_identifiable",
       "status": "non_identifiable"
     },

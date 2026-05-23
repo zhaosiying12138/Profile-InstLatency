@@ -1,0 +1,133 @@
+schema_version: 1
+experiment_id: "t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse"
+template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+result_group: "vdivu_vv"
+instruction_id: "vdivu_vv"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_start"
+    local_label: ".Lrvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_end"
+    local_label: ".Lrvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse"
+  template_id: "T20_PAIRWISE_PIPE_CLASSIFICATION"
+  purpose: "Classify pairwise RVV pipe affinity."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_start"
+      local_label: ".Lrvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_end"
+      local_label: ".Lrvv_profile_marker_t20_vdivu_vv_vmseq_vv_m4_n1_resource_noreuse_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T20_PAIRWISE_PIPE_CLASSIFICATION"
+      - "--instr"
+      - "vdivu_vv"
+      - "--lmul"
+      - "m4"
+      - "--other-instr"
+      - "vmseq_vv"
+      - "--t20-register-policy"
+      - "resource_noreuse_prefix"
+      - "--iterations"
+      - "1"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse"
+    command: "python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vdivu_vv --lmul m4 --other-instr vmseq_vv --t20-register-policy resource_noreuse_prefix --iterations 1 --output-root experiments/generated --experiment-id t20-vdivu-vv-vmseq-vv-m4-n1-resource-noreuse"
+instruction:
+  id: "vdivu_vv"
+  asm: "vdivu.vv"
+  llvm_sched_write: "WriteVIDivV"
+  result_kind: "vector"
+  chainable: true
+  notes: "Unsigned vector integer divide; inputs avoid zero divisors."
+pair_instruction:
+  id: "vmseq_vv"
+  asm: "vmseq.vv"
+  llvm_sched_write: "WriteVICmpV"
+  result_kind: "mask"
+  chainable: false
+  notes: "Vector compare producing a mask result."
+body:
+  iterations: 1
+  pair_count: 1
+  instruction_pair:
+    A: "vdivu_vv"
+    B: "vmseq_vv"
+  instances:
+    -
+      index: 0
+      side: "A"
+      instruction: "vdivu_vv"
+      destination: "v8"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 0
+      side: "B"
+      instruction: "vmseq_vv"
+      destination: "v12"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+  destinations:
+    - "v8"
+    - "v12"
+  register_reuse: false
+  destination_allocation:
+    vector_destination_count: 2
+    scalar_destination_count: 0
+    available_vector_output_groups: 6
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false
+  register_policy: "resource_noreuse_prefix"
+  resource_disambiguation:
+    usable_for_proc_resource: true
+    count_set_id: "m4_vector_vector_noreuse"
+    symmetry_breaker: false
