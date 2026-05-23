@@ -491,6 +491,37 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertIn("matched_control_convergence", constraint["reason"])
         self.assertIn("converged_gap=3", constraint["reason"])
 
+    def test_t12_matched_control_partial_stalls_infer_sub_cadence_latency(self):
+        field = solve_latency_field(
+            t12_matched_control_observations(
+                [(0, 3), (1, 1), (2, 0), (3, 0)],
+                [(0, 0), (1, 0), (2, 0), (3, 0)],
+                cadence=2,
+            )
+        )
+
+        self.assertEqual(field["status"], "exact_fit")
+        self.assertEqual(field["value"], 3)
+        constraint = field["t12_latency_constraints"][0]
+        self.assertEqual(constraint["status"], "exact")
+        self.assertIn("positive_stall_latency=3", constraint["reason"])
+        self.assertIn("exact_latency=3", constraint["reason"])
+
+    def test_t12_matched_control_disagreeing_positive_stalls_fail_closed(self):
+        field = solve_latency_field(
+            t12_matched_control_observations(
+                [(0, 3), (1, 2), (2, 0), (3, 0)],
+                [(0, 0), (1, 0), (2, 0), (3, 0)],
+                cadence=2,
+            )
+        )
+
+        self.assertEqual(field["status"], "non_identifiable")
+        self.assertIsNone(field["value"])
+        constraint = field["t12_latency_constraints"][0]
+        self.assertEqual(constraint["status"], "skipped")
+        self.assertIn("positive_stall_latency_disagreement", constraint["reason"])
+
     def test_t12_matched_control_repeat_disagreement_fails_closed(self):
         observations = t12_matched_control_observations(
             [(0, 7), (1, 7), (2, 7), (3, 7)],

@@ -280,10 +280,53 @@ def t12_matched_control_constraint(
             observed_cadence_gaps=tuple(control_cadence_gaps),
         )
 
-    latency = converged_gap * cadence
+    positive_stall_latency = {
+        gap * cadence + stall
+        for gap, stall in stalls.items()
+        if stall > 0
+    }
+    if not positive_stall_latency:
+        return T12LatencyConstraint(
+            "skipped",
+            f"{reason_prefix};no_positive_stall_latency_equation",
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+    if len(positive_stall_latency) != 1:
+        return T12LatencyConstraint(
+            "skipped",
+            f"{reason_prefix};positive_stall_latency_disagreement;latencies={sorted(positive_stall_latency)}",
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+
+    latency = next(iter(positive_stall_latency))
+    inconsistent_zero_gaps = [
+        gap for gap in converged_gaps if gap * cadence < latency
+    ]
+    if inconsistent_zero_gaps:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                f"{reason_prefix};zero_stall_before_positive_latency;"
+                f"latency={latency};zero_gaps={inconsistent_zero_gaps}"
+            ),
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(matched_gaps),
+            observed_cadence_gaps=tuple(control_cadence_gaps),
+        )
+
     return T12LatencyConstraint(
         "exact",
-        f"{reason_prefix};converged_gap={converged_gap};exact_latency={latency}",
+        (
+            f"{reason_prefix};converged_gap={converged_gap};"
+            f"positive_stall_latency={latency};exact_latency={latency}"
+        ),
         evidence,
         latency=latency,
         filler_cadence=cadence,
