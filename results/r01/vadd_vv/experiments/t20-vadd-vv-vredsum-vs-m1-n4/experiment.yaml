@@ -1,0 +1,117 @@
+schema_version: 1
+experiment_id: t20-vadd-vv-vredsum-vs-m1-n4
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vadd_vv
+instruction_id: vadd_vv
+lmul: m1
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_start
+    local_label: .Lrvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_end
+    local_label: .Lrvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t20-vadd-vv-vredsum-vs-m1-n4
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_start
+      local_label: .Lrvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_end
+      local_label: .Lrvv_profile_marker_t20_vadd_vv_vredsum_vs_m1_n4_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m1
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vadd_vv, --lmul, m1, --other-instr, vredsum_vs, --output-root, experiments/generated, --experiment-id, t20-vadd-vv-vredsum-vs-m1-n4]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vadd_vv --lmul m1 --other-instr vredsum_vs --output-root experiments/generated --experiment-id t20-vadd-vv-vredsum-vs-m1-n4
+instruction:
+  id: vadd_vv
+  asm: vadd.vv
+  llvm_sched_write: WriteVIALUV
+  result_kind: vector
+  chainable: true
+  notes: Simple vector integer ALU operation.
+pair_instruction:
+  id: vredsum_vs
+  asm: vredsum.vs
+  llvm_sched_write: WriteVIRedV_From
+  result_kind: vector
+  chainable: true
+  notes: Vector reduction into a scalar element held in a vector register.
+body:
+  iterations: 4
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vadd_vv
+      destination: v2
+    -
+      index: 0
+      side: B
+      instruction: vredsum_vs
+      destination: v3
+    -
+      index: 1
+      side: A
+      instruction: vadd_vv
+      destination: v4
+    -
+      index: 1
+      side: B
+      instruction: vredsum_vs
+      destination: v5
+    -
+      index: 2
+      side: A
+      instruction: vadd_vv
+      destination: v6
+    -
+      index: 2
+      side: B
+      instruction: vredsum_vs
+      destination: v7
+    -
+      index: 3
+      side: A
+      instruction: vadd_vv
+      destination: v8
+    -
+      index: 3
+      side: B
+      instruction: vredsum_vs
+      destination: v9
+  register_reuse: false

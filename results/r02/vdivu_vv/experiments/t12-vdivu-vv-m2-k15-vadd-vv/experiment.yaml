@@ -1,0 +1,71 @@
+schema_version: 1
+experiment_id: t12-vdivu-vv-m2-k15-vadd-vv
+template_id: T12_CONSUMER_RAW_GAP
+result_group: vdivu_vv
+instruction_id: vdivu_vv
+lmul: m2
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_start
+    local_label: .Lrvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_end
+    local_label: .Lrvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t12-vdivu-vv-m2-k15-vadd-vv
+  template_id: T12_CONSUMER_RAW_GAP
+  purpose: Sweep independent fillers between producer and consumer.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_start
+      local_label: .Lrvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_end
+      local_label: .Lrvv_profile_marker_t12_vdivu_vv_m2_k15_vadd_vv_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T12_CONSUMER_RAW_GAP, --instr, vdivu_vv, --lmul, m2, --consumer, vadd_vv, --filler-count, 15, --output-root, experiments/generated, --experiment-id, t12-vdivu-vv-m2-k15-vadd-vv]
+    command: python3 scripts/gen_asm.py one --template T12_CONSUMER_RAW_GAP --instr vdivu_vv --lmul m2 --consumer vadd_vv --filler-count 15 --output-root experiments/generated --experiment-id t12-vdivu-vv-m2-k15-vadd-vv
+instruction:
+  id: vdivu_vv
+  asm: vdivu.vv
+  llvm_sched_write: WriteVIDivV
+  result_kind: vector
+  chainable: true
+  notes: Unsigned vector integer divide; inputs avoid zero divisors.
+body:
+  filler_count: 15
+  producer_destination: v4
+  consumer: vadd_vv
+  consumer_destination: v6

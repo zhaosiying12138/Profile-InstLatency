@@ -1,0 +1,71 @@
+schema_version: 1
+experiment_id: t12-vcpop-m-m1-k10-scalar-add
+template_id: T12_CONSUMER_RAW_GAP
+result_group: vcpop_m
+instruction_id: vcpop_m
+lmul: m1
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_start
+    local_label: .Lrvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_end
+    local_label: .Lrvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t12-vcpop-m-m1-k10-scalar-add
+  template_id: T12_CONSUMER_RAW_GAP
+  purpose: Sweep independent fillers between producer and consumer.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_start
+      local_label: .Lrvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_end
+      local_label: .Lrvv_profile_marker_t12_vcpop_m_m1_k10_scalar_add_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m1
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T12_CONSUMER_RAW_GAP, --instr, vcpop_m, --lmul, m1, --consumer, scalar_add, --filler-count, 10, --output-root, experiments/generated, --experiment-id, t12-vcpop-m-m1-k10-scalar-add]
+    command: python3 scripts/gen_asm.py one --template T12_CONSUMER_RAW_GAP --instr vcpop_m --lmul m1 --consumer scalar_add --filler-count 10 --output-root experiments/generated --experiment-id t12-vcpop-m-m1-k10-scalar-add
+instruction:
+  id: vcpop_m
+  asm: vcpop.m
+  llvm_sched_write: WriteVMPopV
+  result_kind: scalar
+  chainable: false
+  notes: Mask population count producing a scalar integer result.
+body:
+  filler_count: 10
+  producer_destination: x10
+  consumer: scalar_add
+  consumer_destination: x11

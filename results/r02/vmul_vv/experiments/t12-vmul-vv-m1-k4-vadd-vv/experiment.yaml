@@ -1,0 +1,71 @@
+schema_version: 1
+experiment_id: t12-vmul-vv-m1-k4-vadd-vv
+template_id: T12_CONSUMER_RAW_GAP
+result_group: vmul_vv
+instruction_id: vmul_vv
+lmul: m1
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_start
+    local_label: .Lrvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_end
+    local_label: .Lrvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t12-vmul-vv-m1-k4-vadd-vv
+  template_id: T12_CONSUMER_RAW_GAP
+  purpose: Sweep independent fillers between producer and consumer.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_start
+      local_label: .Lrvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_end
+      local_label: .Lrvv_profile_marker_t12_vmul_vv_m1_k4_vadd_vv_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m1
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T12_CONSUMER_RAW_GAP, --instr, vmul_vv, --lmul, m1, --consumer, vadd_vv, --filler-count, 4, --output-root, experiments/generated, --experiment-id, t12-vmul-vv-m1-k4-vadd-vv]
+    command: python3 scripts/gen_asm.py one --template T12_CONSUMER_RAW_GAP --instr vmul_vv --lmul m1 --consumer vadd_vv --filler-count 4 --output-root experiments/generated --experiment-id t12-vmul-vv-m1-k4-vadd-vv
+instruction:
+  id: vmul_vv
+  asm: vmul.vv
+  llvm_sched_write: WriteVIMulV
+  result_kind: vector
+  chainable: true
+  notes: Vector integer multiply.
+body:
+  filler_count: 4
+  producer_destination: v2
+  consumer: vadd_vv
+  consumer_destination: v3

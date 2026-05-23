@@ -1,0 +1,71 @@
+schema_version: 1
+experiment_id: t12-vrgather-vv-m4-k16-vadd-vv
+template_id: T12_CONSUMER_RAW_GAP
+result_group: vrgather_vv
+instruction_id: vrgather_vv
+lmul: m4
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_start
+    local_label: .Lrvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_end
+    local_label: .Lrvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t12-vrgather-vv-m4-k16-vadd-vv
+  template_id: T12_CONSUMER_RAW_GAP
+  purpose: Sweep independent fillers between producer and consumer.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_start
+      local_label: .Lrvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_end
+      local_label: .Lrvv_profile_marker_t12_vrgather_vv_m4_k16_vadd_vv_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m4
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T12_CONSUMER_RAW_GAP, --instr, vrgather_vv, --lmul, m4, --consumer, vadd_vv, --filler-count, 16, --output-root, experiments/generated, --experiment-id, t12-vrgather-vv-m4-k16-vadd-vv]
+    command: python3 scripts/gen_asm.py one --template T12_CONSUMER_RAW_GAP --instr vrgather_vv --lmul m4 --consumer vadd_vv --filler-count 16 --output-root experiments/generated --experiment-id t12-vrgather-vv-m4-k16-vadd-vv
+instruction:
+  id: vrgather_vv
+  asm: vrgather.vv
+  llvm_sched_write: WriteVRGatherVV
+  result_kind: vector
+  chainable: false
+  notes: Vector gather using vector indices; assembler forbids destination/source overlap.
+body:
+  filler_count: 16
+  producer_destination: v8
+  consumer: vadd_vv
+  consumer_destination: v12

@@ -1,0 +1,86 @@
+schema_version: 1
+experiment_id: t21-vmul-vv-m4-n4
+template_id: T21_PAIR_WITH_SCALAR
+result_group: vmul_vv
+instruction_id: vmul_vv
+lmul: m4
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t21_vmul_vv_m4_n4_start
+    local_label: .Lrvv_profile_marker_t21_vmul_vv_m4_n4_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t21_vmul_vv_m4_n4_end
+    local_label: .Lrvv_profile_marker_t21_vmul_vv_m4_n4_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t21-vmul-vv-m4-n4
+  template_id: T21_PAIR_WITH_SCALAR
+  purpose: "Probe scalar pairing, single-issue, and multi-uop behavior."
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t21_vmul_vv_m4_n4_start
+      local_label: .Lrvv_profile_marker_t21_vmul_vv_m4_n4_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t21_vmul_vv_m4_n4_end
+      local_label: .Lrvv_profile_marker_t21_vmul_vv_m4_n4_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m4
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T21_PAIR_WITH_SCALAR, --instr, vmul_vv, --lmul, m4, --output-root, experiments/generated, --experiment-id, t21-vmul-vv-m4-n4]
+    command: python3 scripts/gen_asm.py one --template T21_PAIR_WITH_SCALAR --instr vmul_vv --lmul m4 --output-root experiments/generated --experiment-id t21-vmul-vv-m4-n4
+instruction:
+  id: vmul_vv
+  asm: vmul.vv
+  llvm_sched_write: WriteVIMulV
+  result_kind: vector
+  chainable: true
+  notes: Vector integer multiply.
+body:
+  iterations: 4
+  instances:
+    -
+      index: 0
+      destination: v8
+      scalar_add_destination: x20
+    -
+      index: 1
+      destination: v12
+      scalar_add_destination: x23
+    -
+      index: 2
+      destination: v16
+      scalar_add_destination: x26
+    -
+      index: 3
+      destination: v20
+      scalar_add_destination: x29
+  register_reuse: false

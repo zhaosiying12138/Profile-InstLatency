@@ -1,0 +1,71 @@
+schema_version: 1
+experiment_id: t12-vmseq-vv-m2-k14-vcpop-m
+template_id: T12_CONSUMER_RAW_GAP
+result_group: vmseq_vv
+instruction_id: vmseq_vv
+lmul: m2
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_start
+    local_label: .Lrvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_end
+    local_label: .Lrvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t12-vmseq-vv-m2-k14-vcpop-m
+  template_id: T12_CONSUMER_RAW_GAP
+  purpose: Sweep independent fillers between producer and consumer.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_start
+      local_label: .Lrvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_end
+      local_label: .Lrvv_profile_marker_t12_vmseq_vv_m2_k14_vcpop_m_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T12_CONSUMER_RAW_GAP, --instr, vmseq_vv, --lmul, m2, --consumer, vcpop_m, --filler-count, 14, --output-root, experiments/generated, --experiment-id, t12-vmseq-vv-m2-k14-vcpop-m]
+    command: python3 scripts/gen_asm.py one --template T12_CONSUMER_RAW_GAP --instr vmseq_vv --lmul m2 --consumer vcpop_m --filler-count 14 --output-root experiments/generated --experiment-id t12-vmseq-vv-m2-k14-vcpop-m
+instruction:
+  id: vmseq_vv
+  asm: vmseq.vv
+  llvm_sched_write: WriteVICmpV
+  result_kind: mask
+  chainable: false
+  notes: Vector compare producing a mask result.
+body:
+  filler_count: 14
+  producer_destination: v4
+  consumer: vcpop_m
+  consumer_destination: x11
