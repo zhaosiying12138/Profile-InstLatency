@@ -1,0 +1,43 @@
+{
+  "id": "tool-worker-r5-capture-verification",
+  "round": 5,
+  "primitive": "h2-check",
+  "tool_surface": "shell",
+  "commands": [
+    "python3 -m json.tool results/common/agentic_flow/artifacts/tool_calls/worker-r5-capture-verification.json >/dev/null",
+    "python3 <events.jsonl parse check>",
+    "python3 <YAML parse check for boards and h2_primitives.yaml>",
+    "python3 <h2_primitives path existence check>",
+    "if rg -n 'Status: Round 1 replay record|Round 1 capture\\. Active worker|it remains `NOT_READY` because only the T01|^round: 0$' results/common/agentic_flow --glob '!**/worker-r5-capture.md' --glob '!**/worker-r5-capture-verification.json'; then exit 1; fi",
+    "find results/r01 results/r02 -name trace.json | wc -l",
+    "sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md",
+    "python3 <field-status count check>",
+    "find results/common -maxdepth 1 -iname '*approval*' -print",
+    "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+    "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results; status=$?; echo exit_code=$status; test $status -ne 0",
+    "git diff --check -- results/common/agentic_flow",
+    "git diff --check"
+  ],
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "inputs": [
+    ".humanize/rlcr/2026-05-23_01-15-03/round-2-summary.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-2-review-result.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-3-summary.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-3-review-result.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-4-summary.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-4-review-result.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-5-prompt.md",
+    "results/common/experiment_quality.md",
+    "results/common/real_platform_inventory.json",
+    "results/common/real_platform_field_status.json"
+  ],
+  "outputs": [
+    "results/common/agentic_flow/replay.md",
+    "results/common/agentic_flow/events.jsonl",
+    "results/common/agentic_flow/boards/execution_state.yaml",
+    "results/common/agentic_flow/artifacts/verification/worker-r5-capture.md"
+  ],
+  "exit_code": 0,
+  "evidence_path": "results/common/agentic_flow/artifacts/verification/worker-r5-capture.md",
+  "status": "passed"
+}

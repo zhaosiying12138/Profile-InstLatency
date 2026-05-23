@@ -1,26 +1,77 @@
 schema_version: 1
-round: 0
-active_mode: synthetic_calibration
+round: 5
+active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
   - real_platform_profile
 cwd: /home/zhaosiying/codebase/compiler/profile_inst_latency
+rlcr_root: .humanize/rlcr/2026-05-23_01-15-03
 rlcr_state_policy:
   worker_may_edit_humanize: false
   worker_may_run_gate: false
   worker_may_edit_plan: false
 lesson_ids: NONE
+current_boundary:
+  round: 5
+  status: in_progress
+  owner_scope: results/common/agentic_flow/**
+  code_and_generated_result_fixes_owned_by_other_worker: true
+  observed_other_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
+  forbidden_paths:
+    - scripts/search_model.py
+    - tests/test_search_model_candidate_sim.py
+    - results/common/search_model_real_platform.json
+    - results/common/real_platform_field_status.json
+    - results/common/real_platform_inventory.json
+    - results/common/experiment_quality.md
+    - results/*/profile.real_platform.yaml
+    - .humanize/rlcr/**
 phase_status:
-  phase_7_analyzer_and_search: implemented_and_verified
-  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_closed
+  phase_7_analyzer_and_search: round5_other_worker_commit_targets_peer_t20_and_short_t12_guard_pending_review
+  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: final_round_capture_recorded
+  humanize2_capture: round5_boundary_refreshed_for_rounds_2_4_without_completion_claim
+real_platform_evidence:
+  checked_in_r01_r02_trace_files: 7190
+  required_real_gem5_groups: 178
+  covered_required_real_gem5_groups: 178
+  stable_repeat_groups: 3595
+  unstable_repeat_groups: 0
+  field_rows:
+    total: 150
+    inferred: 111
+    non_identifiable: 39
+    conflict: 0
+    insufficient_evidence: 0
+  artifact_hashes:
+    real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+    search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
+    experiment_quality_md: 6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307
+  round4_review_hashes:
+    real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
+    real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
+    search_model_real_platform_json: ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935
+    experiment_quality_md: 8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8
 gates:
   synthetic_calibration:
     status: pass
     report: results/common/mismatch_report.md
-    reason: claimed raw-marker-inferred fields match config/rvv_timing_model.yaml
+    command: python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
   real_platform_profile:
     status: not_ready
     report: results/common/experiment_quality.md
-    reason: gem5 evidence covers T01 kill-check only; full timing coverage, repeatability, and human approval are absent
+    command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+    expected_failure_reasons:
+      - quality report lacks exact Gate status: PASS
+      - machine-readable human approval file under results/common is absent
+approval_boundary:
+  explicit_human_approval_required: true
+  approval_artifact_exists: false
+  approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
+  note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
+remaining_blockers:
+  - T20 peer-side constraints were targeted by other-worker commit 773f27d6 and remain pending review.
+  - T12 short-sweep exactness guard was targeted by other-worker commit 773f27d6 and remains pending review.
+  - 39 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
+  - AC-16 remains blocked by missing explicit human approval.

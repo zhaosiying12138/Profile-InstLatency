@@ -2,12 +2,14 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 0
+  round: 5
+  status: in_progress
 manifest:
   capabilities:
     agent_tools: [codex]
     scripts:
       - check_env
+      - gen_asm
       - run_killcheck
       - run_suite
       - analyze
@@ -21,6 +23,7 @@ manifest:
       - rvv.workerOutput.v1
       - rvv.decision.v1
       - rvv.verification.v1
+      - rvv.rlcrReference.v1
     human_input: true
     view: true
 templates:
@@ -30,6 +33,9 @@ templates:
   - id: worker-f3-review-fix
     primitive: h2-template
     path: artifacts/prompts/worker-f3-review-fix.md
+  - id: round-5-capture-refresh
+    primitive: h2-template
+    path: artifacts/prompts/round-5-capture-refresh.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -59,10 +65,6 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-a-verification.md
-  - id: worker-a-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-a-verification.json
   - id: worker-b-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -75,10 +77,6 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-b-verification.md
-  - id: worker-b-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-b-verification.json
   - id: worker-c-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -91,10 +89,6 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-c-verification.md
-  - id: worker-c-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-c-verification.json
   - id: worker-d-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -107,10 +101,6 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-d-verification.md
-  - id: worker-d-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-d-verification.json
   - id: worker-e-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -119,46 +109,42 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.workerOutput.v1
     path: artifacts/worker_outputs/worker-e.md
-  - id: worker-e-red-checks
-    primitive: h2-artifact
-    schema: rvv.verification.v1
-    path: artifacts/verification/worker-e-red-checks.md
   - id: worker-e-final-checks
     primitive: h2-artifact
     schema: rvv.verification.v1
     path: artifacts/verification/worker-e-final-checks.md
-  - id: round-0-worker-split-decision
+  - id: worker-f1-output
     primitive: h2-artifact
-    schema: rvv.decision.v1
-    path: artifacts/decisions/round-0-worker-split.md
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-f1.md
+  - id: worker-f2-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-f2.md
   - id: worker-f3-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
     path: artifacts/worker_contracts/worker-f3.md
-  - id: worker-f3-red-checks
-    primitive: h2-artifact
-    schema: rvv.verification.v1
-    path: artifacts/verification/worker-f3-red-checks.md
-  - id: worker-f3-red-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-f3-red-checks.json
-  - id: worker-f3-final-checks
-    primitive: h2-artifact
-    schema: rvv.verification.v1
-    path: artifacts/verification/worker-f3-final-checks.md
-  - id: worker-f3-final-tool-call
-    primitive: h2-artifact
-    schema: rvv.toolCall.v1
-    path: artifacts/tool_calls/worker-f3-final-checks.json
   - id: worker-f3-output
     primitive: h2-artifact
     schema: rvv.workerOutput.v1
     path: artifacts/worker_outputs/worker-f3.md
-  - id: simulator-candidate-comparison
+  - id: worker-f3-final-checks
     primitive: h2-artifact
-    schema: rvv.decision.v1
-    path: ../../../docs/simulator-candidate-comparison.md
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-f3-final-checks.md
+  - id: worker-g-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-g.md
+  - id: worker-g3-a-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-g3-a.md
+  - id: worker-g3-c-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-g3-c.md
   - id: coordinator-r1-output
     primitive: h2-artifact
     schema: rvv.workerOutput.v1
@@ -171,6 +157,54 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.toolCall.v1
     path: artifacts/tool_calls/coordinator-r1.json
+  - id: rlcr-round-2-summary
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-2-summary.md
+  - id: rlcr-round-2-review
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-2-review-result.md
+  - id: rlcr-round-3-summary
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-3-summary.md
+  - id: rlcr-round-3-review
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-3-review-result.md
+  - id: rlcr-round-4-summary
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-4-summary.md
+  - id: rlcr-round-4-review
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-4-review-result.md
+  - id: rlcr-round-5-prompt
+    primitive: h2-artifact
+    schema: rvv.rlcrReference.v1
+    path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-5-prompt.md
+  - id: round-5-capture-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r5-capture.md
+  - id: round-5-capture-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r5-capture.md
+  - id: round-5-capture-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r5-capture.md
+  - id: round-5-capture-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r5-capture-verification.json
+  - id: simulator-candidate-comparison
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: ../../../docs/simulator-candidate-comparison.md
 events:
   - type: profile.mode.selected
   - type: worker.dispatched
@@ -183,10 +217,12 @@ events:
   - type: gate.synthetic_calibration
   - type: gate.real_platform_profile
   - type: llvm.yushuxin.evidence.recorded
-  - type: synthetic.golden.mismatch
-  - type: synthetic.golden.match
-  - type: real_platform.confidence.stop
-  - type: llvm.yushuxin.worktree.created
+  - type: rlcr.round.summary.captured
+  - type: rlcr.review.request_changes.captured
+  - type: real_platform.artifacts.regenerated
+  - type: real_platform.gate.fail_closed
+  - type: approval.artifact.absent
+  - type: round5.boundary.recorded
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -201,9 +237,36 @@ flow_nodes:
     primitive: h2-check
     uses: check_calibration_gate
     mode: synthetic_calibration
+  - id: real-platform-search-rounds-2-4
+    primitive: h2-transform
+    uses: [search_model, analyze]
+    mode: real_platform_profile
   - id: real-platform-confidence-gate
     primitive: h2-human
     mode: real_platform_profile
+    current_status: fail_closed_awaiting_approval
+  - id: round5-other-worker-code-fix
+    primitive: h2-transform
+    owner: other_worker
+    commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
+    uses: [search_model, analyze]
+    status: observed_pending_review
+  - id: round5-capture-refresh
+    primitive: h2-agent
+    worker: Round5Capture
+    owned_write_set: results/common/agentic_flow/**
+    status: in_progress
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
+approval_boundary:
+  primitive: h2-human
+  required: true
+  artifact_exists: false
+  approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
+  must_bind_to_hashes:
+    real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+    real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  round4_review_hashes:
+    real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
+    real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8

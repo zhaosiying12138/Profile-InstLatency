@@ -1,21 +1,35 @@
 schema_version: 1
 baseline: gem5_minorcpu
-status: selected_t01_killcheck_passed
+status: selected_real_platform_repeat_coverage_present_gate_fail_closed
 candidates:
   - name: gem5_minorcpu
     role: first baseline
-    reason: RVV-capable simulator with in-order MinorCPU timing hooks
+    reason: RVV-capable simulator with in-order MinorCPU timing hooks and current checked-in real-platform repeat evidence
   - name: spike_plus_timing_wrapper
     role: fallback candidate
-    reason: compare if gem5 RVV kill-check fails
+    reason: compare if gem5 RVV kill-check or timing evidence becomes invalid
   - name: additional_rvv_simulator
     role: fallback candidate
     reason: required by simulator-candidate comparison path
 killcheck_gate:
   status: pass
   command: python3 scripts/run_suite.py --killcheck --backend gem5_minor --results-root results
-  expected_artifact: results/common/experiments/t01-*/
   coverage: 10 instructions x 3 LMUL values
+real_platform_repeat_gate:
+  status: evidence_present
+  checked_in_r01_r02_trace_files: 7190
+  required_groups: 178
+  covered_required_groups: 178
+  stable_repeat_groups: 3595
+  unstable_repeat_groups: 0
+  quality_report: results/common/experiment_quality.md
 full_timing_gate:
   status: not_ready
-  reason: T10/T11/T12/T20/T30 still need real repeated gem5 or hardware measurements before real-platform approval
+  reason: explicit machine-readable human approval is absent and 39 LLVM-facing rows remain non-identifiable
+  approval_artifact_exists: false
+round5_other_worker_commit:
+  commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
+  targets:
+    - peer-side T20 constraints
+    - T12 short-sweep exactness guard
+  capture_review_status: pending

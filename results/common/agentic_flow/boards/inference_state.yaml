@@ -1,19 +1,63 @@
 schema_version: 1
-status: synthetic_calibration_passed
+status: real_platform_artifacts_round5_boundary_refreshed_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
+  real_platform_filters:
+    mode: real_platform_profile
+    backend: gem5_minor
 parameter_search:
   implemented: true
-  formula: base_plus_lmul_times_k
+  formula: startup_plus_slope_candidate_tuple
+  t20_state: peer_side_constraints_targeted_by_other_worker_commit_773f27d6_pending_review
+  t12_state: short_sweep_guard_targeted_by_other_worker_commit_773f27d6_pending_review
   confidence_policy: no unsupported certainty
+current_real_platform_outputs:
+  search_model: results/common/search_model_real_platform.json
+  field_status: results/common/real_platform_field_status.json
+  inventory: results/common/real_platform_inventory.json
+  quality_report: results/common/experiment_quality.md
+  search_summary: results/common/search_model_real_platform_summary.md
+  profile_sidecars: results/*/profile.real_platform.yaml
+current_counts:
+  checked_in_r01_r02_trace_files: 7190
+  required_real_gem5_groups: 178
+  stable_repeat_groups: 3595
+  unstable_repeat_groups: 0
+  field_rows_total: 150
+  field_rows_inferred: 111
+  field_rows_non_identifiable: 39
+  field_rows_conflict: 0
+  field_rows_insufficient_evidence: 0
+artifact_hashes:
+  real_platform_inventory_json: d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d
+  real_platform_field_status_json: 904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179
+  search_model_real_platform_json: d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73
+  experiment_quality_md: 6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307
+round4_review_hashes:
+  real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
+  real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8
+  search_model_real_platform_json: ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935
+  experiment_quality_md: 8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8
+replay_commands:
+  real_search: python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-real-search-current.json --format json
+  analyze: python3 scripts/analyze.py --all --root results
+  json_checks: python3 -m json.tool results/common/search_model_real_platform.json >/dev/null && python3 -m json.tool results/common/real_platform_field_status.json >/dev/null && python3 -m json.tool results/common/real_platform_inventory.json >/dev/null
+  trace_count: find results/r01 results/r02 -name trace.json | wc -l
+  hash_check: sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md
 calibration_gates:
   synthetic_calibration:
     report: results/common/mismatch_report.md
     pass_condition: gate_status_pass_and_claimed_mismatches_none
+    command: python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
   real_platform_profile:
     report: results/common/experiment_quality.md
-    pass_condition: coverage_stability_confidence_assumptions_and_human_approval
+    pass_condition: coverage_stability_confidence_assumptions_conflict_resolution_and_human_approval
+    command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+    current_status: fail_closed_awaiting_human_approval
+approval:
+  artifact_exists: false
+  search_command: find results/common -maxdepth 1 -iname '*approval*' -print
 llvm_worktree_helper:
   script: scripts/prepare_llvm_yushuxin_worktree.py
   default: tag_verified_worktree

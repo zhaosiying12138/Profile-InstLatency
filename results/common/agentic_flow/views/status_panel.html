@@ -4,20 +4,23 @@
 <title>RVV Profile Workflow Status</title>
 <style>
   body { font-family: system-ui, sans-serif; margin: 2rem; color: #202124; }
-  table { border-collapse: collapse; width: 100%; max-width: 960px; }
-  th, td { border: 1px solid #d0d7de; padding: 0.5rem; text-align: left; }
+  table { border-collapse: collapse; width: 100%; max-width: 1080px; }
+  th, td { border: 1px solid #d0d7de; padding: 0.5rem; text-align: left; vertical-align: top; }
   th { background: #f6f8fa; }
   code { background: #f6f8fa; padding: 0.1rem 0.25rem; }
 </style>
 <h1>RVV Profile Workflow Status</h1>
-<p>Round 1 capture. Active worker: <code>none</code>.</p>
+<p>Round 5 boundary capture. Active worker: <code>Round5Capture</code>. Scope: <code>results/common/agentic_flow/**</code>.</p>
 <table>
   <tr><th>Area</th><th>Status</th></tr>
-  <tr><td>Phase 7 analyzer/search</td><td>Implemented; synthetic profile formulas and resources inferred from raw marker deltas</td></tr>
-  <tr><td>Phase 8 synthetic calibration gate</td><td>PASS; claimed mismatches: none</td></tr>
-  <tr><td>gem5 kill-check</td><td>PASS for 10 instructions x 3 LMUL values under MinorCPU</td></tr>
-  <tr><td>real-platform gate</td><td>NOT_READY; full timing coverage, repeatability, and human approval still required</td></tr>
-  <tr><td>LLVM YuShuXin evidence</td><td>Recorded in <code>results/common/llvm_yushuxin_implementation.md</code></td></tr>
-  <tr><td>Humanize2 capture</td><td>Replay, boards, events, worker records, and coordinator final check recorded</td></tr>
+  <tr><td>RLCR lineage</td><td>Rounds 2-4 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; Round 5 is in progress.</td></tr>
+  <tr><td>Real-platform coverage</td><td>7190 checked-in <code>results/r01</code>/<code>results/r02</code> traces; 178/178 required real gem5 groups; 3595 stable repeat groups; 0 unstable.</td></tr>
+  <tr><td>Field status</td><td>150 rows: 111 inferred, 39 non-identifiable, 0 conflict, 0 insufficient-evidence.</td></tr>
+  <tr><td>Round 4 simulator state</td><td>Subject-side T20 pair constraints and T12 clean-prefix constraints are reflected in regenerated artifacts.</td></tr>
+  <tr><td>Round 5 code boundary</td><td>Current <code>main</code> includes other-worker commit <code>773f27d6</code> targeting peer-side T20 constraints and the T12 short-sweep guard. This capture records it but does not claim review completion.</td></tr>
+  <tr><td>Round 5 remaining blockers</td><td>39 non-identifiable rows and explicit approval are not resolved by this capture refresh.</td></tr>
+  <tr><td>Real-platform gate</td><td><code>NOT_READY</code>; fail-closed because <code>Gate status: PASS</code> and a machine-readable approval artifact are absent.</td></tr>
+  <tr><td>Approval boundary</td><td>No <code>results/common/*approval*</code> artifact exists. One must not be created without explicit user approval tied to current hashes.</td></tr>
+  <tr><td>Humanize2 capture</td><td>Replay, boards, events, cartridge, worker contract, worker output, and verification artifacts refreshed for the Round 5 boundary.</td></tr>
 </table>
 </html>
