@@ -66,6 +66,11 @@ T20_RESOURCE_NOREUSE_POLICY = "resource_noreuse_prefix"
 DEFAULT_SCALAR_DEST_POLICY = "rotated"
 SCALAR_DEST_POLICIES = (DEFAULT_SCALAR_DEST_POLICY, "fixed")
 T20_REGISTER_POLICIES = ("default", T20_RESOURCE_NOREUSE_POLICY)
+DIAGNOSTIC_ROUNDS = ("r11",)
+MASK_SOURCE_POLICIES = ("v0", "v4", "rot")
+DEFAULT_MASK_SOURCE_POLICY = "v0"
+DEFAULT_MARKER_PADDING_BYTES = 0
+TIMED_BODY_BASE_PC_MOD32 = 4
 
 
 TEMPLATE_IDS = (
@@ -402,6 +407,87 @@ def scalar_dest_policy(args: argparse.Namespace) -> str:
     return getattr(args, "scalar_dest_policy", None) or DEFAULT_SCALAR_DEST_POLICY
 
 
+def diagnostic_round(args: argparse.Namespace) -> str | None:
+    return getattr(args, "diagnostic_round", None) or None
+
+
+def mask_source_policy(args: argparse.Namespace) -> str:
+    return getattr(args, "mask_source_policy", None) or DEFAULT_MASK_SOURCE_POLICY
+
+
+def marker_padding_bytes(args: argparse.Namespace) -> int:
+    value = getattr(args, "marker_padding_bytes", None)
+    return DEFAULT_MARKER_PADDING_BYTES if value is None else int(value)
+
+
+def scalar_dest_policy_suffix(policy: str) -> str:
+    if policy == "rotated":
+        return "rot"
+    if policy == "fixed":
+        return "fix"
+    valid = ", ".join(SCALAR_DEST_POLICIES)
+    raise SystemExit(f"unknown scalar destination policy {policy!r}; valid values: {valid}")
+
+
+def marker_padding_lines(byte_count: int) -> list[str]:
+    if byte_count <= 0:
+        return []
+    if byte_count % 4 != 0:
+        raise SystemExit("--marker-padding-bytes must be a non-negative multiple of 4")
+    return ["addi x0, x0, 0  # r11 marker padding"] * (byte_count // 4)
+
+
+def target_start_pc_mod32(byte_count: int) -> int:
+    return (TIMED_BODY_BASE_PC_MOD32 + byte_count) % 32
+
+
+def expected_fetch_boundary_crossings(start_pc_mod32: int, body_instruction_count: int) -> int:
+    if body_instruction_count <= 0:
+        return 0
+    return (start_pc_mod32 + 4 * (body_instruction_count - 1)) // 32
+
+
+def mask_sources(lmul: str, count: int, policy: str) -> list[str]:
+    if count <= 0:
+        return []
+    if policy == "v0":
+        return ["v0"] * count
+    if policy == "v4":
+        return ["v4"] * count
+    if policy == "rot":
+        groups = aligned_groups(lmul)
+        return [vector_reg(groups[index % len(groups)]) for index in range(count)]
+    valid = ", ".join(MASK_SOURCE_POLICIES)
+    raise SystemExit(f"unknown mask source policy {policy!r}; valid values: {valid}")
+
+
+def add_r11_metadata(
+    body_meta: dict[str, Any],
+    *,
+    scalar_policy: str,
+    source_policy: str,
+    source_registers: Iterable[str],
+    padding_bytes: int,
+    body_instruction_count: int,
+) -> None:
+    start_mod32 = target_start_pc_mod32(padding_bytes)
+    body_meta.update(
+        {
+            "diagnostic_round": "r11",
+            "scalar_dest_policy": scalar_policy,
+            "mask_source_policy": source_policy,
+            "source_registers": list(dict.fromkeys(source_registers)),
+            "marker_padding_bytes": padding_bytes,
+            "target_start_pc_mod32": start_mod32,
+            "body_instruction_count": body_instruction_count,
+            "expected_fetch_boundary_crossings": expected_fetch_boundary_crossings(
+                start_mod32,
+                body_instruction_count,
+            ),
+        }
+    )
+
+
 def t12_filler(args: argparse.Namespace) -> str:
     return getattr(args, "t12_filler", None) or T12_DEFAULT_FILLER
 
@@ -570,6 +656,10 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
     policy = scalar_dest_policy(args)
     if policy != DEFAULT_SCALAR_DEST_POLICY:
         argv += ["--scalar-dest-policy", policy]
+    if diagnostic_round(args):
+        argv += ["--diagnostic-round", diagnostic_round(args)]
+        argv += ["--mask-source-policy", mask_source_policy(args)]
+        argv += ["--marker-padding-bytes", str(marker_padding_bytes(args))]
     if getattr(args, "iterations", None) is not None:
         argv += ["--iterations", str(args.iterations)]
     if getattr(args, "filler_count", None) is not None:
@@ -710,6 +800,7 @@ def make_experiment_id(args: argparse.Namespace) -> str:
             parts.append(args.lmul)
     if (
         template_id == "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        and not diagnostic_round(args)
         and scalar_dest_policy(args) != DEFAULT_SCALAR_DEST_POLICY
     ):
         parts.append(f"scalar-{scalar_dest_policy(args)}")
@@ -721,6 +812,14 @@ def make_experiment_id(args: argparse.Namespace) -> str:
     }:
         iterations, _ = default_iterations(template_id, args.lmul, args.iterations)
         parts.append(f"n{iterations}")
+    if diagnostic_round(args) and template_id in {
+        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+        "T21_PAIR_WITH_SCALAR",
+    }:
+        parts.append(diagnostic_round(args))
+        parts.append(f"sd-{scalar_dest_policy_suffix(scalar_dest_policy(args))}")
+        parts.append(f"src-{mask_source_policy(args)}")
+        parts.append(f"pad{marker_padding_bytes(args):02d}")
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION" and is_t20_resource_noreuse(args):
         parts.append("resource-noreuse")
     if template_id == "T12_CONSUMER_RAW_GAP":
@@ -770,8 +869,16 @@ def body_t10(
     lmul: str,
     iterations: int,
     scalar_policy: str = DEFAULT_SCALAR_DEST_POLICY,
+    source_policy: str = DEFAULT_MASK_SOURCE_POLICY,
+    padding_bytes: int = DEFAULT_MARKER_PADDING_BYTES,
+    r11_diagnostic: bool = False,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
+    source_sequence = (
+        mask_sources(lmul, iterations, source_policy)
+        if spec.instr_id == "vcpop_m" and r11_diagnostic
+        else [src_a] * iterations
+    )
     if spec.result_kind == "scalar":
         vector_dests: list[str] = []
         vector_reused = False
@@ -787,17 +894,19 @@ def body_t10(
     )
     lines = [
         stream_note,
+        *marker_padding_lines(padding_bytes),
         "TIMESTAMP_MARK start",
     ]
     instances = []
     for index in range(iterations):
         dest = scalar_dests[index] if spec.result_kind == "scalar" else vector_dests[index]
-        lines.append(emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"))
+        line_src_a = source_sequence[index]
+        lines.append(emit_instruction(spec, dest=dest, src_a=line_src_a, src_b=src_b, scalar="x6"))
         instances.append(
             {
                 "index": index,
                 "destination": dest,
-                "source_a": src_a,
+                "source_a": line_src_a,
                 "source_b": src_b,
                 "destination_reused": scalar_reused if spec.result_kind == "scalar" else vector_reused,
             }
@@ -811,6 +920,15 @@ def body_t10(
     }
     if spec.result_kind == "scalar":
         body_meta["scalar_dest_policy"] = scalar_policy
+    if r11_diagnostic:
+        add_r11_metadata(
+            body_meta,
+            scalar_policy=scalar_policy,
+            source_policy=source_policy,
+            source_registers=source_sequence,
+            padding_bytes=padding_bytes,
+            body_instruction_count=iterations,
+        )
     return ["start", "end"], lines, body_meta
 
 
@@ -1058,24 +1176,60 @@ def body_t21(
     spec: InstructionSpec,
     lmul: str,
     iterations: int,
+    scalar_policy: str = DEFAULT_SCALAR_DEST_POLICY,
+    source_policy: str = DEFAULT_MASK_SOURCE_POLICY,
+    padding_bytes: int = DEFAULT_MARKER_PADDING_BYTES,
+    r11_diagnostic: bool = False,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
     vector_dests, reused = output_vectors(lmul, iterations, allow_reuse=False)
-    scalar_dests = scalar_outputs(iterations)
+    scalar_dests, scalar_reused = scalar_output_sequence(iterations, scalar_policy)
+    source_sequence = (
+        mask_sources(lmul, iterations, source_policy)
+        if spec.instr_id == "vcpop_m" and r11_diagnostic
+        else [src_a] * iterations
+    )
     scalar_pairs = [("x20", "x21", "x22"), ("x23", "x24", "x25"), ("x26", "x27", "x28"), ("x29", "x30", "x31")]
     lines = [
         "# Scalar pairing probe. Each vector instruction is followed by an add.",
+        *marker_padding_lines(padding_bytes),
         "TIMESTAMP_MARK start",
     ]
     instances = []
     for index in range(iterations):
         dest = scalar_dests[index] if spec.result_kind == "scalar" else vector_dests[index]
-        lines.append(emit_instruction(spec, dest=dest, src_a=src_a, src_b=src_b, scalar="x6"))
+        line_src_a = source_sequence[index]
+        lines.append(emit_instruction(spec, dest=dest, src_a=line_src_a, src_b=src_b, scalar="x6"))
         scalar_dest, scalar_a, scalar_b = scalar_pairs[index % len(scalar_pairs)]
         lines.append(f"add {scalar_dest}, {scalar_a}, {scalar_b}")
-        instances.append({"index": index, "destination": dest, "scalar_add_destination": scalar_dest})
+        instances.append(
+            {
+                "index": index,
+                "destination": dest,
+                "source_a": line_src_a,
+                "source_b": src_b,
+                "scalar_add_destination": scalar_dest,
+                "destination_reused": scalar_reused if spec.result_kind == "scalar" else reused,
+            }
+        )
     lines.append("TIMESTAMP_MARK end")
-    return ["start", "end"], lines, {"iterations": iterations, "instances": instances, "register_reuse": reused}
+    body_meta = {
+        "iterations": iterations,
+        "instances": instances,
+        "register_reuse": reused or scalar_reused,
+    }
+    if spec.result_kind == "scalar":
+        body_meta["scalar_dest_policy"] = scalar_policy
+    if r11_diagnostic:
+        add_r11_metadata(
+            body_meta,
+            scalar_policy=scalar_policy,
+            source_policy=source_policy,
+            source_registers=source_sequence,
+            padding_bytes=padding_bytes,
+            body_instruction_count=iterations * 2,
+        )
+    return ["start", "end"], lines, body_meta
 
 
 def body_t40(lmul: str) -> tuple[list[str], list[str], dict[str, Any]]:
@@ -1115,7 +1269,15 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
         return body_t01(spec, args.lmul)
     if template_id == "T10_INDEPENDENT_STREAM_THROUGHPUT":
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
-        markers, lines, meta = body_t10(spec, args.lmul, iterations, scalar_dest_policy(args))
+        markers, lines, meta = body_t10(
+            spec,
+            args.lmul,
+            iterations,
+            scalar_dest_policy(args),
+            mask_source_policy(args),
+            marker_padding_bytes(args),
+            diagnostic_round(args) == "r11",
+        )
         if note:
             meta["iteration_note"] = note
         return markers, lines, meta
@@ -1146,7 +1308,15 @@ def body_for_args(args: argparse.Namespace) -> tuple[list[str], list[str], dict[
         return markers, lines, meta
     if template_id == "T21_PAIR_WITH_SCALAR":
         iterations, note = default_iterations(template_id, args.lmul, args.iterations)
-        markers, lines, meta = body_t21(spec, args.lmul, iterations)
+        markers, lines, meta = body_t21(
+            spec,
+            args.lmul,
+            iterations,
+            scalar_dest_policy(args),
+            mask_source_policy(args),
+            marker_padding_bytes(args),
+            diagnostic_round(args) == "r11",
+        )
         if note:
             meta["iteration_note"] = note
         return markers, lines, meta
@@ -1274,6 +1444,12 @@ def generate_one(args: argparse.Namespace) -> dict[str, Path]:
         raise SystemExit("--iterations must be positive")
     if args.filler_count is not None and args.filler_count < 0:
         raise SystemExit("--filler-count must be non-negative")
+    if diagnostic_round(args) is not None and diagnostic_round(args) not in DIAGNOSTIC_ROUNDS:
+        raise SystemExit(f"--diagnostic-round must be one of: {', '.join(DIAGNOSTIC_ROUNDS)}")
+    if mask_source_policy(args) not in MASK_SOURCE_POLICIES:
+        raise SystemExit(f"--mask-source-policy must be one of: {', '.join(MASK_SOURCE_POLICIES)}")
+    if marker_padding_bytes(args) < 0 or marker_padding_bytes(args) % 4 != 0:
+        raise SystemExit("--marker-padding-bytes must be a non-negative multiple of 4")
     if t12_filler(args) not in T12_FILLERS:
         raise SystemExit(f"--t12-filler must be one of: {', '.join(T12_FILLERS)}")
     if t12_consumer_role(args) not in T12_CONSUMER_ROLES:
@@ -1317,6 +1493,9 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             consumer=extra.get("consumer"),
             shape=extra.get("shape", "T10_INDEPENDENT_STREAM_THROUGHPUT"),
             scalar_dest_policy=extra.get("scalar_dest_policy"),
+            diagnostic_round=extra.get("diagnostic_round"),
+            mask_source_policy=extra.get("mask_source_policy"),
+            marker_padding_bytes=extra.get("marker_padding_bytes", DEFAULT_MARKER_PADDING_BYTES),
             t20_register_policy=extra.get("t20_register_policy"),
             t12_filler=extra.get("t12_filler", T12_DEFAULT_FILLER),
             t12_consumer_role=extra.get("t12_consumer_role", T12_DEFAULT_CONSUMER_ROLE),
@@ -1344,6 +1523,9 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
             "consumer",
             "shape",
             "scalar_dest_policy",
+            "diagnostic_round",
+            "mask_source_policy",
+            "marker_padding_bytes",
             "t20_register_policy",
             "t12_filler",
             "t12_consumer_role",
@@ -1352,6 +1534,10 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
         ):
             value = getattr(ns, key)
             if value is None:
+                continue
+            if key == "marker_padding_bytes" and value == DEFAULT_MARKER_PADDING_BYTES and not diagnostic_round(ns):
+                continue
+            if key == "mask_source_policy" and value == DEFAULT_MASK_SOURCE_POLICY and not diagnostic_round(ns):
                 continue
             if key == "t12_filler" and value == T12_DEFAULT_FILLER:
                 continue
@@ -1402,6 +1588,61 @@ def suite_entries(args: argparse.Namespace) -> list[dict[str, Any]]:
                         t12_consumer_role="control",
                     )
             add("T21_PAIR_WITH_SCALAR", instr, lmul)
+            if instr == "vcpop_m" and lmul == "m4":
+                for iterations in (7, 9):
+                    add(
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        instr,
+                        lmul,
+                        iterations=iterations,
+                        diagnostic_round="r11",
+                        scalar_dest_policy="rotated",
+                        mask_source_policy="v0",
+                        marker_padding_bytes=0,
+                    )
+                for iterations in (7, 9):
+                    add(
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        instr,
+                        lmul,
+                        iterations=iterations,
+                        diagnostic_round="r11",
+                        scalar_dest_policy="fixed",
+                        mask_source_policy="v0",
+                        marker_padding_bytes=0,
+                    )
+                for iterations in (7, 8, 9):
+                    add(
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        instr,
+                        lmul,
+                        iterations=iterations,
+                        diagnostic_round="r11",
+                        scalar_dest_policy="rotated",
+                        mask_source_policy="v4",
+                        marker_padding_bytes=0,
+                    )
+                for iterations in (7, 8, 9):
+                    add(
+                        "T10_INDEPENDENT_STREAM_THROUGHPUT",
+                        instr,
+                        lmul,
+                        iterations=iterations,
+                        diagnostic_round="r11",
+                        scalar_dest_policy="rotated",
+                        mask_source_policy="v0",
+                        marker_padding_bytes=28,
+                    )
+                for source_policy, scalar_policy in (("v0", "rotated"), ("v4", "rotated"), ("v0", "fixed")):
+                    add(
+                        "T21_PAIR_WITH_SCALAR",
+                        instr,
+                        lmul,
+                        diagnostic_round="r11",
+                        scalar_dest_policy=scalar_policy,
+                        mask_source_policy=source_policy,
+                        marker_padding_bytes=28,
+                    )
             for iterations in suite_stream_iterations("T10_INDEPENDENT_STREAM_THROUGHPUT", instr, lmul):
                 add("T30_LMUL_SCALING", instr, lmul, shape="T10_INDEPENDENT_STREAM_THROUGHPUT", iterations=iterations)
             for iterations in suite_stream_iterations("T11_SELF_RAW_CHAIN", instr, lmul):
@@ -1533,6 +1774,19 @@ def build_parser() -> argparse.ArgumentParser:
         choices=SCALAR_DEST_POLICIES,
         default=DEFAULT_SCALAR_DEST_POLICY,
         help="scalar-result destination allocation for T10/T30 throughput diagnostics",
+    )
+    one.add_argument("--diagnostic-round", choices=DIAGNOSTIC_ROUNDS, help="focused diagnostic round tag")
+    one.add_argument(
+        "--mask-source-policy",
+        choices=MASK_SOURCE_POLICIES,
+        default=DEFAULT_MASK_SOURCE_POLICY,
+        help="mask source allocation for focused vcpop_m diagnostics",
+    )
+    one.add_argument(
+        "--marker-padding-bytes",
+        type=int,
+        default=DEFAULT_MARKER_PADDING_BYTES,
+        help="padding bytes inserted before the timed start marker",
     )
     one.add_argument("--iterations", type=int, help="instance count for stream/chain/pair templates")
     one.add_argument("--filler-count", type=int, help="independent filler count for T12")

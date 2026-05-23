@@ -1,0 +1,130 @@
+schema_version: 1
+experiment_id: "t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28"
+template_id: "T21_PAIR_WITH_SCALAR"
+result_group: "vcpop_m"
+instruction_id: "vcpop_m"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_start"
+    local_label: ".Lrvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_end"
+    local_label: ".Lrvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28"
+  template_id: "T21_PAIR_WITH_SCALAR"
+  purpose: "Probe scalar pairing, single-issue, and multi-uop behavior."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_start"
+      local_label: ".Lrvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_end"
+      local_label: ".Lrvv_profile_marker_t21_vcpop_m_m4_n4_r11_sd_fix_src_v0_pad28_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 3
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T21_PAIR_WITH_SCALAR"
+      - "--instr"
+      - "vcpop_m"
+      - "--lmul"
+      - "m4"
+      - "--scalar-dest-policy"
+      - "fixed"
+      - "--diagnostic-round"
+      - "r11"
+      - "--mask-source-policy"
+      - "v0"
+      - "--marker-padding-bytes"
+      - "28"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28"
+    command: "python3 scripts/gen_asm.py one --template T21_PAIR_WITH_SCALAR --instr vcpop_m --lmul m4 --scalar-dest-policy fixed --diagnostic-round r11 --mask-source-policy v0 --marker-padding-bytes 28 --output-root experiments/generated --experiment-id t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28"
+instruction:
+  id: "vcpop_m"
+  asm: "vcpop.m"
+  llvm_sched_write: "WriteVMPopV"
+  result_kind: "scalar"
+  chainable: false
+  notes: "Mask population count producing a scalar integer result."
+body:
+  iterations: 4
+  instances:
+    -
+      index: 0
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      scalar_add_destination: "x20"
+      destination_reused: true
+    -
+      index: 1
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      scalar_add_destination: "x23"
+      destination_reused: true
+    -
+      index: 2
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      scalar_add_destination: "x26"
+      destination_reused: true
+    -
+      index: 3
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      scalar_add_destination: "x29"
+      destination_reused: true
+  register_reuse: true
+  scalar_dest_policy: "fixed"
+  diagnostic_round: "r11"
+  mask_source_policy: "v0"
+  source_registers:
+    - "v0"
+  marker_padding_bytes: 28
+  target_start_pc_mod32: 0
+  body_instruction_count: 8
+  expected_fetch_boundary_crossings: 0

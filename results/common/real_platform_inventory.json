@@ -33,11 +33,11 @@
   },
   "counts": {
     "by_backend": {
-      "gem5_minor": 7634,
+      "gem5_minor": 7660,
       "synthetic_cmodel": 3191
     },
     "by_mode": {
-      "real_platform_profile": 7634,
+      "real_platform_profile": 7660,
       "synthetic_calibration": 3191
     },
     "real_by_template_instruction_lmul": {
@@ -107,7 +107,7 @@
         "vcpop_m": {
           "m1": 10,
           "m2": 10,
-          "m4": 20
+          "m4": 40
         },
         "vdivu_vv": {
           "m1": 10,
@@ -310,7 +310,7 @@
         "vcpop_m": {
           "m1": 2,
           "m2": 2,
-          "m4": 2
+          "m4": 8
         },
         "vdivu_vv": {
           "m1": 2,
@@ -478,7 +478,7 @@
         "vcpop_m": {
           "m1": 10,
           "m2": 10,
-          "m4": 20
+          "m4": 40
         },
         "vdivu_vv": {
           "m1": 10,
@@ -681,7 +681,7 @@
         "vcpop_m": {
           "m1": 2,
           "m2": 2,
-          "m4": 2
+          "m4": 8
         },
         "vdivu_vv": {
           "m1": 2,
@@ -1151,7 +1151,7 @@
       "NumMicroOps",
       "SingleIssue"
     ],
-    "sha256": "5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50",
+    "sha256": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
     "status": "blocked",
     "status_counts": {
       "inferred": 141,
@@ -1204,10 +1204,10 @@
           "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
           "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
           "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+          "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
         ],
         "field": "Latency",
         "instruction_id": "vcpop_m",
@@ -1224,10 +1224,10 @@
           "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
           "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
           "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+          "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
         ],
         "field": "ReleaseAtCycles",
         "instruction_id": "vcpop_m",
@@ -1244,10 +1244,10 @@
           "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
           "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
           "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+          "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
         ],
         "field": "ProcResource",
         "instruction_id": "vcpop_m",
@@ -1264,10 +1264,10 @@
           "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
           "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
           "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+          "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
         ],
         "field": "NumMicroOps",
         "instruction_id": "vcpop_m",
@@ -1284,10 +1284,10 @@
           "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
           "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
           "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+          "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
         ],
         "field": "SingleIssue",
         "instruction_id": "vcpop_m",
@@ -1426,6 +1426,370 @@
         "trace_paths": [
           "results/r01/common/experiments/t40-common-vlsu-load-hit-m1/trace.json",
           "results/r02/common/experiments/t40-common-vlsu-load-hit-m1/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":7,\"destination_policy\":\"scalar_fixed\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x10\",\"destination_reused\":true,\"index\":6,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":7,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v0\",\"register_reuse\":true,\"scalar_dest_policy\":\"fixed\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 8,
+          "mean": 8,
+          "min": 8,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            8,
+            8
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":7,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x16\",\"destination_reused\":false,\"index\":6,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":7,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 8,
+          "mean": 8,
+          "min": 8,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            8,
+            8
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":7,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x16\",\"destination_reused\":false,\"index\":6,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":7,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 6,
+          "mean": 6,
+          "min": 6,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            6,
+            6
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":7,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x16\",\"destination_reused\":false,\"index\":6,\"source_a\":\"v4\",\"source_b\":\"v4\"},\"iterations\":7,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v4\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v4\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 11,
+          "mean": 11,
+          "min": 11,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            11,
+            11
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":8,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x17\",\"destination_reused\":false,\"index\":7,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":8,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 7,
+          "mean": 7,
+          "min": 7,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            7,
+            7
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v0-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v0-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":8,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":1,\"instances\":{\"destination\":\"x17\",\"destination_reused\":false,\"index\":7,\"source_a\":\"v4\",\"source_b\":\"v4\"},\"iterations\":8,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v4\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v4\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 14,
+          "mean": 14,
+          "min": 14,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            14,
+            14
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v4-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v4-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":8,\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x10\",\"destination_reused\":true,\"index\":3,\"scalar_add_destination\":\"x29\",\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":4,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v0\",\"register_reuse\":true,\"scalar_dest_policy\":\"fixed\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T21_PAIR_WITH_SCALAR"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":8,\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x13\",\"destination_reused\":false,\"index\":3,\"scalar_add_destination\":\"x29\",\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":4,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T21_PAIR_WITH_SCALAR"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v0-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v0-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":8,\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":0,\"instances\":{\"destination\":\"x13\",\"destination_reused\":false,\"index\":3,\"scalar_add_destination\":\"x29\",\"source_a\":\"v4\",\"source_b\":\"v4\"},\"iterations\":4,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v4\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v4\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T21_PAIR_WITH_SCALAR"
+        },
+        "primary_delta_cycles": {
+          "max": 4,
+          "mean": 4,
+          "min": 4,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            4,
+            4
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v4-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v4-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":9,\"destination_policy\":\"scalar_fixed\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":1,\"instances\":{\"destination\":\"x10\",\"destination_reused\":true,\"index\":8,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":9,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v0\",\"register_reuse\":true,\"scalar_dest_policy\":\"fixed\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 12,
+          "mean": 12,
+          "min": 12,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            12,
+            12
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-fix-src-v0-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-fix-src-v0-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":9,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":1,\"instances\":{\"destination\":\"x18\",\"destination_reused\":false,\"index\":8,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":9,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 12,
+          "mean": 12,
+          "min": 12,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            12,
+            12
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad00/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":9,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":1,\"instances\":{\"destination\":\"x18\",\"destination_reused\":false,\"index\":8,\"source_a\":\"v0\",\"source_b\":\"v4\"},\"iterations\":9,\"marker_padding_bytes\":28,\"mask_source_policy\":\"v0\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v0\"],\"target_start_pc_mod32\":0}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 8,
+          "mean": 8,
+          "min": 8,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            8,
+            8
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad28/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad28/trace.json"
+        ]
+      },
+      {
+        "key": {
+          "body_signature": "{\"body_instruction_count\":9,\"destination_policy\":\"scalar_rotated\",\"diagnostic_round\":\"r11\",\"expected_fetch_boundary_crossings\":1,\"instances\":{\"destination\":\"x18\",\"destination_reused\":false,\"index\":8,\"source_a\":\"v4\",\"source_b\":\"v4\"},\"iterations\":9,\"marker_padding_bytes\":0,\"mask_source_policy\":\"v4\",\"register_reuse\":false,\"scalar_dest_policy\":\"rotated\",\"source_registers\":[\"v4\"],\"target_start_pc_mod32\":4}",
+          "instruction_id": "vcpop_m",
+          "lmul": "m4",
+          "pair_instruction_id": "unknown",
+          "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+        },
+        "primary_delta_cycles": {
+          "max": 15,
+          "mean": 15,
+          "min": 15,
+          "missing_delta_count": 0,
+          "pstdev": 0.0,
+          "spread": 0,
+          "values": [
+            15,
+            15
+          ]
+        },
+        "stable": true,
+        "status": "stable",
+        "trace_count": 2,
+        "trace_paths": [
+          "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v4-pad00/trace.json",
+          "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v4-pad00/trace.json"
         ]
       },
       {
@@ -107918,9 +108282,9 @@
       }
     ],
     "missing_stable_repeat_template_instruction_lmul": [],
-    "repeat_groups_total": 3802,
-    "repeated_trace_total": 7634,
-    "stable_repeat_groups": 3802,
+    "repeat_groups_total": 3815,
+    "repeated_trace_total": 7660,
+    "stable_repeat_groups": 3815,
     "stable_template_instruction_lmul": [
       {
         "instruction_id": "unknown",
@@ -108978,10 +109342,10 @@
   "schema_version": 1,
   "trace_totals": {
     "conflict": 0,
-    "real": 7634,
-    "real_gem5": 7634,
+    "real": 7660,
+    "real_gem5": 7660,
     "synthetic": 3191,
-    "total": 10825,
+    "total": 10851,
     "unknown": 0
   }
 }

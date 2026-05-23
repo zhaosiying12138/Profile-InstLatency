@@ -118,6 +118,77 @@ def t10_observations(deltas_by_iterations, *, instruction_id="vfiller", lmul="m1
     ]
 
 
+def t10_boundary_observations(
+    deltas_by_iterations,
+    *,
+    start_pc_mod32,
+    instruction_id="vcpop_m",
+    lmul="m4",
+    mask_source_policy="v0",
+    marker_padding_bytes=0,
+    scalar_dest_policy="rotated",
+):
+    return [
+        raw_observation(
+            instruction_id=instruction_id,
+            lmul=lmul,
+            template_id="T10_INDEPENDENT_STREAM_THROUGHPUT",
+            delta_cycles=delta,
+            experiment_id=(
+                f"t10-vcpop-m-m4-n{iterations}-r11-"
+                f"sd-{'fix' if scalar_dest_policy == 'fixed' else 'rot'}-"
+                f"src-{mask_source_policy}-pad{marker_padding_bytes:02d}"
+            ),
+            body={
+                "iterations": iterations,
+                "diagnostic_round": "r11",
+                "scalar_dest_policy": scalar_dest_policy,
+                "mask_source_policy": mask_source_policy,
+                "source_registers": [mask_source_policy],
+                "marker_padding_bytes": marker_padding_bytes,
+                "target_start_pc_mod32": start_pc_mod32,
+                "body_instruction_count": iterations,
+                "expected_fetch_boundary_crossings": (start_pc_mod32 + 4 * (iterations - 1)) // 32,
+            },
+        )
+        for iterations, delta in deltas_by_iterations
+    ]
+
+
+def t21_boundary_observation(
+    *,
+    iterations=4,
+    delta_cycles,
+    start_pc_mod32,
+    mask_source_policy="v0",
+    marker_padding_bytes=0,
+    scalar_dest_policy="rotated",
+):
+    body_instruction_count = 2 * iterations
+    return raw_observation(
+        instruction_id="vcpop_m",
+        lmul="m4",
+        template_id="T21_PAIR_WITH_SCALAR",
+        delta_cycles=delta_cycles,
+        experiment_id=(
+            f"t21-vcpop-m-m4-n{iterations}-r11-"
+            f"sd-{'fix' if scalar_dest_policy == 'fixed' else 'rot'}-"
+            f"src-{mask_source_policy}-pad{marker_padding_bytes:02d}"
+        ),
+        body={
+            "iterations": iterations,
+            "diagnostic_round": "r11",
+            "scalar_dest_policy": scalar_dest_policy,
+            "mask_source_policy": mask_source_policy,
+            "source_registers": [mask_source_policy],
+            "marker_padding_bytes": marker_padding_bytes,
+            "target_start_pc_mod32": start_pc_mod32,
+            "body_instruction_count": body_instruction_count,
+            "expected_fetch_boundary_crossings": (start_pc_mod32 + 4 * (body_instruction_count - 1)) // 32,
+        },
+    )
+
+
 def t12_observations(
     deltas_by_gap,
     *,
@@ -499,6 +570,47 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
                 ],
             )
             self.assertIn("observed_points=n2=delta6,n4=delta10,n6=delta18", row["follow_up"])
+
+    def test_vcpop_m4_boundary_correction_fits_old_stream_and_t21_pattern(self):
+        observations = t10_boundary_observations(
+            [(2, 1), (4, 3), (6, 5), (8, 11), (12, 15)],
+            start_pc_mod32=4,
+        )
+        observations.append(t21_boundary_observation(delta_cycles=8, start_pc_mod32=4))
+
+        fields = solve_candidate_fields(observations)
+
+        self.assertEqual(fields["ReleaseAtCycles"]["status"], "exact_fit")
+        self.assertEqual(fields["ReleaseAtCycles"]["value"], 1)
+        self.assertEqual(fields["NumMicroOps"]["status"], "exact_fit")
+        self.assertEqual(fields["NumMicroOps"]["value"], 1)
+        self.assertEqual(fields["SingleIssue"]["status"], "exact_fit")
+        self.assertIs(fields["SingleIssue"]["value"], False)
+
+    def test_vcpop_m4_boundary_correction_rejects_padding_source_mismatch(self):
+        observations = t10_boundary_observations(
+            [(7, 6), (8, 11), (9, 12)],
+            start_pc_mod32=0,
+            mask_source_policy="v4",
+            marker_padding_bytes=28,
+        )
+
+        fields = solve_candidate_fields(observations)
+
+        for field in ("ReleaseAtCycles", "NumMicroOps", "SingleIssue"):
+            self.assertEqual(fields[field]["status"], "non_identifiable", field)
+            self.assertIsNone(fields[field]["value"], field)
+
+    def test_vcpop_m4_boundary_correction_rejects_repeat_disagreement(self):
+        observations = t10_boundary_observations(
+            [(7, 6), (7, 7), (8, 11), (9, 12)],
+            start_pc_mod32=4,
+        )
+
+        fields = solve_candidate_fields(observations)
+
+        self.assertEqual(fields["ReleaseAtCycles"]["status"], "non_identifiable")
+        self.assertIsNone(fields["ReleaseAtCycles"]["value"])
 
     def test_field_status_counts_non_identifiable_as_blocking(self):
         report = {

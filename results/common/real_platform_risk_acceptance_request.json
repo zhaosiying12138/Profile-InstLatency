@@ -2,7 +2,7 @@
   "schema_version": 1,
   "artifact_kind": "risk_acceptance_request",
   "round": 11,
-  "request_worker": "Round11T12MatchedControl",
+  "request_worker": "Round11VcpopM4IssueFieldDiagnostics",
   "status": "pending",
   "request_status": "not_approved",
   "decision_status": "not_approved",
@@ -15,10 +15,10 @@
   "source_inventory_path": "results/common/real_platform_inventory.json",
   "source_inventory_json_pointer": "/field_status/unresolved",
   "current_hashes": {
-    "inventory_sha256": "e6687617845d3d6272f474303650f0125d30e1d55aef9ff274611cca1a15bc19",
-    "real_platform_field_status_sha256": "5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50",
-    "search_model_real_platform_sha256": "1a08061c3e16a37a54af73dd2119c22b55367bd805b9d16208f806b2090fc31c",
-    "experiment_quality_sha256": "ab03900c8f44b28f05ff0d64850c2e9e3c97586b9ebaff2d0a7bd089cb819de6"
+    "inventory_sha256": "197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd",
+    "real_platform_field_status_sha256": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
+    "search_model_real_platform_sha256": "2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6",
+    "experiment_quality_sha256": "d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a"
   },
   "gate_command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
   "expected_current_fail_closed_reasons": [
@@ -68,5 +68,13 @@
       "description": "Human may later accept only selected risk IDs from this list by creating a separate current-hash-bound human_approval.json artifact."
     }
   ],
-  "handoff_note": "Present this pending request to the human before creating any human_approval.json. This file is a request artifact only; it is not a gate-satisfying approval artifact."
+  "handoff_note": "Present this pending request to the human before creating any human_approval.json. This file is a request artifact only; it is not a gate-satisfying approval artifact.",
+  "diagnostic_context": {
+    "worker": "Round11VcpopM4IssueFieldDiagnostics",
+    "instruction_id": "vcpop_m",
+    "lmul": "m4",
+    "diagnostic_round": "r11",
+    "result": "explicit_boundary_source_model_falsified_by_repeated_real_gem5_diagnostics",
+    "approval_artifact_created": false
+  }
 }

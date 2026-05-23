@@ -15,10 +15,10 @@ This report is generated from trace inventory. Synthetic calibration traces rema
 ## Trace Inventory
 
 Result root: `results`
-Trace files analyzed: 10825
+Trace files analyzed: 10851
 Synthetic traces: 3191
-Real-platform traces: 7634
-Real gem5 traces: 7634
+Real-platform traces: 7660
+Real gem5 traces: 7660
 Unknown/conflicting traces: 0 unknown, 0 conflicting
 
 Classification uses JSON `mode` and `backend`; result paths are not used.
@@ -36,13 +36,26 @@ Real gem5 templates covered: `T00_BASELINE_MARKER`, `T01_DECODE_EXEC_KILLCHECK`,
 
 ## Repeatability
 
-Repeat groups found: 3802
-Stable repeat groups: 3802
+Repeat groups found: 3815
+Stable repeat groups: 3815
 Unstable repeat groups: 0
 
 | Template | Instruction | LMUL | Traces | Delta values | Status |
 | --- | --- | --- | ---: | --- | --- |
 | `T40_COMMON_VLSU_LOAD_HIT` | `unknown` | `m1` | 2 | `1, 1` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `6, 6` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `11, 11` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `7, 7` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `14, 14` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `12, 12` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `12, 12` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `15, 15` | stable |
 | `T30_LMUL_SCALING` | `viota_m` | `m1` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vmseq_vv` | `m1` | 2 | `9, 9` | stable |
 | `T30_LMUL_SCALING` | `vrgather_vv` | `m1` | 2 | `5, 5` | stable |
@@ -3856,7 +3869,7 @@ Failed gate checks:
 
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
-Artifact sha256: `5a6aae11dd6e5e52073c52feab842b2af12d635f447e175766a7cd44b1a92d50`
+Artifact sha256: `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432`
 Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150

@@ -1,0 +1,145 @@
+schema_version: 1
+experiment_id: "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00"
+template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+result_group: "vcpop_m"
+instruction_id: "vcpop_m"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_start"
+    local_label: ".Lrvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_end"
+    local_label: ".Lrvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00"
+  template_id: "T10_INDEPENDENT_STREAM_THROUGHPUT"
+  purpose: "Measure independent stream throughput for resource occupancy."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_start"
+      local_label: ".Lrvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_end"
+      local_label: ".Lrvv_profile_marker_t10_vcpop_m_m4_n7_r11_sd_rot_src_v0_pad00_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 3
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T10_INDEPENDENT_STREAM_THROUGHPUT"
+      - "--instr"
+      - "vcpop_m"
+      - "--lmul"
+      - "m4"
+      - "--diagnostic-round"
+      - "r11"
+      - "--mask-source-policy"
+      - "v0"
+      - "--marker-padding-bytes"
+      - "0"
+      - "--iterations"
+      - "7"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00"
+    command: "python3 scripts/gen_asm.py one --template T10_INDEPENDENT_STREAM_THROUGHPUT --instr vcpop_m --lmul m4 --diagnostic-round r11 --mask-source-policy v0 --marker-padding-bytes 0 --iterations 7 --output-root experiments/generated --experiment-id t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00"
+instruction:
+  id: "vcpop_m"
+  asm: "vcpop.m"
+  llvm_sched_write: "WriteVMPopV"
+  result_kind: "scalar"
+  chainable: false
+  notes: "Mask population count producing a scalar integer result."
+body:
+  iterations: 7
+  instances:
+    -
+      index: 0
+      destination: "x10"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 1
+      destination: "x11"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 2
+      destination: "x12"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 3
+      destination: "x13"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 4
+      destination: "x14"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 5
+      destination: "x15"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+    -
+      index: 6
+      destination: "x16"
+      source_a: "v0"
+      source_b: "v4"
+      destination_reused: false
+  register_reuse: false
+  destination_policy: "scalar_rotated"
+  scalar_dest_policy: "rotated"
+  diagnostic_round: "r11"
+  mask_source_policy: "v0"
+  source_registers:
+    - "v0"
+  marker_padding_bytes: 0
+  target_start_pc_mod32: 4
+  body_instruction_count: 7
+  expected_fetch_boundary_crossings: 0

@@ -93,6 +93,7 @@ class RawObservation:
     backend: str
     dry_run_trace: bool
     trace_sha256: str
+    marker_start_pc_mod32: int | None = None
 
 
 @dataclass(frozen=True)
@@ -400,16 +401,25 @@ def extract_markers(entries: Iterable[dict[str, Any]]) -> tuple[Marker, ...]:
     return tuple(markers)
 
 
-def named_marker_deltas(markers: tuple[Marker, ...], baseline: int) -> list[tuple[str, int]]:
+def pc_mod32(pc: str | None) -> int | None:
+    if pc is None:
+        return None
+    try:
+        return int(str(pc), 0) % 32
+    except ValueError:
+        return None
+
+
+def named_marker_deltas(markers: tuple[Marker, ...], baseline: int) -> list[tuple[str, int, int | None]]:
     by_name: dict[str, Marker] = {}
     for marker in markers:
         by_name.setdefault(marker.name, marker)
-    deltas: list[tuple[str, int]] = []
+    deltas: list[tuple[str, int, int | None]] = []
     for left_name, right_name in KNOWN_MARKER_PAIRS:
         left = by_name.get(left_name)
         right = by_name.get(right_name)
         if left is not None and right is not None:
-            deltas.append((f"{left_name}/{right_name}", right.cycle - left.cycle - baseline))
+            deltas.append((f"{left_name}/{right_name}", right.cycle - left.cycle - baseline, pc_mod32(left.pc)))
     return deltas
 
 
@@ -724,7 +734,7 @@ def load_trace_observations(
     )
 
     observations: list[RawObservation] = []
-    for marker_pair, delta in deltas:
+    for marker_pair, delta, marker_start_pc_mod32 in deltas:
         observations.append(
             RawObservation(
                 trace_path=trace_path,
@@ -746,6 +756,7 @@ def load_trace_observations(
                 backend=backend,
                 dry_run_trace=dry_run_trace,
                 trace_sha256=trace_sha256,
+                marker_start_pc_mod32=marker_start_pc_mod32,
             )
         )
     return observations, warnings
@@ -1054,6 +1065,9 @@ def direct_interval_candidates(
     body_keys: tuple[str, ...],
     max_value: int,
 ) -> set[int]:
+    boundary_candidates = boundary_corrected_direct_interval_candidates(items, shape, body_keys, max_value)
+    if boundary_candidates is not None:
+        return boundary_candidates
     points: list[tuple[int, int]] = []
     for item in items:
         if item.effective_template_id != shape:
@@ -1071,6 +1085,67 @@ def direct_interval_candidates(
     for value in range(max_value + 1):
         offsets = {delta - intervals * value for intervals, delta in points}
         if len(offsets) == 1:
+            candidates.add(value)
+    return candidates
+
+
+def vcpop_m4_boundary_model_item(item: RawObservation, shape: str) -> bool:
+    return item.instruction_id == "vcpop_m" and item.lmul == "m4" and item.effective_template_id == shape
+
+
+def boundary_start_pc_mod32(item: RawObservation) -> int | None:
+    if item.marker_start_pc_mod32 is not None:
+        return item.marker_start_pc_mod32
+    return body_int(item, "target_start_pc_mod32", "start_pc_mod32")
+
+
+def boundary_body_instruction_count(item: RawObservation, shape: str, iterations: int) -> int | None:
+    metadata_count = body_int(item, "body_instruction_count", "timed_body_instruction_count")
+    if metadata_count is not None and metadata_count > 0:
+        return metadata_count
+    if shape == "T10_INDEPENDENT_STREAM_THROUGHPUT":
+        return iterations
+    if shape == "T21_PAIR_WITH_SCALAR":
+        return iterations * 2
+    return None
+
+
+def boundary_fetch_penalty(item: RawObservation, shape: str, iterations: int) -> int | None:
+    start_mod32 = boundary_start_pc_mod32(item)
+    body_instruction_count = boundary_body_instruction_count(item, shape, iterations)
+    if start_mod32 is None or body_instruction_count is None or body_instruction_count <= 0:
+        return None
+    return 4 * ((start_mod32 + 4 * (body_instruction_count - 1)) // 32)
+
+
+def boundary_corrected_direct_interval_candidates(
+    items: list[RawObservation],
+    shape: str,
+    body_keys: tuple[str, ...],
+    max_value: int,
+) -> set[int] | None:
+    if shape != "T10_INDEPENDENT_STREAM_THROUGHPUT":
+        return None
+    shape_items = [item for item in items if item.effective_template_id == shape]
+    if not shape_items:
+        return None
+    if not all(item.instruction_id == "vcpop_m" and item.lmul == "m4" for item in shape_items):
+        return None
+    if not any(boundary_start_pc_mod32(item) is not None for item in shape_items):
+        return None
+
+    points: list[tuple[int, int]] = []
+    for item in shape_items:
+        iterations = body_int(item, *body_keys)
+        if iterations is None or iterations <= 1:
+            return set()
+        penalty = boundary_fetch_penalty(item, shape, iterations)
+        if penalty is None:
+            return set()
+        points.append((iterations - 1, item.delta_cycles - penalty))
+    candidates: set[int] = set()
+    for value in range(max_value + 1):
+        if all(delta == intervals * value for intervals, delta in points):
             candidates.add(value)
     return candidates
 
@@ -2181,6 +2256,14 @@ def expected_delta_for_observation(
         iterations = body_int(item, "iterations", "pair_count", "sample_count")
         if iterations is None or iterations <= 0:
             return None, "T21 skipped:missing_iterations"
+        if vcpop_m4_boundary_model_item(item, shape):
+            penalty = boundary_fetch_penalty(item, shape, iterations)
+            if penalty is None:
+                return None, "T21 skipped:vcpop_m_m4_boundary_model_missing_start_pc"
+            return iterations * expected_t21_pair_cycles(candidate) + penalty, (
+                "T21 expected delta=iterations*scalar_pair_cycles+vcpop_m_m4_fetch_boundary_penalty;"
+                f"iterations={iterations};boundary_penalty={penalty}"
+            )
         if item.delta_cycles % iterations != 0:
             return None, (
                 "T21 non_identifiable:marker delta is not divisible by pair count, "

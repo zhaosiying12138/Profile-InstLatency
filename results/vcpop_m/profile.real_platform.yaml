@@ -238,10 +238,10 @@ llvm_facing_fields:
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"
         - "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json"
         - "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json"
-        - "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
     ReleaseAtCycles:
       status: "non_identifiable"
       value: null
@@ -253,10 +253,10 @@ llvm_facing_fields:
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"
         - "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json"
         - "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json"
-        - "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -268,10 +268,10 @@ llvm_facing_fields:
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"
         - "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json"
         - "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json"
-        - "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
     NumMicroOps:
       status: "non_identifiable"
       value: null
@@ -283,10 +283,10 @@ llvm_facing_fields:
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"
         - "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json"
         - "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json"
-        - "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
     SingleIssue:
       status: "non_identifiable"
       value: null
@@ -298,10 +298,10 @@ llvm_facing_fields:
         - "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json"
         - "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json"
         - "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json"
-        - "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json"
-        - "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json"
+        - "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
 hardware_interpretation:
   issue_width: 2
   issue_order: "in_order"

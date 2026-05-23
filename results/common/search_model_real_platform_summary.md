@@ -4,9 +4,9 @@ Status: raw_observation_parameter_search
 
 ## Inputs
 
-- trace files before filter: 10825
-- trace files after filter: 7634
-- usable marker observations: 7630
+- trace files before filter: 10851
+- trace files after filter: 7660
+- usable marker observations: 7656
 - profile summaries reference-only: 10
 - mode filter: `real_platform_profile`
 - backend filter: `gem5_minor`
@@ -60,11 +60,11 @@ Status: raw_observation_parameter_search
 | `vcpop_m` | `m2` | `ProcResource` | exact_fit | `YuShuXinVPipe0` | 9 |
 | `vcpop_m` | `m2` | `NumMicroOps` | exact_fit | `1` | 146 |
 | `vcpop_m` | `m2` | `SingleIssue` | exact_fit | `False` | 146 |
-| `vcpop_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 324 |
-| `vcpop_m` | `m4` | `ReleaseAtCycles` | non_identifiable | `n/a` | 324 |
-| `vcpop_m` | `m4` | `ProcResource` | non_identifiable | `n/a` | 324 |
-| `vcpop_m` | `m4` | `NumMicroOps` | non_identifiable | `n/a` | 324 |
-| `vcpop_m` | `m4` | `SingleIssue` | non_identifiable | `n/a` | 324 |
+| `vcpop_m` | `m4` | `Latency` | non_identifiable | `0, 1, 2, 3, 4` | 350 |
+| `vcpop_m` | `m4` | `ReleaseAtCycles` | non_identifiable | `n/a` | 350 |
+| `vcpop_m` | `m4` | `ProcResource` | non_identifiable | `n/a` | 350 |
+| `vcpop_m` | `m4` | `NumMicroOps` | non_identifiable | `n/a` | 350 |
+| `vcpop_m` | `m4` | `SingleIssue` | non_identifiable | `n/a` | 350 |
 | `vdivu_vv` | `m1` | `Latency` | exact_fit | `4` | 166 |
 | `vdivu_vv` | `m1` | `ReleaseAtCycles` | exact_fit | `1` | 166 |
 | `vdivu_vv` | `m1` | `ProcResource` | exact_fit | `YuShuXinVPipe0` | 9 |

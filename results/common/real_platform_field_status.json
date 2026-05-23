@@ -2021,8 +2021,48 @@
       "sha256": "5ac98d7115e7688109492de528cbfad74d94c600ed9348464b1f091a2babf7d7"
     },
     {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+      "sha256": "e41f9fa3e448b1bbb2ae6097947e4e2d2104770eed0d2f701afba07fa1f52c9a"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+      "sha256": "7e42775f83073b231d285a2c732f8b68fda674032354da521a8942dee7decaf6"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "377fae003a8d908ccc63ca906142bd8a8a1ca9bd60e11c2c6f3a656222fb8093"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "f1cd34fb66588cec988cfb68089789a872fca185d2f387af29b4de45da1d97b3"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "bf15724f0a371c037c5775dbe00f99a780cbce52eefbaa7b8cd1f4af89466b99"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "752cd13c9c719f58b3ad7fa1e8b4b4abfaa0001c0b959bb7898490002201bd7b"
+    },
+    {
       "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
       "sha256": "3dd3f6094fd699c0f1695f4b4e38892ce4f7458b7d8736d8aa3d4d2efe8f00f1"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-fix-src-v0-pad00/trace.json",
+      "sha256": "c97ff5044807aa04db323f51f8c53f24b6e288f3cf6f3b3acad382d4802dc858"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad00/trace.json",
+      "sha256": "e574d97bea0b7f034badd83d83d416cb1d99f3419f45ce7757e3d2c219231a39"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "1e1358c14a0d949791da48114096658fc6abb25c81f3db72b7fcca12b64f4b99"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "8b796f445fd9624a4248efa4e4fb00ccb698a31817052ab06b5bf0afd041a8f6"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
@@ -3011,6 +3051,18 @@
     {
       "path": "results/r01/vcpop_m/experiments/t21-vcpop-m-m2-n4/trace.json",
       "sha256": "18155fb7bc31d4ec615444892d446c83df4e8e784611e799cf5aa00142a29d87"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28/trace.json",
+      "sha256": "90de0c9218ad99e157d3fc635c1d6a8a3947121883282cc18e95aa41b9cae500"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "61f76a3b17708728ba348fb056628ff74f58ee0720b875cd3493fdf0c61cf0d4"
+    },
+    {
+      "path": "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v4-pad28/trace.json",
+      "sha256": "443e300a1f12ac71b7761663daf7a12316f2e64304187523459e338c0967b338"
     },
     {
       "path": "results/r01/vcpop_m/experiments/t21-vcpop-m-m4-n4/trace.json",
@@ -17229,8 +17281,48 @@
       "sha256": "3bbb57512be2e6322c817cf48fc7ee2008fe94c516de69645e9f53b1efa8994b"
     },
     {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+      "sha256": "72df8d3883b5d3151591fe1da22ecdf3f08136394b2c3fcad5c08e4be15e28d2"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+      "sha256": "752faf9e80af6daa4b5b9ae1d875897c0efd21d919bc2ace5fc506a42cd34bc7"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "7c75fc31d4d6ee6ad9fe96a54d61828fafc6dacff2df7530e25557fb2f75d098"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "1210ca33a64b790056ed54ffb56bc7227c5bb01c52bb23872b90a2901c87f24c"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "0c20b1032d93971baf0dfeb349f30c346d729dbfe58a8ba0d91d2a0d29767388"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n8-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "51f26c55cf62e4150aec84b07be4fe82b13b42b3ebf41f55e6b0b51c80c6218e"
+    },
+    {
       "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
       "sha256": "04fae0398b4cea7777666922ad93dfb0fc5854db343e10fea55eab5d7502867a"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-fix-src-v0-pad00/trace.json",
+      "sha256": "32e8c87b6dab78519c20196198927fefbb458eb2b78169919840250ec31b8f40"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad00/trace.json",
+      "sha256": "94fb5165cb06ed2161f1a55b0147345833642314c312d81b519fc975f9d5f67f"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "3c9c2afe863528206e3c6f3725b98da8d414848234c2cbac57338478c4b52ad9"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-n9-r11-sd-rot-src-v4-pad00/trace.json",
+      "sha256": "a4b9c3b541ffdcade8a625b1c129a24b543bb70fda0278c02ac4f1733b363d52"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
@@ -18219,6 +18311,18 @@
     {
       "path": "results/r02/vcpop_m/experiments/t21-vcpop-m-m2-n4/trace.json",
       "sha256": "dac742e5daa2cd35d42bcddbf5f496a7a1268ba7cb2604cdb71f489e590729ec"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-fix-src-v0-pad28/trace.json",
+      "sha256": "8f22a9e1306b337960cceaf47f2553ea7ae12702c27bd76d251f489480dcbfe6"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v0-pad28/trace.json",
+      "sha256": "4eadc6ea27fc9e52646684ab9a26d94592eda6501c9dabff2173a7f25a1ca739"
+    },
+    {
+      "path": "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4-r11-sd-rot-src-v4-pad28/trace.json",
+      "sha256": "81d6a18a5a9ffa437dc17fa34ba4b370755a4033390c8cf78ef7a7a894e73f6b"
     },
     {
       "path": "results/r02/vcpop_m/experiments/t21-vcpop-m-m4-n4/trace.json",
@@ -30545,9 +30649,9 @@
     "mode": "real_platform_profile"
   },
   "input_counts": {
-    "trace_files_after_filter": 7634,
-    "trace_files_before_filter": 10825,
-    "usable_marker_observations": 7630
+    "trace_files_after_filter": 7660,
+    "trace_files_before_filter": 10851,
+    "usable_marker_observations": 7656
   },
   "mode": "real_platform_profile",
   "required_fields": [
@@ -31379,16 +31483,16 @@
         3,
         4
       ],
-      "constraint_count": 324,
+      "constraint_count": 350,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
         "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
         "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-        "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
       ],
       "field": "Latency",
       "follow_up": "Run/interpret template=T12_CONSUMER_RAW_GAP instruction=vcpop_m lmul=m4 consumer=result-kind-default-consumer gaps=k0..k40; register_policy=producer destination from metadata with independent vadd_vv fillers; collect gap0 plus contiguous clean-prefix gaps with defensible filler cadence before claiming Latency.",
@@ -31402,19 +31506,19 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 324,
+      "constraint_count": 350,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
         "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
         "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-        "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
       ],
       "field": "ReleaseAtCycles",
-      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15",
+      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n7=delta8,n7=delta8,n7=delta6,n7=delta11,n8=delta7,n8=delta14,n8=delta11,n9=delta12,n9=delta12,n9=delta8,n9=delta15,n12=delta15",
       "instruction_id": "vcpop_m",
       "lmul": "m4",
       "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
@@ -31425,19 +31529,19 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 324,
+      "constraint_count": 350,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
         "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
         "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-        "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
       ],
       "field": "ProcResource",
-      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15",
+      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n7=delta8,n7=delta8,n7=delta6,n7=delta11,n8=delta7,n8=delta14,n8=delta11,n9=delta12,n9=delta12,n9=delta8,n9=delta15,n12=delta15",
       "instruction_id": "vcpop_m",
       "lmul": "m4",
       "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
@@ -31448,19 +31552,19 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 324,
+      "constraint_count": 350,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
         "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
         "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-        "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
       ],
       "field": "NumMicroOps",
-      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15",
+      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n7=delta8,n7=delta8,n7=delta6,n7=delta11,n8=delta7,n8=delta14,n8=delta11,n9=delta12,n9=delta12,n9=delta8,n9=delta15,n12=delta15",
       "instruction_id": "vcpop_m",
       "lmul": "m4",
       "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
@@ -31471,19 +31575,19 @@
       "candidate": null,
       "candidate_count": 0,
       "candidates": [],
-      "constraint_count": 324,
+      "constraint_count": 350,
       "evidence": [
         "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
         "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
         "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
         "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
-        "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
-        "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        "t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-fix-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=8:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad00/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=6:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v0-pad28/trace.json",
+        "t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n7-r11-sd-rot-src-v4-pad00/trace.json"
       ],
       "field": "SingleIssue",
-      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15,n2=delta1,n4=delta3,n6=delta5,n8=delta11,n12=delta15",
+      "follow_up": "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing issue fields; vary N around the first non-affine point, marker PC alignment, scalar destination policy, and source register policy.; observed_points=n12=delta15,n2=delta1,n4=delta3,n6=delta5,n7=delta8,n7=delta8,n7=delta6,n7=delta11,n8=delta7,n8=delta14,n8=delta11,n9=delta12,n9=delta12,n9=delta8,n9=delta15,n12=delta15",
       "instruction_id": "vcpop_m",
       "lmul": "m4",
       "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
