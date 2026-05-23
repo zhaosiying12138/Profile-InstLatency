@@ -1,0 +1,185 @@
+schema_version: 1
+experiment_id: t20-vmul-vv-vdivu-vv-m1-n6
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vmul_vv
+instruction_id: vmul_vv
+lmul: m1
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_start
+    local_label: .Lrvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_end
+    local_label: .Lrvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t20-vmul-vv-vdivu-vv-m1-n6
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_start
+      local_label: .Lrvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_end
+      local_label: .Lrvv_profile_marker_t20_vmul_vv_vdivu_vv_m1_n6_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m1
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vmul_vv, --lmul, m1, --other-instr, vdivu_vv, --iterations, 6, --output-root, experiments/generated, --experiment-id, t20-vmul-vv-vdivu-vv-m1-n6]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmul_vv --lmul m1 --other-instr vdivu_vv --iterations 6 --output-root experiments/generated --experiment-id t20-vmul-vv-vdivu-vv-m1-n6
+instruction:
+  id: vmul_vv
+  asm: vmul.vv
+  llvm_sched_write: WriteVIMulV
+  result_kind: vector
+  chainable: true
+  notes: Vector integer multiply.
+pair_instruction:
+  id: vdivu_vv
+  asm: vdivu.vv
+  llvm_sched_write: WriteVIDivV
+  result_kind: vector
+  chainable: true
+  notes: Unsigned vector integer divide; inputs avoid zero divisors.
+body:
+  iterations: 6
+  pair_count: 6
+  instruction_pair:
+    A: vmul_vv
+    B: vdivu_vv
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vmul_vv
+      destination: v2
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 0
+      side: B
+      instruction: vdivu_vv
+      destination: v3
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 1
+      side: A
+      instruction: vmul_vv
+      destination: v4
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 1
+      side: B
+      instruction: vdivu_vv
+      destination: v5
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 2
+      side: A
+      instruction: vmul_vv
+      destination: v6
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 2
+      side: B
+      instruction: vdivu_vv
+      destination: v7
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 3
+      side: A
+      instruction: vmul_vv
+      destination: v8
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 3
+      side: B
+      instruction: vdivu_vv
+      destination: v9
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 4
+      side: A
+      instruction: vmul_vv
+      destination: v10
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 4
+      side: B
+      instruction: vdivu_vv
+      destination: v11
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 5
+      side: A
+      instruction: vmul_vv
+      destination: v12
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 5
+      side: B
+      instruction: vdivu_vv
+      destination: v13
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+  destinations: [v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13]
+  register_reuse: false
+  destination_allocation:
+    vector_destination_count: 12
+    scalar_destination_count: 0
+    available_vector_output_groups: 30
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

@@ -1,0 +1,185 @@
+schema_version: 1
+experiment_id: t20-vcpop-m-vrgather-vv-m2-n6
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vcpop_m
+instruction_id: vcpop_m
+lmul: m2
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_start
+    local_label: .Lrvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_end
+    local_label: .Lrvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t20-vcpop-m-vrgather-vv-m2-n6
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_start
+      local_label: .Lrvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_end
+      local_label: .Lrvv_profile_marker_t20_vcpop_m_vrgather_vv_m2_n6_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m2
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vcpop_m, --lmul, m2, --other-instr, vrgather_vv, --iterations, 6, --output-root, experiments/generated, --experiment-id, t20-vcpop-m-vrgather-vv-m2-n6]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vcpop_m --lmul m2 --other-instr vrgather_vv --iterations 6 --output-root experiments/generated --experiment-id t20-vcpop-m-vrgather-vv-m2-n6
+instruction:
+  id: vcpop_m
+  asm: vcpop.m
+  llvm_sched_write: WriteVMPopV
+  result_kind: scalar
+  chainable: false
+  notes: Mask population count producing a scalar integer result.
+pair_instruction:
+  id: vrgather_vv
+  asm: vrgather.vv
+  llvm_sched_write: WriteVRGatherVV
+  result_kind: vector
+  chainable: false
+  notes: Vector gather using vector indices; assembler forbids destination/source overlap.
+body:
+  iterations: 6
+  pair_count: 6
+  instruction_pair:
+    A: vcpop_m
+    B: vrgather_vv
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vcpop_m
+      destination: x10
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 0
+      side: B
+      instruction: vrgather_vv
+      destination: v4
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 1
+      side: A
+      instruction: vcpop_m
+      destination: x11
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 1
+      side: B
+      instruction: vrgather_vv
+      destination: v6
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 2
+      side: A
+      instruction: vcpop_m
+      destination: x12
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 2
+      side: B
+      instruction: vrgather_vv
+      destination: v8
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 3
+      side: A
+      instruction: vcpop_m
+      destination: x13
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 3
+      side: B
+      instruction: vrgather_vv
+      destination: v10
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 4
+      side: A
+      instruction: vcpop_m
+      destination: x14
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 4
+      side: B
+      instruction: vrgather_vv
+      destination: v12
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 5
+      side: A
+      instruction: vcpop_m
+      destination: x15
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+    -
+      index: 5
+      side: B
+      instruction: vrgather_vv
+      destination: v14
+      source_a: v0
+      source_b: v2
+      destination_reused: false
+  destinations: [x10, v4, x11, v6, x12, v8, x13, v10, x14, v12, x15, v14]
+  register_reuse: false
+  destination_allocation:
+    vector_destination_count: 6
+    scalar_destination_count: 6
+    available_vector_output_groups: 14
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

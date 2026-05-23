@@ -1,0 +1,121 @@
+schema_version: 1
+experiment_id: t20-vadd-vv-viota-m-m1-n2
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vadd_vv
+instruction_id: vadd_vv
+lmul: m1
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_start
+    local_label: .Lrvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_end
+    local_label: .Lrvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t20-vadd-vv-viota-m-m1-n2
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_start
+      local_label: .Lrvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_end
+      local_label: .Lrvv_profile_marker_t20_vadd_vv_viota_m_m1_n2_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m1
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vadd_vv, --lmul, m1, --other-instr, viota_m, --iterations, 2, --output-root, experiments/generated, --experiment-id, t20-vadd-vv-viota-m-m1-n2]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vadd_vv --lmul m1 --other-instr viota_m --iterations 2 --output-root experiments/generated --experiment-id t20-vadd-vv-viota-m-m1-n2
+instruction:
+  id: vadd_vv
+  asm: vadd.vv
+  llvm_sched_write: WriteVIALUV
+  result_kind: vector
+  chainable: true
+  notes: Simple vector integer ALU operation.
+pair_instruction:
+  id: viota_m
+  asm: viota.m
+  llvm_sched_write: WriteVIotaV
+  result_kind: vector
+  chainable: false
+  notes: Mask-to-vector prefix index operation.
+body:
+  iterations: 2
+  pair_count: 2
+  instruction_pair:
+    A: vadd_vv
+    B: viota_m
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vadd_vv
+      destination: v2
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 0
+      side: B
+      instruction: viota_m
+      destination: v3
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 1
+      side: A
+      instruction: vadd_vv
+      destination: v4
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+    -
+      index: 1
+      side: B
+      instruction: viota_m
+      destination: v5
+      source_a: v0
+      source_b: v1
+      destination_reused: false
+  destinations: [v2, v3, v4, v5]
+  register_reuse: false
+  destination_allocation:
+    vector_destination_count: 4
+    scalar_destination_count: 0
+    available_vector_output_groups: 30
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

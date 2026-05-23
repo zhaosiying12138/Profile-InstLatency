@@ -5,20 +5,20 @@ instruction_id: "vslideup_vx"
 llvm_facing_fields:
   m1:
     Latency:
-      status: "inferred"
-      value: 5
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 5
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
         - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
         - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
         - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
         - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
+        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
+        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
+        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 5
@@ -31,9 +31,9 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
         - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
         - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
+        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
+        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
+        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -41,16 +41,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json"
         - "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json"
         - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
         - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
         - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
+        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
+        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
+        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -63,9 +63,9 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
         - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
         - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
+        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
+        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
+        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -78,25 +78,25 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json"
         - "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json"
         - "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json"
-        - "t11-vslideup-vx-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n12/trace.json"
-        - "t11-vslideup-vx-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n2/trace.json"
-        - "t11-vslideup-vx-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m1-n4/trace.json"
+        - "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json"
+        - "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json"
+        - "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
   m2:
     Latency:
-      status: "inferred"
-      value: 7
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 7
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
         - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
         - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
         - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
         - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
+        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
+        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
+        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 7
@@ -109,9 +109,9 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
         - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
         - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
+        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
+        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
+        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -119,16 +119,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json"
         - "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json"
         - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
         - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
         - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
+        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
+        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
+        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -141,9 +141,9 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
         - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
         - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
+        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
+        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
+        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -156,25 +156,25 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json"
         - "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json"
         - "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json"
-        - "t11-vslideup-vx-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=83:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n12/trace.json"
-        - "t11-vslideup-vx-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n2/trace.json"
-        - "t11-vslideup-vx-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=27:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m2-n4/trace.json"
+        - "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json"
+        - "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json"
+        - "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
   m4:
     Latency:
-      status: "inferred"
-      value: 18
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 18
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
         - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
         - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
+        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
+        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
+        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 18
@@ -185,11 +185,11 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
         - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
         - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
+        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
+        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
+        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ReleaseAtCycles @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ReleaseAtCycles @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ReleaseAtCycles @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -197,16 +197,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
         - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
         - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
+        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
+        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
+        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -217,11 +217,11 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
         - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
         - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
+        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
+        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
+        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:NumMicroOps @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:NumMicroOps @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:NumMicroOps @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -232,11 +232,11 @@ llvm_facing_fields:
         - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
         - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
         - "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=215:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n12/trace.json"
-        - "t11-vslideup-vx-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n2/trace.json"
-        - "t11-vslideup-vx-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n4/trace.json"
-        - "t11-vslideup-vx-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=107:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n6/trace.json"
-        - "t11-vslideup-vx-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=143:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t11-vslideup-vx-m4-n8/trace.json"
+        - "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json"
+        - "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json"
+        - "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:SingleIssue @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json"
+        - "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:SingleIssue @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json"
+        - "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:SingleIssue @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
 hardware_interpretation:
   issue_width: 2
   issue_order: "in_order"

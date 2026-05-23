@@ -5,20 +5,20 @@ instruction_id: "vrgather_vv"
 llvm_facing_fields:
   m1:
     Latency:
-      status: "inferred"
-      value: 2
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 2
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json"
         - "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json"
         - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
         - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
         - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
-        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
-        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
-        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 2
@@ -31,9 +31,9 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
         - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
         - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
-        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
-        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
-        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -41,16 +41,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json"
         - "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json"
         - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
         - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
         - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
-        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
-        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
-        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -63,9 +63,9 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
         - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
         - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
-        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
-        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
-        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -78,25 +78,25 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json"
         - "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json"
         - "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json"
-        - "t11-vrgather-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=25:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n12/trace.json"
-        - "t11-vrgather-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n2/trace.json"
-        - "t11-vrgather-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m1-n4/trace.json"
+        - "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json"
+        - "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json"
+        - "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
   m2:
     Latency:
-      status: "inferred"
-      value: 6
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 6
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json"
         - "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json"
         - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
         - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
         - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
-        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
-        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
-        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 6
@@ -109,9 +109,9 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
         - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
         - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
-        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
-        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
-        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -119,16 +119,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json"
         - "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json"
         - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
         - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
         - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
-        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
-        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
-        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -141,9 +141,9 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
         - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
         - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
-        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
-        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
-        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -156,25 +156,25 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json"
         - "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json"
         - "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json"
-        - "t11-vrgather-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=72:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n12/trace.json"
-        - "t11-vrgather-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n2/trace.json"
-        - "t11-vrgather-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m2-n4/trace.json"
+        - "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json"
+        - "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json"
+        - "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
   m4:
     Latency:
-      status: "inferred"
-      value: 20
+      status: "non_identifiable"
+      value: null
       candidates:
-        - 20
-      reason: "Unique candidate inferred from real-platform marker observations."
+        - 0
+      reason: "T11 observations for this row are non-chainable placeholders or absent; T12 consumer-gap observations exist but the shared simulator has no implemented bypass/read-advance model, so Latency is not identifiable."
       evidence:
         - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
         - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
         - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
-        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
-        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
-        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
     ReleaseAtCycles:
       status: "inferred"
       value: 20
@@ -185,11 +185,11 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
         - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
         - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
-        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
-        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
-        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ReleaseAtCycles @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ReleaseAtCycles @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ReleaseAtCycles @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
     ProcResource:
       status: "non_identifiable"
       value: null
@@ -197,16 +197,16 @@ llvm_facing_fields:
         - "YuShuXinAnyVPipe"
         - "YuShuXinVPipe0"
         - "YuShuXinVPipe1"
-      reason: "The current real-platform T20 pair template records pipe-interaction timing, but with one pair-count it cannot uniquely identify which RVV pipe resource executes this instruction. Add a T20 sweep with multiple pair counts or a simulator pipe-label trace to distinguish resources."
+      reason: "T20 pair timing is recorded as startup+slope groups. Current checked-in real traces do not provide multiple usable pair counts per pair/LMUL, so ProcResource remains non-identifiable without overclaiming a pipe."
       evidence:
         - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
         - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
         - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
-        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
-        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
-        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
     NumMicroOps:
       status: "inferred"
       value: 1
@@ -217,11 +217,11 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
         - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
         - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
-        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
-        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
-        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:NumMicroOps @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:NumMicroOps @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:NumMicroOps @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
     SingleIssue:
       status: "inferred"
       value: false
@@ -232,11 +232,11 @@ llvm_facing_fields:
         - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
         - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
         - "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=239:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n12/trace.json"
-        - "t11-vrgather-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n2/trace.json"
-        - "t11-vrgather-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n4/trace.json"
-        - "t11-vrgather-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=119:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n6/trace.json"
-        - "t11-vrgather-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=159:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t11-vrgather-vv-m4-n8/trace.json"
+        - "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json"
+        - "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json"
+        - "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:SingleIssue @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json"
+        - "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:SingleIssue @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json"
+        - "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:SingleIssue @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
 hardware_interpretation:
   issue_width: 2
   issue_order: "in_order"

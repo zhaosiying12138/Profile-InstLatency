@@ -1,0 +1,153 @@
+schema_version: 1
+experiment_id: t20-vmul-vv-vcpop-m-m4-n4
+template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+result_group: vmul_vv
+instruction_id: vmul_vv
+lmul: m4
+sew: 32
+markers: [start, end]
+marker_metadata:
+  -
+    label: start
+    symbol: __rvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_start
+    local_label: .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_start
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+  -
+    label: end
+    symbol: __rvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_end
+    local_label: .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_end
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: next_instruction
+experiment:
+  id: t20-vmul-vv-vcpop-m-m4-n4
+  template_id: T20_PAIRWISE_PIPE_CLASSIFICATION
+  purpose: Classify pairwise RVV pipe affinity.
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+  markers:
+    -
+      label: start
+      symbol: __rvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_start
+      local_label: .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_start
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+    -
+      label: end
+      symbol: __rvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_end
+      local_label: .Lrvv_profile_marker_t20_vmul_vv_vcpop_m_m4_n4_end
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: next_instruction
+parameters:
+  sew: 32
+  lmul: m4
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: scripts/gen_asm.py
+  generator_version: 2
+  stdlib_only: true
+  deterministic: true
+  template_file: templates/rvv_program.s.tpl
+  reproduce:
+    argv: [python3, scripts/gen_asm.py, one, --template, T20_PAIRWISE_PIPE_CLASSIFICATION, --instr, vmul_vv, --lmul, m4, --other-instr, vcpop_m, --iterations, 4, --output-root, experiments/generated, --experiment-id, t20-vmul-vv-vcpop-m-m4-n4]
+    command: python3 scripts/gen_asm.py one --template T20_PAIRWISE_PIPE_CLASSIFICATION --instr vmul_vv --lmul m4 --other-instr vcpop_m --iterations 4 --output-root experiments/generated --experiment-id t20-vmul-vv-vcpop-m-m4-n4
+instruction:
+  id: vmul_vv
+  asm: vmul.vv
+  llvm_sched_write: WriteVIMulV
+  result_kind: vector
+  chainable: true
+  notes: Vector integer multiply.
+pair_instruction:
+  id: vcpop_m
+  asm: vcpop.m
+  llvm_sched_write: WriteVMPopV
+  result_kind: scalar
+  chainable: false
+  notes: Mask population count producing a scalar integer result.
+body:
+  iterations: 4
+  pair_count: 4
+  instruction_pair:
+    A: vmul_vv
+    B: vcpop_m
+  instances:
+    -
+      index: 0
+      side: A
+      instruction: vmul_vv
+      destination: v8
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 0
+      side: B
+      instruction: vcpop_m
+      destination: x10
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 1
+      side: A
+      instruction: vmul_vv
+      destination: v12
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 1
+      side: B
+      instruction: vcpop_m
+      destination: x11
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 2
+      side: A
+      instruction: vmul_vv
+      destination: v16
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 2
+      side: B
+      instruction: vcpop_m
+      destination: x12
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 3
+      side: A
+      instruction: vmul_vv
+      destination: v20
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+    -
+      index: 3
+      side: B
+      instruction: vcpop_m
+      destination: x13
+      source_a: v0
+      source_b: v4
+      destination_reused: false
+  destinations: [v8, x10, v12, x11, v16, x12, v20, x13]
+  register_reuse: false
+  destination_allocation:
+    vector_destination_count: 4
+    scalar_destination_count: 4
+    available_vector_output_groups: 6
+    available_scalar_outputs: 22
+    vector_register_reuse: false
+    scalar_register_reuse: false

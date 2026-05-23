@@ -1285,6 +1285,31 @@ def solve_candidate_sets(
     return results
 
 
+def direct_interval_domain_conflict(result: CandidateSearchResult) -> bool:
+    return any(
+        str(item.get("reason", "")).startswith("Direct interval constraints produced an empty candidate domain")
+        for item in result.conflict_examples
+    )
+
+
+def non_affine_stream_follow_up(observations: Iterable[RawObservation]) -> str:
+    stream_points: list[str] = []
+    for item in observations:
+        if item.effective_template_id != "T10_INDEPENDENT_STREAM_THROUGHPUT":
+            continue
+        iterations = body_int(item, "iterations", "stream_length", "sample_count")
+        if iterations is None:
+            continue
+        stream_points.append(f"n{iterations}=delta{item.delta_cycles}")
+    suffix = "; observed_points=" + ",".join(stream_points[:16]) if stream_points else ""
+    return (
+        "Add a focused T10 stream-length and alignment sweep before claiming LLVM-facing "
+        "issue fields; vary N around the first non-affine point, marker PC alignment, "
+        "scalar destination policy, and source register policy."
+        + suffix
+    )
+
+
 def candidate_field_result(
     field: str,
     result: CandidateSearchResult,
@@ -1359,6 +1384,24 @@ def candidate_field_result(
                     "bypass-gap model."
                 ),
                 "follow_up": "Implement a T12 bypass/read-advance readiness model before claiming Latency.",
+            }
+        )
+        return record
+
+    if not result.candidates and direct_interval_domain_conflict(result):
+        record.update(
+            {
+                "status": "non_identifiable",
+                "value": None,
+                "reason": (
+                    "The real-platform stream observations are not affine under the "
+                    "LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records "
+                    "the evidence but does not claim this field without a follow-up model "
+                    "for the extra platform effect."
+                ),
+                "follow_up": non_affine_stream_follow_up(result.all_observations),
+                "conflict_examples": list(result.conflict_examples),
+                "t20_startup_slope_groups": t20_startup_slope_groups(result.all_observations),
             }
         )
         return record
