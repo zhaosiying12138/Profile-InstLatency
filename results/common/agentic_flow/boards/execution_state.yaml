@@ -18,7 +18,6 @@ current_boundary:
     - results/common/real_platform_risk_acceptance_request.json
     - results/common/agentic_flow/**
   task: refresh_round9_request_semantics_and_humanize2_capture
-  code_and_generated_result_fixes_owned_by_round5_worker: true
   round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   round5_code_worker_review_status: accepted_for_candidate_simulator_scope
   approval_gate_fixes_owned_by_round6_worker: true
