@@ -22,9 +22,10 @@
   },
   "confidence": {
     "failed_gate_checks": [
+      "required_llvm_field_status_clean_or_accepted",
       "explicit_human_approval"
     ],
-    "level": "awaiting_human_approval"
+    "level": "unresolved_llvm_field_status"
   },
   "conflicts": {
     "items": [],
@@ -1151,13 +1152,794 @@
       "SingleIssue"
     ],
     "sha256": "904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179",
-    "status": "ready",
+    "status": "blocked",
     "status_counts": {
       "inferred": 111,
       "non_identifiable": 39
     },
-    "unresolved": [],
-    "unresolved_total": 0
+    "unresolved": [
+      {
+        "evidence": [
+          "t10-vadd-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n12/trace.json",
+          "t10-vadd-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n2/trace.json",
+          "t10-vadd-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n4/trace.json",
+          "t10-vadd-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n6/trace.json",
+          "t10-vadd-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m1-n8/trace.json",
+          "t11-vadd-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n12/trace.json",
+          "t11-vadd-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n2/trace.json",
+          "t11-vadd-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vadd_vv",
+        "json_path": "$.rows[2]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vadd-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n12/trace.json",
+          "t10-vadd-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n2/trace.json",
+          "t10-vadd-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n4/trace.json",
+          "t10-vadd-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n6/trace.json",
+          "t10-vadd-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m2-n8/trace.json",
+          "t11-vadd-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=45:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n12/trace.json",
+          "t11-vadd-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n2/trace.json",
+          "t11-vadd-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vadd_vv",
+        "json_path": "$.rows[7]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vadd_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vadd-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n2/trace.json",
+          "t10-vadd-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n4/trace.json",
+          "t10-vadd-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t10-vadd-vv-m4-n6/trace.json",
+          "t11-vadd-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n12/trace.json",
+          "t11-vadd-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n2/trace.json",
+          "t11-vadd-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n4/trace.json",
+          "t11-vadd-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n6/trace.json",
+          "t11-vadd-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vadd_vv/experiments/t11-vadd-vv-m4-n8/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vadd_vv",
+        "json_path": "$.rows[12]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vadd_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
+          "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
+          "t10-vcpop-m-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n4/trace.json",
+          "t10-vcpop-m-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n6/trace.json",
+          "t10-vcpop-m-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n8/trace.json",
+          "t30-vcpop-m-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n12/trace.json",
+          "t30-vcpop-m-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n2/trace.json",
+          "t30-vcpop-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[15]",
+        "lmul": "m1",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 1); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:vcpop_m:m1:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n12/trace.json",
+          "t10-vcpop-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n2/trace.json",
+          "t10-vcpop-m-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n4/trace.json",
+          "t10-vcpop-m-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n6/trace.json",
+          "t10-vcpop-m-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m1-n8/trace.json",
+          "t30-vcpop-m-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n12/trace.json",
+          "t30-vcpop-m-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n2/trace.json",
+          "t30-vcpop-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[17]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vcpop_m:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
+          "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
+          "t10-vcpop-m-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n4/trace.json",
+          "t10-vcpop-m-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n6/trace.json",
+          "t10-vcpop-m-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n8/trace.json",
+          "t30-vcpop-m-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n12/trace.json",
+          "t30-vcpop-m-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n2/trace.json",
+          "t30-vcpop-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[20]",
+        "lmul": "m2",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 2); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:vcpop_m:m2:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n12/trace.json",
+          "t10-vcpop-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n2/trace.json",
+          "t10-vcpop-m-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n4/trace.json",
+          "t10-vcpop-m-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n6/trace.json",
+          "t10-vcpop-m-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m2-n8/trace.json",
+          "t30-vcpop-m-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n12/trace.json",
+          "t30-vcpop-m-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n2/trace.json",
+          "t30-vcpop-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t30-vcpop-m-t10-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[22]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vcpop_m:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
+          "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
+          "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
+          "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
+          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:Latency @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[25]",
+        "lmul": "m4",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:vcpop_m:m4:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
+          "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
+          "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
+          "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
+          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ReleaseAtCycles @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        ],
+        "field": "ReleaseAtCycles",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[26]",
+        "lmul": "m4",
+        "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
+        "risk_id": "llvm_field_status:vcpop_m:m4:ReleaseAtCycles:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
+          "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
+          "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
+          "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
+          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[27]",
+        "lmul": "m4",
+        "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
+        "risk_id": "llvm_field_status:vcpop_m:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
+          "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
+          "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
+          "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
+          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:NumMicroOps @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        ],
+        "field": "NumMicroOps",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[28]",
+        "lmul": "m4",
+        "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
+        "risk_id": "llvm_field_status:vcpop_m:m4:NumMicroOps:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vcpop-m-m4-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n12/trace.json",
+          "t10-vcpop-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n2/trace.json",
+          "t10-vcpop-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n4/trace.json",
+          "t10-vcpop-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n6/trace.json",
+          "t10-vcpop-m-m4-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-n8/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n12/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n2/trace.json",
+          "t10-vcpop-m-m4-scalar-fixed-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:SingleIssue @ results/r01/vcpop_m/experiments/t10-vcpop-m-m4-scalar-fixed-n4/trace.json"
+        ],
+        "field": "SingleIssue",
+        "instruction_id": "vcpop_m",
+        "json_path": "$.rows[29]",
+        "lmul": "m4",
+        "reason": "The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect.",
+        "risk_id": "llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vdivu-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n12/trace.json",
+          "t10-vdivu-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n2/trace.json",
+          "t10-vdivu-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/trace.json",
+          "t10-vdivu-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n6/trace.json",
+          "t10-vdivu-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n8/trace.json",
+          "t11-vdivu-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n12/trace.json",
+          "t11-vdivu-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n2/trace.json",
+          "t11-vdivu-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vdivu_vv",
+        "json_path": "$.rows[32]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vdivu_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vdivu-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n12/trace.json",
+          "t10-vdivu-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n2/trace.json",
+          "t10-vdivu-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n4/trace.json",
+          "t10-vdivu-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n6/trace.json",
+          "t10-vdivu-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m2-n8/trace.json",
+          "t11-vdivu-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=45:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m2-n12/trace.json",
+          "t11-vdivu-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m2-n2/trace.json",
+          "t11-vdivu-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vdivu_vv",
+        "json_path": "$.rows[37]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vdivu_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vdivu-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n2/trace.json",
+          "t10-vdivu-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json",
+          "t10-vdivu-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t10-vdivu-vv-m4-n6/trace.json",
+          "t11-vdivu-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n12/trace.json",
+          "t11-vdivu-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n2/trace.json",
+          "t11-vdivu-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n4/trace.json",
+          "t11-vdivu-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n6/trace.json",
+          "t11-vdivu-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vdivu_vv/experiments/t11-vdivu-vv-m4-n8/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vdivu_vv",
+        "json_path": "$.rows[42]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-viota-m-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n12/trace.json",
+          "t10-viota-m-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n2/trace.json",
+          "t10-viota-m-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n4/trace.json",
+          "t10-viota-m-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n6/trace.json",
+          "t10-viota-m-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m1-n8/trace.json",
+          "t30-viota-m-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n12/trace.json",
+          "t30-viota-m-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n2/trace.json",
+          "t30-viota-m-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "viota_m",
+        "json_path": "$.rows[47]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:viota_m:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-viota-m-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n12/trace.json",
+          "t10-viota-m-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n2/trace.json",
+          "t10-viota-m-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n4/trace.json",
+          "t10-viota-m-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n6/trace.json",
+          "t10-viota-m-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m2-n8/trace.json",
+          "t30-viota-m-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n12/trace.json",
+          "t30-viota-m-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n2/trace.json",
+          "t30-viota-m-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "viota_m",
+        "json_path": "$.rows[52]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:viota_m:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
+          "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
+          "t10-viota-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/viota_m/experiments/t10-viota-m-m4-n6/trace.json",
+          "t30-viota-m-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n2/trace.json",
+          "t30-viota-m-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n4/trace.json",
+          "t30-viota-m-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:Latency @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n6/trace.json",
+          "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:Latency @ results/r02/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
+          "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:Latency @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "viota_m",
+        "json_path": "$.rows[55]",
+        "lmul": "m4",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:viota_m:m4:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
+          "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n4/trace.json",
+          "t10-viota-m-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t10-viota-m-m4-n6/trace.json",
+          "t30-viota-m-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n2/trace.json",
+          "t30-viota-m-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n4/trace.json",
+          "t30-viota-m-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/viota_m/experiments/t30-viota-m-t10-m4-n6/trace.json",
+          "t10-viota-m-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r02/viota_m/experiments/t10-viota-m-m4-n2/trace.json",
+          "t10-viota-m-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r02/viota_m/experiments/t10-viota-m-m4-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "viota_m",
+        "json_path": "$.rows[57]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:viota_m:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmseq-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n12/trace.json",
+          "t10-vmseq-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n2/trace.json",
+          "t10-vmseq-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n4/trace.json",
+          "t10-vmseq-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n6/trace.json",
+          "t10-vmseq-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m1-n8/trace.json",
+          "t30-vmseq-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m1-n12/trace.json",
+          "t30-vmseq-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m1-n2/trace.json",
+          "t30-vmseq-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmseq_vv",
+        "json_path": "$.rows[62]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmseq-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n12/trace.json",
+          "t10-vmseq-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n2/trace.json",
+          "t10-vmseq-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n4/trace.json",
+          "t10-vmseq-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n6/trace.json",
+          "t10-vmseq-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m2-n8/trace.json",
+          "t30-vmseq-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m2-n12/trace.json",
+          "t30-vmseq-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m2-n2/trace.json",
+          "t30-vmseq-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmseq_vv",
+        "json_path": "$.rows[67]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
+          "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json",
+          "t10-vmseq-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t10-vmseq-vv-m4-n6/trace.json",
+          "t30-vmseq-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m4-n2/trace.json",
+          "t30-vmseq-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m4-n4/trace.json",
+          "t30-vmseq-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vmseq_vv/experiments/t30-vmseq-vv-t10-m4-n6/trace.json",
+          "t10-vmseq-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r02/vmseq_vv/experiments/t10-vmseq-vv-m4-n2/trace.json",
+          "t10-vmseq-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r02/vmseq_vv/experiments/t10-vmseq-vv-m4-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmseq_vv",
+        "json_path": "$.rows[72]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmseq_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmul-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n12/trace.json",
+          "t10-vmul-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n2/trace.json",
+          "t10-vmul-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n4/trace.json",
+          "t10-vmul-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n6/trace.json",
+          "t10-vmul-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m1-n8/trace.json",
+          "t11-vmul-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m1-n12/trace.json",
+          "t11-vmul-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m1-n2/trace.json",
+          "t11-vmul-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmul_vv",
+        "json_path": "$.rows[77]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmul_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmul-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n12/trace.json",
+          "t10-vmul-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n2/trace.json",
+          "t10-vmul-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n4/trace.json",
+          "t10-vmul-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n6/trace.json",
+          "t10-vmul-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m2-n8/trace.json",
+          "t11-vmul-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=45:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m2-n12/trace.json",
+          "t11-vmul-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m2-n2/trace.json",
+          "t11-vmul-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmul_vv",
+        "json_path": "$.rows[82]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmul_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vmul-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n2/trace.json",
+          "t10-vmul-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n4/trace.json",
+          "t10-vmul-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t10-vmul-vv-m4-n6/trace.json",
+          "t11-vmul-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n12/trace.json",
+          "t11-vmul-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n2/trace.json",
+          "t11-vmul-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n4/trace.json",
+          "t11-vmul-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n6/trace.json",
+          "t11-vmul-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vmul_vv/experiments/t11-vmul-vv-m4-n8/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vmul_vv",
+        "json_path": "$.rows[87]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vmul_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vredsum-vs-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n12/trace.json",
+          "t10-vredsum-vs-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n2/trace.json",
+          "t10-vredsum-vs-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n4/trace.json",
+          "t10-vredsum-vs-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n6/trace.json",
+          "t10-vredsum-vs-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m1-n8/trace.json",
+          "t11-vredsum-vs-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m1-n12/trace.json",
+          "t11-vredsum-vs-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m1-n2/trace.json",
+          "t11-vredsum-vs-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vredsum_vs",
+        "json_path": "$.rows[92]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vredsum_vs:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vredsum-vs-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n12/trace.json",
+          "t10-vredsum-vs-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n2/trace.json",
+          "t10-vredsum-vs-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n4/trace.json",
+          "t10-vredsum-vs-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n6/trace.json",
+          "t10-vredsum-vs-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m2-n8/trace.json",
+          "t11-vredsum-vs-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=56:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m2-n12/trace.json",
+          "t11-vredsum-vs-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=6:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m2-n2/trace.json",
+          "t11-vredsum-vs-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=16:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vredsum_vs",
+        "json_path": "$.rows[97]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vredsum_vs:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vredsum-vs-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n2/trace.json",
+          "t10-vredsum-vs-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n4/trace.json",
+          "t10-vredsum-vs-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t10-vredsum-vs-m4-n6/trace.json",
+          "t11-vredsum-vs-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=80:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n12/trace.json",
+          "t11-vredsum-vs-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=10:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n2/trace.json",
+          "t11-vredsum-vs-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n4/trace.json",
+          "t11-vredsum-vs-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=38:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n6/trace.json",
+          "t11-vredsum-vs-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=52:candidate_simulator:ProcResource @ results/r01/vredsum_vs/experiments/t11-vredsum-vs-m4-n8/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vredsum_vs",
+        "json_path": "$.rows[102]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vredsum_vs:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vrgather-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n12/trace.json",
+          "t10-vrgather-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n2/trace.json",
+          "t10-vrgather-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n4/trace.json",
+          "t10-vrgather-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n6/trace.json",
+          "t10-vrgather-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=17:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m1-n8/trace.json",
+          "t30-vrgather-vv-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=25:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n12/trace.json",
+          "t30-vrgather-vv-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n2/trace.json",
+          "t30-vrgather-vv-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vrgather_vv",
+        "json_path": "$.rows[107]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vrgather_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vrgather-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n12/trace.json",
+          "t10-vrgather-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n2/trace.json",
+          "t10-vrgather-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n4/trace.json",
+          "t10-vrgather-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=36:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n6/trace.json",
+          "t10-vrgather-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=48:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m2-n8/trace.json",
+          "t30-vrgather-vv-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=72:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n12/trace.json",
+          "t30-vrgather-vv-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n2/trace.json",
+          "t30-vrgather-vv-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=24:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vrgather_vv",
+        "json_path": "$.rows[112]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vrgather_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
+          "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
+          "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json",
+          "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json",
+          "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json",
+          "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:Latency @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json",
+          "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:Latency @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
+          "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:Latency @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "vrgather_vv",
+        "json_path": "$.rows[115]",
+        "lmul": "m4",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:vrgather_vv:m4:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
+          "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json",
+          "t10-vrgather-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t10-vrgather-vv-m4-n6/trace.json",
+          "t30-vrgather-vv-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n2/trace.json",
+          "t30-vrgather-vv-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n4/trace.json",
+          "t30-vrgather-vv-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=119:candidate_simulator:ProcResource @ results/r01/vrgather_vv/experiments/t30-vrgather-vv-t10-m4-n6/trace.json",
+          "t10-vrgather-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n2/trace.json",
+          "t10-vrgather-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=79:candidate_simulator:ProcResource @ results/r02/vrgather_vv/experiments/t10-vrgather-vv-m4-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vrgather_vv",
+        "json_path": "$.rows[117]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vrgather_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vslideup-vx-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n12/trace.json",
+          "t10-vslideup-vx-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n2/trace.json",
+          "t10-vslideup-vx-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n4/trace.json",
+          "t10-vslideup-vx-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=29:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n6/trace.json",
+          "t10-vslideup-vx-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=39:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m1-n8/trace.json",
+          "t30-vslideup-vx-t10-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=59:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n12/trace.json",
+          "t30-vslideup-vx-t10-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=9:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n2/trace.json",
+          "t30-vslideup-vx-t10-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=19:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vslideup_vx",
+        "json_path": "$.rows[122]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vslideup_vx:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vslideup-vx-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n12/trace.json",
+          "t10-vslideup-vx-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n2/trace.json",
+          "t10-vslideup-vx-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n4/trace.json",
+          "t10-vslideup-vx-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=41:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n6/trace.json",
+          "t10-vslideup-vx-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=55:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m2-n8/trace.json",
+          "t30-vslideup-vx-t10-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=83:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n12/trace.json",
+          "t30-vslideup-vx-t10-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n2/trace.json",
+          "t30-vslideup-vx-t10-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=27:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vslideup_vx",
+        "json_path": "$.rows[127]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vslideup_vx:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
+          "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
+          "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json",
+          "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json",
+          "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json",
+          "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:Latency @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json",
+          "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:Latency @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
+          "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:Latency @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        ],
+        "field": "Latency",
+        "instruction_id": "vslideup_vx",
+        "json_path": "$.rows[130]",
+        "lmul": "m4",
+        "reason": "T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value.",
+        "risk_id": "llvm_field_status:vslideup_vx:m4:Latency:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
+          "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json",
+          "t10-vslideup-vx-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t10-vslideup-vx-m4-n6/trace.json",
+          "t30-vslideup-vx-t10-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n2/trace.json",
+          "t30-vslideup-vx-t10-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n4/trace.json",
+          "t30-vslideup-vx-t10-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=107:candidate_simulator:ProcResource @ results/r01/vslideup_vx/experiments/t30-vslideup-vx-t10-m4-n6/trace.json",
+          "t10-vslideup-vx-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=35:candidate_simulator:ProcResource @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n2/trace.json",
+          "t10-vslideup-vx-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=71:candidate_simulator:ProcResource @ results/r02/vslideup_vx/experiments/t10-vslideup-vx-m4-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vslideup_vx",
+        "json_path": "$.rows[132]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vslideup_vx:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vsll-vv-m1-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n12/trace.json",
+          "t10-vsll-vv-m1-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=1:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n2/trace.json",
+          "t10-vsll-vv-m1-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n4/trace.json",
+          "t10-vsll-vv-m1-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n6/trace.json",
+          "t10-vsll-vv-m1-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m1-n8/trace.json",
+          "t11-vsll-vv-m1-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=44:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m1-n12/trace.json",
+          "t11-vsll-vv-m1-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=4:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m1-n2/trace.json",
+          "t11-vsll-vv-m1-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=12:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m1-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vsll_vv",
+        "json_path": "$.rows[137]",
+        "lmul": "m1",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vsll_vv:m1:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vsll-vv-m2-n12:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n12/trace.json",
+          "t10-vsll-vv-m2-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=3:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n2/trace.json",
+          "t10-vsll-vv-m2-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n4/trace.json",
+          "t10-vsll-vv-m2-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=11:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n6/trace.json",
+          "t10-vsll-vv-m2-n8:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m2-n8/trace.json",
+          "t11-vsll-vv-m2-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=45:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m2-n12/trace.json",
+          "t11-vsll-vv-m2-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=5:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m2-n2/trace.json",
+          "t11-vsll-vv-m2-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=13:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m2-n4/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vsll_vv",
+        "json_path": "$.rows[142]",
+        "lmul": "m2",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vsll_vv:m2:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      },
+      {
+        "evidence": [
+          "t10-vsll-vv-m4-n2:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n2/trace.json",
+          "t10-vsll-vv-m4-n4:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n4/trace.json",
+          "t10-vsll-vv-m4-n6:T10_INDEPENDENT_STREAM_THROUGHPUT:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t10-vsll-vv-m4-n6/trace.json",
+          "t11-vsll-vv-m4-n12:T11_SELF_RAW_CHAIN:pair=start/end:delta=47:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n12/trace.json",
+          "t11-vsll-vv-m4-n2:T11_SELF_RAW_CHAIN:pair=start/end:delta=7:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n2/trace.json",
+          "t11-vsll-vv-m4-n4:T11_SELF_RAW_CHAIN:pair=start/end:delta=15:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n4/trace.json",
+          "t11-vsll-vv-m4-n6:T11_SELF_RAW_CHAIN:pair=start/end:delta=23:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n6/trace.json",
+          "t11-vsll-vv-m4-n8:T11_SELF_RAW_CHAIN:pair=start/end:delta=31:candidate_simulator:ProcResource @ results/r01/vsll_vv/experiments/t11-vsll-vv-m4-n8/trace.json"
+        ],
+        "field": "ProcResource",
+        "instruction_id": "vsll_vv",
+        "json_path": "$.rows[147]",
+        "lmul": "m4",
+        "reason": "T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe.",
+        "risk_id": "llvm_field_status:vsll_vv:m4:ProcResource:non_identifiable",
+        "source_status": "non_identifiable",
+        "status": "non_identifiable"
+      }
+    ],
+    "unresolved_total": 39
   },
   "gate": {
     "checks": {
@@ -1166,7 +1948,7 @@
       "marker_contract_valid": true,
       "no_unresolved_conflicts": true,
       "real_platform_field_status_present": true,
-      "required_llvm_field_status_clean_or_accepted": true,
+      "required_llvm_field_status_clean_or_accepted": false,
       "required_template_instruction_lmul_covered_by_real_gem5": true,
       "required_templates_covered_by_real_gem5": true,
       "stable_repeats_exist_for_required_groups": true
@@ -102995,7 +103777,7 @@
   "result_root": "results",
   "risk_acceptance": {
     "accepted_risk_ids": [],
-    "field_status_unresolved_risks_accepted": true
+    "field_status_unresolved_risks_accepted": false
   },
   "schema_version": 1,
   "trace_totals": {

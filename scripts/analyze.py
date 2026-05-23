@@ -44,6 +44,7 @@ FIELD_STATUS_FILENAME = "real_platform_field_status.json"
 BLOCKING_FIELD_STATUSES = {
     "conflict",
     "insufficient_evidence",
+    "non_identifiable",
     "missing",
     "unknown",
     "invalid",

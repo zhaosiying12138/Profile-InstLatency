@@ -53,6 +53,25 @@ UNKNOWN_CONFIDENCE_VALUES = {
     "conflict",
 }
 PASS_APPROVAL_VALUES = ("approved", "granted", "yes", "true", "pass")
+BLOCKING_FIELD_STATUSES = {
+    "conflict",
+    "insufficient_evidence",
+    "non_identifiable",
+    "missing",
+    "unknown",
+    "invalid",
+    "error",
+    "not_set",
+}
+ALL_RISKS_ACCEPTANCE_VALUES = {
+    "*",
+    "all",
+    "all_risks",
+    "all_unresolved",
+    "all_unresolved_risks",
+    "all_field_status_risks",
+    "all_real_platform_field_status_risks",
+}
 
 
 @dataclass(frozen=True)
@@ -552,6 +571,29 @@ def canonical_key(key: Any) -> str:
     return str(key).strip().lstrip("-").strip()
 
 
+def canonical_json_key(value: Any) -> str:
+    return str(value).strip().lower().replace("-", "_").replace(" ", "_")
+
+
+def normalize_field_status(value: Any) -> str:
+    if value is None:
+        return "missing"
+    text = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+    if not text:
+        return "missing"
+    if "conflict" in text:
+        return "conflict"
+    if text.startswith("insufficient") or "insufficient_evidence" in text or "not_enough" in text:
+        return "insufficient_evidence"
+    if "unknown" in text:
+        return "unknown"
+    return text
+
+
+def is_blocking_field_status(value: Any) -> bool:
+    return normalize_field_status(value) in BLOCKING_FIELD_STATUSES
+
+
 def get_any(data: dict[str, Any], names: set[str]) -> Any:
     for key, value in data.items():
         if canonical_key(key) in names:
@@ -570,6 +612,121 @@ def find_values_by_key(data: Any, names: set[str]) -> list[Any]:
         for value in data:
             values.extend(find_values_by_key(value, names))
     return values
+
+
+def values_from_json_key(data: Any, names: set[str]) -> list[Any]:
+    values: list[Any] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if canonical_json_key(key) in names:
+                values.append(value)
+            values.extend(values_from_json_key(value, names))
+    elif isinstance(data, list):
+        for value in data:
+            values.extend(values_from_json_key(value, names))
+    return values
+
+
+def risk_ids_from_value(value: Any) -> set[str]:
+    risk_ids: set[str] = set()
+    if isinstance(value, str):
+        if value.strip():
+            risk_ids.add(value.strip())
+    elif isinstance(value, list):
+        for item in value:
+            risk_ids.update(risk_ids_from_value(item))
+    elif isinstance(value, dict):
+        risk_id = get_any(value, {"risk_id", "id"})
+        if risk_id is not None and str(risk_id).strip():
+            risk_ids.add(str(risk_id).strip())
+        for nested in value.values():
+            if isinstance(nested, (dict, list)):
+                risk_ids.update(risk_ids_from_value(nested))
+    return risk_ids
+
+
+def accepted_risk_ids_from_document(data: dict[str, Any] | None) -> set[str]:
+    if not isinstance(data, dict):
+        return set()
+    accepted: set[str] = set()
+    for value in values_from_json_key(
+        data,
+        {
+            "accepted_risk_ids",
+            "accepted_risks",
+            "accepted_unresolved_risks",
+            "accepted_field_status_risks",
+            "field_status_accepted_risks",
+            "risk_acceptance",
+            "risk_acceptances",
+        },
+    ):
+        accepted.update(risk_ids_from_value(value))
+    return accepted
+
+
+def field_status_blocking_count(field_status: dict[str, Any]) -> int:
+    counts = field_status.get("status_counts")
+    if not isinstance(counts, dict):
+        return 0
+    total = 0
+    for status, count in counts.items():
+        if not is_blocking_field_status(status):
+            continue
+        parsed = int_or_none(count)
+        if parsed is not None:
+            total += parsed
+    return total
+
+
+def field_status_unresolved_records(field_status: dict[str, Any]) -> list[dict[str, Any]]:
+    unresolved = field_status.get("unresolved")
+    if isinstance(unresolved, list) and unresolved:
+        return [record for record in unresolved if isinstance(record, dict)]
+    rows = field_status.get("rows")
+    if isinstance(rows, list):
+        return [
+            record
+            for record in rows
+            if isinstance(record, dict) and is_blocking_field_status(record.get("status"))
+        ]
+    count_only_records: list[dict[str, Any]] = []
+    counts = field_status.get("status_counts")
+    if isinstance(counts, dict):
+        for status, count in counts.items():
+            if not is_blocking_field_status(status):
+                continue
+            parsed = int_or_none(count) or 0
+            if parsed:
+                count_only_records.append(
+                    {
+                        "risk_id": f"real_platform_field_status:{normalize_field_status(status)}",
+                        "status": normalize_field_status(status),
+                        "reason": f"status_counts reports {parsed} blocking field-status rows.",
+                    }
+                )
+    return count_only_records
+
+
+def field_status_risks_accepted(field_status: dict[str, Any], approval: dict[str, Any] | None) -> bool:
+    unresolved_records = field_status_unresolved_records(field_status)
+    unresolved_total = max(
+        int_or_none(field_status.get("unresolved_total")) or 0,
+        len(unresolved_records),
+        field_status_blocking_count(field_status),
+    )
+    if unresolved_total == 0:
+        return True
+    accepted = accepted_risk_ids_from_document(approval)
+    accepted_lower = {risk_id.lower() for risk_id in accepted}
+    if accepted_lower & ALL_RISKS_ACCEPTANCE_VALUES:
+        return True
+    required = {
+        str(record.get("risk_id")).strip()
+        for record in unresolved_records
+        if isinstance(record, dict) and str(record.get("risk_id", "")).strip()
+    }
+    return bool(required) and required <= accepted
 
 
 def approval_file(profile_root: Path) -> Path | None:
@@ -647,27 +804,26 @@ def human_approval_failures(
         if not any(str(value).strip() in accepted or Path(str(value).strip()).name == inventory_path.name for value in path_values):
             failures.append(f"{path}: approval inventory path does not match {inventory_path}")
 
-    hash_values = find_values_by_key(approval, {"inventory_sha256", "trace_inventory_sha256"})
-    if hash_values:
-        if not inventory_path.exists():
-            failures.append(f"{path}: approval records an inventory hash but {inventory_path} is missing")
-        else:
-            digest = sha256_file(inventory_path)
-            if not any(str(value).strip().lower() == digest for value in hash_values):
-                failures.append(f"{path}: approval inventory sha256 does not match {inventory_path}")
+    inventory_hash_values = find_values_by_key(approval, {"inventory_sha256"})
+    if not inventory_hash_values:
+        failures.append(f"{path}: approval must record current inventory_sha256")
+    elif not inventory_path.exists():
+        failures.append(f"{path}: approval records inventory_sha256 but {inventory_path} is missing")
+    else:
+        digest = sha256_file(inventory_path)
+        if not any(str(value).strip().lower() == digest for value in inventory_hash_values):
+            failures.append(f"{path}: approval inventory sha256 does not match {inventory_path}")
 
     field_status = inventory.get("field_status") if isinstance(inventory, dict) else None
-    if isinstance(field_status, dict) and field_status.get("sha256"):
-        field_hash_values = find_values_by_key(
-            approval,
-            {"field_status_sha256", "real_platform_field_status_sha256", "llvm_field_status_sha256"},
-        )
-        if field_hash_values:
-            expected_hash = str(field_status.get("sha256", "")).strip().lower()
-            if not any(str(value).strip().lower() == expected_hash for value in field_hash_values):
-                failures.append(f"{path}: approval field_status_sha256 does not match inventory field_status sha256")
-        elif field_status.get("unresolved_total"):
-            failures.append(f"{path}: approval does not record real_platform_field_status_sha256 for unresolved field risks")
+    field_hash_values = find_values_by_key(approval, {"real_platform_field_status_sha256"})
+    if not field_hash_values:
+        failures.append(f"{path}: approval must record real_platform_field_status_sha256")
+    elif not isinstance(field_status, dict) or not field_status.get("sha256"):
+        failures.append(f"{path}: approval records real_platform_field_status_sha256 but inventory has no field-status sha256")
+    else:
+        expected_hash = str(field_status.get("sha256", "")).strip().lower()
+        if not any(str(value).strip().lower() == expected_hash for value in field_hash_values):
+            failures.append(f"{path}: approval real_platform_field_status_sha256 does not match inventory field_status sha256")
 
     for value in find_values_by_key(approval, {"trace_count", "total_trace_count"}):
         expected = int_or_none(value)
@@ -685,6 +841,7 @@ def real_platform_field_status_failures(
     inventory_path: Path,
     inventory: dict[str, Any] | None,
     approval_valid: bool,
+    approval: dict[str, Any] | None,
 ) -> list[str]:
     if inventory is None:
         return [f"missing {inventory_path}; cannot verify real-platform LLVM field status"]
@@ -697,22 +854,32 @@ def real_platform_field_status_failures(
     if status in {"invalid", "no_records", "missing"}:
         detail = field_status.get("error") or status
         return [f"{inventory_path}: invalid real-platform field status artifact: {detail}"]
-    unresolved_total = int_or_none(field_status.get("unresolved_total")) or 0
-    accepted = bool(
-        inventory.get("risk_acceptance", {}).get("field_status_unresolved_risks_accepted")
-        if isinstance(inventory.get("risk_acceptance"), dict)
-        else False
+    unresolved_records = field_status_unresolved_records(field_status)
+    unresolved_total = max(
+        int_or_none(field_status.get("unresolved_total")) or 0,
+        len(unresolved_records),
+        field_status_blocking_count(field_status),
     )
+    accepted = field_status_risks_accepted(field_status, approval)
     if unresolved_total and not (approval_valid and accepted):
-        unresolved = field_status.get("unresolved")
         counts = Counter(
             str(record.get("status", "unknown"))
-            for record in unresolved
+            for record in unresolved_records
             if isinstance(record, dict)
-        ) if isinstance(unresolved, list) else field_status.get("status_counts")
+        )
+        if not counts and isinstance(field_status.get("status_counts"), dict):
+            counts = Counter(
+                {
+                    str(status): int_or_none(count) or 0
+                    for status, count in field_status["status_counts"].items()
+                    if is_blocking_field_status(status)
+                }
+            )
         suffix = ""
-        if isinstance(counts, dict) and counts:
+        if counts:
             suffix = " status_counts=" + json.dumps(counts, sort_keys=True)
+        if approval_valid and not accepted:
+            suffix += "; approval accepted risk scope is missing or incomplete"
         return [f"{inventory_path}: unresolved real-platform LLVM field-status risks={unresolved_total}{suffix}"]
     return []
 
@@ -953,7 +1120,7 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
         ]
         failures.extend(summarize_expected_missing("repeatability/stability", expected, missing_repeats))
 
-    failures.extend(real_platform_field_status_failures(inventory_path, inventory, approval_valid))
+    failures.extend(real_platform_field_status_failures(inventory_path, inventory, approval_valid, approval))
     failures.extend(marker_contract_failures(inventory_path, inventory))
     failures.extend(confidence_failures(inventory_path, inventory))
     failures.extend(conflict_status_failures(inventory_path, inventory))

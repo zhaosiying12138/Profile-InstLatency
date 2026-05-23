@@ -2,13 +2,14 @@
 
 Mode: real_platform_profile
 Gate status: NOT_READY
-Confidence: awaiting_human_approval
+Confidence: unresolved_llvm_field_status
 Human approval status: absent
 
 This report is generated from trace inventory. Synthetic calibration traces remain separate from real-platform observations and do not count toward the real gate.
 
 ## Approval Blockers
 
+- LLVM field-status unresolved risks: 39 (non_identifiable=39).
 - Explicit human approval artifact: absent or not approved.
 
 ## Trace Inventory
@@ -3639,8 +3640,9 @@ Unstable repeat groups: 0
 
 ## Confidence
 
-Computed confidence level: `awaiting_human_approval`.
+Computed confidence level: `unresolved_llvm_field_status`.
 Failed gate checks:
+- `required_llvm_field_status_clean_or_accepted`
 - `explicit_human_approval`
 
 ## LLVM Field Status
@@ -3648,7 +3650,7 @@ Failed gate checks:
 Field-status artifact: `results/common/real_platform_field_status.json`
 Artifact present: true
 Artifact sha256: `904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179`
-Field-status summary: `ready`
+Field-status summary: `blocked`
 Required LLVM-facing fields: `Latency`, `ReleaseAtCycles`, `ProcResource`, `NumMicroOps`, `SingleIssue`
 Status records: 150
 
@@ -3656,7 +3658,50 @@ Status records: 150
 | --- | ---: |
 | `inferred` | 111 |
 | `non_identifiable` | 39 |
-No unresolved field-status risks.
+
+Unresolved field-status risks:
+
+| Risk ID | Instruction | LMUL | Field | Status | Reason |
+| --- | --- | --- | --- | --- | --- |
+| `llvm_field_status:vadd_vv:m1:ProcResource:non_identifiable` | `vadd_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vadd_vv:m2:ProcResource:non_identifiable` | `vadd_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vadd_vv:m4:ProcResource:non_identifiable` | `vadd_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vcpop_m:m1:Latency:non_identifiable` | `vcpop_m` | `m1` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 1); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:vcpop_m:m1:ProcResource:non_identifiable` | `vcpop_m` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vcpop_m:m2:Latency:non_identifiable` | `vcpop_m` | `m2` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 2); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:vcpop_m:m2:ProcResource:non_identifiable` | `vcpop_m` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vcpop_m:m4:Latency:non_identifiable` | `vcpop_m` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:vcpop_m:m4:ReleaseAtCycles:non_identifiable` | `vcpop_m` | `m4` | `ReleaseAtCycles` | `non_identifiable` | The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect. |
+| `llvm_field_status:vcpop_m:m4:ProcResource:non_identifiable` | `vcpop_m` | `m4` | `ProcResource` | `non_identifiable` | The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect. |
+| `llvm_field_status:vcpop_m:m4:NumMicroOps:non_identifiable` | `vcpop_m` | `m4` | `NumMicroOps` | `non_identifiable` | The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect. |
+| `llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable` | `vcpop_m` | `m4` | `SingleIssue` | `non_identifiable` | The real-platform stream observations are not affine under the LLVM-facing startup+(N-1)*ReleaseAtCycles model. The profiler records the evidence but does not claim this field without a follow-up model for the extra platform effect. |
+| `llvm_field_status:vdivu_vv:m1:ProcResource:non_identifiable` | `vdivu_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vdivu_vv:m2:ProcResource:non_identifiable` | `vdivu_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vdivu_vv:m4:ProcResource:non_identifiable` | `vdivu_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:viota_m:m1:ProcResource:non_identifiable` | `viota_m` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:viota_m:m2:ProcResource:non_identifiable` | `viota_m` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:viota_m:m4:Latency:non_identifiable` | `viota_m` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:viota_m:m4:ProcResource:non_identifiable` | `viota_m` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmseq_vv:m1:ProcResource:non_identifiable` | `vmseq_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmseq_vv:m2:ProcResource:non_identifiable` | `vmseq_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmseq_vv:m4:ProcResource:non_identifiable` | `vmseq_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmul_vv:m1:ProcResource:non_identifiable` | `vmul_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmul_vv:m2:ProcResource:non_identifiable` | `vmul_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vmul_vv:m4:ProcResource:non_identifiable` | `vmul_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vredsum_vs:m1:ProcResource:non_identifiable` | `vredsum_vs` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vredsum_vs:m2:ProcResource:non_identifiable` | `vredsum_vs` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vredsum_vs:m4:ProcResource:non_identifiable` | `vredsum_vs` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vrgather_vv:m1:ProcResource:non_identifiable` | `vrgather_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vrgather_vv:m2:ProcResource:non_identifiable` | `vrgather_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vrgather_vv:m4:Latency:non_identifiable` | `vrgather_vv` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:vrgather_vv:m4:ProcResource:non_identifiable` | `vrgather_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vslideup_vx:m1:ProcResource:non_identifiable` | `vslideup_vx` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vslideup_vx:m2:ProcResource:non_identifiable` | `vslideup_vx` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vslideup_vx:m4:Latency:non_identifiable` | `vslideup_vx` | `m4` | `Latency` | `non_identifiable` | T12 consumer-gap observations provide only a conservative upper bound for Latency (Latency <= 4); the shared simulator filters candidate tuples with that bound but does not render a fake exact value. |
+| `llvm_field_status:vslideup_vx:m4:ProcResource:non_identifiable` | `vslideup_vx` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vsll_vv:m1:ProcResource:non_identifiable` | `vsll_vv` | `m1` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vsll_vv:m2:ProcResource:non_identifiable` | `vsll_vv` | `m2` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
+| `llvm_field_status:vsll_vv:m4:ProcResource:non_identifiable` | `vsll_vv` | `m4` | `ProcResource` | `non_identifiable` | T20 pair timing is checked as startup-free slope groups, but the available pair groups are underdetermined or contradictory for an exact ProcResource claim without overclaiming a pipe. |
 
 ## Marker Contract
 
