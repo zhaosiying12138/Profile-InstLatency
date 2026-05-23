@@ -1,5 +1,5 @@
 schema_version: 1
-round: 5
+round: 6
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,11 +12,13 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 5
+  round: 6
   status: in_progress
   owner_scope: results/common/agentic_flow/**
-  code_and_generated_result_fixes_owned_by_other_worker: true
-  observed_other_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
+  task: complete_missing_round5_code_worker_capture_package
+  code_and_generated_result_fixes_owned_by_round5_worker: true
+  round5_code_worker_commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
+  round5_code_worker_review_status: accepted_for_candidate_simulator_scope
   forbidden_paths:
     - scripts/search_model.py
     - tests/test_search_model_candidate_sim.py
@@ -27,10 +29,10 @@ current_boundary:
     - results/*/profile.real_platform.yaml
     - .humanize/rlcr/**
 phase_status:
-  phase_7_analyzer_and_search: round5_other_worker_commit_targets_peer_t20_and_short_t12_guard_pending_review
+  phase_7_analyzer_and_search: round5_code_worker_review_accepted_peer_t20_and_short_t12_guard
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round5_boundary_refreshed_for_rounds_2_4_without_completion_claim
+  humanize2_capture: round5_code_worker_package_added_by_round6_without_ac16_completion_claim
 real_platform_evidence:
   checked_in_r01_r02_trace_files: 7190
   required_real_gem5_groups: 178
@@ -71,7 +73,6 @@ approval_boundary:
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   note: Do not create approval artifacts without explicit user approval tied to current risk IDs and hashes.
 remaining_blockers:
-  - T20 peer-side constraints were targeted by other-worker commit 773f27d6 and remain pending review.
-  - T12 short-sweep exactness guard was targeted by other-worker commit 773f27d6 and remains pending review.
   - 39 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
+  - Approval validation still needs hardening before AC-16 can accept the 39 non-identifiable rows.
   - AC-16 remains blocked by missing explicit human approval.

@@ -27,9 +27,10 @@ full_timing_gate:
   status: not_ready
   reason: explicit machine-readable human approval is absent and 39 LLVM-facing rows remain non-identifiable
   approval_artifact_exists: false
-round5_other_worker_commit:
+round5_code_worker_commit:
   commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   targets:
     - peer-side T20 constraints
     - T12 short-sweep exactness guard
-  capture_review_status: pending
+  review_status: accepted_for_candidate_simulator_scope
+  capture_package: artifacts/worker_outputs/worker-r5-code.md

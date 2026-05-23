@@ -10,9 +10,9 @@ Owner scope: `results/common/agentic_flow/**`
   from stale Round 1/T01-only state to Round 5 boundary state.
 - Add prompt, worker-output, verification, and tool-call artifacts for this
   capture refresh.
-- Preserve conservative claims: Round 5 is in progress, code fixes are owned by
-  another worker and observed at commit `773f27d6`, the real-platform gate is
-  fail-closed, and no approval artifact exists.
+- Preserve conservative claims at the Round 5 capture-refresh boundary: code
+  fixes are owned by another worker and observed at commit `773f27d6`, the
+  real-platform gate is fail-closed, and no approval artifact exists.
 
 ## Constraints
 

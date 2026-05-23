@@ -33,8 +33,10 @@ Status: validated locally
 ## Remaining Items
 
 - T20 peer-side constraints and the T12 short-sweep exactness guard were
-  targeted by other-worker commit `773f27d6`; this capture records that boundary
-  but does not review or complete that code work.
+  targeted by other-worker commit `773f27d6`; this Round 5 capture recorded
+  that boundary before the later review outcome. The normalized code-worker
+  package in `worker-r5-code.md` now records the accepted candidate-simulator
+  scope.
 - AC-16 remains blocked by the explicit approval boundary.
 - This worker did not edit `.humanize/rlcr/**`, so the RLCR `round-5-summary.md`
   placeholder remains intentionally untouched.

@@ -52,8 +52,9 @@ round4_candidate_simulator:
   t20_subject_side_checks: true
   t12_clean_prefix_constraints: true
   t12_upper_bound_rows_rendered_non_identifiable: true
-round5_other_worker_commit:
+round5_code_worker_commit:
   commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
   t20_peer_side_constraints_targeted: true
   t12_short_sweep_guard_targeted: true
-  capture_review_status: pending
+  review_status: accepted_for_candidate_simulator_scope
+  capture_package: artifacts/worker_outputs/worker-r5-code.md

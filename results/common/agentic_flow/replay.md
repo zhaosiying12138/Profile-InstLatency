@@ -1,10 +1,10 @@
 # Humanize2 Replay Notes
 
-Status: Round 5 boundary capture for Rounds 2-4 plus the current Round 5
-agentic-flow refresh task. This capture is intentionally not a completion
-claim: code and generated real-platform result fixes are owned by another Round
-5 worker, current `main` includes that worker's commit `773f27d6`, and no
-human approval artifact exists.
+Status: Round 6 capture package for the Round 5 candidate-simulator code
+worker, preserving the Rounds 2-4 lineage and Round 5 review outcome. This is
+intentionally not a completion claim: Round 5 review accepted commit
+`773f27d6` for the candidate-simulator scope, but the real-platform gate still
+lacks explicit machine-readable human approval.
 
 ## Checkout
 
@@ -48,11 +48,14 @@ Important files for replay:
 - `round-4-summary.md` and `round-4-review-result.md`: added subject-side T20
   pair checks and T12 clean-prefix constraints, regenerated real-platform
   artifacts, and reopened AC-12/AC-13 because this capture tree was stale.
-- `round-5-prompt.md`: current boundary. It identifies the Round 4 blockers:
+- `round-5-prompt.md`: Round 5 boundary. It identifies the Round 4 blockers:
   peer-side T20 constraints, T12 short-sweep exactness guard, stale
-  Humanize2/agentic-flow capture, and missing explicit approval. The code
-  worker's current `main` commit `773f27d6` targets the peer-side T20 and T12
-  guard items, but this capture does not claim review completion.
+  Humanize2/agentic-flow capture, and missing explicit approval.
+- `round-5-summary.md`: records candidate-simulator Worker Anscombe at commit
+  `773f27d6` and capture Worker Kepler at commit `cfd9a788`.
+- `round-5-review-result.md`: accepts the candidate-simulator fixes from
+  `773f27d6`, finds the Round 5 code-worker capture package missing, and keeps
+  AC-16 blocked by absent explicit approval plus approval-validation risk.
 
 Do not edit `.humanize/rlcr/**` from worker tasks. This replay records where
 those files are read, not a modification of RLCR state.
@@ -96,6 +99,68 @@ Current source-backed counts:
 - `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
   `Confidence: awaiting_human_approval`, and `Human approval status: absent`.
 - `find results/common -maxdepth 1 -iname '*approval*' -print` is empty.
+
+## Round 5 Code Worker Capture Package
+
+Worker Anscombe's original prompt transcript was not checked in. The replay
+therefore uses normalized reconstructed artifacts, explicitly labeled as such:
+
+- Prompt: `artifacts/prompts/round-5-code-worker-candidate-simulator.md`
+- Contract: `artifacts/worker_contracts/worker-r5-code.md`
+- Output: `artifacts/worker_outputs/worker-r5-code.md`
+- Verification: `artifacts/verification/worker-r5-code.md`
+- Tool calls: `artifacts/tool_calls/worker-r5-code-normalized.json`
+
+Allowed write scope reconstructed from commit `773f27d6`:
+
+- `scripts/search_model.py`
+- `tests/test_search_model_candidate_sim.py`
+- `results/common/search_model_real_platform.json`
+- `results/common/search_model_real_platform_summary.md`
+- `results/common/real_platform_field_status.json`
+- `results/common/real_platform_inventory.json`
+- `results/common/experiment_quality.md`
+- `results/vredsum_vs/profile.real_platform.yaml`
+
+Success criteria reconstructed from Round 5 review:
+
+- Peer-side T20 observations constrain rows that only appear as
+  `pair_instruction_id`.
+- `vredsum_vs` receives peer-side T20 groups in the regenerated real-platform
+  search artifact.
+- T12 clean-prefix exact latency requires trailing no-stall residual plateau
+  coverage.
+- Short K0/K1 T12 sweeps remain `non_identifiable`.
+- Unit tests and review regeneration checks pass.
+- Synthetic gate passes.
+- Real-platform gate fails closed until explicit approval exists.
+
+State-changing commands captured for replay:
+
+```bash
+python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output results/common/search_model_real_platform.json --format json
+python3 scripts/analyze.py --all --root results
+```
+
+Verification commands captured for replay:
+
+```bash
+python3 -m unittest tests.test_search_model_candidate_sim
+python3 -m pytest -q
+python3 -m py_compile scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/gen_asm.py scripts/run_experiment.py scripts/run_suite.py
+python3 -m json.tool results/common/search_model_real_platform.json >/dev/null
+python3 -m json.tool results/common/real_platform_field_status.json >/dev/null
+python3 -m json.tool results/common/real_platform_inventory.json >/dev/null
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+find results/common -maxdepth 1 -iname '*approval*' -print
+sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md
+git diff --check
+```
+
+The real-platform gate command is expected to return nonzero until a current,
+machine-readable human approval artifact exists and the quality report says
+`Gate status: PASS`.
 
 ## Replay Commands
 
@@ -209,15 +274,17 @@ AC-13 because this capture tree still described Round 1/T01-only state.
 
 ### Round 5 Boundary
 
-This worker owns only `results/common/agentic_flow/**`. Another worker owns
-`scripts/search_model.py`, `tests/test_search_model_candidate_sim.py`,
-generated real-platform outputs, common real-platform JSON/Markdown artifacts,
-and `results/*/profile.real_platform.yaml`. Current `main` includes that
-worker's commit `773f27d6`, which targets peer-side T20 mirroring and the T12
-short-sweep guard. This capture refresh records the current control flow and
-replay commands but does not claim those code changes are reviewed complete,
-does not resolve the 39 non-identifiable rows by approval, and does not cross
-the explicit approval boundary.
+Worker Anscombe owned `scripts/search_model.py`,
+`tests/test_search_model_candidate_sim.py`, generated real-platform outputs,
+common real-platform JSON/Markdown artifacts, and
+`results/vredsum_vs/profile.real_platform.yaml`. Current `main` includes that
+worker's commit `773f27d6`; Round 5 review accepted the candidate-simulator
+fixes for peer-side T20 mirroring and the T12 short-sweep guard.
+
+This Round 6 capture package owns only `results/common/agentic_flow/**`. It
+records the missing Round 5 code-worker control flow and replay commands, does
+not resolve the 39 non-identifiable rows by approval, and does not cross the
+explicit approval boundary.
 
 ## Humanize2 Hub Path
 

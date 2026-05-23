@@ -1,5 +1,5 @@
 schema_version: 1
-status: real_platform_artifacts_round5_boundary_refreshed_gate_not_ready
+status: real_platform_artifacts_round5_code_worker_capture_added_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -9,8 +9,8 @@ analysis_inputs:
 parameter_search:
   implemented: true
   formula: startup_plus_slope_candidate_tuple
-  t20_state: peer_side_constraints_targeted_by_other_worker_commit_773f27d6_pending_review
-  t12_state: short_sweep_guard_targeted_by_other_worker_commit_773f27d6_pending_review
+  t20_state: peer_side_constraints_review_accepted_commit_773f27d6
+  t12_state: short_sweep_guard_review_accepted_commit_773f27d6
   confidence_policy: no unsupported certainty
 current_real_platform_outputs:
   search_model: results/common/search_model_real_platform.json

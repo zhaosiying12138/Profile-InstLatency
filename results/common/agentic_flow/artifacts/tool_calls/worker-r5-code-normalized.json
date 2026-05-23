@@ -1,0 +1,175 @@
+{
+  "id": "tool-worker-r5-code-normalized",
+  "round": 5,
+  "worker": "Anscombe",
+  "primitive": "h2-agent",
+  "tool_surface": "shell",
+  "capture_type": "normalized_reconstruction",
+  "source_commit": "773f27d67e8306ec8fbafc434dcd158953e71e95",
+  "sources": [
+    ".humanize/rlcr/2026-05-23_01-15-03/round-5-summary.md",
+    ".humanize/rlcr/2026-05-23_01-15-03/round-5-review-result.md",
+    "git show --format=fuller --name-only 773f27d6"
+  ],
+  "cwd": "/home/zhaosiying/codebase/compiler/profile_inst_latency",
+  "state_changes": [
+    {
+      "kind": "code_edit",
+      "summary": "Mirror T20 pair observations into existing peer rows and preserve pair keying for peer-side candidate checks.",
+      "paths": [
+        "scripts/search_model.py"
+      ]
+    },
+    {
+      "kind": "code_edit",
+      "summary": "Require a trailing no-stall residual plateau before T12 clean-prefix observations can render exact latency.",
+      "paths": [
+        "scripts/search_model.py"
+      ]
+    },
+    {
+      "kind": "test_edit",
+      "summary": "Add focused regression tests for peer-only T20 constraints and K0/K1 T12 short-sweep overclaim prevention.",
+      "paths": [
+        "tests/test_search_model_candidate_sim.py"
+      ]
+    },
+    {
+      "kind": "artifact_regeneration",
+      "summary": "Regenerate real-platform search, field-status, inventory, quality, summary, and affected sidecar artifacts.",
+      "paths": [
+        "results/common/search_model_real_platform.json",
+        "results/common/search_model_real_platform_summary.md",
+        "results/common/real_platform_field_status.json",
+        "results/common/real_platform_inventory.json",
+        "results/common/experiment_quality.md",
+        "results/vredsum_vs/profile.real_platform.yaml"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "worker-r5-code-unit-tests",
+      "category": "tests",
+      "command": "python3 -m unittest tests.test_search_model_candidate_sim",
+      "exit_code": 0,
+      "reported_result": "passed, 10 tests"
+    },
+    {
+      "id": "worker-r5-code-pytest",
+      "category": "tests",
+      "command": "python3 -m pytest -q",
+      "exit_code": 0,
+      "reported_result": "passed, 10 tests in Round 5 review"
+    },
+    {
+      "id": "worker-r5-code-pycompile",
+      "category": "verification",
+      "command": "python3 -m py_compile scripts/search_model.py scripts/check_calibration_gate.py scripts/analyze.py scripts/gen_asm.py scripts/run_experiment.py scripts/run_suite.py",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r5-code-real-search-regeneration",
+      "category": "artifact_regeneration",
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output results/common/search_model_real_platform.json --format json",
+      "exit_code": 0,
+      "outputs": [
+        "results/common/search_model_real_platform.json"
+      ],
+      "reported_result": "completed"
+    },
+    {
+      "id": "worker-r5-code-real-analyze",
+      "category": "artifact_regeneration",
+      "command": "python3 scripts/analyze.py --all --root results",
+      "exit_code": 0,
+      "outputs": [
+        "results/common/real_platform_field_status.json",
+        "results/common/real_platform_inventory.json",
+        "results/common/experiment_quality.md",
+        "results/common/search_model_real_platform_summary.md",
+        "results/vredsum_vs/profile.real_platform.yaml"
+      ],
+      "reported_result": "completed"
+    },
+    {
+      "id": "worker-r5-code-search-json-parse",
+      "category": "json",
+      "command": "python3 -m json.tool results/common/search_model_real_platform.json >/dev/null",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r5-code-field-json-parse",
+      "category": "json",
+      "command": "python3 -m json.tool results/common/real_platform_field_status.json >/dev/null",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r5-code-inventory-json-parse",
+      "category": "json",
+      "command": "python3 -m json.tool results/common/real_platform_inventory.json >/dev/null",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r5-code-synthetic-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+      "exit_code": 0,
+      "reported_result": "passed"
+    },
+    {
+      "id": "worker-r5-code-real-gate",
+      "category": "gate",
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "exit_code": 1,
+      "expected_failure": true,
+      "reported_result": "failed closed because Gate status PASS and machine-readable approval are absent"
+    },
+    {
+      "id": "worker-r5-code-approval-search",
+      "category": "approval_boundary",
+      "command": "find results/common -maxdepth 1 -iname '*approval*' -print",
+      "exit_code": 0,
+      "reported_result": "empty"
+    },
+    {
+      "id": "worker-r5-code-hashes",
+      "category": "hash",
+      "command": "sha256sum results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md",
+      "exit_code": 0,
+      "reported_hashes": {
+        "results/common/real_platform_inventory.json": "d29e632b98c0a5734d541939c561872eeed691fd3c00b7ea83cf8aea666a536d",
+        "results/common/real_platform_field_status.json": "904cca46aff4a923bc230d069230e15eb164af043f020dab33e5546f18560179",
+        "results/common/search_model_real_platform.json": "d31ef8902821f272d8432f24f1e7f76da90261fdd3f47c56dfe60f0a3048bc73",
+        "results/common/experiment_quality.md": "6062c76f6f051eac6c60b0ead3be0e8ac74bc3f723841a0ec19d0d7a750e7307"
+      }
+    },
+    {
+      "id": "worker-r5-code-review-regeneration-cmp",
+      "category": "review_verification",
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r5-review-search.json --format json && cmp /tmp/profile-inst-latency-r5-review-search.json results/common/search_model_real_platform.json",
+      "exit_code": 0,
+      "reported_result": "review reproduced byte-for-byte regenerated search JSON"
+    },
+    {
+      "id": "worker-r5-code-diff-check",
+      "category": "whitespace",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "reported_result": "passed"
+    }
+  ],
+  "outputs": [
+    "results/common/agentic_flow/artifacts/prompts/round-5-code-worker-candidate-simulator.md",
+    "results/common/agentic_flow/artifacts/worker_contracts/worker-r5-code.md",
+    "results/common/agentic_flow/artifacts/worker_outputs/worker-r5-code.md",
+    "results/common/agentic_flow/artifacts/verification/worker-r5-code.md",
+    "results/common/agentic_flow/artifacts/tool_calls/worker-r5-code-normalized.json"
+  ],
+  "approval_artifact_created": false,
+  "status": "captured_after_review"
+}

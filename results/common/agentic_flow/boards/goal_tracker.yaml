@@ -1,13 +1,13 @@
 schema_version: 1
-round: 5
+round: 6
 source_plan: docs/plan.md
 rlcr_goal_tracker: .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
 ultimate_goal: profile selected non-memory RVV instruction timing and preserve LLVM schedule-model evidence
 lesson_ids: NONE
 acceptance_focus:
-  - AC-9 was the code-owning worker's scope for peer-side T20 constraints and the T12 short-sweep guard; current main has commit 773f27d6, pending review.
-  - AC-12 is addressed here by refreshing Humanize2-style boards, events, replay, cartridge, and worker artifacts.
-  - AC-13 is addressed here by adding empty-context replay commands and Round 2-5 lineage.
+  - AC-9 candidate-simulator scope was accepted by Round 5 review for peer-side T20 constraints and the T12 short-sweep guard in commit 773f27d6.
+  - AC-12 is addressed here by adding the missing normalized Round 5 code-worker prompt, contract, output, verification, tool-call JSON, boards, events, replay, cartridge, and worker artifacts.
+  - AC-13 is addressed here by making empty-context replay reconstruct the Round 5 code-worker scope, state-changing commands, regenerated artifacts, verification evidence, hashes, and approval boundary.
   - AC-16 remains not met until explicit machine-readable human approval exists or all non-identifiable risks are resolved.
 worker_split:
   A: LLVM read-only extractor and mapping docs
@@ -21,16 +21,17 @@ worker_split:
   G3-A: Round 3 T20 pair-count generation and vcpop_m diagnostics
   G3-C: Round 3 search-model evidence routing
   Godel: Round 4 T20/T12 candidate-simulator fixes
-  Round5Capture: Round 5 agentic-flow capture refresh only
-active_worker: Round5Capture
-status: round5_in_progress_real_platform_gate_fail_closed_capture_refreshed
+  Anscombe: Round 5 candidate-simulator peer T20 and short T12 exactness fixes
+  Kepler: Round 5 agentic-flow capture refresh
+active_worker: Round6CodeCapturePackage
+status: round6_capture_package_added_real_platform_gate_fail_closed
 round_status:
   round_2: shared_candidate_search_introduced_but_t20_t12_and_approval_blocked
   round_3: expanded_real_t20_coverage_and_regenerated_artifacts_but_t20_t12_modeling_blocked
   round_4: subject_t20_and_t12_constraints_added_artifacts_refreshed_capture_stale
-  round_5: capture_refresh_in_progress_code_fixes_committed_elsewhere_pending_review
+  round_5: code_worker_candidate_simulator_scope_accepted_capture_gap_found_approval_blocked
+  round_6: missing_round5_code_worker_capture_package_added_approval_boundary_preserved
 remaining_open_items:
-  - Review other-worker commit 773f27d6 for T20 peer-side candidate constraints.
-  - Review other-worker commit 773f27d6 for the T12 short-sweep exactness guard.
+  - Harden approval validation for the 39 non-identifiable real-platform rows.
   - Explicit human approval boundary for real-platform gate.
   - 39 non-identifiable real-platform field rows.

@@ -1,7 +1,8 @@
 # Humanize2 Manifest Notes
 
-Status: Round 5 boundary capture after Round 4 real-platform artifact refresh
-and current `main` commit `773f27d6`.
+Status: Round 6 capture package for the Round 5 candidate-simulator worker,
+after Round 4 real-platform artifact refresh and current `main` commit
+`773f27d6`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -33,10 +34,13 @@ Current gate state:
 Round 5 ownership:
 
 - This worker owns only `results/common/agentic_flow/**`.
-- Another worker owns `scripts/search_model.py`,
+- Worker Anscombe owned `scripts/search_model.py`,
   `tests/test_search_model_candidate_sim.py`, generated real-platform outputs,
   common real-platform JSON/Markdown artifacts, and
   `results/*/profile.real_platform.yaml`; current `main` commit `773f27d6`
   is that worker's code/result change.
+- Round 5 review accepted the candidate-simulator scope for peer-side T20 and
+  short T12 exactness, but requested this missing code-worker capture package
+  plus separate AC-16 approval hardening.
 - `.humanize/rlcr/**` is read-only for this worker; replay points there for
   prompt/result history.

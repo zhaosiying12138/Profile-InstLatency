@@ -1,7 +1,7 @@
 <h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.5.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
-    <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1"></h2-capability>
+    <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1"></h2-capability>
     <h2-capability name="script" allow="check_env,gen_asm,run_killcheck,run_suite,analyze,search_model,check_calibration_gate,prepare_llvm_yushuxin_worktree"></h2-capability>
     <h2-capability name="human-input"></h2-capability>
     <h2-capability name="view"></h2-capability>
@@ -18,6 +18,9 @@
   </h2-template>
   <h2-template id="round-5-capture-refresh" type="prompt" href="../artifacts/prompts/round-5-capture-refresh.md">
     Refresh only results/common/agentic_flow artifacts for Rounds 2-4 and the current Round 5 boundary. Do not touch code, generated real-platform outputs, or .humanize/rlcr state.
+  </h2-template>
+  <h2-template id="round-5-code-worker-candidate-simulator" type="prompt" href="../artifacts/prompts/round-5-code-worker-candidate-simulator.md">
+    Normalized reconstruction of Worker Anscombe's Round 5 candidate-simulator scope for peer-side T20 constraints, short T12 exactness, artifact regeneration, and fail-closed approval handling.
   </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
@@ -55,7 +58,16 @@
         <h2-command>python3 -m json.tool results/common/real_platform_inventory.json >/dev/null</h2-command>
       </h2-check>
     </h2-loop>
+    <h2-agent id="round5-code-worker-candidate-simulator" role="worker" tool="codex" prompt="#round-5-code-worker-candidate-simulator" short-name="candidate-sim" timeout="unknown">
+      <h2-current-status>reviewed-accepted-for-candidate-simulator-scope</h2-current-status>
+      <h2-commit>773f27d67e8306ec8fbafc434dcd158953e71e95</h2-commit>
+      <h2-expect artifact="round-5-code-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-5-code-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-5-code-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-5-code-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+    </h2-agent>
     <h2-agent id="round5-capture-refresh" role="worker" tool="codex" prompt="#round-5-capture-refresh" short-name="agentic-flow-refresh" timeout="30m">
+      <h2-current-status>superseded-by-round6-code-worker-capture-package</h2-current-status>
       <h2-expect artifact="round-5-capture-output" schema="rvv.workerOutput.v1"></h2-expect>
       <h2-expect artifact="round-5-capture-verification" schema="rvv.verification.v1"></h2-expect>
     </h2-agent>

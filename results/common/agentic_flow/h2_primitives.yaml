@@ -2,7 +2,7 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 5
+  round: 6
   status: in_progress
 manifest:
   capabilities:
@@ -36,6 +36,9 @@ templates:
   - id: round-5-capture-refresh
     primitive: h2-template
     path: artifacts/prompts/round-5-capture-refresh.md
+  - id: round-5-code-worker-candidate-simulator
+    primitive: h2-template
+    path: artifacts/prompts/round-5-code-worker-candidate-simulator.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -185,6 +188,22 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
     path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-5-prompt.md
+  - id: round-5-code-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r5-code.md
+  - id: round-5-code-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r5-code.md
+  - id: round-5-code-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r5-code.md
+  - id: round-5-code-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r5-code-normalized.json
   - id: round-5-capture-contract
     primitive: h2-artifact
     schema: rvv.workerContract.v1
@@ -223,6 +242,11 @@ events:
   - type: real_platform.gate.fail_closed
   - type: approval.artifact.absent
   - type: round5.boundary.recorded
+  - type: round5.code_worker.dispatched
+  - type: round5.code_worker.completed
+  - type: round5.code_worker.artifacts.regenerated
+  - type: round5.code_worker.verification.captured
+  - type: round5.review.outcome.captured
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -245,17 +269,23 @@ flow_nodes:
     primitive: h2-human
     mode: real_platform_profile
     current_status: fail_closed_awaiting_approval
-  - id: round5-other-worker-code-fix
-    primitive: h2-transform
-    owner: other_worker
+  - id: round5-code-worker-candidate-simulator
+    primitive: h2-agent
+    worker: Anscombe
     commit: 773f27d67e8306ec8fbafc434dcd158953e71e95
     uses: [search_model, analyze]
-    status: observed_pending_review
+    prompt: artifacts/prompts/round-5-code-worker-candidate-simulator.md
+    artifacts:
+      contract: artifacts/worker_contracts/worker-r5-code.md
+      output: artifacts/worker_outputs/worker-r5-code.md
+      verification: artifacts/verification/worker-r5-code.md
+      tool_call: artifacts/tool_calls/worker-r5-code-normalized.json
+    status: reviewed_accepted_for_candidate_simulator_scope
   - id: round5-capture-refresh
     primitive: h2-agent
-    worker: Round5Capture
+    worker: Kepler
     owned_write_set: results/common/agentic_flow/**
-    status: in_progress
+    status: superseded_by_round6_code_worker_capture_package
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
