@@ -142,6 +142,55 @@ class ReviewPhaseRound30Test(unittest.TestCase):
         self.assertNotIn("real gem5 coverage", joined)
         self.assertIn("repeatability/stability", joined)
 
+    def test_real_gate_repeatability_does_not_depend_on_first_manifest_experiment(self):
+        with tempfile.TemporaryDirectory() as tempdir:
+            root = Path(tempdir) / "focused"
+            root.mkdir()
+            (root / "suite_manifest.yaml").write_text(
+                "\n".join(
+                    [
+                        "schema_version: 1",
+                        "experiments:",
+                        "  -",
+                        "    id: t12-vadd-vv-m1-k2-vadd-vv",
+                        "    template_id: T12_CONSUMER_RAW_GAP",
+                        "    result_group: vadd_vv",
+                        "    instruction_id: vadd_vv",
+                        "    lmul: m1",
+                        "  -",
+                        "    id: t12-vadd-vv-m1-k4-vadd-vv",
+                        "    template_id: T12_CONSUMER_RAW_GAP",
+                        "    result_group: vadd_vv",
+                        "    instruction_id: vadd_vv",
+                        "    lmul: m1",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            write_real_trace(root, "k2-once", "t12-vadd-vv-m1-k2-vadd-vv")
+            write_real_trace(root, "k4-repeat-a", "t12-vadd-vv-m1-k4-vadd-vv")
+            write_real_trace(root, "k4-repeat-b", "t12-vadd-vv-m1-k4-vadd-vv")
+
+            with (
+                mock.patch.object(gate, "load_inventory", return_value=(root / "common" / "real_platform_inventory.json", {}, [])),
+                mock.patch.object(gate, "human_approval_failures", return_value=(True, [], {"status": "approved"})),
+                mock.patch.object(gate, "real_platform_field_status_failures", return_value=[]),
+                mock.patch.object(gate, "marker_contract_failures", return_value=[]),
+                mock.patch.object(gate, "confidence_failures", return_value=[]),
+                mock.patch.object(gate, "conflict_status_failures", return_value=[]),
+                mock.patch.object(gate, "has_documented_assumptions", return_value=True),
+            ):
+                failures = gate.real_platform_failures(
+                    "Mode: real_platform_profile\nGate status: PASS\n## Assumptions\nGrouped coverage.",
+                    root,
+                )
+
+        joined = "\n".join(failures)
+        self.assertNotIn("real gem5 coverage", joined)
+        self.assertNotIn("repeatability/stability", joined)
+        self.assertEqual(failures, [])
+
     def test_default_vector_filler_does_not_emit_fixed_cadence_metadata(self):
         args = gen_asm.build_parser().parse_args(
             [
