@@ -17,7 +17,14 @@ from dataclasses import dataclass
 import hashlib
 import json
 from pathlib import Path
+import sys
 from typing import Any
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from approval_status import top_level_approval_decision
 
 
 LMUL_ORDER = ("m1", "m2", "m4")
@@ -614,12 +621,6 @@ def find_values_by_key(data: Any, names: set[str]) -> list[Any]:
     return values
 
 
-def top_level_values_by_key(data: Any, names: set[str]) -> list[Any]:
-    if not isinstance(data, dict):
-        return []
-    return [value for key, value in data.items() if canonical_json_key(key) in names]
-
-
 def values_from_json_key(data: Any, names: set[str]) -> list[Any]:
     values: list[Any] = []
     if isinstance(data, dict):
@@ -776,10 +777,8 @@ def human_approval_failures(
     if approval is None:
         return False, failures, None
 
-    status_values = top_level_values_by_key(
-        approval, {"approved", "status", "approval_status", "human_approval"}
-    )
-    approved = bool(status_values) and all(truthy_status(value) for value in status_values)
+    approval_decision = top_level_approval_decision(approval)
+    approved = bool(approval_decision["approved"])
     if not approved:
         failures.append(f"{path}: approval status is not approved/granted/pass")
 

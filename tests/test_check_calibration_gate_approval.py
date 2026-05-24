@@ -263,6 +263,29 @@ class ApprovalGateHardeningTest(unittest.TestCase):
         self.assertTrue(discovered["approved"])
         self.assertEqual(["all"], discovered["accepted_risk_ids"])
 
+    def test_human_approved_top_level_status_has_analyzer_gate_parity(self):
+        profile_root, common, inventory_path, inventory, inventory_sha, field_sha = self.make_profile_root()
+        write_json(
+            common / "human_approval.json",
+            {
+                "human_approved": True,
+                "approved_by": "unit-test-human",
+                "inventory_sha256": inventory_sha,
+                "real_platform_field_status_sha256": field_sha,
+                "accepted_risk_ids": ["all"],
+            },
+        )
+
+        approval_valid, approval_failures, approval = self.approval_check(profile_root, inventory_path, inventory)
+        field_failures = gate.real_platform_field_status_failures(
+            inventory_path, inventory, approval_valid, approval
+        )
+        discovered = analyze.discover_approval(profile_root)
+
+        self.assertEqual(discovered["approved"], approval_valid, approval_failures)
+        self.assertTrue(approval_valid, approval_failures)
+        self.assertEqual([], field_failures)
+
 
 if __name__ == "__main__":
     unittest.main()

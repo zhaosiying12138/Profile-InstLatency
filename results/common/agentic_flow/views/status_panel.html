@@ -10,7 +10,7 @@
   code { background: #f6f8fa; padding: 0.1rem 0.25rem; }
 </style>
 <h1>RVV Profile Workflow Status</h1>
-<p>Round 14 formula-fit coverage repair. Active control owner: <code>CoordinatorAndCodexReviewer</code>. Worker write scopes exclude <code>.humanize/rlcr/**</code>.</p>
+<p>Round 15 approval-status hardening. Active control owner: <code>CoordinatorAndCodexReviewer</code>. Worker write scopes exclude <code>.humanize/rlcr/**</code>.</p>
 <table>
   <tr><th>Area</th><th>Status</th></tr>
   <tr><td>RLCR lineage</td><td>Rounds 2-10 prompt, summary, and review references recorded from <code>.humanize/rlcr/2026-05-23_01-15-03/</code>; current-head and T12 exactness addenda are captured in Round 11 and Round 12 artifacts.</td></tr>
@@ -21,6 +21,7 @@
   <tr><td>T12 exactness</td><td>Commit <code>91201d20</code> derives matched-control exact latency from agreeing positive-stall equations. Cadence-2 stalls <code>[3, 1, 0, 0]</code> now infer <code>Latency = 3</code>; disagreement fails closed.</td></tr>
   <tr><td>Control-plane ownership</td><td>Worker prompts, contracts, and owned write sets no longer grant <code>.humanize/rlcr/**</code> write scope. The Round 10 summary is coordinator-owned; tracker and review-result files are Codex-reviewer-owned.</td></tr>
   <tr><td>Formula-fit coverage</td><td>Cross-LMUL formula summaries require exact <code>m1</code>, <code>m2</code>, and <code>m4</code> rows. Partial LMUL coverage now reports <code>partial_fit_blocked</code>; exact subset fits are diagnostic-only under <code>provisional_fit</code>.</td></tr>
+  <tr><td>Approval-status hardening</td><td>Commit <code>9a85412b</code> rejects top-level pending plus nested approved artifacts. The follow-up repair shares top-level approval vocabulary between analyzer discovery and gate validation through <code>scripts/approval_status.py</code>.</td></tr>
   <tr><td>Current request</td><td><code>results/common/real_platform_risk_acceptance_request.json</code> is pending and not approved. It lists all 9 unresolved risk IDs, binds inventory <code>197787ab...</code> and field status <code>079cb94d...</code>, and records the exact real-platform gate command.</td></tr>
   <tr><td>Capture artifacts</td><td>Normalized prompt, contract, output, verification, tool-call, boards, events, replay, cartridge, and status artifacts are registered for empty-context replay.</td></tr>
   <tr><td>Current hashes</td><td>Inventory <code>197787ab...</code>; field status <code>079cb94d...</code>; search <code>3d72fd2e...</code>; quality <code>d3c2e41...</code>.</td></tr>

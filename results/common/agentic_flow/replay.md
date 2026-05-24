@@ -740,6 +740,34 @@ status remains 141 inferred and 9 non-identifiable. The pending request is
 refreshed to Round 14 / `Round14FormulaFitCoverageRepair` and remains not
 approved, not a gate input, not an approval artifact, and not gate-consumed.
 
+### Round 15 Approval-Status Hardening
+
+Round 10 re-review then found two approval-status issues at the current-head
+boundary. Commit `9a85412b` fixed the contradictory approval artifact case:
+top-level `status: pending` plus nested `risk_acceptance.status: approved` is
+rejected by gate validation and by `analyze.discover_approval()`.
+
+The follow-up repair adds `scripts/approval_status.py` so analyzer discovery
+and gate validation use the same top-level approval decision helper. The
+shared vocabulary is `approved`, `human_approved`, `human_approval`, `status`,
+`human_approval_status`, and `approval_status`. Every present top-level
+approval/status field must be approved/granted/pass. Nested risk acceptance
+remains recursive for accepted risk IDs, but nested `status` values are not
+artifact-level approval decisions.
+
+The Humanize2 capture package for this boundary is:
+
+- `artifacts/prompts/round-15-approval-status-hardening-worker.md`
+- `artifacts/worker_contracts/worker-r15-approval-status-hardening.md`
+- `artifacts/worker_outputs/worker-r15-approval-status-hardening.md`
+- `artifacts/verification/worker-r15-approval-status-hardening.md`
+- `artifacts/tool_calls/worker-r15-approval-status-hardening-normalized.json`
+- `artifacts/decisions/round-15-approval-status-hardening.md`
+
+No approval artifact was created. The real-platform gate still fails closed on
+missing `Gate status: PASS`, missing machine-readable approval, and the 9
+unresolved `non_identifiable` risks.
+
 ## Humanize2 Hub Path
 
 If a Humanize2 hub is available, load:

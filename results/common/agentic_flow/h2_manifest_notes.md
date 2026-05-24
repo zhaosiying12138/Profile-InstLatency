@@ -1,7 +1,7 @@
 # Humanize2 Manifest Notes
 
-Status: Round 14 formula-fit coverage repair after commit
-`418a24ab`.
+Status: Round 15 approval-status hardening after commit `9a85412b`
+and the follow-up vocabulary-parity repair.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -101,6 +101,12 @@ Round 6 ownership:
   non-exact, the primary status is `partial_fit_blocked` and any exact subset
   fit appears only as `provisional_fit`. This changes only the search summary
   hash; field-status counts remain 141 inferred and 9 non-identifiable.
+- Round 15 captures the current-head approval-status hardening boundary:
+  commit `9a85412b` rejects top-level pending plus nested approved approval
+  artifacts, and the follow-up vocabulary repair makes analyzer discovery and
+  gate validation share `scripts/approval_status.py`. The top-level approval
+  vocabulary now includes `human_approved` on both paths; accepted-risk scope
+  extraction remains recursive. No approval artifact was created.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

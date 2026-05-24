@@ -25,8 +25,8 @@ from analyze_core import (
     int_or_none,
     parse_yamlish,
     render_yaml,
-    truthy_human_approval_status,
 )
+from approval_status import top_level_approval_decision
 
 def normalized_id(value: Any) -> str:
     if value is None or value == "":
@@ -82,12 +82,6 @@ def get_first_by_keys(data: dict[str, Any], names: set[str]) -> Any:
         if canonical_json_key(key) in names:
             return value
     return None
-
-
-def top_level_values_by_key(data: Any, names: set[str]) -> list[Any]:
-    if not isinstance(data, dict):
-        return []
-    return [value for key, value in data.items() if canonical_json_key(key) in names]
 
 
 def walk_json_dicts(data: Any, path: tuple[str, ...] = ("$",)) -> list[tuple[tuple[str, ...], dict[str, Any]]]:
@@ -583,29 +577,9 @@ def discover_approval(root: Path) -> dict[str, Any]:
             if path.suffix.lower() == ".json":
                 data = json.loads(path.read_text(encoding="utf-8"))
                 if isinstance(data, dict):
-                    approval_values = top_level_values_by_key(
-                        data,
-                        {
-                            "approved",
-                            "human_approved",
-                            "human_approval",
-                            "status",
-                            "human_approval_status",
-                            "approval_status",
-                        },
-                    )
-                    status_value = str(
-                        first_value(
-                            *top_level_values_by_key(
-                                data, {"status", "human_approval_status", "approval_status"}
-                            ),
-                            "",
-                        )
-                    ).lower()
-                    artifact["approved"] = bool(approval_values) and all(
-                        truthy_human_approval_status(value) for value in approval_values
-                    )
-                    artifact["status"] = "approved" if artifact["approved"] else status_value or "present_unapproved"
+                    approval_decision = top_level_approval_decision(data)
+                    artifact["approved"] = bool(approval_decision["approved"])
+                    artifact["status"] = str(approval_decision["status"])
                     artifact["accepted_risk_ids"] = sorted(accepted_risk_ids_from_document(data))
             else:
                 text = path.read_text(encoding="utf-8").lower()

@@ -49,6 +49,10 @@ current_head_capture:
     owner: CoordinatorAndCodexReviewer
     status: repaired
     effect: partial LMUL formula fits now report partial_fit_blocked instead of exact_fit
+  round15_approval_status_hardening:
+    worker: Round15ApprovalStatusHardening
+    status: captured
+    effect: approval status parsing is top-level-only and shared by analyzer discovery and gate validation
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   decision_status: not_approved

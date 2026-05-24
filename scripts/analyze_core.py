@@ -15,11 +15,18 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from statistics import mean, pstdev
 from typing import Any, Iterable
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from approval_status import truthy_approval_status
 
 
 KNOWN_MARKER_PAIRS = (
@@ -266,14 +273,7 @@ def first_value(*values: Any) -> Any:
 
 
 def truthy_human_approval_status(value: Any) -> bool:
-    if isinstance(value, bool):
-        return value
-    if value is None:
-        return False
-    lowered = str(value).strip().lower()
-    return lowered in {"approved", "accepted", "pass", "passed", "granted", "yes", "true"} or lowered.startswith(
-        ("approved ", "granted ")
-    )
+    return truthy_approval_status(value)
 
 
 def int_or_none(value: Any) -> int | None:

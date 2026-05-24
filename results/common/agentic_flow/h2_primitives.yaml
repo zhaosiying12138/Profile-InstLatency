@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 14
-  status: awaiting_human_risk_decision_after_formula_fit_coverage_repair
+  round: 15
+  status: approval_status_hardened_gate_fail_closed_awaiting_human_risk_decision
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -58,6 +58,9 @@ templates:
   - id: round-12-t12-exactness-fix-worker
     primitive: h2-template
     path: artifacts/prompts/round-12-t12-exactness-fix-worker.md
+  - id: round-15-approval-status-hardening-worker
+    primitive: h2-template
+    path: artifacts/prompts/round-15-approval-status-hardening-worker.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -351,6 +354,26 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.decision.v1
     path: artifacts/decisions/round-14-formula-fit-coverage.md
+  - id: round-15-approval-status-hardening-decision
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: artifacts/decisions/round-15-approval-status-hardening.md
+  - id: round-15-approval-status-hardening-contract
+    primitive: h2-artifact
+    schema: rvv.workerContract.v1
+    path: artifacts/worker_contracts/worker-r15-approval-status-hardening.md
+  - id: round-15-approval-status-hardening-output
+    primitive: h2-artifact
+    schema: rvv.workerOutput.v1
+    path: artifacts/worker_outputs/worker-r15-approval-status-hardening.md
+  - id: round-15-approval-status-hardening-verification
+    primitive: h2-artifact
+    schema: rvv.verification.v1
+    path: artifacts/verification/worker-r15-approval-status-hardening.md
+  - id: round-15-approval-status-hardening-tool-call
+    primitive: h2-artifact
+    schema: rvv.toolCall.v1
+    path: artifacts/tool_calls/worker-r15-approval-status-hardening-normalized.json
   - id: rlcr-round-10-summary
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
@@ -432,6 +455,9 @@ events:
   - type: round12.real_gate.fail_closed
   - type: round13.control_plane_ownership.corrected
   - type: round13.worker_scope_verified
+  - type: round15.approval_status_hardening.completed
+  - type: round15.approval_status_hardening.verification.captured
+  - type: round15.real_gate.fail_closed
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -822,6 +848,88 @@ flow_nodes:
         search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
     status: formula_fit_guard_repaired_pending_ac16_human_decision
+  - id: round15-approval-status-hardening
+    primitive: h2-agent
+    worker: Round15ApprovalStatusHardening
+    commits:
+      prior_hardening: 9a85412b
+      vocabulary_parity: pending_commit
+    prompt: artifacts/prompts/round-15-approval-status-hardening-worker.md
+    owned_write_set:
+      - scripts/approval_status.py
+      - scripts/check_calibration_gate.py
+      - scripts/analyze_core.py
+      - scripts/analyze_quality.py
+      - tests/test_check_calibration_gate_approval.py
+      - results/common/agentic_flow/**
+    forbidden_write_set:
+      - results/common/*approval*
+      - results/common/real_platform_risk_acceptance_request.json
+      - results/common/search_model_real_platform.json
+      - results/common/real_platform_field_status.json
+      - results/common/real_platform_inventory.json
+      - results/common/experiment_quality.md
+      - .humanize/rlcr/**
+    control_plane_references:
+      goal_tracker:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
+        worker_write_scope: false
+      review_result:
+        owner: CodexReviewer
+        path: ../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+        worker_write_scope: false
+    artifacts:
+      decision: artifacts/decisions/round-15-approval-status-hardening.md
+      contract: artifacts/worker_contracts/worker-r15-approval-status-hardening.md
+      output: artifacts/worker_outputs/worker-r15-approval-status-hardening.md
+      verification: artifacts/verification/worker-r15-approval-status-hardening.md
+      tool_call: artifacts/tool_calls/worker-r15-approval-status-hardening-normalized.json
+    approval_status_hardening:
+      artifact_approval_scope: top_level_only
+      shared_helper: scripts/approval_status.py
+      accepted_risk_scope: recursive
+      vocabulary:
+        - approved
+        - human_approved
+        - human_approval
+        - status
+        - human_approval_status
+        - approval_status
+      regressions:
+        contradictory_pending_nested_approved: rejects
+        human_approved_vocabulary_parity: analyzer_and_gate_agree
+        top_level_approved_nested_risk_scope: accepts
+    field_status_summary:
+      total: 150
+      inferred: 141
+      non_identifiable: 9
+      conflict: 0
+      insufficient_evidence: 0
+      blocking_total: 9
+    request_boundary:
+      status: pending_not_approved
+      request_status: not_approved
+      decision_status: not_approved
+      gate_status: not_submitted
+      approved: false
+      is_gate_input: false
+      is_approval_artifact: false
+      gate_consumed: false
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 9
+      request_worker: Round14FormulaFitCoverageRepair
+      gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+      expected_fail_closed_reasons:
+        - missing Gate status PASS
+        - missing machine-readable human approval
+        - 9 unresolved non_identifiable risks
+      current_hashes:
+        real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+        real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+        search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
+        experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+    status: approval_status_hardened_pending_ac16_human_decision
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree

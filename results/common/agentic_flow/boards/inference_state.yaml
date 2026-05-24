@@ -1,5 +1,5 @@
 schema_version: 1
-status: formula_fit_coverage_repaired_real_platform_gate_not_ready
+status: approval_status_hardened_real_platform_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -13,6 +13,7 @@ parameter_search:
   t12_state: short_sweep_guard_plus_matched_controls_plus_positive_stall_exactness_fix
   vcpop_m4_state: r11_diagnostics_falsified_boundary_model_kept_fail_closed
   reproducibility_state: tmp_output_cmp_matches_checked_in_search_artifact
+  approval_status_state: shared_top_level_helper_for_analyzer_and_gate
 current_real_platform_outputs:
   search_model: results/common/search_model_real_platform.json
   field_status: results/common/real_platform_field_status.json
@@ -73,6 +74,19 @@ round14_formula_fit_coverage:
     - vcpop_m ReleaseAtCycles m4
     - vrgather_vv Latency m4
     - vslideup_vx Latency m4
+round15_approval_status_hardening:
+  worker: Round15ApprovalStatusHardening
+  decision: results/common/agentic_flow/artifacts/decisions/round-15-approval-status-hardening.md
+  prior_commit: 9a85412b
+  follow_up_commit: pending_commit
+  shared_helper: scripts/approval_status.py
+  artifact_approval_scope: top_level_only
+  accepted_risk_scope: recursive
+  vocabulary: [approved, human_approved, human_approval, status, human_approval_status, approval_status]
+  regressions:
+    contradictory_pending_nested_approved: rejects
+    human_approved_vocabulary_parity: analyzer_and_gate_agree
+    top_level_approved_nested_risk_scope: accepts
 replay_commands:
   real_search: python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-current-review-search-fixed.json --format json
   compare_search: cmp /tmp/profile-inst-latency-current-review-search-fixed.json results/common/search_model_real_platform.json

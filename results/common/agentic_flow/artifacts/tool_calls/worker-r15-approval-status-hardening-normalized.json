@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "worker": "Round15ApprovalStatusHardening",
+  "boundary": {
+    "prior_commit": "9a85412b",
+    "follow_up_commit": "pending_commit",
+    "approval_artifact_created": false,
+    "real_platform_gate_expected": "fail_closed_missing_pass_missing_approval_9_unresolved_non_identifiable"
+  },
+  "commands": [
+    {
+      "command": "python3 -m unittest tests.test_check_calibration_gate_approval.ApprovalGateHardeningTest.test_human_approved_top_level_status_has_analyzer_gate_parity",
+      "status": "failed_expected_before_fix",
+      "summary": "analyzer discovery accepted human_approved while gate validation rejected it"
+    },
+    {
+      "command": "python3 -m unittest tests.test_check_calibration_gate_approval.ApprovalGateHardeningTest.test_human_approved_top_level_status_has_analyzer_gate_parity",
+      "status": "passed_after_fix"
+    },
+    {
+      "command": "python3 -m unittest tests.test_check_calibration_gate_approval",
+      "status": "passed",
+      "summary": "10 tests passed"
+    },
+    {
+      "command": "python3 -m py_compile scripts/approval_status.py scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/analyze_core.py scripts/analyze_quality.py scripts/run_experiment.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m pytest -q",
+      "status": "passed",
+      "summary": "62 tests passed"
+    },
+    {
+      "command": "python3 scripts/analyze.py --all --dry-run",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-round15-review-search.json --format json",
+      "status": "passed"
+    },
+    {
+      "command": "cmp /tmp/profile-inst-latency-round15-review-search.json results/common/search_model_real_platform.json",
+      "status": "passed",
+      "sha256": "3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "status": "failed_expected",
+      "failures": [
+        "quality report must contain exact line `Gate status: PASS`",
+        "missing machine-readable human approval file under results/common",
+        "unresolved real-platform LLVM field-status risks=9 status_counts={\"non_identifiable\": 9}"
+      ]
+    },
+    {
+      "command": "find results/common -maxdepth 1 -iname '*approval*' -print",
+      "status": "passed",
+      "summary": "no output"
+    }
+  ],
+  "changed_files": [
+    "scripts/approval_status.py",
+    "scripts/check_calibration_gate.py",
+    "scripts/analyze_core.py",
+    "scripts/analyze_quality.py",
+    "tests/test_check_calibration_gate_approval.py",
+    "results/common/agentic_flow/**"
+  ],
+  "approval_vocabulary": [
+    "approved",
+    "human_approved",
+    "human_approval",
+    "status",
+    "human_approval_status",
+    "approval_status"
+  ],
+  "current_hashes": {
+    "real_platform_inventory_json": "197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd",
+    "real_platform_field_status_json": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
+    "search_model_real_platform_json": "3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd",
+    "experiment_quality_md": "d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a"
+  }
+}

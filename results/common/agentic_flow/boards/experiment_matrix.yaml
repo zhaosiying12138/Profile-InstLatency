@@ -44,6 +44,11 @@ current_head_evidence:
   formula_fit_coverage_repair:
     artifact: results/common/agentic_flow/artifacts/decisions/round-14-formula-fit-coverage.md
     effect: formula summaries now report partial_fit_blocked when any required LMUL row is not exact
+  approval_status_hardening:
+    commit: 9a85412b
+    follow_up_commit: pending_commit
+    artifact: results/common/agentic_flow/artifacts/decisions/round-15-approval-status-hardening.md
+    effect: analyzer discovery and gate validation share the same top-level approval-status helper
 current_counts:
   real_platform_traces: 7660
   stable_repeat_groups: 3815
