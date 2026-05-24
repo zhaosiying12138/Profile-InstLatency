@@ -1,6 +1,6 @@
 schema_version: 1
 baseline: gem5_minorcpu
-status: selected_real_platform_repeat_coverage_present_gate_fail_closed
+status: selected_real_platform_repeat_coverage_present_gate_pass
 candidates:
   - name: gem5_minorcpu
     role: first baseline
@@ -21,13 +21,14 @@ real_platform_repeat_gate:
   unstable_repeat_groups: 0
   quality_report: results/common/experiment_quality.md
 full_timing_gate:
-  status: not_ready
-  reason: explicit machine-readable human approval is absent and 9 LLVM-facing rows remain non-identifiable approval-bound risks
-  approval_artifact_exists: false
+  status: pass
+  reason: explicit machine-readable human approval accepts the 9 non-identifiable LLVM-facing rows as known risks
+  approval_artifact_exists: true
+  approval_artifact: ../human_approval.json
   risk_acceptance_request: ../real_platform_risk_acceptance_request.json
-  request_status: pending_not_approved
+  request_status: approved_by_human_approval
   request_gate_consumed: false
-  approval_must_bind_inventory_hash: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+  approval_must_bind_inventory_hash: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
   approval_must_bind_field_status_hash: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
 current_head_capture:
   worker: Round11CurrentHeadCapture
@@ -58,12 +59,13 @@ current_head_capture:
     status: captured
     effect: approval file discovery is limited to the gate-discoverable results/common/human_approval files
   request_artifact: ../real_platform_risk_acceptance_request.json
-  request_status: pending_not_approved
-  decision_status: not_approved
-  gate_status: not_submitted
+  request_status: approved_by_human_approval
+  decision_status: approved
+  gate_status: passed_via_human_approval
   request_gate_consumed: false
-  approval_artifact_created: false
+  approval_artifact_created: true
+  approval_artifact: ../human_approval.json
   field_status_blocking_total: 9
   blocking_status_counts:
     non_identifiable: 9
-  human_handoff: present_request_before_creating_human_approval_json
+  human_handoff: fulfilled_by_results_common_human_approval_json

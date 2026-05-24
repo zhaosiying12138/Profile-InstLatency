@@ -40,6 +40,9 @@
   <h2-template id="round-12-t12-exactness-fix-worker" type="prompt" href="../artifacts/prompts/round-12-t12-exactness-fix-worker.md">
     Fix and capture matched-control T12 exactness: infer exact latency from agreeing positive-stall equations and fail closed on disagreement.
   </h2-template>
+  <h2-template id="round-17-human-approval-coordinator" type="prompt" href="../artifacts/prompts/round-17-human-approval-coordinator.md">
+    Record the human decision for the 9 current non-identifiable risks, bind approval to current artifact hashes, regenerate analyzer outputs, and verify the real-platform gate.
+  </h2-template>
   <h2-flow>
     <h2-check id="env-check" uses="check_env"></h2-check>
     <h2-parallel id="round-0-workers">
@@ -205,7 +208,7 @@
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
     <h2-agent id="round16-approval-discovery-scope" model="codex" owner="CoordinatorAndCodexReviewer" commit="366be5b8">
-      <h2-current-status>approval-discovery-scope-captured-pending-ac16-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round17-human-approval</h2-current-status>
       <h2-prompt href="../artifacts/prompts/round-16-approval-discovery-scope-worker.md"></h2-prompt>
       <h2-owned-write-set>scripts/approval_status.py scripts/check_calibration_gate.py scripts/analyze_quality.py tests/test_check_calibration_gate_approval.py results/common/agentic_flow/**</h2-owned-write-set>
       <h2-forbidden-write-set>results/common/*approval* results/common/real_platform_risk_acceptance_request.json results/common/search_model_real_platform.json results/common/real_platform_field_status.json results/common/real_platform_inventory.json results/common/experiment_quality.md .humanize/rlcr/**</h2-forbidden-write-set>
@@ -217,15 +220,27 @@
       <h2-approval-file-scope helper="scripts/approval_status.py:human_approval_file" common-files="human_approval.json,human_approval.yaml,human_approval.yml" nested-results-approval-files="ignored"></h2-approval-file-scope>
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
+    <h2-agent id="round17-human-approval" role="coordinator" tool="codex" prompt="#round-17-human-approval-coordinator" short-name="human-approval" timeout="manual">
+      <h2-current-status>human-approval-recorded-real-platform-gate-pass</h2-current-status>
+      <h2-owned-write-set>results/common/human_approval.json,results/common/real_platform_risk_acceptance_request.json,results/common/real_platform_inventory.json,results/common/experiment_quality.md,results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-forbidden-write-set>.humanize/rlcr/**</h2-forbidden-write-set>
+      <h2-expect artifact="round-17-human-approval-decision" schema="rvv.decision.v1"></h2-expect>
+      <h2-expect artifact="round-17-human-approval-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-17-human-approval-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-17-human-approval-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-approval-artifact path="../human_approval.json" status="approved" approved-by="zhaosiying" accepted-risk-count="9" sha256="f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd"></h2-approval-artifact>
+      <h2-request-boundary status="fulfilled-by-human-approval" request-status="approved-by-human-approval" decision-status="approved" gate-status="passed-via-human-approval" gate-consumed="false" request-artifact="../real_platform_risk_acceptance_request.json" approval-artifact="../human_approval.json" inventory-sha256="857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce" request-sha256="1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913" unresolved-non-identifiable-risks="9"></h2-request-boundary>
+    </h2-agent>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
-      <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 9 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>
+      <h2-current-status>PASS: real-platform coverage, repeats, confidence, assumptions, conflicts, marker contract, and approval passed</h2-current-status>
     </h2-check>
-    <h2-human id="real-platform-approval" prompt="Present results/common/real_platform_risk_acceptance_request.json, then approve or reject explicit real-platform risk acceptance tied to inventory hash 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd, field-status hash 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432, and the 9 unresolved risk IDs before treating AC-16 as satisfied.">
-      <h2-current-status>absent</h2-current-status>
+    <h2-human id="real-platform-approval" prompt="Human owner approved the exact 9 listed non-identifiable real-platform risk IDs in results/common/human_approval.json. The approved rows remain known risks, not exact inferred hardware values.">
+      <h2-current-status>approved</h2-current-status>
       <h2-request-artifact>results/common/real_platform_risk_acceptance_request.json</h2-request-artifact>
       <h2-required-artifact>results/common/human_approval.json</h2-required-artifact>
+      <h2-approval-sha256>f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd</h2-approval-sha256>
     </h2-human>
-    <h2-end id="not-complete-yet"></h2-end>
+    <h2-end id="complete-after-human-approval"></h2-end>
   </h2-flow>
 </h2-workflow>

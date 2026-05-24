@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 16
-  status: approval_discovery_scope_captured_gate_fail_closed_awaiting_human_risk_decision
+  round: 17
+  status: human_approval_recorded_real_platform_gate_pass
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -64,6 +64,9 @@ templates:
   - id: round-16-approval-discovery-scope-worker
     primitive: h2-template
     path: artifacts/prompts/round-16-approval-discovery-scope-worker.md
+  - id: round-17-human-approval-coordinator
+    primitive: h2-template
+    path: artifacts/prompts/round-17-human-approval-coordinator.md
 boards:
   - id: goal-tracker
     primitive: h2-board
@@ -478,12 +481,17 @@ events:
   - type: round12.real_gate.fail_closed
   - type: round13.control_plane_ownership.corrected
   - type: round13.worker_scope_verified
+  - type: round14.formula_fit_coverage.repaired
+  - type: round14.risk_request.refreshed
   - type: round15.approval_status_hardening.completed
   - type: round15.approval_status_hardening.verification.captured
   - type: round15.real_gate.fail_closed
   - type: round16.approval_discovery_scope.completed
   - type: round16.approval_discovery_scope.verification.captured
   - type: round16.real_gate.fail_closed
+  - type: round17.human_approval.recorded
+  - type: round17.real_platform.artifacts.regenerated
+  - type: round17.real_gate.pass
 flow_nodes:
   - id: env-check
     primitive: h2-check
@@ -505,7 +513,7 @@ flow_nodes:
   - id: real-platform-confidence-gate
     primitive: h2-human
     mode: real_platform_profile
-    current_status: fail_closed_awaiting_approval
+    current_status: pass_with_human_approval
   - id: round5-code-worker-candidate-simulator
     primitive: h2-agent
     worker: Anscombe
@@ -1028,25 +1036,62 @@ flow_nodes:
         search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
     status: approval_discovery_scope_captured_pending_ac16_human_decision
+  - id: round17-human-approval
+    primitive: h2-agent
+    worker: CoordinatorAndCodexReviewer
+    prompt: artifacts/prompts/round-17-human-approval-coordinator.md
+    owned_write_set:
+      - results/common/human_approval.json
+      - results/common/real_platform_risk_acceptance_request.json
+      - results/common/real_platform_inventory.json
+      - results/common/experiment_quality.md
+      - results/common/agentic_flow/**
+    forbidden_write_set:
+      - .humanize/rlcr/**
+    artifacts:
+      decision: artifacts/decisions/round-17-human-approval.md
+      output: artifacts/worker_outputs/coordinator-r17-human-approval.md
+      verification: artifacts/verification/coordinator-r17-human-approval.md
+      tool_call: artifacts/tool_calls/coordinator-r17-human-approval.json
+    approval_gate:
+      approval_artifact: results/common/human_approval.json
+      request_artifact: results/common/real_platform_risk_acceptance_request.json
+      request_status: approved_by_human_approval
+      accepted_risk_count: 9
+      accepted_rows_remain_non_identifiable: true
+      current_hashes:
+        human_approval_json: f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd
+        real_platform_inventory_json: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
+        real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+        search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
+        experiment_quality_md: 57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce
+        risk_acceptance_request_json: 1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913
+    gates:
+      synthetic_calibration: pass
+      real_platform_profile: pass
+    status: human_approval_recorded_real_platform_gate_pass
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
 approval_boundary:
   primitive: h2-human
   required: true
-  artifact_exists: false
+  artifact_exists: true
+  artifact_path: ../human_approval.json
+  status: approved
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   risk_acceptance_request:
     path: ../real_platform_risk_acceptance_request.json
     round: 14
     request_worker: Round14FormulaFitCoverageRepair
-    status: pending_not_approved
+    status: approved_by_human_approval
     gate_consumed: false
-    present_to_human_before_human_approval_json: true
+    presented_to_human_before_human_approval_json: true
   must_bind_to_hashes:
-    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    real_platform_inventory_json: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
     real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
   unresolved_non_identifiable_risks: 9
+  accepted_risks: 9
   round4_review_hashes:
     real_platform_inventory_json: 5371f4c4c8dd8c7c292b6143243f1d9e5c68fdcbf70d2fa75274afe58885f9f4
     real_platform_field_status_json: a629c52497ca8eade0e197d6e8e398558f1c89ea13d85823d21a1b443f21a4a8

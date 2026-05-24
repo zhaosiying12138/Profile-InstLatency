@@ -3,30 +3,27 @@
   "artifact_kind": "risk_acceptance_request",
   "round": 14,
   "request_worker": "Round14FormulaFitCoverageRepair",
-  "status": "pending",
-  "request_status": "not_approved",
-  "decision_status": "not_approved",
-  "gate_status": "not_submitted",
-  "approved": false,
+  "status": "fulfilled_by_human_approval",
+  "request_status": "approved_by_human_approval",
+  "decision_status": "approved",
+  "gate_status": "passed_via_human_approval",
+  "approved": true,
   "is_gate_input": false,
   "is_approval_artifact": false,
   "gate_consumed": false,
+  "fulfilled_by_approval_artifact": "results/common/human_approval.json",
   "gate_discovery_note": "The real-platform gate discovers only results/common/human_approval.json, results/common/human_approval.yaml, or results/common/human_approval.yml. This request is not consumed by the gate.",
   "source_inventory_path": "results/common/real_platform_inventory.json",
   "source_inventory_json_pointer": "/field_status/unresolved",
   "current_hashes": {
-    "inventory_sha256": "197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd",
+    "inventory_sha256": "857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759",
     "real_platform_field_status_sha256": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
     "search_model_real_platform_sha256": "3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd",
-    "experiment_quality_sha256": "d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a"
+        "experiment_quality_sha256": "57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce"
   },
   "gate_command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
-  "expected_current_fail_closed_reasons": [
-    "missing Gate status PASS",
-    "missing machine-readable human approval",
-    "9 unresolved non_identifiable risks"
-  ],
-  "risk_status": "9 unresolved non_identifiable risks",
+  "expected_current_fail_closed_reasons": [],
+  "risk_status": "9 unresolved non_identifiable risks accepted by results/common/human_approval.json",
   "risk_ids": [
     "llvm_field_status:vcpop_m:m1:Latency:non_identifiable",
     "llvm_field_status:vcpop_m:m2:Latency:non_identifiable",
@@ -68,7 +65,7 @@
       "description": "Human may later accept only selected risk IDs from this list by creating a separate current-hash-bound human_approval.json artifact."
     }
   ],
-  "handoff_note": "Present this pending request to the human before creating any human_approval.json. This file is a request artifact only; it is not a gate-satisfying approval artifact.",
+  "handoff_note": "The human owner approved the exact listed risk IDs in results/common/human_approval.json. This request remains a request artifact only; the real-platform gate consumes the separate human_approval.json artifact.",
   "diagnostic_context": {
     "worker": "Round14FormulaFitCoverageRepair",
     "prior_request_worker": "Round11VcpopM4IssueFieldDiagnostics",
@@ -80,6 +77,7 @@
     ],
     "prior_diagnostic_round": "r11",
     "prior_result": "explicit_boundary_source_model_falsified_by_repeated_real_gem5_diagnostics",
-    "approval_artifact_created": false
+    "approval_artifact_created": true,
+    "approval_artifact": "results/common/human_approval.json"
   }
 }

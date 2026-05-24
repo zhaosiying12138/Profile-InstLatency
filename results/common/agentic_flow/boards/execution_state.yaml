@@ -1,5 +1,5 @@
 schema_version: 1
-round: 16
+round: 17
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,9 +12,9 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 16
-  status: approval_discovery_scope_captured_gate_fail_closed_awaiting_human_risk_decision
-  task: constrain_approval_discovery_scope_and_capture_current_head
+  round: 17
+  status: human_approval_recorded_real_platform_gate_pass
+  task: record_human_approval_and_pass_real_platform_gate
   request_worker: Round14FormulaFitCoverageRepair
   current_head_capture_worker: Round11CurrentHeadCapture
   t12_exactness_fix_worker: Round12T12ExactnessFix
@@ -36,14 +36,15 @@ current_boundary:
     - .humanize/rlcr/2026-05-23_01-15-03/state.md
 phase_status:
   phase_7_analyzer_and_search: current_head_search_reproducible
-  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_9_unresolved_risks
+  phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_pass_with_human_approval
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round16_approval_discovery_scope_captured_without_ac16_completion_claim
+  humanize2_capture: round17_human_approval_capture_records_gate_pass
   control_plane_ownership: worker_write_scopes_exclude_humanize_rlcr
   t12_matched_control_exactness: fixed_by_positive_stall_equations
   formula_fit_coverage: partial_lmul_fits_report_partial_fit_blocked
   approval_status_hardening: shared_top_level_decision_helper_analyzer_gate_parity
   approval_discovery_scope: analyzer_gate_share_common_human_approval_file_scope
+  human_approval: approval_artifact_created_and_real_platform_gate_passed
 real_platform_evidence:
   real_platform_traces: 7660
   required_real_gem5_groups: 178
@@ -57,10 +58,12 @@ real_platform_evidence:
     conflict: 0
     insufficient_evidence: 0
   artifact_hashes:
-    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    human_approval_json: f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd
+    real_platform_inventory_json: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
     real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
     search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
-    experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+    experiment_quality_md: 57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce
+    real_platform_risk_acceptance_request_json: 1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913
   field_status_summary:
     blocking_total: 9
     blocking_status_counts:
@@ -71,31 +74,29 @@ gates:
     report: results/common/mismatch_report.md
     command: python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results --mismatch-report results/common/mismatch_report.md
   real_platform_profile:
-    status: not_ready
+    status: pass
     report: results/common/experiment_quality.md
     command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-    expected_failure_reasons:
-      - quality report lacks exact Gate status: PASS
-      - machine-readable human approval file under results/common is absent
-      - 9 unresolved non_identifiable real-platform LLVM field-status risks remain unresolved
+    expected_failure_reasons: []
     request_artifact: results/common/real_platform_risk_acceptance_request.json
 approval_boundary:
   explicit_human_approval_required: true
-  approval_artifact_exists: false
+  approval_artifact_exists: true
+  approval_artifact: results/common/human_approval.json
+  approval_status: approved
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   risk_acceptance_request:
     path: results/common/real_platform_risk_acceptance_request.json
-    status: pending_not_approved
+    status: approved_by_human_approval
     round: 14
     request_worker: Round14FormulaFitCoverageRepair
     gate_consumed: false
     is_approval_artifact: false
     present_to_human_before_human_approval_json: true
   must_bind_to_hashes:
-    real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+    real_platform_inventory_json: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
     real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
   accepted_risk_scope_required: true
   unresolved_non_identifiable_risks: 9
-remaining_blockers:
-  - 9 non-identifiable LLVM-facing real-platform rows need stronger evidence or explicit human acceptance.
-  - AC-16 remains blocked by missing explicit human approval.
+  accepted_risk_count: 9
+remaining_blockers: []

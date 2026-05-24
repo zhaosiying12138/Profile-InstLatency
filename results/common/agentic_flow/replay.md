@@ -680,10 +680,6 @@ python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile
 python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
 ```
 
-The real-platform gate is expected to fail closed until the human explicitly
-approves the current hashes and exact 9-risk scope, or stronger evidence
-resolves those rows.
-
 ### Round 12 T12 Exactness Fix
 
 Round 10 review found that matched-control T12 exact latency could be
@@ -795,9 +791,33 @@ cmp /tmp/profile-inst-latency-approval-scope-search.json results/common/search_m
 python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
 ```
 
-The final command still fails closed until AC-16 receives explicit
-current-hash-bound human approval or the 9 unresolved risks are resolved by
-stronger evidence.
+The same command now passes after Round 17 created
+`results/common/human_approval.json` and regenerated the inventory/quality
+artifacts.
+
+## Round 17 Human Approval Gate
+
+Human owner approval was recorded after reviewing the 9 current
+`non_identifiable` risk IDs. The coordinator created
+`results/common/human_approval.json`, regenerated real-platform inventory and
+quality reports, and verified the gates:
+
+```bash
+python3 scripts/analyze.py --all
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+```
+
+Expected results:
+
+- Synthetic calibration gate: `PASS`.
+- Real-platform gate: `PASS`.
+- `results/common/experiment_quality.md` contains `Gate status: PASS`.
+- `results/common/real_platform_inventory.json` records
+  `confidence.level: approved_real_platform`.
+
+The accepted rows remain approval-bound known risks, not exact inferred
+hardware values.
 
 ## Humanize2 Hub Path
 
@@ -824,8 +844,8 @@ current persistent state.
    prompt/result lineage.
 5. Re-run only the failed lightweight check or worker-owned package. Do not run
    heavy gem5 unless the active worker explicitly owns that task.
-6. If AC-16 is the active topic, present
-   `results/common/real_platform_risk_acceptance_request.json` to the human
-   before creating any future `human_approval.json`.
+6. If AC-16 is the active topic, verify `results/common/human_approval.json`
+   is present, approved, and bound to the current inventory/field-status
+   hashes before relying on the real-platform gate result.
 7. Append a new event and verification artifact before asking the coordinator
    to integrate the result.

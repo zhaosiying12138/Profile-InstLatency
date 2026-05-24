@@ -4,20 +4,33 @@ Back to main report: [experiment_quality.md](experiment_quality.md)
 Next: [experiment_quality_repeatability_part2.md](experiment_quality_repeatability_part2.md)
 
 Mode: real_platform_profile
-Gate status: NOT_READY
-Confidence: awaiting_human_approval
-Human approval status: absent
+Gate status: PASS
+Confidence: approved_real_platform
+Human approval status: approved
 
-## Repeatability Rows 1-1798 of 3595
+## Repeatability Rows 1-1908 of 3815
 
 
-Repeat groups found: 3595
-Stable repeat groups: 3595
+Repeat groups found: 3815
+Stable repeat groups: 3815
 Unstable repeat groups: 0
 
 | Template | Instruction | LMUL | Traces | Delta values | Status |
 | --- | --- | --- | ---: | --- | --- |
 | `T40_COMMON_VLSU_LOAD_HIT` | `unknown` | `m1` | 2 | `1, 1` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `6, 6` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `11, 11` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `7, 7` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `14, 14` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T21_PAIR_WITH_SCALAR` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `12, 12` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `12, 12` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T10_INDEPENDENT_STREAM_THROUGHPUT` | `vcpop_m` | `m4` | 2 | `15, 15` | stable |
 | `T30_LMUL_SCALING` | `viota_m` | `m1` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vmseq_vv` | `m1` | 2 | `9, 9` | stable |
 | `T30_LMUL_SCALING` | `vrgather_vv` | `m1` | 2 | `5, 5` | stable |
@@ -318,6 +331,60 @@ Unstable repeat groups: 0
 | `T11_SELF_RAW_CHAIN` | `vmul_vv` | `m4` | 2 | `31, 31` | stable |
 | `T11_SELF_RAW_CHAIN` | `vredsum_vs` | `m4` | 2 | `52, 52` | stable |
 | `T11_SELF_RAW_CHAIN` | `vsll_vv` | `m4` | 2 | `31, 31` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `3, 3` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `2, 2` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `4, 4` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `5, 5` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `9, 9` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m1` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m2` | 2 | `1, 1` | stable |
 | `T30_LMUL_SCALING` | `vcpop_m` | `m4` | 2 | `1, 1` | stable |
@@ -564,6 +631,51 @@ Unstable repeat groups: 0
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m1` | 2 | `10, 10` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m2` | 2 | `19, 19` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vcpop_m` | `m4` | 2 | `37, 37` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `28, 28` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `26, 26` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `29, 29` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `27, 27` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `8, 8` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `24, 24` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `22, 22` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `9, 9` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `14, 14` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `25, 25` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `23, 23` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `14, 14` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `28, 28` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `26, 26` | stable |
+| `T12_CONSUMER_RAW_GAP` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vrgather_vv` | `m4` | 2 | `29, 29` | stable |
+| `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m4` | 2 | `27, 27` | stable |
 | `T30_LMUL_SCALING` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `viota_m` | `m4` | 2 | `7, 7` | stable |
@@ -1813,5 +1925,3 @@ Unstable repeat groups: 0
 | `T12_CONSUMER_RAW_GAP` | `vslideup_vx` | `m1` | 2 | `10, 10` | stable |
 | `T12_CONSUMER_RAW_GAP` | `vsll_vv` | `m1` | 2 | `6, 6` | stable |
 | `T30_LMUL_SCALING` | `vadd_vv` | `m1` | 2 | `7, 7` | stable |
-| `T30_LMUL_SCALING` | `vdivu_vv` | `m1` | 2 | `7, 7` | stable |
-| `T30_LMUL_SCALING` | `viota_m` | `m1` | 2 | `7, 7` | stable |

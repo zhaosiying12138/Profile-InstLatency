@@ -1,5 +1,5 @@
 schema_version: 1
-round: 14
+round: 17
 source_plan: docs/plan.md
 rlcr_goal_tracker: .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
 ultimate_goal: profile selected non-memory RVV instruction timing and preserve LLVM schedule-model evidence
@@ -11,7 +11,7 @@ acceptance_focus:
   - AC-12 and AC-13 now include current-head capture artifacts for commits 77d181af, 6ff16b7c, 88c9e6e5, 8ec7a8a8, and 91201d20.
   - AC-12 and AC-13 also include Round 15 capture artifacts for approval-status hardening at commit 9a85412b, the follow-up approval-vocabulary parity repair, and Round 16 capture artifacts for approval-discovery scope commit 366be5b8.
   - AC-11, AC-12, and AC-13 now separate worker-owned artifacts from coordinator/reviewer-owned `.humanize/rlcr/**` control-plane files.
-  - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 9 non-identifiable risks.
+  - AC-16 is now satisfied by explicit machine-readable human approval plus passing real-platform gate; the 9 rows remain accepted known risks, not exact inferred values.
 worker_split:
   Anscombe: Round 5 candidate-simulator peer T20 and short T12 exactness fixes
   Gibbs: Round 6 approval-gate hardening for hash-bound unresolved-risk acceptance
@@ -24,8 +24,9 @@ worker_split:
   Round14FormulaFitCoverageRepair: Formula-fit coverage guard and request hash refresh
   Round15ApprovalStatusHardening: Approval-status contradiction fix, analyzer/gate vocabulary parity, and Humanize2 capture refresh
   Round16ApprovalDiscoveryScope: Analyzer/gate approval-file discovery scope parity and Humanize2 capture refresh
-active_worker: none_approval_discovery_scope_repair_captured_by_coordinator_and_reviewer
-status: approval_discovery_scope_captured_pending_human_decision
+  CoordinatorRound17HumanApproval: Human approval artifact, regenerated quality inventory, and gate-pass capture
+active_worker: none_human_approval_recorded_by_coordinator
+status: human_approval_recorded_real_platform_gate_pass
 round_status:
   round_9: field_status_summary_counts_non_identifiable_as_blocking_request_hashes_refreshed_capture_updated
   round_10: stronger_t20_t12_evidence_refreshed_real_artifacts_38_unresolved_risks_gate_fail_closed
@@ -35,8 +36,5 @@ round_status:
   round_14: partial_lmul_formula_fits_report_partial_fit_blocked_gate_still_fail_closed
   round_15: approval_status_top_level_helper_shared_by_analyzer_and_gate_capture_refreshed_gate_still_fail_closed
   round_16: approval_file_discovery_scope_shared_by_analyzer_and_gate_capture_refreshed_gate_still_fail_closed
-remaining_open_items:
-  - Present results/common/real_platform_risk_acceptance_request.json to the human before creating any future human_approval.json.
-  - Explicit human approval or stronger evidence is still required before the real-platform gate can pass.
-  - 9 unresolved non_identifiable real-platform field rows remain approval-bound risks.
-  - AC-16 remains blocked until the real-platform gate passes with explicit current-hash-bound approval or the 9 rows are resolved by stronger evidence.
+  round_17: human_approval_json_created_request_fulfilled_real_platform_gate_pass
+remaining_open_items: []

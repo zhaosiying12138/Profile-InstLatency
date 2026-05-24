@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "coordinator-r17-human-approval",
+  "category": "approval_gate",
+  "owner": "CoordinatorAndCodexReviewer",
+  "approval_artifact": "results/common/human_approval.json",
+  "request_artifact": "results/common/real_platform_risk_acceptance_request.json",
+  "commands": [
+    {
+      "command": "python3 scripts/analyze.py --all",
+      "reported_result": "regenerated real_platform_inventory.json and experiment_quality.md with approved human approval"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results",
+      "reported_result": "PASS"
+    },
+    {
+      "command": "python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results",
+      "reported_result": "PASS"
+    },
+    {
+      "command": "sha256sum results/common/human_approval.json results/common/real_platform_inventory.json results/common/real_platform_field_status.json results/common/search_model_real_platform.json results/common/experiment_quality.md results/common/real_platform_risk_acceptance_request.json",
+      "reported_result": "hashes captured in verification artifact"
+    }
+  ],
+  "accepted_risk_ids": [
+    "llvm_field_status:vcpop_m:m1:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m2:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:ReleaseAtCycles:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:ProcResource:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:NumMicroOps:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable",
+    "llvm_field_status:vrgather_vv:m4:Latency:non_identifiable",
+    "llvm_field_status:vslideup_vx:m4:Latency:non_identifiable"
+  ],
+  "hashes": {
+    "human_approval": "f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd",
+    "inventory": "857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759",
+    "field_status": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
+    "search": "3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd",
+    "quality": "57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce",
+    "risk_request": "1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913"
+  },
+  "gate_status": {
+    "synthetic_calibration": "PASS",
+    "real_platform_profile": "PASS"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "human_real_platform_risk_approval",
+  "status": "approved",
+  "approval_status": "approved",
+  "approved": true,
+  "human_approved": true,
+  "approved_by": "zhaosiying",
+  "approved_at": "2026-05-24T22:15:57+08:00",
+  "decision": "Accept the listed non_identifiable real-platform LLVM field-status risks as known risks for this artifact set. Do not interpret these rows as exact hardware-derived values.",
+  "profile_root": "results",
+  "inventory_path": "results/common/real_platform_inventory.json",
+  "field_status_path": "results/common/real_platform_field_status.json",
+  "inventory_sha256": "857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759",
+  "real_platform_field_status_sha256": "079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432",
+  "search_model_real_platform_sha256": "3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd",
+    "experiment_quality_sha256": "57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce",
+    "risk_acceptance_request_sha256": "1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913",
+  "accepted_risk_ids": [
+    "llvm_field_status:vcpop_m:m1:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m2:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:Latency:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:ReleaseAtCycles:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:ProcResource:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:NumMicroOps:non_identifiable",
+    "llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable",
+    "llvm_field_status:vrgather_vv:m4:Latency:non_identifiable",
+    "llvm_field_status:vslideup_vx:m4:Latency:non_identifiable"
+  ],
+  "risk_acceptance": {
+    "status": "accepted",
+    "scope": "listed_real_platform_field_status_risk_ids_only",
+    "accepted_risk_ids": [
+      "llvm_field_status:vcpop_m:m1:Latency:non_identifiable",
+      "llvm_field_status:vcpop_m:m2:Latency:non_identifiable",
+      "llvm_field_status:vcpop_m:m4:Latency:non_identifiable",
+      "llvm_field_status:vcpop_m:m4:ReleaseAtCycles:non_identifiable",
+      "llvm_field_status:vcpop_m:m4:ProcResource:non_identifiable",
+      "llvm_field_status:vcpop_m:m4:NumMicroOps:non_identifiable",
+      "llvm_field_status:vcpop_m:m4:SingleIssue:non_identifiable",
+      "llvm_field_status:vrgather_vv:m4:Latency:non_identifiable",
+      "llvm_field_status:vslideup_vx:m4:Latency:non_identifiable"
+    ]
+  }
+}

@@ -4,19 +4,21 @@ Back to main report: [experiment_quality.md](experiment_quality.md)
 Previous: [experiment_quality_repeatability_part1.md](experiment_quality_repeatability_part1.md)
 
 Mode: real_platform_profile
-Gate status: NOT_READY
-Confidence: awaiting_human_approval
-Human approval status: absent
+Gate status: PASS
+Confidence: approved_real_platform
+Human approval status: approved
 
-## Repeatability Rows 1799-3595 of 3595
+## Repeatability Rows 1909-3815 of 3815
 
 
-Repeat groups found: 3595
-Stable repeat groups: 3595
+Repeat groups found: 3815
+Stable repeat groups: 3815
 Unstable repeat groups: 0
 
 | Template | Instruction | LMUL | Traces | Delta values | Status |
 | --- | --- | --- | ---: | --- | --- |
+| `T30_LMUL_SCALING` | `vdivu_vv` | `m1` | 2 | `7, 7` | stable |
+| `T30_LMUL_SCALING` | `viota_m` | `m1` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `vmul_vv` | `m1` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `vredsum_vs` | `m1` | 2 | `7, 7` | stable |
 | `T30_LMUL_SCALING` | `vrgather_vv` | `m1` | 2 | `10, 10` | stable |
@@ -1280,42 +1282,150 @@ Unstable repeat groups: 0
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `11, 11` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `17, 17` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vcpop_m` | `m1` | 2 | `35, 35` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `11, 11` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `7, 7` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `7, 7` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `27, 27` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `37, 37` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `25, 25` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `21, 21` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `7, 7` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
-| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `15, 15` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `47, 47` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `55, 55` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `55, 55` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `75, 75` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `75, 75` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `47, 47` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `51, 51` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `51, 51` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `43, 43` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `43, 43` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `15, 15` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `35, 35` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vrgather_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `23, 23` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `83, 83` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vslideup_vx` | `m4` | 2 | `113, 113` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `71, 71` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vdivu_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `viota_m` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmseq_vv` | `m4` | 2 | `77, 77` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `65, 65` | stable |
+| `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `23, 23` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vadd_vv` | `m4` | 2 | `31, 31` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vmul_vv` | `m4` | 2 | `31, 31` | stable |
 | `T20_PAIRWISE_PIPE_CLASSIFICATION` | `vsll_vv` | `m4` | 2 | `31, 31` | stable |

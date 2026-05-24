@@ -1,6 +1,6 @@
 # Humanize2 Manifest Notes
 
-Status: Round 16 approval-discovery scope capture after commit `366be5b8`.
+Status: Round 17 human approval captured; real-platform gate passes.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -21,18 +21,16 @@ Current gate state:
   repeat groups.
 - Real-platform field status: 150 rows, 141 inferred, 9 non-identifiable, 0
   conflict, 0 insufficient-evidence.
-- Real-platform gate: `NOT_READY`, see `results/common/experiment_quality.md`.
-  The approval artifact is absent and must not be created without explicit
-  user approval tied to current risk IDs and hashes.
+- Real-platform gate: `PASS`, see `results/common/experiment_quality.md`.
+  The explicit approval artifact is `results/common/human_approval.json`.
 - Field-status blocking summary: `blocking_total: 9` and
   `blocking_status_counts.non_identifiable: 9`.
 - Risk request: `results/common/real_platform_risk_acceptance_request.json`
-  exists as a Round 14 pending, not-approved request for human decision. It is
-  not consumed by the gate and is not an approval artifact.
-- Current Round 14 hashes are `197787ab...` for inventory, `079cb94d...` for
-  field status, `3d72fd2e...` for real search, and `d3c2e41...` for
-  experiment quality. Future approval must bind at least the current inventory
-  and field-status hashes and must accept the current unresolved risk scope.
+  is fulfilled by `results/common/human_approval.json`. It is still not
+  consumed by the gate and is not an approval artifact.
+- Current Round 17 hashes are `f85dc41f...` for approval, `857590b1...` for
+  inventory, `079cb94d...` for field status, `3d72fd2e...` for real search,
+  `57c8d84d...` for experiment quality, and `1605e9af...` for the request.
   Older Round 4 through Round 7 hashes remain only in explicitly historical
   capture artifacts and events.
 
@@ -117,3 +115,26 @@ Round 6 ownership:
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require
   stronger experiments/modeling, or accept selected listed risk IDs.
+- Round 17 records the human decision to accept all 9 current risk IDs. The
+  coordinator created `results/common/human_approval.json`, regenerated
+  inventory and quality artifacts, and verified both synthetic and
+  real-platform gates pass. The accepted rows remain `non_identifiable` known
+  risks; they are not exact hardware-derived values.
+
+### Round 17 Human Approval
+
+The Humanize2 capture package for this boundary is:
+
+- `artifacts/prompts/round-17-human-approval-coordinator.md`
+- `artifacts/worker_outputs/coordinator-r17-human-approval.md`
+- `artifacts/verification/coordinator-r17-human-approval.md`
+- `artifacts/tool_calls/coordinator-r17-human-approval.json`
+- `artifacts/decisions/round-17-human-approval.md`
+
+Replay checks:
+
+```bash
+python3 scripts/analyze.py --all
+python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+```
