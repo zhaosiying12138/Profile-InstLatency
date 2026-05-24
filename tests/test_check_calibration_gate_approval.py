@@ -286,6 +286,24 @@ class ApprovalGateHardeningTest(unittest.TestCase):
         self.assertTrue(approval_valid, approval_failures)
         self.assertEqual([], field_failures)
 
+    def test_nested_human_approval_is_not_discovered_or_gate_consumed(self):
+        profile_root, _common, _inventory_path, _inventory, _inventory_sha, _field_sha = self.make_profile_root()
+        write_json(
+            profile_root / "r01" / "vadd_vv" / "human_approval.json",
+            {
+                "status": "approved",
+                "approved_by": "unit-test-human",
+                "accepted_risk_ids": ["all"],
+            },
+        )
+
+        discovered = analyze.discover_approval(profile_root)
+
+        self.assertFalse(discovered["approved"])
+        self.assertEqual("absent", discovered["status"])
+        self.assertIsNone(discovered["artifact_path"])
+        self.assertIsNone(gate.approval_file(profile_root))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -24,7 +24,7 @@ SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from approval_status import top_level_approval_decision
+from approval_status import human_approval_file, top_level_approval_decision
 
 
 LMUL_ORDER = ("m1", "m2", "m4")
@@ -737,12 +737,7 @@ def field_status_risks_accepted(field_status: dict[str, Any], approval: dict[str
 
 
 def approval_file(profile_root: Path) -> Path | None:
-    root = common_result_root(profile_root)
-    for name in ("human_approval.json", "human_approval.yaml", "human_approval.yml"):
-        path = root / name
-        if path.exists():
-            return path
-    return None
+    return human_approval_file(profile_root)
 
 
 def sha256_file(path: Path) -> str:

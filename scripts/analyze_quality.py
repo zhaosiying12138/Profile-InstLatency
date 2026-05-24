@@ -12,7 +12,6 @@ from statistics import mean, pstdev
 from typing import Any, Iterable
 
 from analyze_core import (
-    APPROVAL_FILENAMES,
     BLOCKING_FIELD_STATUSES,
     FIELD_STATUS_FILENAME,
     NON_REQUIRED_REAL_TEMPLATES,
@@ -26,7 +25,7 @@ from analyze_core import (
     parse_yamlish,
     render_yaml,
 )
-from approval_status import top_level_approval_decision
+from approval_status import human_approval_file, top_level_approval_decision
 
 def normalized_id(value: Any) -> str:
     if value is None or value == "":
@@ -547,14 +546,8 @@ def group_tuple_to_record(group: tuple[str, str, str]) -> dict[str, str]:
 
 
 def discover_approval(root: Path) -> dict[str, Any]:
-    candidates = sorted(
-        (
-            path
-            for path in root.rglob("*")
-            if path.is_file() and path.name.lower() in APPROVAL_FILENAMES
-        ),
-        key=lambda path: path.as_posix(),
-    )
+    approval_path = human_approval_file(root)
+    candidates = [approval_path] if approval_path is not None else []
     if not candidates:
         return {
             "status": "absent",
