@@ -107,6 +107,17 @@ def experiment(group: str, exp_id: str) -> dict[str, Path]:
     }
 
 
+def relative_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def missing_exec_logs(exps: dict[str, dict[str, Path]]) -> list[str]:
+    return sorted(relative_path(exp["exec"]) for exp in exps.values() if not exp["exec"].exists())
+
+
 def rows_between(exp: dict[str, Path], start: str, end: str) -> list[dict[str, Any]]:
     pcs = marker_pcs(exp["trace"])
     lo, hi = pcs[start], pcs[end]
@@ -251,11 +262,21 @@ def build() -> None:
     for key, exp in exps.items():
         cycles = marker_cycles(exp["trace"])
         evidence["experiments"][key] = {
-            "trace": str(exp["trace"].relative_to(ROOT)),
-            "test": str(exp["test"].relative_to(ROOT)),
+            "trace": relative_path(exp["trace"]),
+            "test": relative_path(exp["test"]),
             "marker_cycles": cycles,
             "primary_delta": max(cycles.values()) - min(cycles.values()) if cycles else None,
         }
+
+    missing_logs = missing_exec_logs(exps)
+    if missing_logs:
+        evidence["degraded"] = True
+        evidence["degraded_reason"] = "gem5 exec.log inputs are absent; preserving committed figures"
+        evidence["missing_exec_logs"] = missing_logs
+        evidence_path = REF_ROOT / "evidence.json"
+        if not evidence_path.exists():
+            evidence_path.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        return
 
     # Issue width and SingleIssue share T21 evidence.
     t21_rows = macro_ops(rows_between(exps["t21"], "start", "end"), ("vdivu_vv", "add "))

@@ -319,11 +319,20 @@ def load_paths_config(path: Path = DEFAULT_PATHS_CONFIG) -> dict[str, Any]:
     return data
 
 
-def resolve_config_path(config: dict[str, Any], key: str) -> Path:
+def is_bare_executable_name(value: str) -> bool:
+    has_separator = os.sep in value or (os.altsep is not None and os.altsep in value)
+    return not has_separator and not value.startswith(".")
+
+
+def resolve_config_path(config: dict[str, Any], key: str, *, search_path: bool = False) -> Path:
     value = config.get(key)
     if not value:
         raise ExperimentError(f"missing `{key}` in {DEFAULT_PATHS_CONFIG}")
     expanded = os.path.expandvars(os.path.expanduser(str(value)))
+    if search_path and is_bare_executable_name(expanded):
+        discovered = shutil.which(expanded)
+        if discovered:
+            return Path(discovered)
     path = Path(expanded)
     if not path.is_absolute():
         path = Path.cwd() / path
@@ -331,7 +340,7 @@ def resolve_config_path(config: dict[str, Any], key: str) -> Path:
 
 
 def require_executable(config: dict[str, Any], key: str) -> Path:
-    path = resolve_config_path(config, key)
+    path = resolve_config_path(config, key, search_path=True)
     if not path.exists() or not os.access(path, os.X_OK):
         raise ExperimentError(f"`{key}` is not an executable path: {path}")
     return path
