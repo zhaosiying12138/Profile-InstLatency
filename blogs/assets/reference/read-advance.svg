@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="360" viewBox="0 0 1320 360">
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="34" y="48" font-size="28" font-family="Inter,Arial" font-weight="700" fill="#172033">T12 k=2 consumer gap: no ReadAdvance claim</text>
+<line x1="170.0" y1="78" x2="170.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="170.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">0</text>
+<line x1="390.0" y1="78" x2="390.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="390.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">1</text>
+<line x1="610.0" y1="78" x2="610.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="610.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">2</text>
+<line x1="830.0" y1="78" x2="830.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="830.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">3</text>
+<line x1="1050.0" y1="78" x2="1050.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1050.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">4</text>
+<line x1="1270.0" y1="78" x2="1270.0" y2="280" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1270.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">5</text>
+<text x="34" y="135" font-size="18" font-family="Inter,Arial" fill="#27364a">gap window</text>
+<line x1="170" y1="142" x2="1270" y2="142" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="170.0" y="110" width="216.0" height="42" rx="6" fill="#2b6cb0"/>
+<text x="278.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vdivu.vv</text>
+<text x="170.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vdivu.vv v2, v0, v1</text>
+<rect x="390.0" y="110" width="216.0" height="42" rx="6" fill="#2f855a"/>
+<text x="498.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vadd.vv</text>
+<text x="390.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vadd.vv v4, v0, v1</text>
+<rect x="610.0" y="110" width="216.0" height="42" rx="6" fill="#2f855a"/>
+<text x="718.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vadd.vv</text>
+<text x="610.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vadd.vv v5, v0, v1</text>
+<rect x="1050.0" y="110" width="216.0" height="42" rx="6" fill="#2f855a"/>
+<text x="1158.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vadd.vv</text>
+<text x="1050.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vadd.vv v3, v2, v1</text>
+<rect x="830.0" y="110" width="216.0" height="42" rx="6" fill="#e53e3e"/>
+<text x="938.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">bubble</text>
+<text x="830.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">consumer waits for readiness</text>
+<text x="34" y="284" font-size="16" font-family="Inter,Arial" fill="#334155">Two fillers do not fully hide vdivu.vv readiness.</text>
+<text x="34" y="308" font-size="16" font-family="Inter,Arial" fill="#334155">The experiment constrains Latency, not a consumer-specific ReadAdvance field.</text>
+</svg>
