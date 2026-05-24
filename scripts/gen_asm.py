@@ -1004,6 +1004,11 @@ def body_t12(
     consumer_role: str = T12_DEFAULT_CONSUMER_ROLE,
     matched_dependent_experiment_id: str | None = None,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
+    if consumer == T12_SCALAR_FILLER and spec.result_kind != "scalar":
+        raise SystemExit(
+            "T12 scalar_add consumer requires a scalar-result producer; "
+            "use a vector or mask consumer for vector/mask producer results"
+        )
     src_a, src_b = base_vector_sources(lmul)
     vector_filler_count = filler_count if filler == T12_DEFAULT_FILLER else 0
     if spec.result_kind == "scalar":
