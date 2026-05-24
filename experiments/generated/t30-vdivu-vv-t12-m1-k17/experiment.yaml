@@ -52,7 +52,7 @@ parameters:
   vl_value: 64
 generation:
   generator: "scripts/gen_asm.py"
-  generator_version: 2
+  generator_version: 3
   stdlib_only: true
   deterministic: true
   template_file: "templates/rvv_program.s.tpl"
@@ -97,6 +97,8 @@ scaling:
     - "m4"
 body:
   filler_count: 17
+  filler_instruction_id: "vadd_vv"
+  independent_filler_kind: "vector"
   producer_destination: "v2"
   producer_result_kind: "vector"
   consumer: "vadd_vv"

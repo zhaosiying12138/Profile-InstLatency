@@ -52,7 +52,7 @@ parameters:
   vl_value: 64
 generation:
   generator: "scripts/gen_asm.py"
-  generator_version: 2
+  generator_version: 3
   stdlib_only: true
   deterministic: true
   template_file: "templates/rvv_program.s.tpl"
@@ -85,6 +85,8 @@ instruction:
   notes: "Vector gather using vector indices; assembler forbids destination/source overlap."
 body:
   filler_count: 8
+  filler_instruction_id: "vadd_vv"
+  independent_filler_kind: "vector"
   producer_destination: "v8"
   producer_result_kind: "vector"
   consumer: "vadd_vv"

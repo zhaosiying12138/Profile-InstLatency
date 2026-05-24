@@ -22,7 +22,7 @@ suite:
 generation:
   generator: "scripts/gen_asm.py"
   generator_version: 3
-  manifest_only: true
+  manifest_only: false
 experiments:
   -
     id: "t00-marker"

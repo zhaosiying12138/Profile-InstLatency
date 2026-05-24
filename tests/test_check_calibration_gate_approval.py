@@ -216,6 +216,31 @@ class ApprovalGateHardeningTest(unittest.TestCase):
         self.assertTrue(approval_valid, approval_failures)
         self.assertEqual([], field_failures)
 
+    def test_yaml_block_list_risk_acceptance_passes_unresolved_field_status(self):
+        profile_root, common, inventory_path, inventory, inventory_sha, field_sha = self.make_profile_root()
+        (common / "human_approval.yaml").write_text(
+            "\n".join(
+                [
+                    "status: approved",
+                    "approved_by: unit-test-human",
+                    f"inventory_sha256: {inventory_sha}",
+                    f"real_platform_field_status_sha256: {field_sha}",
+                    "accepted_risk_ids:",
+                    "  - all",
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+        approval_valid, approval_failures, approval = self.approval_check(profile_root, inventory_path, inventory)
+        field_failures = gate.real_platform_field_status_failures(
+            inventory_path, inventory, approval_valid, approval
+        )
+
+        self.assertTrue(approval_valid, approval_failures)
+        self.assertEqual([], field_failures)
+
     def test_pending_top_level_status_fails_even_if_nested_risk_acceptance_is_approved(self):
         profile_root, common, inventory_path, inventory, inventory_sha, field_sha = self.make_profile_root()
         self.write_approval(

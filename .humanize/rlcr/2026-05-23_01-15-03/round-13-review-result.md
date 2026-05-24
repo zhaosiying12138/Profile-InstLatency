@@ -1,0 +1,14 @@
+- [P2] Support block-list YAML approvals — /home/zhaosiying/codebase/compiler/profile_inst_latency/scripts/check_calibration_gate.py:147-148
+  When the approval artifact is `human_approval.yaml`, any normal YAML block list such as `accepted_risk_ids:\n  - all` is silently discarded here because list-item lines have no colon. The gate then sees `accepted_risk_ids` as an empty mapping/string instead of a list, so a valid YAML approval that waives unresolved field-status risks is still rejected; either parse block lists or restrict approvals to JSON/inline-list YAML.
+
+- [P2] Regenerate checked-in experiments with generator v3 — /home/zhaosiying/codebase/compiler/profile_inst_latency/experiments/generated/t12-vadd-vv-m4-k40-vadd-vv/experiment.yaml:55-55
+  This generated experiment still records `generator_version: 2` while the committed generator and suite manifest now declare version 3; most checked-in experiment YAMLs are in this stale state, and rerunning the recorded reproduce command rewrites metadata such as `filler_instruction_id` and `independent_filler_kind`. Because `run_suite.py` consumes these checked-in experiment files directly, the suite is not reproducible from the committed generator until the generated artifacts are refreshed.
+The patch has functional/reproducibility issues: YAML approvals can be rejected despite valid block-list risk waivers, and many committed generated experiments are stale relative to the committed generator. These should be fixed before treating the change as correct.
+
+Full review comments:
+
+- [P2] Support block-list YAML approvals — /home/zhaosiying/codebase/compiler/profile_inst_latency/scripts/check_calibration_gate.py:147-148
+  When the approval artifact is `human_approval.yaml`, any normal YAML block list such as `accepted_risk_ids:\n  - all` is silently discarded here because list-item lines have no colon. The gate then sees `accepted_risk_ids` as an empty mapping/string instead of a list, so a valid YAML approval that waives unresolved field-status risks is still rejected; either parse block lists or restrict approvals to JSON/inline-list YAML.
+
+- [P2] Regenerate checked-in experiments with generator v3 — /home/zhaosiying/codebase/compiler/profile_inst_latency/experiments/generated/t12-vadd-vv-m4-k40-vadd-vv/experiment.yaml:55-55
+  This generated experiment still records `generator_version: 2` while the committed generator and suite manifest now declare version 3; most checked-in experiment YAMLs are in this stale state, and rerunning the recorded reproduce command rewrites metadata such as `filler_instruction_id` and `independent_filler_kind`. Because `run_suite.py` consumes these checked-in experiment files directly, the suite is not reproducible from the committed generator until the generated artifacts are refreshed.

@@ -136,29 +136,84 @@ def parse_scalar(text: str) -> Any:
         return text.strip("\"'")
 
 
+def sequence_item_text(text: str) -> str | None:
+    if text == "-":
+        return ""
+    if text.startswith("- "):
+        return text[2:].strip()
+    return None
+
+
+def parse_yaml_block(lines: list[tuple[int, str]], index: int, indent: int) -> tuple[Any, int]:
+    if index >= len(lines) or lines[index][0] < indent:
+        return {}, index
+    if sequence_item_text(lines[index][1]) is not None:
+        items: list[Any] = []
+        while index < len(lines):
+            line_indent, text = lines[index]
+            item_text = sequence_item_text(text)
+            if line_indent != indent or item_text is None:
+                break
+            index += 1
+            if item_text == "":
+                if index < len(lines) and lines[index][0] > indent:
+                    item, index = parse_yaml_block(lines, index, lines[index][0])
+                else:
+                    item = None
+                items.append(item)
+                continue
+            if ":" in item_text and not item_text.startswith(("{", "[")):
+                key, raw = item_text.split(":", 1)
+                clean_key = str(parse_scalar(key.strip()))
+                item_map: dict[str, Any] = {
+                    clean_key: parse_scalar(raw.strip()) if raw.strip() else None
+                }
+                if index < len(lines) and lines[index][0] > indent:
+                    child, index = parse_yaml_block(lines, index, lines[index][0])
+                    if isinstance(child, dict):
+                        item_map.update(child)
+                    else:
+                        item_map[clean_key] = child
+                items.append(item_map)
+            else:
+                items.append(parse_scalar(item_text))
+        return items, index
+
+    mapping: dict[str, Any] = {}
+    while index < len(lines):
+        line_indent, text = lines[index]
+        if line_indent != indent or sequence_item_text(text) is not None:
+            break
+        if ":" not in text:
+            index += 1
+            continue
+        key, raw = text.split(":", 1)
+        clean_key = str(parse_scalar(key.strip()))
+        raw = raw.strip()
+        index += 1
+        if raw:
+            mapping[clean_key] = parse_scalar(raw)
+        elif index < len(lines) and lines[index][0] > indent:
+            mapping[clean_key], index = parse_yaml_block(lines, index, lines[index][0])
+        else:
+            mapping[clean_key] = None
+    return mapping, index
+
+
 def parse_yamlish(path: Path) -> dict[str, Any]:
     if path.suffix == ".json":
         data = json.loads(path.read_text(encoding="utf-8"))
         return data if isinstance(data, dict) else {}
-    root: dict[str, Any] = {}
-    stack: list[tuple[int, dict[str, Any]]] = [(-1, root)]
+    lines: list[tuple[int, str]] = []
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.split("#", 1)[0].rstrip()
-        if not line.strip() or ":" not in line:
+        if not line.strip():
             continue
-        indent = len(line) - len(line.lstrip(" "))
-        key, value = line.strip().split(":", 1)
-        while stack and indent <= stack[-1][0]:
-            stack.pop()
-        parent = stack[-1][1]
-        clean_key = str(parse_scalar(key.strip()))
-        if value.strip():
-            parent[clean_key] = parse_scalar(value)
-            continue
-        child: dict[str, Any] = {}
-        parent[clean_key] = child
-        stack.append((indent, child))
-    return root
+        lines.append((len(line) - len(line.lstrip(" ")), line.strip()))
+    if not lines:
+        return {}
+    parsed, _index = parse_yaml_block(lines, 0, lines[0][0])
+    return parsed if isinstance(parsed, dict) else {}
 
 
 def nested_get(data: dict[str, Any], path: tuple[str, ...]) -> Any:
