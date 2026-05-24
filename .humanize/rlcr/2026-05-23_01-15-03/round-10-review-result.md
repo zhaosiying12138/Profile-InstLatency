@@ -4,7 +4,7 @@ Recommendation: REQUEST CHANGES
 
 Architectural Status: BLOCK
 
-Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The submitted Round 10 summary is accurate for its original boundary through `7a7da5d2`, but the live checkout has advanced to `188b3d29`. Do not use the summary's 38-risk hashes as current state. Current HEAD reports 141 inferred rows, 9 `non_identifiable` rows, request round 14, and search hash `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd`.
+Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The submitted Round 10 summary is accurate for its original boundary through `7a7da5d2`, but the live checkout has advanced beyond that boundary. Do not use the summary's 38-risk hashes as current state. Current HEAD reports 141 inferred rows, 9 `non_identifiable` rows, request round 14, and search hash `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd`.
 
 ## Part 1: Implementation Review
 
@@ -61,6 +61,19 @@ Required implementation plan:
 6. Refresh `results/common/agentic_flow/**` for the new evidence boundary, keeping worker write scopes out of `.humanize/rlcr/**`.
 7. Verify `python3 -m pytest -q`, py_compile, real-search byte reproducibility, synthetic gate pass, and real gate status. Do not claim completion until `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results` passes.
 
+### Accepted: future human approval validation is hardened
+
+The approval-status issue found during re-review is now fixed. `scripts/check_calibration_gate.py` reads artifact approval only from top-level `approved`, `status`, `approval_status`, and `human_approval` fields, and every present top-level approval field must be approved/granted/pass. Nested `risk_acceptance.status` no longer satisfies artifact-level approval.
+
+`scripts/analyze.py`/`scripts/analyze_quality.py` now use the same top-level approval decision for approval discovery, while recursive extraction is still used for accepted risk IDs and risk-acceptance scope.
+
+Regression coverage in `tests/test_check_calibration_gate_approval.py` verifies:
+
+- top-level `status: pending` plus nested `risk_acceptance.status: approved` fails approval validation and remains unapproved in `analyze.discover_approval()`.
+- top-level approved plus nested accepted-risk scope remains valid.
+
+This does not make the real-platform gate pass, because no approval artifact exists and the 9 non-identifiable rows remain unresolved.
+
 ## Part 2: Goal Alignment Check
 
 Current AC status:
@@ -95,30 +108,34 @@ ACs: 17/17 addressed, 16/17 met | Forgotten items: 0 | Unjustified deferrals: 0
 
 ## Part 3: Goal Tracker Update Requests
 
-Claude's Round 10 tracker request was justified as a progress update, not a completion update, but it is now superseded by later current-head tracker state. No additional tracker edit is needed in this review.
+Claude's Round 10 tracker request was justified as a progress update, not a completion update, but it is now superseded by later current-head tracker state. I applied an additional mutable tracker update for the approval-status validation blocker and then recorded its fix.
 
 Current tracker state already records:
 
-- Plan Version 24 at `goal-tracker.md:52`.
+- Plan Version 26 at `goal-tracker.md:52`.
 - Round 10 progress for `f3bb4552`, `cd71b7ed`, `c1032a2c`, `73b99c2e`, and `7a7da5d2` at `goal-tracker.md:73`.
 - The formula-fit coverage repair at `goal-tracker.md:81`.
-- T9 and T11 as `needs_changes` until AC-16 passes at `goal-tracker.md:96-98`.
-- The current open issue for 9 non-identifiable real-platform LLVM-facing rows at `goal-tracker.md:143`.
+- The approval-status gate hardening issue and fix at `goal-tracker.md:82-83`.
+- T9 and T11 as `needs_changes` until AC-16 passes at `goal-tracker.md:97-99`.
+- The current open issue for 9 non-identifiable real-platform LLVM-facing rows at `goal-tracker.md:145`.
 
 The immutable goal and acceptance criteria were not modified.
 
 ## Reviewer Verification Commands
 
-- `python3 -m pytest -q`: passed, 59 tests.
-- `python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py`: passed.
+- `python3 -m pytest -q`: passed, 61 tests.
+- `python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/analyze_core.py scripts/analyze_quality.py scripts/run_experiment.py`: passed.
+- `python3 -m unittest tests.test_check_calibration_gate_approval`: passed, 9 tests.
+- `python3 scripts/analyze.py --all --dry-run`: passed after the analyzer helper split imported `parse_yamlish` from `analyze_core.py`.
 - `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results`: passed.
 - `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results`: failed closed as expected on missing PASS, missing approval, and 9 unresolved risks.
-- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-round10-current-review-search.json --format json`: passed.
-- `cmp /tmp/profile-inst-latency-round10-current-review-search.json results/common/search_model_real_platform.json`: passed.
+- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-round10-current-review-search-codex.json --format json`: passed.
+- `cmp /tmp/profile-inst-latency-round10-current-review-search-codex.json results/common/search_model_real_platform.json`: passed.
 - SHA for both regenerated and checked-in real search output: `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd`.
-- YAML/JSON/JSONL/HTML parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, events, and cartridge: passed.
+- YAML/JSON/JSONL parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, and events: passed, 71 events.
 - Formula-fit probe reports `partial_fit_blocked` with blocked `m4` for `vcpop_m` `ReleaseAtCycles`, `vrgather_vv` `Latency`, and `vslideup_vx` `Latency`.
 - Request risk IDs match inventory unresolved risk IDs exactly.
+- Approval-status regression now rejects top-level `status: pending` when a nested risk-acceptance object has `status: approved`, and still accepts top-level approved plus nested accepted-risk scope.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no output.
 - `git diff --check` and `git diff --cached --check`: passed.
 

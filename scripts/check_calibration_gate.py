@@ -614,6 +614,12 @@ def find_values_by_key(data: Any, names: set[str]) -> list[Any]:
     return values
 
 
+def top_level_values_by_key(data: Any, names: set[str]) -> list[Any]:
+    if not isinstance(data, dict):
+        return []
+    return [value for key, value in data.items() if canonical_json_key(key) in names]
+
+
 def values_from_json_key(data: Any, names: set[str]) -> list[Any]:
     values: list[Any] = []
     if isinstance(data, dict):
@@ -770,8 +776,10 @@ def human_approval_failures(
     if approval is None:
         return False, failures, None
 
-    status_values = find_values_by_key(approval, {"approved", "status", "approval_status", "human_approval"})
-    approved = any(truthy_status(value) for value in status_values)
+    status_values = top_level_values_by_key(
+        approval, {"approved", "status", "approval_status", "human_approval"}
+    )
+    approved = bool(status_values) and all(truthy_status(value) for value in status_values)
     if not approved:
         failures.append(f"{path}: approval status is not approved/granted/pass")
 

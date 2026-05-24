@@ -216,6 +216,53 @@ class ApprovalGateHardeningTest(unittest.TestCase):
         self.assertTrue(approval_valid, approval_failures)
         self.assertEqual([], field_failures)
 
+    def test_pending_top_level_status_fails_even_if_nested_risk_acceptance_is_approved(self):
+        profile_root, common, inventory_path, inventory, inventory_sha, field_sha = self.make_profile_root()
+        self.write_approval(
+            common,
+            status="pending",
+            inventory_sha256=inventory_sha,
+            real_platform_field_status_sha256=field_sha,
+            risk_acceptance={
+                "status": "approved",
+                "accepted_risk_ids": ["all"],
+            },
+        )
+
+        approval_valid, approval_failures, approval = self.approval_check(profile_root, inventory_path, inventory)
+        field_failures = gate.real_platform_field_status_failures(
+            inventory_path, inventory, approval_valid, approval
+        )
+
+        self.assertFalse(approval_valid)
+        self.assertTrue(any("approval status is not approved" in failure for failure in approval_failures))
+        self.assertTrue(field_failures)
+        discovered = analyze.discover_approval(profile_root)
+        self.assertFalse(discovered["approved"])
+        self.assertEqual("present_unapproved", discovered["status"])
+
+    def test_top_level_approved_can_use_nested_risk_acceptance_scope(self):
+        profile_root, common, inventory_path, inventory, inventory_sha, field_sha = self.make_profile_root()
+        self.write_approval(
+            common,
+            inventory_sha256=inventory_sha,
+            real_platform_field_status_sha256=field_sha,
+            risk_acceptance={
+                "accepted_risk_ids": ["all"],
+            },
+        )
+
+        approval_valid, approval_failures, approval = self.approval_check(profile_root, inventory_path, inventory)
+        field_failures = gate.real_platform_field_status_failures(
+            inventory_path, inventory, approval_valid, approval
+        )
+
+        self.assertTrue(approval_valid, approval_failures)
+        self.assertEqual([], field_failures)
+        discovered = analyze.discover_approval(profile_root)
+        self.assertTrue(discovered["approved"])
+        self.assertEqual(["all"], discovered["accepted_risk_ids"])
+
 
 if __name__ == "__main__":
     unittest.main()
