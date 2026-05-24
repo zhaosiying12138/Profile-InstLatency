@@ -53,7 +53,7 @@ class ReviewPhaseRound23Test(unittest.TestCase):
             self.assertEqual(nested_profiles, [root / "r01" / "vadd_vv" / "profile.yaml"])
             self.assertEqual(nested_traces, [root / "r01" / "vadd_vv" / "experiments" / "nested-r01-t10" / "trace.json"])
 
-    def test_default_vector_filler_does_not_emit_fixed_cadence_metadata(self):
+    def test_default_vector_filler_emits_regeneration_cadence_metadata(self):
         args = gen_asm.build_parser().parse_args(
             [
                 "one",
@@ -73,8 +73,8 @@ class ReviewPhaseRound23Test(unittest.TestCase):
         _markers, _lines, meta = gen_asm.body_for_args(args)
 
         self.assertEqual(meta["filler_instruction_id"], "vadd_vv")
-        self.assertNotIn("filler_cadence_cycles", meta)
-        self.assertNotIn("independent_filler_cadence_cycles", meta["gap_sweep"])
+        self.assertEqual(meta["filler_cadence_cycles"], 1)
+        self.assertEqual(meta["gap_sweep"]["independent_filler_cadence_cycles"], 1)
 
     def test_scalar_filler_keeps_fixed_cadence_metadata(self):
         args = gen_asm.build_parser().parse_args(

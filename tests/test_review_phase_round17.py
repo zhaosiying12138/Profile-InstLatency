@@ -134,7 +134,7 @@ class ReviewPhaseRound17Test(unittest.TestCase):
             self.assertTrue((root / "common" / "real_platform_field_status.json").exists())
             self.assertTrue((root / "vadd_vv" / "profile.real_platform.yaml").exists())
 
-    def test_default_t12_vector_filler_leaves_cadence_to_measured_model(self):
+    def test_default_t12_vector_filler_records_regeneration_cadence(self):
         args = gen_asm.build_parser().parse_args(
             [
                 "one",
@@ -154,8 +154,8 @@ class ReviewPhaseRound17Test(unittest.TestCase):
         _markers, _lines, meta = gen_asm.body_for_args(args)
 
         self.assertEqual(meta["filler_instruction_id"], "vadd_vv")
-        self.assertNotIn("filler_cadence_cycles", meta)
-        self.assertNotIn("independent_filler_cadence_cycles", meta["gap_sweep"])
+        self.assertEqual(meta["filler_cadence_cycles"], 1)
+        self.assertEqual(meta["gap_sweep"]["independent_filler_cadence_cycles"], 1)
 
 
 if __name__ == "__main__":

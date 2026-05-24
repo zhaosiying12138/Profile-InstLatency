@@ -38,6 +38,10 @@ T12_FOCUSED_FILLER_COUNTS = tuple(range(9))
 T12_DEFAULT_FILLER = "vadd_vv"
 T12_SCALAR_FILLER = "scalar_add"
 T12_FILLERS = (T12_DEFAULT_FILLER, T12_SCALAR_FILLER)
+T12_FILLER_CADENCE_CYCLES = {
+    T12_DEFAULT_FILLER: 1,
+    T12_SCALAR_FILLER: 1,
+}
 T12_DEFAULT_CONSUMER_ROLE = "dependent"
 T12_CONSUMER_ROLES = (T12_DEFAULT_CONSUMER_ROLE, "control")
 T12_SCALAR_FILLER_TARGETS = frozenset(
@@ -1102,7 +1106,7 @@ def body_t12(
     lines.append("TIMESTAMP_MARK end")
     raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
     filler_kind = "scalar" if filler == T12_SCALAR_FILLER else "vector"
-    filler_cadence = 1 if filler == T12_SCALAR_FILLER else None
+    filler_cadence = T12_FILLER_CADENCE_CYCLES.get(filler)
     gap_sweep: dict[str, Any] = {
         "parameter": "filler_count",
         "value": filler_count,
