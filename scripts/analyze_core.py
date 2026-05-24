@@ -528,22 +528,18 @@ def infer_release_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
         if iterations is None or iterations <= 0 or delta is None:
             skipped.append(raw_marker_evidence(item, "throughput_missing_delta_or_iterations"))
             continue
-        if delta % iterations != 0:
-            skipped.append(raw_marker_evidence(item, f"throughput_non_integer:delta={delta}:iterations={iterations}"))
-            continue
-        value = delta // iterations
         observations.append(
             (
                 iterations,
-                value,
+                delta,
                 raw_marker_evidence(
                     item,
-                    f"{effective_shape(item)}:delta={delta}:iterations={iterations}:release={value}",
+                    f"{effective_shape(item)}:delta={delta}:iterations={iterations}",
                 ),
             )
         )
 
-    evidence = [entry for _iterations, _value, entry in observations] + skipped
+    evidence = [entry for _iterations, _delta, entry in observations] + skipped
     if not observations:
         return field_record(
             None,
@@ -551,7 +547,7 @@ def infer_release_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
             evidence,
             claimed=False,
             identifiable=False,
-            reason="No T10/T30 throughput marker delta with an exact integer delta/iterations ratio is available.",
+            reason="No T10/T30 throughput marker delta with stream length metadata is available.",
         )
     distinct_lengths = {iterations for iterations, _value, _entry in observations}
     if len(distinct_lengths) < 2:
@@ -563,16 +559,64 @@ def infer_release_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
             identifiable=False,
             reason="Throughput release requires at least two stream lengths for the same instruction/LMUL.",
         )
-    value = same_value([value for _iterations, value, _entry in observations])
-    if value is None:
+
+    deltas_by_length: dict[int, list[int]] = defaultdict(list)
+    for iterations, delta, _entry in observations:
+        deltas_by_length[iterations].append(delta)
+    points: list[tuple[int, int]] = []
+    for iterations in sorted(deltas_by_length):
+        delta = same_value(deltas_by_length[iterations])
+        if delta is None:
+            return field_record(
+                None,
+                "conflict_raw_marker_evidence",
+                evidence,
+                claimed=False,
+                identifiable=False,
+                reason="T10/T30 repeated throughput marker deltas for one stream length disagree.",
+            )
+        points.append((iterations, delta))
+
+    first_iterations, first_delta = points[0]
+    last_iterations, last_delta = points[-1]
+    delta_iterations = last_iterations - first_iterations
+    delta_cycles = last_delta - first_delta
+    if delta_iterations <= 0 or delta_cycles % delta_iterations != 0:
         return field_record(
             None,
             "conflict_raw_marker_evidence",
             evidence,
             claimed=False,
             identifiable=False,
-            reason="T10/T30 throughput marker deltas imply conflicting release values.",
+            reason="T10/T30 throughput marker deltas do not fit an integral ReleaseAtCycles slope.",
         )
+    value = delta_cycles // delta_iterations
+    if value < 0:
+        return field_record(
+            None,
+            "conflict_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="T10/T30 throughput marker deltas imply a negative ReleaseAtCycles slope.",
+        )
+    startup = first_delta - (first_iterations - 1) * value
+    mismatches = [
+        (iterations, delta)
+        for iterations, delta in points
+        if delta != startup + (iterations - 1) * value
+    ]
+    if mismatches:
+        return field_record(
+            None,
+            "conflict_raw_marker_evidence",
+            evidence,
+            claimed=False,
+            identifiable=False,
+            reason="T10/T30 throughput marker deltas do not fit startup + (N - 1) * ReleaseAtCycles.",
+        )
+    point_summary = ",".join(f"n{iterations}=delta{delta}" for iterations, delta in points)
+    evidence.append(f"throughput_fit:startup={startup}:release={value}:points={point_summary}")
     return field_record(
         value,
         "raw_marker_inference",
@@ -614,16 +658,28 @@ def infer_latency_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
             if filler_count is None or delta is None:
                 sweep_skipped.append(raw_marker_evidence(item, "raw_gap_missing_delta_or_filler_count"))
                 continue
-            value = delta - filler_count
+            cadence = body_int(item, "filler_cadence_cycles")
+            if filler_count > 0 and (cadence is None or cadence <= 0):
+                sweep_skipped.append(
+                    raw_marker_evidence(item, f"raw_gap_missing_filler_cadence:delta={delta}:filler={filler_count}")
+                )
+                continue
+            filler_cost = filler_count * (cadence if cadence is not None else 0)
+            value = delta - filler_cost
             if value < 0:
-                sweep_skipped.append(raw_marker_evidence(item, f"raw_gap_negative_readiness:delta={delta}:filler={filler_count}"))
+                sweep_skipped.append(
+                    raw_marker_evidence(
+                        item,
+                        f"raw_gap_negative_readiness:delta={delta}:filler={filler_count}:cadence={cadence}:filler_cost={filler_cost}",
+                    )
+                )
                 continue
             sweep_by_k.setdefault(filler_count, []).append(
                 (
                     value,
                     raw_marker_evidence(
                         item,
-                        f"{shape}:delta={delta}:filler_count={filler_count}:readiness={value}",
+                        f"{shape}:delta={delta}:filler_count={filler_count}:filler_cadence={cadence}:filler_cost={filler_cost}:readiness={value}",
                     ),
                 )
             )
