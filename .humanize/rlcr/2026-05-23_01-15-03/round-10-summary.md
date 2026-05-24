@@ -122,4 +122,6 @@ risks into fabricated exact values.
 
 ## BitLesson Delta
 
-none
+- Action: none
+- Lesson ID(s): NONE
+- Notes: BitLesson selector returned NONE for the approval/gate continuation; no reusable BitLesson entry was added or updated.
