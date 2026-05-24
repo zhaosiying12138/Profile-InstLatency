@@ -306,22 +306,41 @@ def dump_yaml(value: Any, indent: int = 0) -> str:
 def profile_files_from_path(raw: str) -> list[Path]:
     path = Path(raw)
     if path.is_dir():
-        return sorted(path.rglob("profile.yaml"), key=lambda item: item.as_posix())
+        direct_profile = path / "profile.yaml"
+        if direct_profile.exists():
+            return [direct_profile]
+        return sorted(
+            child / "profile.yaml"
+            for child in path.iterdir()
+            if child.is_dir() and (child / "profile.yaml").exists()
+        )
     if path.exists() and path.name == "profile.yaml":
         return [path]
     return []
 
 
+def experiment_trace_files(experiments_dir: Path) -> list[Path]:
+    return sorted(experiments_dir.glob("*/trace.json"), key=lambda item: item.as_posix())
+
+
 def trace_files_from_path(raw: str) -> list[Path]:
     path = Path(raw)
     if path.is_dir():
-        return sorted(path.rglob("trace.json"), key=lambda item: item.as_posix())
+        experiments_dir = path / "experiments"
+        if experiments_dir.exists():
+            return experiment_trace_files(experiments_dir)
+        traces: list[Path] = []
+        for child in path.iterdir():
+            child_experiments = child / "experiments"
+            if child.is_dir() and child_experiments.exists():
+                traces.extend(experiment_trace_files(child_experiments))
+        return sorted(traces, key=lambda item: item.as_posix())
     if not path.exists():
         return []
     if path.name == "profile.yaml":
         experiments_dir = path.parent / "experiments"
         if experiments_dir.exists():
-            return sorted(experiments_dir.rglob("trace.json"), key=lambda item: item.as_posix())
+            return experiment_trace_files(experiments_dir)
         return []
     if path.name == "trace.json" or path.suffix == ".json":
         return [path]

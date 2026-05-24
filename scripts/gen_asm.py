@@ -1097,7 +1097,7 @@ def body_t12(
     lines.append("TIMESTAMP_MARK end")
     raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
     filler_kind = "scalar" if filler == T12_SCALAR_FILLER else "vector"
-    filler_cadence = 1 if filler in {T12_SCALAR_FILLER, T12_DEFAULT_FILLER} else None
+    filler_cadence = 1 if filler == T12_SCALAR_FILLER else None
     gap_sweep: dict[str, Any] = {
         "parameter": "filler_count",
         "value": filler_count,
