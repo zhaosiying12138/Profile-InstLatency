@@ -177,6 +177,80 @@ class GenAsmT12FocusedTest(unittest.TestCase):
         self.assertIn("vadd.vv v12, v4, v0", lines)
         self.assertNotIn("vadd.vv v12, v8, v4", lines)
 
+    def test_generated_t12_vector_consumer_uses_requested_instruction(self):
+        args = gen_asm.build_parser().parse_args(
+            [
+                "one",
+                "--template",
+                "T12_CONSUMER_RAW_GAP",
+                "--instr",
+                "vadd_vv",
+                "--lmul",
+                "m1",
+                "--filler-count",
+                "0",
+                "--consumer",
+                "vmul_vv",
+                "--output-root",
+                "experiments/generated",
+            ]
+        )
+
+        _markers, lines, meta = gen_asm.body_for_args(args)
+
+        self.assertEqual(meta["consumer"], "vmul_vv")
+        self.assertEqual(meta["consumer_kind"], "vector")
+        self.assertIn("vmul.vv v3, v2, v1", lines)
+        self.assertNotIn("vadd.vv v3, v2, v1", lines)
+
+    def test_t30_t12_experiment_id_includes_requested_consumer(self):
+        parser = gen_asm.build_parser()
+        vadd_args = parser.parse_args(
+            [
+                "one",
+                "--template",
+                "T30_LMUL_SCALING",
+                "--shape",
+                "T12_CONSUMER_RAW_GAP",
+                "--instr",
+                "vadd_vv",
+                "--lmul",
+                "m1",
+                "--filler-count",
+                "0",
+                "--consumer",
+                "vadd_vv",
+                "--output-root",
+                "experiments/generated",
+            ]
+        )
+        vmul_args = parser.parse_args(
+            [
+                "one",
+                "--template",
+                "T30_LMUL_SCALING",
+                "--shape",
+                "T12_CONSUMER_RAW_GAP",
+                "--instr",
+                "vadd_vv",
+                "--lmul",
+                "m1",
+                "--filler-count",
+                "0",
+                "--consumer",
+                "vmul_vv",
+                "--output-root",
+                "experiments/generated",
+            ]
+        )
+
+        vadd_id = gen_asm.make_experiment_id(vadd_args)
+        vmul_id = gen_asm.make_experiment_id(vmul_args)
+
+        self.assertNotEqual(vadd_id, vmul_id)
+        self.assertIn("vadd-vv", vadd_id)
+        self.assertIn("vmul-vv", vmul_id)
+
 
 if __name__ == "__main__":
     unittest.main()

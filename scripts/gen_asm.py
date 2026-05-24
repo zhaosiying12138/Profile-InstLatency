@@ -832,7 +832,7 @@ def make_experiment_id(args: argparse.Namespace) -> str:
     if template_id == "T30_LMUL_SCALING":
         if args.shape == "T12_CONSUMER_RAW_GAP":
             filler_count = args.filler_count if args.filler_count is not None else 0
-            parts.append(f"k{filler_count}")
+            parts.extend([f"k{filler_count}", args.consumer or default_consumer(args.instr)])
             if t12_filler(args) != T12_DEFAULT_FILLER:
                 parts.append(f"f{t12_filler(args)}")
         else:
@@ -1045,7 +1045,15 @@ def body_t12(
                 )
             )
         else:
-            lines.append(emit_consumer("vector", consumer_source, consumer_dest, fallback_source))
+            lines.append(
+                emit_instruction(
+                    consumer_spec,
+                    dest=consumer_dest,
+                    src_a=consumer_source,
+                    src_b=fallback_source,
+                    scalar="x6",
+                )
+            )
     lines.append("TIMESTAMP_MARK end")
     raw_path = f"{spec.result_kind}_result_to_{consumer_kind}"
     filler_kind = "scalar" if filler == T12_SCALAR_FILLER else "vector"

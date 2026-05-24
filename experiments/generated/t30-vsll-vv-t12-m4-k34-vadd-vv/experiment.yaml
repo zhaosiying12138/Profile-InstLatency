@@ -1,0 +1,114 @@
+schema_version: 1
+experiment_id: "t30-vsll-vv-t12-m4-k34-vadd-vv"
+template_id: "T30_LMUL_SCALING"
+result_group: "vsll_vv"
+instruction_id: "vsll_vv"
+lmul: "m4"
+sew: 32
+markers:
+  - "start"
+  - "end"
+marker_metadata:
+  -
+    label: "start"
+    symbol: "__rvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_start"
+    local_label: ".Lrvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_start"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+  -
+    label: "end"
+    symbol: "__rvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_end"
+    local_label: ".Lrvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_end"
+    zero_cost: true
+    occupies_issue_slot: false
+    pc_anchor: "next_instruction"
+experiment:
+  id: "t30-vsll-vv-t12-m4-k34-vadd-vv"
+  template_id: "T30_LMUL_SCALING"
+  purpose: "Reuse timing shapes across LMUL values for scaling fits."
+  files:
+    assembly: "test.s"
+    metadata: "experiment.yaml"
+  markers:
+    -
+      label: "start"
+      symbol: "__rvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_start"
+      local_label: ".Lrvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_start"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+    -
+      label: "end"
+      symbol: "__rvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_end"
+      local_label: ".Lrvv_profile_marker_t30_vsll_vv_t12_m4_k34_vadd_vv_end"
+      zero_cost: true
+      occupies_issue_slot: false
+      pc_anchor: "next_instruction"
+parameters:
+  sew: 32
+  lmul: "m4"
+  vl_register: "x5"
+  vl_value: 64
+generation:
+  generator: "scripts/gen_asm.py"
+  generator_version: 3
+  stdlib_only: true
+  deterministic: true
+  template_file: "templates/rvv_program.s.tpl"
+  reproduce:
+    argv:
+      - "python3"
+      - "scripts/gen_asm.py"
+      - "one"
+      - "--template"
+      - "T30_LMUL_SCALING"
+      - "--instr"
+      - "vsll_vv"
+      - "--lmul"
+      - "m4"
+      - "--consumer"
+      - "vadd_vv"
+      - "--shape"
+      - "T12_CONSUMER_RAW_GAP"
+      - "--filler-count"
+      - "34"
+      - "--output-root"
+      - "experiments/generated"
+      - "--experiment-id"
+      - "t30-vsll-vv-t12-m4-k34-vadd-vv"
+    command: "python3 scripts/gen_asm.py one --template T30_LMUL_SCALING --instr vsll_vv --lmul m4 --consumer vadd_vv --shape T12_CONSUMER_RAW_GAP --filler-count 34 --output-root experiments/generated --experiment-id t30-vsll-vv-t12-m4-k34-vadd-vv"
+instruction:
+  id: "vsll_vv"
+  asm: "vsll.vv"
+  llvm_sched_write: "WriteVShiftV"
+  result_kind: "vector"
+  chainable: true
+  notes: "Vector shift using a vector shift-count operand."
+scaling:
+  shape: "T12_CONSUMER_RAW_GAP"
+  shape_parameters:
+    filler_count: 34
+    consumer: "vadd_vv"
+  fit_form: "base_plus_lmul_times_k"
+  suite_values:
+    - "m1"
+    - "m2"
+    - "m4"
+body:
+  filler_count: 34
+  filler_instruction_id: "vadd_vv"
+  independent_filler_kind: "vector"
+  producer_destination: "v8"
+  producer_result_kind: "vector"
+  consumer: "vadd_vv"
+  consumer_kind: "vector"
+  consumer_destination: "v12"
+  consumer_reads_producer: true
+  raw_path: "vector_result_to_vector"
+  gap_sweep:
+    parameter: "filler_count"
+    value: 34
+    independent_filler_instruction: "vadd_vv"
+    independent_filler_count: 34
+  scaling_shape: "T12_CONSUMER_RAW_GAP"
