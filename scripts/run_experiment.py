@@ -835,6 +835,35 @@ def body_value(metadata: dict[str, Any], key: str, default: Any = None) -> Any:
     return metadata.get(key, default)
 
 
+def body_bool(metadata: dict[str, Any], key: str) -> bool | None:
+    value = body_value(metadata, key)
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        text = value.strip().lower()
+        if text in {"1", "true", "yes", "on"}:
+            return True
+        if text in {"0", "false", "no", "off"}:
+            return False
+    if isinstance(value, (int, float)):
+        return bool(value)
+    return None
+
+
+def t12_consumer_reads_producer(metadata: dict[str, Any]) -> bool:
+    role = body_value(metadata, "t12_consumer_role", body_value(metadata, "consumer_role"))
+    if role is not None and str(role).strip().lower() == "control":
+        return False
+    reads_producer = body_bool(metadata, "consumer_reads_producer")
+    return True if reads_producer is None else reads_producer
+
+
+def t12_filler_cost(metadata: dict[str, Any]) -> int:
+    filler_count = int(body_value(metadata, "filler_count", 0) or 0)
+    cadence = int(body_value(metadata, "filler_cadence_cycles", 1) or 1)
+    return filler_count * max(1, cadence)
+
+
 def _instruction_timing(
     metadata: dict[str, Any], timing_model: dict[str, Any]
 ) -> tuple[int, int, dict[str, Any], bool]:
@@ -902,7 +931,10 @@ def synthetic_delta_cycles(metadata: dict[str, Any], timing_model: dict[str, Any
     if template_id == "T11_SELF_RAW_CHAIN":
         return int(body_value(metadata, "iterations", body_value(metadata, "chain_length", 6))) * max(1, latency)
     if template_id == "T12_CONSUMER_RAW_GAP":
-        return max(1, latency) + int(body_value(metadata, "filler_count", 0) or 0)
+        filler_cost = t12_filler_cost(metadata)
+        if not t12_consumer_reads_producer(metadata):
+            return filler_cost
+        return max(1, latency) + filler_cost
     if template_id == "T20_PAIRWISE_PIPE_CLASSIFICATION":
         return pair_delta_cycles(metadata, timing_model)
     if template_id == "T21_PAIR_WITH_SCALAR":
@@ -913,7 +945,10 @@ def synthetic_delta_cycles(metadata: dict[str, Any], timing_model: dict[str, Any
         if shape == "T10_INDEPENDENT_STREAM_THROUGHPUT":
             return int(body_value(metadata, "iterations", body_value(metadata, "sample_count", 6))) * max(1, release)
         if shape == "T12_CONSUMER_RAW_GAP":
-            return max(1, latency) + int(body_value(metadata, "filler_count", 0) or 0)
+            filler_cost = t12_filler_cost(metadata)
+            if not t12_consumer_reads_producer(metadata):
+                return filler_cost
+            return max(1, latency) + filler_cost
         return int(body_value(metadata, "iterations", body_value(metadata, "sample_count", 6))) * max(1, latency)
     if template_id == "T40_COMMON_VLSU_LOAD_HIT":
         return max(1, latency + release)

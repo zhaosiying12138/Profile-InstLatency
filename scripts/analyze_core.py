@@ -439,6 +439,20 @@ def body_int(item: ExperimentAnalysis, *keys: str) -> int | None:
     return None
 
 
+def body_bool(item: ExperimentAnalysis, *keys: str) -> bool | None:
+    for key in keys:
+        if key in item.body:
+            return bool_or_false(item.body.get(key))
+    return None
+
+
+def t12_is_control_probe(item: ExperimentAnalysis) -> bool:
+    role = item.body.get("t12_consumer_role", item.body.get("consumer_role"))
+    if role is not None and str(role).strip().lower() == "control":
+        return True
+    return body_bool(item, "consumer_reads_producer") is False
+
+
 def effective_shape(item: ExperimentAnalysis) -> str:
     if item.template_id == "T30_LMUL_SCALING" and item.scaling_shape:
         return item.scaling_shape
@@ -654,6 +668,9 @@ def infer_latency_record(items: list[ExperimentAnalysis]) -> dict[str, Any]:
                 )
             )
         elif shape == "T12_CONSUMER_RAW_GAP":
+            if t12_is_control_probe(item):
+                sweep_skipped.append(raw_marker_evidence(item, "raw_gap_control_probe_skipped"))
+                continue
             filler_count = body_int(item, "filler_count")
             if filler_count is None or delta is None:
                 sweep_skipped.append(raw_marker_evidence(item, "raw_gap_missing_delta_or_filler_count"))
