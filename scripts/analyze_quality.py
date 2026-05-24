@@ -30,6 +30,9 @@ from run_experiment import load_structured_file
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFERRED_REAL_TEMPLATES = {"T40_COMMON_VLSU_LOAD_HIT"}
+NON_REQUIRED_QUALITY_TEMPLATES = NON_REQUIRED_REAL_TEMPLATES | DEFERRED_REAL_TEMPLATES
+
 
 def normalized_id(value: Any) -> str:
     if value is None or value == "":
@@ -554,7 +557,7 @@ def requirement_groups_from_items(items: Iterable[ExperimentAnalysis]) -> tuple[
         {
             item.template_id
             for item in items
-            if item.template_id and item.template_id not in NON_REQUIRED_REAL_TEMPLATES
+            if item.template_id and item.template_id not in NON_REQUIRED_QUALITY_TEMPLATES
         }
     )
     required_groups = {
@@ -595,7 +598,7 @@ def requirement_groups_from_suite_manifest(root: Path) -> tuple[str | None, list
             if not isinstance(entry, dict):
                 continue
             template_id = entry.get("template_id")
-            if template_id is None or str(template_id) in NON_REQUIRED_REAL_TEMPLATES:
+            if template_id is None or str(template_id) in NON_REQUIRED_QUALITY_TEMPLATES:
                 continue
             template_text = str(template_id)
             templates.add(template_text)
@@ -618,14 +621,14 @@ def required_coverage_groups(
 ) -> tuple[str, list[str], set[tuple[str, str, str]]]:
     required_templates, required_groups = requirement_groups_from_items(synthetic_items)
     if required_templates and required_groups:
-        return "synthetic_trace_inventory_excluding_T00_BASELINE_MARKER", required_templates, required_groups
+        return "synthetic_trace_inventory_excluding_non_required_templates", required_templates, required_groups
 
     manifest_source, manifest_templates, manifest_groups = requirement_groups_from_suite_manifest(root)
     if manifest_source and manifest_templates and manifest_groups:
         return manifest_source, manifest_templates, manifest_groups
 
     real_templates, real_groups = requirement_groups_from_items(real_gem5_items)
-    return "real_gem5_trace_inventory_excluding_T00_BASELINE_MARKER", real_templates, real_groups
+    return "real_gem5_trace_inventory_excluding_non_required_templates", real_templates, real_groups
 
 
 def discover_approval(root: Path) -> dict[str, Any]:
@@ -1030,7 +1033,7 @@ def render_quality_report(inventory: dict[str, Any]) -> str:
 
     lines.extend(["", "## Coverage", ""])
     lines.append(
-        "Required templates are inferred from the non-baseline synthetic latency/resource inventory: "
+        "Required templates are inferred after excluding baseline/deferred templates: "
         + (", ".join(f"`{template}`" for template in coverage["required_templates"]) if coverage["required_templates"] else "none")
         + "."
     )

@@ -1190,7 +1190,10 @@ def body_t21(
     r11_diagnostic: bool = False,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
-    vector_dests, reused = output_vectors(lmul, iterations, allow_reuse=False)
+    if spec.result_kind == "scalar":
+        vector_dests, reused = [], False
+    else:
+        vector_dests, reused = output_vectors(lmul, iterations, allow_reuse=False)
     scalar_dests, scalar_reused = scalar_output_sequence(iterations, scalar_policy)
     source_sequence = (
         mask_sources(lmul, iterations, source_policy)
