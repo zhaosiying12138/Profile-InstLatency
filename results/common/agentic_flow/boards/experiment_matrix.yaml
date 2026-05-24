@@ -63,20 +63,23 @@ current_counts:
   field_rows_conflict: 0
   field_rows_insufficient_evidence: 0
 request_artifact: ../real_platform_risk_acceptance_request.json
-request_status: pending_not_approved
-decision_status: not_approved
-gate_status: not_submitted
+request_status: approved_by_human_approval
+decision_status: approved
+gate_status: passed_via_human_approval
 gate_consumed: false
-approval_artifact_created: false
+approval_artifact_created: true
+approval_artifact: ../human_approval.json
 unresolved_non_identifiable_risks: 9
 field_status_summary:
   blocking_total: 9
   blocking_status_counts:
     non_identifiable: 9
 current_hashes:
-  real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+  human_approval_json: f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd
+  real_platform_inventory_json: 857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759
   real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
   search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
-  experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+  experiment_quality_md: 57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce
+  risk_acceptance_request_json: 1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913
 gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
-human_handoff: present_request_before_creating_human_approval_json
+human_handoff: fulfilled_by_results_common_human_approval_json

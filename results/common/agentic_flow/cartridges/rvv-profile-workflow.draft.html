@@ -166,7 +166,7 @@
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
     <h2-agent id="round12-t12-exactness-fix-worker" role="worker" tool="codex" prompt="#round-12-t12-exactness-fix-worker" short-name="r12-t12-fix" timeout="unknown">
-      <h2-current-status>t12-exactness-fixed-pending-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round17-human-approval</h2-current-status>
       <h2-commit>91201d20</h2-commit>
       <h2-owned-write-set>scripts/search_model_impl.py,tests/test_search_model_candidate_sim.py,results/common/agentic_flow/**</h2-owned-write-set>
       <h2-control-plane-ref owner="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md" worker-write-scope="false"></h2-control-plane-ref>
@@ -180,14 +180,14 @@
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
     <h2-control id="round13-control-plane-ownership-repair" owner="CoordinatorAndCodexReviewer" decision="../artifacts/decisions/round-13-control-plane-ownership.md">
-      <h2-current-status>worker-scope-repaired-pending-ac16-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round17-human-approval</h2-current-status>
       <h2-control-plane-owner name="RLCRCoordinator" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-summary.md"></h2-control-plane-owner>
       <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md"></h2-control-plane-owner>
       <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md"></h2-control-plane-owner>
       <h2-verification worker-owned-write-set-excludes-humanize="true" worker-prompts-and-contracts-exclude-humanize-write-scope="true" humanize-read-only-lineage-allowed="true"></h2-verification>
     </h2-control>
     <h2-control id="round14-formula-fit-coverage-repair" owner="CoordinatorAndCodexReviewer" decision="../artifacts/decisions/round-14-formula-fit-coverage.md">
-      <h2-current-status>formula-fit-coverage-repaired-pending-ac16-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round17-human-approval</h2-current-status>
       <h2-formula-fit required-lmuls="m1,m2,m4" blocked-status="partial_fit_blocked" provisional-key="provisional_fit"></h2-formula-fit>
       <h2-blocked-formula instruction="vcpop_m" field="ReleaseAtCycles" blocked-lmul="m4"></h2-blocked-formula>
       <h2-blocked-formula instruction="vrgather_vv" field="Latency" blocked-lmul="m4"></h2-blocked-formula>
@@ -195,7 +195,7 @@
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-control>
     <h2-agent id="round15-approval-status-hardening" model="codex" owner="CoordinatorAndCodexReviewer" prior-commit="9a85412b" follow-up-commit="f1687ac9">
-      <h2-current-status>approval-status-hardened-pending-ac16-human-decision</h2-current-status>
+      <h2-current-status>superseded-by-round17-human-approval</h2-current-status>
       <h2-prompt href="../artifacts/prompts/round-15-approval-status-hardening-worker.md"></h2-prompt>
       <h2-owned-write-set>scripts/approval_status.py scripts/check_calibration_gate.py scripts/analyze_core.py scripts/analyze_quality.py tests/test_check_calibration_gate_approval.py results/common/agentic_flow/**</h2-owned-write-set>
       <h2-forbidden-write-set>results/common/*approval* results/common/real_platform_risk_acceptance_request.json results/common/search_model_real_platform.json results/common/real_platform_field_status.json results/common/real_platform_inventory.json results/common/experiment_quality.md .humanize/rlcr/**</h2-forbidden-write-set>

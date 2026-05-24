@@ -813,7 +813,7 @@ flow_nodes:
         search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
       next_human_step: present_request_before_creating_human_approval_json
-    status: t12_exactness_fixed_pending_human_decision
+    status: superseded_by_round17_human_approval
   - id: round13-control-plane-ownership-repair
     primitive: h2-control
     owner: CoordinatorAndCodexReviewer
@@ -832,7 +832,7 @@ flow_nodes:
       worker_owned_write_set_excludes_humanize: true
       worker_prompts_and_contracts_exclude_humanize_write_scope: true
       humanize_read_only_lineage_allowed: true
-    status: worker_scope_repaired_pending_ac16_human_decision
+    status: superseded_by_round17_human_approval
   - id: round14-formula-fit-coverage-repair
     primitive: h2-control
     owner: CoordinatorAndCodexReviewer
@@ -881,7 +881,7 @@ flow_nodes:
         real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
         search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
-    status: formula_fit_guard_repaired_pending_ac16_human_decision
+    status: superseded_by_round17_human_approval
   - id: round15-approval-status-hardening
     primitive: h2-agent
     worker: Round15ApprovalStatusHardening
@@ -963,7 +963,7 @@ flow_nodes:
         real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
         search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
         experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
-    status: approval_status_hardened_pending_ac16_human_decision
+    status: superseded_by_round17_human_approval
   - id: round16-approval-discovery-scope
     primitive: h2-agent
     worker: Round16ApprovalDiscoveryScope

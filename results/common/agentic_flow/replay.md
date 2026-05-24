@@ -1,9 +1,9 @@
 # Humanize2 Replay Notes
 
-Status: Round 11 current-head capture package after commit `8ec7a8a8`. This
-is intentionally not a completion claim: the real-platform gate still lacks
-explicit machine-readable human approval or stronger evidence for 9 unresolved
-`non_identifiable` rows.
+Status: Round 17 human approval capture. The current real-platform gate passes
+with `results/common/human_approval.json` bound to the current artifacts; the 9
+remaining `non_identifiable` rows are accepted risks, not exact inferred
+hardware values.
 
 ## Checkout
 
@@ -99,14 +99,16 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 14 approval-bound hashes after formula-fit coverage repair:
+Current Round 17 approval-bound hashes after human approval:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `results/common/real_platform_inventory.json` | `197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd` |
+| `results/common/human_approval.json` | `f85dc41ffdea94249da33fe9dad29b6879de51616463b806cf4c6cd27228f2fd` |
+| `results/common/real_platform_inventory.json` | `857590b16d9690eaa502f2fb589b8b0e79a20f5b6dba2112c44e02d01c379759` |
 | `results/common/real_platform_field_status.json` | `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432` |
 | `results/common/search_model_real_platform.json` | `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd` |
-| `results/common/experiment_quality.md` | `d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a` |
+| `results/common/experiment_quality.md` | `57c8d84dff3816459fffbbdab3643e3c196bb6adc17b4db2dcc5accada9905ce` |
+| `results/common/real_platform_risk_acceptance_request.json` | `1605e9af6e64d5a8c77b466c7cd8ddf7ad68fe6fe161821e4fb5054418daa913` |
 
 Current source-backed counts:
 
@@ -119,13 +121,13 @@ Current source-backed counts:
 - `results/common/real_platform_field_status.json` now reports
   `summary.blocking_total = 9` and
   `summary.blocking_status_counts.non_identifiable = 9`.
-- `results/common/experiment_quality.md` reports `Gate status: NOT_READY`,
-  `Confidence: unresolved_llvm_field_status`, and `Human approval status:
-  absent`.
-- `find results/common -maxdepth 1 -iname '*approval*' -print` is empty.
-- `results/common/real_platform_risk_acceptance_request.json` is a pending
-  request artifact. It is not consumed by the gate and is not a human approval
-  artifact.
+- `results/common/experiment_quality.md` reports `Gate status: PASS`,
+  `Confidence: approved_real_platform`, and human approval present.
+- `results/common/human_approval.json` is present, approved, and bound to the
+  current inventory and field-status hashes.
+- `results/common/real_platform_risk_acceptance_request.json` is fulfilled by
+  the approval artifact and lists all 9 accepted risk IDs. It remains a request
+  artifact and is not gate-consumed.
 
 ## Round 5 Code Worker Capture Package
 
@@ -837,7 +839,7 @@ current persistent state.
 2. Read `boards/execution_state.yaml` for active mode, gate status, and owned
    write boundaries.
 3. Read `boards/inference_state.yaml` for real-platform artifact hashes,
-   current field-status counts, the pending request artifact, and replay
+   current field-status counts, the fulfilled request artifact, and replay
    commands.
 4. Read `.humanize/rlcr/2026-05-23_01-15-03/round-*-prompt.md`,
    `round-*-summary.md`, and `round-*-review-result.md` for the exact RLCR

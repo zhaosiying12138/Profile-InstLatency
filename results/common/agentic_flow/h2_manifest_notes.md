@@ -111,10 +111,11 @@ Round 6 ownership:
   `results/common/human_approval.yml` can be artifact-level approval files.
   Nested `results/**/human_approval.*` files are ignored. No approval artifact
   was created.
-- Empty-context replay must present the pending request to the human before any
-  future `human_approval.json` is created. The human choices are: accept all
-  current risks with a future gate-consumed artifact, reject and require
-  stronger experiments/modeling, or accept selected listed risk IDs.
+- Before Round 17, empty-context replay had to present the pending request to
+  the human before any `human_approval.json` was created. The human choices
+  were: accept all current risks with a future gate-consumed artifact, reject
+  and require stronger experiments/modeling, or accept selected listed risk
+  IDs.
 - Round 17 records the human decision to accept all 9 current risk IDs. The
   coordinator created `results/common/human_approval.json`, regenerated
   inventory and quality artifacts, and verified both synthetic and
