@@ -204,6 +204,19 @@
       <h2-approval-status helper="scripts/approval_status.py" artifact-approval-scope="top-level-only" accepted-risk-scope="recursive" vocabulary="approved,human_approved,human_approval,status,human_approval_status,approval_status"></h2-approval-status>
       <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-agent>
+    <h2-agent id="round16-approval-discovery-scope" model="codex" owner="CoordinatorAndCodexReviewer" commit="366be5b8">
+      <h2-current-status>approval-discovery-scope-captured-pending-ac16-human-decision</h2-current-status>
+      <h2-prompt href="../artifacts/prompts/round-16-approval-discovery-scope-worker.md"></h2-prompt>
+      <h2-owned-write-set>scripts/approval_status.py scripts/check_calibration_gate.py scripts/analyze_quality.py tests/test_check_calibration_gate_approval.py results/common/agentic_flow/**</h2-owned-write-set>
+      <h2-forbidden-write-set>results/common/*approval* results/common/real_platform_risk_acceptance_request.json results/common/search_model_real_platform.json results/common/real_platform_field_status.json results/common/real_platform_inventory.json results/common/experiment_quality.md .humanize/rlcr/**</h2-forbidden-write-set>
+      <h2-expect artifact="round-16-approval-discovery-scope-decision" schema="rvv.decision.v1"></h2-expect>
+      <h2-expect artifact="round-16-approval-discovery-scope-contract" schema="rvv.workerContract.v1"></h2-expect>
+      <h2-expect artifact="round-16-approval-discovery-scope-output" schema="rvv.workerOutput.v1"></h2-expect>
+      <h2-expect artifact="round-16-approval-discovery-scope-verification" schema="rvv.verification.v1"></h2-expect>
+      <h2-expect artifact="round-16-approval-discovery-scope-tool-call" schema="rvv.toolCall.v1"></h2-expect>
+      <h2-approval-file-scope helper="scripts/approval_status.py:human_approval_file" common-files="human_approval.json,human_approval.yaml,human_approval.yml" nested-results-approval-files="ignored"></h2-approval-file-scope>
+      <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
+    </h2-agent>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>
       <h2-current-status>fail-closed: Gate status PASS, machine-readable approval artifact, and accepted scope for 9 unresolved risks are absent; the pending request is not gate-consumed</h2-current-status>

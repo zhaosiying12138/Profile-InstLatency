@@ -9,7 +9,7 @@ acceptance_focus:
   - AC-9 also includes the Round 12 T12 matched-control exactness fix: cadence-2 stalls [3, 1, 0, 0] infer Latency 3, while disagreeing positive stalls fail closed.
   - AC-9 now includes the Round 14 formula-fit coverage guard: partial LMUL coverage reports partial_fit_blocked, with any exact subset only under provisional_fit.
   - AC-12 and AC-13 now include current-head capture artifacts for commits 77d181af, 6ff16b7c, 88c9e6e5, 8ec7a8a8, and 91201d20.
-  - AC-12 and AC-13 also include Round 15 capture artifacts for approval-status hardening at commit 9a85412b and the follow-up approval-vocabulary parity repair.
+  - AC-12 and AC-13 also include Round 15 capture artifacts for approval-status hardening at commit 9a85412b, the follow-up approval-vocabulary parity repair, and Round 16 capture artifacts for approval-discovery scope commit 366be5b8.
   - AC-11, AC-12, and AC-13 now separate worker-owned artifacts from coordinator/reviewer-owned `.humanize/rlcr/**` control-plane files.
   - AC-16 remains not met until explicit machine-readable human approval exists or stronger evidence resolves all 9 non-identifiable risks.
 worker_split:
@@ -23,8 +23,9 @@ worker_split:
   CoordinatorAndCodexReviewer: Round 13 control-plane ownership repair for `.humanize/rlcr/**`
   Round14FormulaFitCoverageRepair: Formula-fit coverage guard and request hash refresh
   Round15ApprovalStatusHardening: Approval-status contradiction fix, analyzer/gate vocabulary parity, and Humanize2 capture refresh
-active_worker: none_approval_status_repair_by_coordinator_and_reviewer
-status: approval_status_hardened_pending_human_decision
+  Round16ApprovalDiscoveryScope: Analyzer/gate approval-file discovery scope parity and Humanize2 capture refresh
+active_worker: none_approval_discovery_scope_repair_captured_by_coordinator_and_reviewer
+status: approval_discovery_scope_captured_pending_human_decision
 round_status:
   round_9: field_status_summary_counts_non_identifiable_as_blocking_request_hashes_refreshed_capture_updated
   round_10: stronger_t20_t12_evidence_refreshed_real_artifacts_38_unresolved_risks_gate_fail_closed
@@ -33,6 +34,7 @@ round_status:
   round_13: worker_write_scopes_exclude_humanize_control_plane_files_gate_still_fail_closed
   round_14: partial_lmul_formula_fits_report_partial_fit_blocked_gate_still_fail_closed
   round_15: approval_status_top_level_helper_shared_by_analyzer_and_gate_capture_refreshed_gate_still_fail_closed
+  round_16: approval_file_discovery_scope_shared_by_analyzer_and_gate_capture_refreshed_gate_still_fail_closed
 remaining_open_items:
   - Present results/common/real_platform_risk_acceptance_request.json to the human before creating any future human_approval.json.
   - Explicit human approval or stronger evidence is still required before the real-platform gate can pass.

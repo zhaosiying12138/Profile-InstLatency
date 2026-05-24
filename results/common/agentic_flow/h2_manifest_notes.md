@@ -1,7 +1,6 @@
 # Humanize2 Manifest Notes
 
-Status: Round 15 approval-status hardening after commit `9a85412b`
-and the follow-up vocabulary-parity repair.
+Status: Round 16 approval-discovery scope capture after commit `366be5b8`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -107,6 +106,13 @@ Round 6 ownership:
   gate validation share `scripts/approval_status.py`. The top-level approval
   vocabulary now includes `human_approved` on both paths; accepted-risk scope
   extraction remains recursive. No approval artifact was created.
+- Round 16 captures the approval-discovery scope repair at commit `366be5b8`:
+  analyzer discovery and gate validation now share
+  `human_approval_file()`, so only `results/common/human_approval.json`,
+  `results/common/human_approval.yaml`, and
+  `results/common/human_approval.yml` can be artifact-level approval files.
+  Nested `results/**/human_approval.*` files are ignored. No approval artifact
+  was created.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

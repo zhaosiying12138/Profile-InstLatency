@@ -768,6 +768,37 @@ No approval artifact was created. The real-platform gate still fails closed on
 missing `Gate status: PASS`, missing machine-readable approval, and the 9
 unresolved `non_identifiable` risks.
 
+### Round 16 Approval-Discovery Scope
+
+Round 10 re-review then found that analyzer approval discovery accepted nested
+`results/**/human_approval.*` files that the real gate would ignore. Commit
+`366be5b8` fixed this by adding `human_approval_file()` in
+`scripts/approval_status.py` and using it from both analyzer quality reporting
+and gate validation.
+
+The Humanize2 capture package for this boundary is:
+
+- `artifacts/prompts/round-16-approval-discovery-scope-worker.md`
+- `artifacts/worker_contracts/worker-r16-approval-discovery-scope.md`
+- `artifacts/worker_outputs/worker-r16-approval-discovery-scope.md`
+- `artifacts/verification/worker-r16-approval-discovery-scope.md`
+- `artifacts/tool_calls/worker-r16-approval-discovery-scope-normalized.json`
+- `artifacts/decisions/round-16-approval-discovery-scope.md`
+
+Replay checks:
+
+```bash
+python3 -m unittest tests.test_check_calibration_gate_approval
+python3 -m pytest -q
+python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-approval-scope-search.json --format json
+cmp /tmp/profile-inst-latency-approval-scope-search.json results/common/search_model_real_platform.json
+python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+```
+
+The final command still fails closed until AC-16 receives explicit
+current-hash-bound human approval or the 9 unresolved risks are resolved by
+stronger evidence.
+
 ## Humanize2 Hub Path
 
 If a Humanize2 hub is available, load:

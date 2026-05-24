@@ -1,5 +1,5 @@
 schema_version: 1
-round: 15
+round: 16
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,13 +12,14 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 15
-  status: approval_status_hardened_gate_fail_closed_awaiting_human_risk_decision
-  task: harden_approval_status_vocabulary_and_capture_current_head
+  round: 16
+  status: approval_discovery_scope_captured_gate_fail_closed_awaiting_human_risk_decision
+  task: constrain_approval_discovery_scope_and_capture_current_head
   request_worker: Round14FormulaFitCoverageRepair
   current_head_capture_worker: Round11CurrentHeadCapture
   t12_exactness_fix_worker: Round12T12ExactnessFix
   approval_status_worker: Round15ApprovalStatusHardening
+  approval_discovery_scope_worker: Round16ApprovalDiscoveryScope
   control_plane_owner: CoordinatorAndCodexReviewer
   commits:
     proc_resource_mirror_canonicalization: 77d181af
@@ -29,6 +30,7 @@ current_boundary:
     formula_fit_coverage_repair: 188b3d29
     approval_status_contradiction_fix: 9a85412b
     approval_vocabulary_parity_fix: f1687ac9
+    approval_discovery_scope_fix: 366be5b8
   forbidden_paths:
     - results/common/*approval*
     - .humanize/rlcr/2026-05-23_01-15-03/state.md
@@ -36,11 +38,12 @@ phase_status:
   phase_7_analyzer_and_search: current_head_search_reproducible
   phase_8_mismatch_and_quality_gate: synthetic_gate_pass_real_gate_fail_closed_awaiting_approval_and_9_unresolved_risks
   phase_10_llvm_worktree_helper: executed_after_synthetic_gate
-  humanize2_capture: round15_approval_status_hardening_captured_without_ac16_completion_claim
+  humanize2_capture: round16_approval_discovery_scope_captured_without_ac16_completion_claim
   control_plane_ownership: worker_write_scopes_exclude_humanize_rlcr
   t12_matched_control_exactness: fixed_by_positive_stall_equations
   formula_fit_coverage: partial_lmul_fits_report_partial_fit_blocked
   approval_status_hardening: shared_top_level_decision_helper_analyzer_gate_parity
+  approval_discovery_scope: analyzer_gate_share_common_human_approval_file_scope
 real_platform_evidence:
   real_platform_traces: 7660
   required_real_gem5_groups: 178

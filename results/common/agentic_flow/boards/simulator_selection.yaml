@@ -53,6 +53,10 @@ current_head_capture:
     worker: Round15ApprovalStatusHardening
     status: captured
     effect: approval status parsing is top-level-only and shared by analyzer discovery and gate validation
+  round16_approval_discovery_scope:
+    worker: Round16ApprovalDiscoveryScope
+    status: captured
+    effect: approval file discovery is limited to the gate-discoverable results/common/human_approval files
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   decision_status: not_approved

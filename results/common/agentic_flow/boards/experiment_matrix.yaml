@@ -49,6 +49,10 @@ current_head_evidence:
     follow_up_commit: f1687ac9
     artifact: results/common/agentic_flow/artifacts/decisions/round-15-approval-status-hardening.md
     effect: analyzer discovery and gate validation share the same top-level approval-status helper
+  approval_discovery_scope:
+    commit: 366be5b8
+    artifact: results/common/agentic_flow/artifacts/decisions/round-16-approval-discovery-scope.md
+    effect: analyzer discovery and gate validation share the same results/common/human_approval file scope
 current_counts:
   real_platform_traces: 7660
   stable_repeat_groups: 3815
