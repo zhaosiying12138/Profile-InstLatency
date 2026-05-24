@@ -23,19 +23,19 @@ if str(SCRIPTS_DIR) not in sys.path:
 from analyze_core import *  # noqa: F401,F403
 from analyze_quality import *  # noqa: F401,F403
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Analyze RVV marker trace JSON files.")
     parser.add_argument("--all", action="store_true", help="Accepted for the plan's one-command flow.")
     parser.add_argument("--root", default="results", help="Result root to scan.")
     parser.add_argument("--config", default="config/rvv_timing_model.yaml", help="Synthetic timing config.")
     parser.add_argument(
         "--aggregate",
-        default="results/common/experiment_quality.md",
+        default=None,
         help="Real-platform quality report path.",
     )
     parser.add_argument(
         "--mismatch-report",
-        default="results/common/mismatch_report.md",
+        default=None,
         help="Synthetic calibration mismatch report path.",
     )
     parser.add_argument(
@@ -44,7 +44,13 @@ def parse_args() -> argparse.Namespace:
         help="Real-platform machine-readable inventory path. Defaults next to --aggregate.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print planned writes without changing files.")
-    return parser.parse_args()
+    args = parser.parse_args(argv)
+    root = Path(args.root)
+    if args.aggregate is None:
+        args.aggregate = (root / "common" / "experiment_quality.md").as_posix()
+    if args.mismatch_report is None:
+        args.mismatch_report = (root / "common" / "mismatch_report.md").as_posix()
+    return args
 
 
 def main() -> int:

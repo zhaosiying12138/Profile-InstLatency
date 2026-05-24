@@ -43,7 +43,10 @@ def int_or_none(value: Any) -> int | None:
 
 
 def load_profiles(root: Path) -> list[tuple[Path, dict[str, Any]]]:
-    return search_model.load_profiles([root.as_posix()])
+    return [
+        (profile_path, search_model.parse_yamlish(profile_path))
+        for profile_path in search_model.load_profiles([root.as_posix()])
+    ]
 
 
 def tablegen_identifier(text: Any) -> str:

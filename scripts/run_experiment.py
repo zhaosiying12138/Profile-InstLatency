@@ -1057,6 +1057,17 @@ def run_experiment_from_metadata(
     output_dir = results_root / group / "experiments" / exp_id
     if backend == "auto":
         backend = "gem5_minor" if mode == "real_platform_profile" and not dry_run else "synthetic_cmodel"
+    if dry_run:
+        trace = build_synthetic_trace(
+            metadata,
+            timing_model,
+            timing_model_path,
+            mode=mode,
+            dry_run=dry_run,
+            repeat_index=repeat_index,
+        )
+        write_result_files(metadata, output_dir, source_dir, trace)
+        return output_dir
     if backend == "gem5_minor":
         if source_dir is None:
             raise ExperimentError("gem5_minor backend requires a source experiment directory")
