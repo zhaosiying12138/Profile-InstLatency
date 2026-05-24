@@ -28,7 +28,7 @@ current_boundary:
     t12_matched_control_exactness_fix: 91201d20
     formula_fit_coverage_repair: 188b3d29
     approval_status_contradiction_fix: 9a85412b
-    approval_vocabulary_parity_fix: pending_commit
+    approval_vocabulary_parity_fix: f1687ac9
   forbidden_paths:
     - results/common/*approval*
     - .humanize/rlcr/2026-05-23_01-15-03/state.md

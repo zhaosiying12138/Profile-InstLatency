@@ -78,7 +78,7 @@ round15_approval_status_hardening:
   worker: Round15ApprovalStatusHardening
   decision: results/common/agentic_flow/artifacts/decisions/round-15-approval-status-hardening.md
   prior_commit: 9a85412b
-  follow_up_commit: pending_commit
+  follow_up_commit: f1687ac9
   shared_helper: scripts/approval_status.py
   artifact_approval_scope: top_level_only
   accepted_risk_scope: recursive

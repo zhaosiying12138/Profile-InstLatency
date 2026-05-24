@@ -3,7 +3,7 @@
   "worker": "Round15ApprovalStatusHardening",
   "boundary": {
     "prior_commit": "9a85412b",
-    "follow_up_commit": "pending_commit",
+    "follow_up_commit": "f1687ac9",
     "approval_artifact_created": false,
     "real_platform_gate_expected": "fail_closed_missing_pass_missing_approval_9_unresolved_non_identifiable"
   },

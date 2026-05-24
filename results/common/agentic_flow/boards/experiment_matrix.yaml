@@ -46,7 +46,7 @@ current_head_evidence:
     effect: formula summaries now report partial_fit_blocked when any required LMUL row is not exact
   approval_status_hardening:
     commit: 9a85412b
-    follow_up_commit: pending_commit
+    follow_up_commit: f1687ac9
     artifact: results/common/agentic_flow/artifacts/decisions/round-15-approval-status-hardening.md
     effect: analyzer discovery and gate validation share the same top-level approval-status helper
 current_counts:

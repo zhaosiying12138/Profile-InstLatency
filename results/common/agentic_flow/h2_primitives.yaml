@@ -853,7 +853,7 @@ flow_nodes:
     worker: Round15ApprovalStatusHardening
     commits:
       prior_hardening: 9a85412b
-      vocabulary_parity: pending_commit
+      vocabulary_parity: f1687ac9
     prompt: artifacts/prompts/round-15-approval-status-hardening-worker.md
     owned_write_set:
       - scripts/approval_status.py

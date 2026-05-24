@@ -18,7 +18,7 @@ Changes:
 Captured boundary:
 
 - Prior hardening commit: `9a85412b`.
-- Follow-up vocabulary-parity commit: `pending_commit`.
+- Follow-up vocabulary-parity commit: `f1687ac9`.
 
 Approval boundary:
 
