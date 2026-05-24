@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>从 gem5 profile 到 LLVM RVV 调度模型</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --paper: #ffffff;
+      --ink: #17202a;
+      --muted: #5c6773;
+      --line: #d8dee8;
+      --blue: #1b5fbf;
+      --green: #26755a;
+      --amber: #9a6400;
+      --code-bg: #111827;
+      --code-ink: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.62;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 28px 36px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 28px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px;
+      align-items: start;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 20px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      font-size: 14px;
+    }
+
+    nav h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    nav ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    nav li {
+      margin: 6px 0;
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      margin: 0 0 22px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 42%);
+      gap: 20px;
+      align-items: start;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      border-top: 1px solid var(--line);
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #eef3f8;
+      font-weight: 700;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      margin: 14px 0;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 8px;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .evidence {
+      border-left: 4px solid var(--blue);
+      background: #f2f6fc;
+      padding: 12px 14px;
+      margin: 14px 0;
+      color: #223247;
+    }
+
+    .warning {
+      border-left-color: var(--amber);
+      background: #fff8e8;
+    }
+
+    .ok {
+      border-left-color: var(--green);
+      background: #eef8f4;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef3f8;
+      color: #2f3b4a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <p class="eyebrow">RVV scheduling model profiling</p>
+      <h1>从 profile 到 LLVM RISC-V RVV 调度模型</h1>
+      <p class="subtitle">本文说明实现一个 LLVM 调度模型需要 profile 哪些公共参数和指令参数，并用 `vdivu.vv` 作为代表，把汇编实验、marker delta、`profile.yaml`、`mismatch_report.md` 和 TableGen 草案串成一条可审计证据链。</p>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <section id="background">
+        <h2>研究背景与证据边界</h2>
+        <p>LLVM 的 scheduling model 不是一张“指令延迟表”。它同时描述 issue 宽度、in-order/OOO 假设、执行资源、资源占用、生产者到消费者的可见时间，以及少数 issue group 约束。对于 RVV 指令，LMUL 会改变一个逻辑指令覆盖的元素组规模，因此同一 opcode 还需要分 LMUL profile。</p>
+        <p>本仓库有两层证据。第一层是 `real_platform_profile`：gem5 MinorCPU 跑真实 trace，`results/common/experiment_quality.md` 当前 gate 为 PASS，用来证明 profile 流水线有覆盖、重复性和人工风险接受。第二层是 `synthetic_calibration`：`results/<instr>/profile.yaml` 作为可直接导出 `results/common/llvm_model_draft.td` 的输入，`results/common/mismatch_report.md` 显示所有 claimed raw-inferred 字段与配置真值一致。本文的 TableGen 数值以第二层为准，避免把尚未导出到 draft 的 sidecar 结果混入 LLVM 实现段。</p>
+        <div class="evidence ok">
+          <span class="tag">代表指令</span> `vdivu.vv` / `WriteVIDivV`。
+          <span class="tag">校准状态</span> `mismatch_report.md`: Gate status PASS, claimed mismatches none。
+          <span class="tag">方法边界</span> 图像只辅助理解，数值结论只来自代码块和表格。
+        </div>
+      </section>
+
+      <section id="taxonomy">
+        <h2>LLVM 调度模型需要 profile 的参数</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>字段</th>
+              <th>LLVM 表达</th>
+              <th>profile 目标</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>公共处理器</td>
+              <td>`IssueWidth`</td>
+              <td>`SchedMachineModel` 字段</td>
+              <td>每 cycle group 最多 issue 的 micro-op 数。</td>
+            </tr>
+            <tr>
+              <td>公共处理器</td>
+              <td>`MicroOpBufferSize`</td>
+              <td>`SchedMachineModel` 字段</td>
+              <td>是否按 in-order 风格调度，是否存在 OOO buffer。</td>
+            </tr>
+            <tr>
+              <td>公共/指令</td>
+              <td>`ProcResource` / `ProcResGroup`</td>
+              <td>`ProcResource`, `ProcResGroup`, `SchedWriteRes`</td>
+              <td>指令占用哪类执行资源，能否在资源组内任选。</td>
+            </tr>
+            <tr>
+              <td>指令</td>
+              <td>`Latency`</td>
+              <td>`let Latency = N`</td>
+              <td>producer 结果到 consumer 可读的 readiness。</td>
+            </tr>
+            <tr>
+              <td>指令</td>
+              <td>`ReleaseAtCycles`</td>
+              <td>`let ReleaseAtCycles = [N]`</td>
+              <td>资源从 issue 起占用多久，影响独立流吞吐。</td>
+            </tr>
+            <tr>
+              <td>指令</td>
+              <td>`AcquireAtCycles`</td>
+              <td>`let AcquireAtCycles = [...]`</td>
+              <td>资源是否延迟获取；默认空列表表示 issue 时获取。</td>
+            </tr>
+            <tr>
+              <td>指令</td>
+              <td>`NumMicroOps`</td>
+              <td>`let NumMicroOps = N`</td>
+              <td>一条指令消耗几个 issue micro-op。</td>
+            </tr>
+            <tr>
+              <td>指令</td>
+              <td>`SingleIssue` / group flag</td>
+              <td>`SingleIssue`, `BeginGroup`, `EndGroup`</td>
+              <td>指令是否独占 dispatch group 或强制 group 边界。</td>
+            </tr>
+            <tr>
+              <td>producer-consumer 对</td>
+              <td>`ReadAdvance`</td>
+              <td>`ReadAdvance`, `SchedReadAdvance`</td>
+              <td>特定 consumer 是否比默认 latency 更早读到结果。</td>
+            </tr>
+            <tr>
+              <td>变体公式</td>
+              <td>LMUL scaling</td>
+              <td>通常拆成每 LMUL `SchedWriteRes`</td>
+              <td>把 `m1/m2/m4` 的 latency 与 occupancy 拟合成公式或离散定义。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="issue-width">
+        <div class="grid">
+          <div>
+            <h2>IssueWidth</h2>
+            <p>`IssueWidth` 是 LLVM scheduler 在同一个 cycle group 内最多能放入的 micro-op 数。它不是某条指令的延迟，而是整个处理器模型的公共上限。</p>
+            <p>当前公共 profile 把模型设为双发射：</p>
+            <pre><code>processor:
+  issue_width:
+    value: 2
+    source: prior_from_task_statement
+    evidence:
+      - docs/plan.md</code></pre>
+            <p>用于观察 issue group 行为的汇编形态是 T21，向量指令后接 scalar `add`。如果 vector 指令能够和 scalar companion 同组，说明没有额外 single-issue 压力；如果持续阻塞，则要考虑 `NumMicroOps` 或 group flag。</p>
+            <pre><code>__rvv_profile_marker_t21_vdivu_vv_m1_n4_start:
+    vdivu.vv v2, v0, v1
+    add x20, x21, x22
+    vdivu.vv v3, v0, v1
+    add x23, x24, x25
+    vdivu.vv v4, v0, v1
+    add x26, x27, x28
+    vdivu.vv v5, v0, v1
+    add x29, x30, x31
+__rvv_profile_marker_t21_vdivu_vv_m1_n4_end:</code></pre>
+            <div class="evidence">
+              `t21-vdivu-vv-m1-n4/trace.json`: start 1000, end 1024, primary delta 24。对 `profile.yaml` 校准链而言，这一数据不单独 claim `IssueWidth`，公共字段由 `processor.yaml` 固定。
+            </div>
+            <p>TableGen 草案中的实现是机器模型字段：</p>
+            <pre><code>def YuShuXinModel : SchedMachineModel {
+  let IssueWidth = 2;
+  let MicroOpBufferSize = 0;
+  let LoadLatency = 0;
+}</code></pre>
+          </div>
+          <figure>
+            <img src="assets/issue-width.png" alt="IssueWidth 双发射时序图">
+            <figcaption>IssueWidth 限制每个 cycle group 可容纳的 micro-op 数，第三个 micro-op 必须进入后续 group。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="micro-op-buffer-size">
+        <div class="grid">
+          <div>
+            <h2>MicroOpBufferSize</h2>
+            <p>`MicroOpBufferSize` 表示 LLVM 对 issue 与 scheduling 之间缓冲能力的假设。`0` 或 `1` 是 in-order 风格；大于 `1` 时，LLVM 会把模型视作有 OOO buffer。</p>
+            <pre><code>processor:
+  micro_op_buffer_size:
+    value: 0
+    source: prior_from_task_statement
+  out_of_order:
+    value: false
+  rob_entries:
+    value: 0</code></pre>
+            <p>在这种假设下，T10/T11/T12 的解释都按程序顺序构建：独立流看资源吞吐，自依赖链看 RAW readiness，而不是让 OOO issue 重排掩盖 stall。</p>
+            <pre><code># T11 self RAW chain: order is the measurement surface.
+__rvv_profile_marker_t11_vdivu_vv_m1_n4_start:
+    vdivu.vv v2, v0, v1
+    vdivu.vv v2, v2, v1
+    vdivu.vv v2, v2, v1
+    vdivu.vv v2, v2, v1
+__rvv_profile_marker_t11_vdivu_vv_m1_n4_end:</code></pre>
+            <div class="evidence">
+              `t11-vdivu-vv-m1-n4/trace.json`: start 1000, end 1072, delta 72。由于是四条 RAW chain，校准 profile 推出 `Latency = 18`。
+            </div>
+            <p>LLVM 实现仍落在同一个 `SchedMachineModel`：</p>
+            <pre><code>let MicroOpBufferSize = 0;</code></pre>
+          </div>
+          <figure>
+            <img src="assets/micro-op-buffer-size.png" alt="MicroOpBufferSize in-order 模型图">
+            <figcaption>`MicroOpBufferSize = 0` 将 profile 解释约束在 in-order 语义内。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="proc-resource">
+        <div class="grid">
+          <div>
+            <h2>ProcResource / ProcResGroup</h2>
+            <p>`ProcResource` 是资源本体，`ProcResGroup` 是可任选其一的资源组。RVV 指令若只能进入某条 pipe，就用单个 `ProcResource`；若能在两条 pipe 间调度，就用 group。</p>
+            <pre><code>processor:
+  rvv_pipelines:
+    count:
+      value: 2
+    resources:
+      - name: YuShuXinVPipe0
+      - name: YuShuXinVPipe1
+      - name: YuShuXinAnyVPipe
+        kind: proc_resource_group
+        members: [YuShuXinVPipe0, YuShuXinVPipe1]</code></pre>
+            <p>`vdivu.vv` 在校准 profile 中被归到 `YuShuXinVPipe1`。T20 pairwise 实验把 `vdivu.vv` 和另一个指令交错，观察 pair slope 是否出现同资源串行。</p>
+            <pre><code>__rvv_profile_marker_t20_vdivu_vv_vredsum_vs_m1_n4_start:
+    vdivu.vv  v2, v0, v1
+    vredsum.vs v3, v0, v1
+    vdivu.vv  v4, v0, v1
+    vredsum.vs v5, v0, v1
+    vdivu.vv  v6, v0, v1
+    vredsum.vs v7, v0, v1
+    vdivu.vv  v8, v0, v1
+    vredsum.vs v9, v0, v1
+__rvv_profile_marker_t20_vdivu_vv_vredsum_vs_m1_n4_end:</code></pre>
+            <div class="evidence">
+              `t20-vdivu-vv-vredsum-vs-m1-n4/trace.json`: start 1000, end 1032, delta 32。`profile.yaml` 的 `m1.proc_resource.value` 为 `YuShuXinVPipe1`，confidence 为 `raw_marker_pairwise_inference`。
+            </div>
+            <pre><code>def YuShuXinVPipe0 : ProcResource&lt;1&gt;;
+def YuShuXinVPipe1 : ProcResource&lt;1&gt;;
+def YuShuXinAnyVPipe : ProcResGroup&lt;[YuShuXinVPipe0,
+                                      YuShuXinVPipe1]&gt;;</code></pre>
+          </div>
+          <figure>
+            <img src="assets/proc-resource.png" alt="ProcResource 和 ProcResGroup 管线图">
+            <figcaption>资源分类决定 `SchedWriteRes` 的 resource list。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="latency">
+        <div class="grid">
+          <div>
+            <h2>Latency</h2>
+            <p>`Latency` 是 LLVM scheduling model 里最核心的指令字段之一。它表示 producer 写结果后，dependent consumer 何时可以读取这个结果。它不是独立指令吞吐，也不等同于物理 writeback stage。</p>
+            <p>校准 profile 对 `vdivu.vv` 的结论如下：</p>
+            <table>
+              <thead>
+                <tr><th>LMUL</th><th>Latency</th><th>证据</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>`m1`</td><td>18</td><td>`t11-vdivu-vv-m1-n4`: delta 72 / 4</td></tr>
+                <tr><td>`m2`</td><td>24</td><td>`t30-vdivu-vv-t12-m2-k0`: readiness 24</td></tr>
+                <tr><td>`m4`</td><td>36</td><td>`t30-vdivu-vv-t12-m4-k0`: readiness 36</td></tr>
+              </tbody>
+            </table>
+            <pre><code>__rvv_profile_marker_t30_vdivu_vv_t12_m1_k0_start:
+    vdivu.vv v2, v0, v1
+    vadd.vv  v3, v2, v1
+__rvv_profile_marker_t30_vdivu_vv_t12_m1_k0_end:</code></pre>
+            <pre><code>{
+  "experiment_id": "t30-vdivu-vv-t12-m1-k0",
+  "observation": {
+    "primary_delta_cycles": 18,
+    "filler_count": 0,
+    "template_id": "T30_LMUL_SCALING"
+  },
+  "synthetic": {
+    "latency_cycles": 18,
+    "release_cycles": 6,
+    "pipe": "pipe1"
+  }
+}</code></pre>
+            <p>LLVM 实现时，`Latency` 写入对应 LMUL 的 `SchedWriteRes`：</p>
+            <pre><code>def YuShuXinWriteVIDivV_M1 : SchedWriteRes&lt;[YuShuXinVPipe1]&gt; {
+  let Latency = 18;
+  let ReleaseAtCycles = [6];
+}</code></pre>
+          </div>
+          <figure>
+            <img src="assets/latency.png" alt="Latency producer consumer 时序图">
+            <figcaption>`Latency` 约束 dependent consumer 的最早 issue 时间。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="release">
+        <div class="grid">
+          <div>
+            <h2>ReleaseAtCycles</h2>
+            <p>`ReleaseAtCycles` 描述资源占用持续时间。长 latency 的指令可以只占用执行 pipe 很短时间；反过来，吞吐差的指令也可能资源占用很长。LLVM 通过它建模独立指令流的 steady-state slope。</p>
+            <pre><code>__rvv_profile_marker_t10_vdivu_vv_m1_n4_start:
+    vdivu.vv v2, v0, v1
+    vdivu.vv v3, v0, v1
+    vdivu.vv v4, v0, v1
+    vdivu.vv v5, v0, v1
+__rvv_profile_marker_t10_vdivu_vv_m1_n4_end:</code></pre>
+            <pre><code>{
+  "experiment_id": "t10-vdivu-vv-m1-n4",
+  "observation": {
+    "iterations": 4,
+    "primary_delta_cycles": 24,
+    "template_id": "T10_INDEPENDENT_STREAM_THROUGHPUT"
+  },
+  "synthetic": {
+    "release_cycles": 6
+  }
+}</code></pre>
+            <table>
+              <thead>
+                <tr><th>LMUL</th><th>ReleaseAtCycles</th><th>独立流解释</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>`m1`</td><td>[6]</td><td>四条独立 `vdivu.vv` delta 24。</td></tr>
+                <tr><td>`m2`</td><td>[8]</td><td>资源占用随 LMUL 增长。</td></tr>
+                <tr><td>`m4`</td><td>[12]</td><td>更大的 LMUL 使 pipe 更久不能接收同类指令。</td></tr>
+              </tbody>
+            </table>
+            <p>LLVM 中与 `Latency` 同处一个 `SchedWriteRes`：</p>
+            <pre><code>let ReleaseAtCycles = [6];</code></pre>
+          </div>
+          <figure>
+            <img src="assets/release-at-cycles.png" alt="ReleaseAtCycles 资源占用时序图">
+            <figcaption>`ReleaseAtCycles` 控制独立流吞吐，不直接表示 consumer readiness。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="acquire">
+        <div class="grid">
+          <div>
+            <h2>AcquireAtCycles</h2>
+            <p>`AcquireAtCycles` 与 `ReleaseAtCycles` 成对出现，用来描述资源不是在 issue 当下立即获取，而是在 issue 后若干 cycle 才开始占用。默认空列表表示资源从 issue 起占用。</p>
+            <p>`vdivu.vv` 当前校准 profile 对该字段不 claim，保持默认空列表：</p>
+            <pre><code>acquire_at_cycles:
+  value: []
+  confidence: "assumed_default"
+  claimed: false
+  identifiable: true
+  evidence: []</code></pre>
+            <p>对应的汇编仍是 T10/T20 一类资源实验；只是当前 marker 观测不要求“延迟获取”这一额外自由度，因而 TableGen 草案不写 `AcquireAtCycles`。</p>
+            <div class="evidence warning">
+              结论：不生成 LLVM 字段。只有当不同 pair/throughput 形态无法被 issue-time acquisition 解释时，才需要把 `AcquireAtCycles` 写入 `SchedWriteRes`。
+            </div>
+          </div>
+          <figure>
+            <img src="assets/acquire-at-cycles.png" alt="AcquireAtCycles 默认获取和延迟获取对比图">
+            <figcaption>当前证据链采用默认资源获取语义。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="num-micro-ops">
+        <div class="grid">
+          <div>
+            <h2>NumMicroOps</h2>
+            <p>`NumMicroOps` 决定一条调度写对 `IssueWidth` 的压力。如果一条指令展开为多个 scheduler micro-op，即使资源没有冲突，也可能占满 issue group。</p>
+            <p>校准 profile 中，`vdivu.vv` 记录了这个字段，但没有 claim：</p>
+            <pre><code>num_micro_ops:
+  value: null
+  confidence: "not_identifiable"
+  claimed: false
+  identifiable: false
+  reason: "T20/T21 marker evidence is not sufficient to decompose scheduler writes into micro-ops."</code></pre>
+            <p>它的 profile 汇编仍来自 T21 scalar pairing：</p>
+            <pre><code>vdivu.vv v2, v0, v1
+add x20, x21, x22
+vdivu.vv v3, v0, v1
+add x23, x24, x25</code></pre>
+            <div class="evidence warning">
+              `t21-vdivu-vv-m1-n4/trace.json`: delta 24。该 delta 能参与候选约束，但 `profile.yaml` 不把它升级成 `NumMicroOps` 的 claimed LLVM 字段；`llvm_model_draft.td` 也只留下注释。
+            </div>
+            <pre><code>// NumMicroOps is recorded in the profile but not claimed by current evidence.</code></pre>
+          </div>
+          <figure>
+            <img src="assets/num-micro-ops.png" alt="NumMicroOps issue 宽度压力图">
+            <figcaption>`NumMicroOps` 需要能把 issue pressure 与资源 occupancy 清楚分离的证据。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="single-issue">
+        <div class="grid">
+          <div>
+            <h2>SingleIssue / BeginGroup / EndGroup</h2>
+            <p>`SingleIssue` 表示该指令必须独占一个 issue group；`BeginGroup` 和 `EndGroup` 则分别约束 group 边界。它们影响的是 group packing，不是执行 latency。</p>
+            <p>当前校准 profile 对 `vdivu.vv` 不 claim 这些字段：</p>
+            <pre><code>single_issue:
+  value: null
+  confidence: "not_identifiable"
+  claimed: false
+  identifiable: false
+  reason: "Scalar-pairing evidence is not sufficient to claim SingleIssue."</code></pre>
+            <p>同样使用 T21 汇编作为 probe，但结果没有达到“必须独占 group”的 claim 门槛。</p>
+            <pre><code>__rvv_profile_marker_t21_vdivu_vv_m1_n4_start:
+    vdivu.vv v2, v0, v1
+    add x20, x21, x22
+    vdivu.vv v3, v0, v1
+    add x23, x24, x25
+__rvv_profile_marker_t21_vdivu_vv_m1_n4_end:</code></pre>
+            <div class="evidence warning">
+              LLVM 实现：不写 `let SingleIssue = 1`，不写 `BeginGroup`，不写 `EndGroup`。保持默认比误建模更安全。
+            </div>
+            <pre><code>// SingleIssue is recorded in the profile but not claimed by current evidence.</code></pre>
+          </div>
+          <figure>
+            <img src="assets/single-issue-group.png" alt="SingleIssue group 边界图">
+            <figcaption>group flag 只有在 profile 明确显示 group packing 被禁止时才应写入。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="read-advance">
+        <div class="grid">
+          <div>
+            <h2>ReadAdvance</h2>
+            <p>`ReadAdvance` 是 producer-consumer pair 的修正项。当某类 consumer 通过 bypass 比默认 `Latency` 更早读到结果，LLVM 可用 `SchedReadAdvance` 表示这个差值。</p>
+            <p>`vdivu.vv` 当前没有 consumer-specific bypass claim：</p>
+            <pre><code>read_advance:
+  value: null
+  confidence: "not_identifiable"
+  claimed: false
+  identifiable: false</code></pre>
+            <p>T12/T30 的汇编只证明 `vadd.vv` 这个 consumer 的 readiness；没有比较出另一类 consumer 的不同 readiness，因此不能写 `ReadAdvance`。</p>
+            <pre><code>vdivu.vv v2, v0, v1
+vadd.vv  v3, v2, v1</code></pre>
+            <div class="evidence warning">
+              LLVM 实现：不生成 `ReadAdvance`。如果后续加入不同 read class 的 consumer-gap 实验，并观察到稳定提前量，再补 `SchedReadAdvance`。
+            </div>
+          </div>
+          <figure>
+            <img src="assets/read-advance.png" alt="ReadAdvance bypass 对比图">
+            <figcaption>`ReadAdvance` 只在不同 consumer 的可读时间确实不同的时候成立。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="lmul-scaling">
+        <div class="grid">
+          <div>
+            <h2>LMUL scaling</h2>
+            <p>RVV 调度模型不能只给 opcode 一个标量值。`m1/m2/m4` 改变向量寄存器组规模，也改变 latency 和 resource occupancy。校准 profile 对 `vdivu.vv` 给出精确线性拟合：</p>
+            <table>
+              <thead>
+                <tr><th>字段</th><th>公式</th><th>`m1`</th><th>`m2`</th><th>`m4`</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>`Latency`</td><td>`12 + 6 * LMUL`</td><td>18</td><td>24</td><td>36</td></tr>
+                <tr><td>`ReleaseAtCycles`</td><td>`4 + 2 * LMUL`</td><td>6</td><td>8</td><td>12</td></tr>
+              </tbody>
+            </table>
+            <pre><code>fit:
+  latency_formula:
+    form: base_plus_lmul_times_k
+    base: 12
+    k: 6
+    residual: 0
+    status: exact_fit
+  release_formula:
+    form: base_plus_lmul_times_k
+    base: 4
+    k: 2
+    residual: 0
+    status: exact_fit</code></pre>
+            <p>LLVM TableGen 草案选择按 LMUL 拆成离散 `SchedWriteRes`，避免在最终文件里留下需要读者再次解释的公式占位。</p>
+          </div>
+          <figure>
+            <img src="assets/lmul-scaling.png" alt="LMUL scaling 条形时序图">
+            <figcaption>LMUL scaling 同时影响 readiness 和 resource occupancy。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="timestamp">
+        <div class="grid">
+          <div>
+            <h2>timestamp_model</h2>
+            <p>`timestamp_model` 不是 LLVM 调度字段，但它是 profile 方法论的根基。marker 如果占 issue slot 或 functional unit，会污染所有 delta。</p>
+            <pre><code>timestamp_model:
+  kind: zero_cost_label_marker
+  occupies_issue_slot: false
+  cycles: 0
+  evidence:
+    - results/common/experiments/t00-marker/trace.json
+    - scripts/run_experiment.py</code></pre>
+            <p>所有关键汇编片段都使用同一约定：marker 是 label-PC wrapper，不生成实际 RVV 指令。</p>
+            <pre><code>.globl __rvv_profile_marker_t10_vdivu_vv_m1_n4_start
+__rvv_profile_marker_t10_vdivu_vv_m1_n4_start:
+    vdivu.vv v2, v0, v1
+    ...
+.globl __rvv_profile_marker_t10_vdivu_vv_m1_n4_end
+__rvv_profile_marker_t10_vdivu_vv_m1_n4_end:</code></pre>
+            <div class="evidence ok">
+              marker baseline cycles 为 0；相邻 marker 不改变 issue、scoreboard 或资源使用。
+            </div>
+          </div>
+          <figure>
+            <img src="assets/timestamp-model.png" alt="zero-cost timestamp marker 图">
+            <figcaption>zero-cost marker 只定义观测边界，不改变被测 pipeline。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="tablegen">
+        <h2>TableGen 草案实现步骤</h2>
+        <p>把 profile 结果写进 LLVM 时，先建立机器模型和资源，再为目标 `SchedWrite` family 按 LMUL 写 `SchedWriteRes`。当前草案片段如下：</p>
+        <pre><code>def YuShuXinModel : SchedMachineModel {
+  let IssueWidth = 2;
+  let MicroOpBufferSize = 0;
+  let LoadLatency = 0;
+}
+
+def YuShuXinVPipe0 : ProcResource&lt;1&gt;;
+def YuShuXinVPipe1 : ProcResource&lt;1&gt;;
+def YuShuXinAnyVPipe : ProcResGroup&lt;[YuShuXinVPipe0, YuShuXinVPipe1]&gt;;
+
+// Evidence: t30-vdivu-vv-t12-m1-k0 @ results/vdivu_vv/experiments/t30-vdivu-vv-t12-m1-k0/trace.json
+def YuShuXinWriteVIDivV_M1 : SchedWriteRes&lt;[YuShuXinVPipe1]&gt; {
+  let Latency = 18;
+  let ReleaseAtCycles = [6];
+  // NumMicroOps is recorded in the profile but not claimed by current evidence.
+  // SingleIssue is recorded in the profile but not claimed by current evidence.
+}
+
+def YuShuXinWriteVIDivV_M2 : SchedWriteRes&lt;[YuShuXinVPipe1]&gt; {
+  let Latency = 24;
+  let ReleaseAtCycles = [8];
+}
+
+def YuShuXinWriteVIDivV_M4 : SchedWriteRes&lt;[YuShuXinVPipe1]&gt; {
+  let Latency = 36;
+  let ReleaseAtCycles = [12];
+}</code></pre>
+        <p>落到真正的 LLVM 后，还需要把 `WriteVIDivV` family 的 LMUL/SEW variant 连接到这些目标写资源。本文只覆盖“如何表达 profile 结果”的层级，不展开完整 upstream patch。</p>
+      </section>
+
+      <section id="claim-boundary">
+        <h2>结论与非声明范围</h2>
+        <p>实现 LLVM RVV 调度模型时，必须先把公共处理器参数和每类指令参数分开。公共层决定 scheduler 的全局约束；指令层决定具体 `SchedWriteRes`。`vdivu.vv` 的校准链给出清晰的 `ProcResource`、`Latency`、`ReleaseAtCycles` 与 LMUL scaling，并且 `mismatch_report.md` 对 claimed 字段给出 PASS。</p>
+        <p>同样重要的是不生成缺证据字段。`AcquireAtCycles`、`NumMicroOps`、`SingleIssue/BeginGroup/EndGroup`、`ReadAdvance` 在当前 `profile.yaml` 到 `llvm_model_draft.td` 的链路中没有被 claim；因此 TableGen 草案保留默认值或注释，而不是写入看似完整但不可证的字段。</p>
+        <div class="evidence ok">
+          最终可写入的核心结构是：`IssueWidth = 2`、`MicroOpBufferSize = 0`、`YuShuXinVPipe0/1`、`YuShuXinAnyVPipe`，以及 `YuShuXinWriteVIDivV_M1/M2/M4` 的 latency 和 release values。
+        </div>
+      </section>
+    </main>
+
+    <nav aria-label="文章目录">
+      <h2>目录</h2>
+      <ol>
+        <li><a href="#background">背景</a></li>
+        <li><a href="#taxonomy">参数分类</a></li>
+        <li><a href="#issue-width">IssueWidth</a></li>
+        <li><a href="#micro-op-buffer-size">MicroOpBufferSize</a></li>
+        <li><a href="#proc-resource">ProcResource</a></li>
+        <li><a href="#latency">Latency</a></li>
+        <li><a href="#release">ReleaseAtCycles</a></li>
+        <li><a href="#acquire">AcquireAtCycles</a></li>
+        <li><a href="#num-micro-ops">NumMicroOps</a></li>
+        <li><a href="#single-issue">SingleIssue</a></li>
+        <li><a href="#read-advance">ReadAdvance</a></li>
+        <li><a href="#lmul-scaling">LMUL scaling</a></li>
+        <li><a href="#timestamp">timestamp_model</a></li>
+        <li><a href="#tablegen">TableGen</a></li>
+      </ol>
+    </nav>
+  </div>
+</body>
+</html>
