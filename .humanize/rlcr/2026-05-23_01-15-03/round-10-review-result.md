@@ -120,9 +120,9 @@ ACs: 17/17 addressed, 16/17 met, 1/17 not met | Forgotten items: 0 | Unjustified
 
 ## Part 3: Goal Tracker Update Requests
 
-Claude's original Round 10 tracker request was justified historically, but applying it literally now would regress the tracker from the current 9-risk state back to stale 38-risk hashes. I did not apply the stale request as written.
+Claude's original Round 10 tracker request was justified historically, and the current tracker already contains the Round 10 evidence rows plus later superseding current-head updates. Applying the request literally now would regress the tracker from the current 9-risk state back to stale 38-risk hashes, so I did not apply the stale request as written.
 
-Mutable tracker updates applied:
+Mutable tracker state verified:
 
 - Plan Version is now 34 for the Round 16 approval-discovery scope capture finalization.
 - The Plan Evolution Log already records the unresolved `pending_commit` placeholders and the follow-up fix.
@@ -138,8 +138,8 @@ Mutable tracker updates applied:
 - `python3 -m py_compile scripts/approval_status.py scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/analyze_core.py scripts/analyze_quality.py scripts/run_experiment.py`: passed.
 - `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results`: passed.
 - `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results`: failed closed as expected on missing PASS, missing approval, and 9 unresolved risks.
-- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-approval-scope-search.json --format json`: passed.
-- `cmp /tmp/profile-inst-latency-approval-scope-search.json results/common/search_model_real_platform.json`: passed.
+- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r10-review-search.json --format json`: passed.
+- `cmp /tmp/profile-inst-latency-r10-review-search.json results/common/search_model_real_platform.json`: passed.
 - SHA for both regenerated and checked-in real search output: `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd`.
 - Current hashes: inventory `197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd`, field-status `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432`, quality `d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a`.
 - Request risk IDs match inventory unresolved risk IDs exactly; request hashes match current files.
@@ -148,7 +148,7 @@ Mutable tracker updates applied:
 - Registered Humanize2 artifact path check: passed.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no output.
 - `python3 -m unittest tests.test_check_calibration_gate_approval`: passed, 11 tests.
-- Temporary nested-approval reproducer: analyzer reports `approved=False` / `absent` for `results/r01/**/human_approval.json`, while `check_calibration_gate.approval_file()` returns `None`.
+- Focused approval-discovery regression coverage confirms nested `results/r01/**/human_approval.json` files are ignored by both analyzer discovery and gate lookup.
 - `git diff --check`: passed after writing this review update.
 
 REQUEST CHANGES
