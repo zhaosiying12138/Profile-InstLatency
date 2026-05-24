@@ -463,6 +463,19 @@ def t12_constraint_for_group(
             clean_gaps=tuple(clean_gaps),
             observed_cadence_gaps=observed_cadence_gaps,
         )
+    if residual0 == minimum_residual and residual0 > 0:
+        return T12LatencyConstraint(
+            "skipped",
+            (
+                f"{reason_prefix};linear_positive_residual={residual0};"
+                "dependent delta grows exactly with filler cadence, so this sweep "
+                "does not provide a conservative latency cap"
+            ),
+            evidence,
+            filler_cadence=cadence,
+            clean_gaps=tuple(clean_gaps),
+            observed_cadence_gaps=observed_cadence_gaps,
+        )
     return T12LatencyConstraint(
         "upper_bound",
         f"{reason_prefix};latency_upper_bound={cadence}",

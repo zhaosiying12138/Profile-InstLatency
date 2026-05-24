@@ -323,6 +323,10 @@ def experiment_trace_files(experiments_dir: Path) -> list[Path]:
     return sorted(experiments_dir.glob("*/trace.json"), key=lambda item: item.as_posix())
 
 
+def is_repeat_result_root(path: Path) -> bool:
+    return path.is_dir() and path.name.startswith("r") and path.name[1:].isdigit()
+
+
 def trace_files_from_path(raw: str) -> list[Path]:
     path = Path(raw)
     if path.is_dir():
@@ -334,6 +338,8 @@ def trace_files_from_path(raw: str) -> list[Path]:
             child_experiments = child / "experiments"
             if child.is_dir() and child_experiments.exists():
                 traces.extend(experiment_trace_files(child_experiments))
+            elif is_repeat_result_root(child):
+                traces.extend(trace_files_from_path(child.as_posix()))
         return sorted(traces, key=lambda item: item.as_posix())
     if not path.exists():
         return []

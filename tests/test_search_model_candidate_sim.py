@@ -393,16 +393,16 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
         self.assertIn("insufficient_post_transition_coverage", field["t12_latency_constraints"][0]["reason"])
 
-    def test_t12_upper_bound_does_not_render_fake_exact_zero(self):
+    def test_t12_linear_positive_residual_does_not_render_latency_cap(self):
         field = solve_latency_field(t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4"))
 
         self.assertEqual(field["status"], "non_identifiable")
         self.assertIsNone(field["value"])
-        self.assertEqual(field["upper_bound"], 4)
-        self.assertEqual(field["candidates"], [0, 1, 2, 3, 4])
-        self.assertEqual(field["candidate_count"], 5)
+        self.assertNotIn("upper_bound", field)
+        self.assertEqual(field["t12_latency_constraints"][0]["status"], "skipped")
+        self.assertIn("linear_positive_residual", field["t12_latency_constraints"][0]["reason"])
 
-    def test_t12_metadata_cadence_narrows_upper_bound_without_exact_claim(self):
+    def test_t12_metadata_cadence_linear_residual_does_not_claim_upper_bound(self):
         wide = t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4")
         focused = t12_observations(
             [(0, 7), (1, 8), (2, 9), (3, 10)],
@@ -415,13 +415,11 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
 
         self.assertEqual(field["status"], "non_identifiable")
         self.assertIsNone(field["value"])
-        self.assertEqual(field["upper_bound"], 1)
-        self.assertEqual(field["candidate_domain"], "0..1")
-        self.assertEqual(field["candidates"], [0, 1])
+        self.assertNotIn("upper_bound", field)
         self.assertTrue(
             any(
-                constraint["status"] == "upper_bound"
-                and constraint["upper_bound"] == 1
+                constraint["status"] == "skipped"
+                and "linear_positive_residual" in constraint["reason"]
                 and "metadata_filler_cadence:scalar_add" in constraint["reason"]
                 for constraint in field["t12_latency_constraints"]
             )

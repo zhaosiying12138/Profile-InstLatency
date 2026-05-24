@@ -45,7 +45,13 @@ class ReviewPhaseRound23Test(unittest.TestCase):
             trace_paths = search_support.trace_files_from_path(root.as_posix())
 
             self.assertEqual(profile_paths, [root / "vadd_vv" / "profile.yaml"])
-            self.assertEqual(trace_paths, [root / "vadd_vv" / "experiments" / "top-t10" / "trace.json"])
+            self.assertEqual(
+                trace_paths,
+                [
+                    root / "r01" / "vadd_vv" / "experiments" / "nested-r01-t10" / "trace.json",
+                    root / "vadd_vv" / "experiments" / "top-t10" / "trace.json",
+                ],
+            )
 
             nested_profiles = search_support.profile_files_from_path((root / "r01").as_posix())
             nested_traces = search_support.trace_files_from_path((root / "r01").as_posix())
