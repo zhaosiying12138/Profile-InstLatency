@@ -87,7 +87,13 @@ class ExpectedExperiment:
     experiment_id: str
     template_id: str
     result_group: str
+    instruction_id: str
+    lmul: str
     path: Path
+
+    @property
+    def coverage_key(self) -> tuple[str, str, str]:
+        return (self.template_id, self.instruction_id, self.lmul)
 
 
 @dataclass(frozen=True)
@@ -95,6 +101,8 @@ class TraceObservation:
     experiment_id: str
     template_id: str
     result_group: str
+    instruction_id: str
+    lmul: str
     mode: str
     backend: str
     dry_run: bool
@@ -438,6 +446,19 @@ def selected_result_groups(profile_root: Path) -> set[str]:
     return groups
 
 
+def normalized_id(value: Any) -> str:
+    if value is None or value == "":
+        return "unknown"
+    return str(value)
+
+
+def first_non_empty(*values: Any) -> Any:
+    for value in values:
+        if value not in (None, ""):
+            return value
+    return None
+
+
 def suite_manifest_candidates(profile_root: Path) -> list[Path]:
     candidates = [
         profile_root / "suite_manifest.yaml",
@@ -459,7 +480,14 @@ def expected_experiment_from_manifest_entry(
         return None
     if selected_groups and str(result_group) not in selected_groups:
         return None
-    return ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path)
+    return ExpectedExperiment(
+        str(experiment_id),
+        str(template_id),
+        str(result_group),
+        normalized_id(entry.get("instruction_id")),
+        normalized_id(entry.get("lmul")),
+        path,
+    )
 
 
 def split_required_expected(
@@ -467,7 +495,11 @@ def split_required_expected(
 ) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
     required: list[ExpectedExperiment] = []
     deferred: list[ExpectedExperiment] = []
+    seen: set[tuple[str, str, str]] = set()
     for expected in expected_items:
+        if expected.coverage_key in seen:
+            continue
+        seen.add(expected.coverage_key)
         if expected.template_id in REQUIRED_REAL_TEMPLATES:
             required.append(expected)
         elif expected.template_id in DEFERRED_REAL_TEMPLATES:
@@ -510,7 +542,16 @@ def load_expected_experiments_from_generated_tree(
             continue
         if selected_groups and str(result_group) not in selected_groups:
             continue
-        expected_items.append(ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path))
+        expected_items.append(
+            ExpectedExperiment(
+                str(experiment_id),
+                str(template_id),
+                str(result_group),
+                normalized_id(data.get("instruction_id")),
+                normalized_id(data.get("lmul")),
+                path,
+            )
+        )
     return split_required_expected(expected_items)
 
 
@@ -546,6 +587,9 @@ def trace_observation_from_data(data: dict[str, Any], identity: str, profile_roo
     if not result_group:
         result_group = infer_result_group(Path(identity), profile_root)
     entries = data.get("entries")
+    observation = data.get("observation") if isinstance(data.get("observation"), dict) else {}
+    instruction_id = first_non_empty(data.get("instruction_id"), observation.get("instruction_id"))
+    lmul = first_non_empty(data.get("lmul"), observation.get("lmul"))
     explicit_entries_count = int_or_none(data.get("entries_count", data.get("entry_count")))
     gem5 = data.get("gem5")
     gem5_returncode = int_or_none(gem5.get("returncode")) if isinstance(gem5, dict) else None
@@ -553,6 +597,8 @@ def trace_observation_from_data(data: dict[str, Any], identity: str, profile_roo
         experiment_id=str(experiment_id),
         template_id=str(template_id),
         result_group=str(result_group or ""),
+        instruction_id=normalized_id(instruction_id),
+        lmul=normalized_id(lmul),
         mode=str(data.get("mode", "")),
         backend=str(data.get("backend", "")),
         dry_run=bool_value(data.get("dry_run_trace", False)),
@@ -627,6 +673,8 @@ def inventory_observations(inventory: dict[str, Any] | None, profile_root: Path)
                 "experiment_id": experiment_id,
                 "template_id": template_id,
                 "result_group": item.get("result_group"),
+                "instruction_id": item.get("instruction_id"),
+                "lmul": item.get("lmul"),
                 "mode": item.get("mode"),
                 "backend": item.get("backend"),
                 "dry_run_trace": item.get("dry_run_trace", item.get("dry_run", False)),
@@ -653,13 +701,24 @@ def is_real_gem5_observation(observation: TraceObservation) -> bool:
     )
 
 
-def real_observation_counts(observations: list[TraceObservation]) -> dict[str, int]:
-    by_experiment: dict[str, set[str]] = {}
+def real_observation_counts(observations: list[TraceObservation]) -> dict[tuple[str, str, str], int]:
+    by_group: dict[tuple[str, str, str], set[str]] = {}
     for observation in observations:
         if not is_real_gem5_observation(observation):
             continue
-        by_experiment.setdefault(observation.experiment_id, set()).add(observation.identity)
-    return {experiment_id: len(identities) for experiment_id, identities in by_experiment.items()}
+        keys = {
+            (observation.template_id, observation.instruction_id, observation.lmul),
+            (observation.template_id, "unknown", observation.lmul),
+            (observation.template_id, observation.instruction_id, "unknown"),
+            (observation.template_id, "unknown", "unknown"),
+        }
+        for key in keys:
+            by_group.setdefault(key, set()).add(observation.identity)
+    return {key: len(identities) for key, identities in by_group.items()}
+
+
+def expected_label(expected: ExpectedExperiment) -> str:
+    return f"{expected.template_id}/{expected.instruction_id}/{expected.lmul}"
 
 
 def summarize_expected_missing(label: str, expected: list[ExpectedExperiment], missing: list[ExpectedExperiment]) -> list[str]:
@@ -667,7 +726,7 @@ def summarize_expected_missing(label: str, expected: list[ExpectedExperiment], m
         return []
     failures = [f"{label}: {len(missing)}/{len(expected)} required experiment groups are missing"]
     for template_id in REQUIRED_REAL_TEMPLATES:
-        examples = [item.experiment_id for item in missing if item.template_id == template_id]
+        examples = [expected_label(item) for item in missing if item.template_id == template_id]
         if not examples:
             continue
         suffix = ", ".join(examples[:5])
@@ -1179,9 +1238,9 @@ def t40_deferral_failures(
     text: str,
     inventory: dict[str, Any] | None,
     deferred_expected: list[ExpectedExperiment],
-    real_counts: dict[str, int],
+    real_counts: dict[tuple[str, str, str], int],
 ) -> list[str]:
-    missing = [item for item in deferred_expected if real_counts.get(item.experiment_id, 0) == 0]
+    missing = [item for item in deferred_expected if real_counts.get(item.coverage_key, 0) == 0]
     if not missing:
         return []
     evidence_text = text.lower()
@@ -1190,7 +1249,7 @@ def t40_deferral_failures(
     documented = "t40" in evidence_text and ("defer" in evidence_text or "common" in evidence_text)
     if documented:
         return []
-    examples = ", ".join(item.experiment_id for item in missing[:5])
+    examples = ", ".join(expected_label(item) for item in missing[:5])
     return [f"T40 common/deferred coverage is missing without documented deferral; examples: {examples}"]
 
 
@@ -1226,7 +1285,7 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
     if not expected:
         failures.append("no required generated experiments found for selected suite")
     else:
-        missing_coverage = [item for item in expected if real_counts.get(item.experiment_id, 0) == 0]
+        missing_coverage = [item for item in expected if real_counts.get(item.coverage_key, 0) == 0]
         failures.extend(summarize_expected_missing("real gem5 coverage", expected, missing_coverage))
 
         approval_valid, approval_failures, approval = human_approval_failures(
@@ -1236,7 +1295,7 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
         missing_repeats = [
             item
             for item in expected
-            if real_counts.get(item.experiment_id, 0) < 2
+            if real_counts.get(item.coverage_key, 0) < 2
             and not (approval_valid and has_repeat_waiver(item, inventory, approval))
         ]
         failures.extend(summarize_expected_missing("repeatability/stability", expected, missing_repeats))
