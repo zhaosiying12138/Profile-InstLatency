@@ -99,6 +99,7 @@ body:
   filler_count: 4
   filler_instruction_id: "vadd_vv"
   independent_filler_kind: "vector"
+  filler_cadence_cycles: 1
   producer_destination: "v2"
   producer_result_kind: "vector"
   consumer: "vadd_vv"
@@ -111,4 +112,5 @@ body:
     value: 4
     independent_filler_instruction: "vadd_vv"
     independent_filler_count: 4
+    independent_filler_cadence_cycles: 1
   scaling_shape: "T12_CONSUMER_RAW_GAP"

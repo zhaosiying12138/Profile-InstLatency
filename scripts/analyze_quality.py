@@ -26,6 +26,10 @@ from analyze_core import (
     render_yaml,
 )
 from approval_status import human_approval_file, top_level_approval_decision
+from run_experiment import load_structured_file
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 def normalized_id(value: Any) -> str:
     if value is None or value == "":
@@ -545,6 +549,85 @@ def group_tuple_to_record(group: tuple[str, str, str]) -> dict[str, str]:
     }
 
 
+def requirement_groups_from_items(items: Iterable[ExperimentAnalysis]) -> tuple[list[str], set[tuple[str, str, str]]]:
+    required_templates = sorted(
+        {
+            item.template_id
+            for item in items
+            if item.template_id and item.template_id not in NON_REQUIRED_REAL_TEMPLATES
+        }
+    )
+    required_groups = {
+        group_key_tuple(item)
+        for item in items
+        if item.template_id in required_templates
+    }
+    return required_templates, required_groups
+
+
+def suite_manifest_candidates(root: Path) -> list[Path]:
+    candidates = [
+        root / "suite_manifest.yaml",
+        root / "experiments" / "generated" / "suite_manifest.yaml",
+        root.parent / "suite_manifest.yaml",
+        root.parent / "experiments" / "generated" / "suite_manifest.yaml",
+        REPO_ROOT / "experiments" / "generated" / "suite_manifest.yaml",
+    ]
+    return list(dict.fromkeys(candidates))
+
+
+def requirement_groups_from_suite_manifest(root: Path) -> tuple[str | None, list[str], set[tuple[str, str, str]]]:
+    for path in suite_manifest_candidates(root):
+        if not path.exists():
+            continue
+        try:
+            manifest = load_structured_file(path)
+        except (OSError, RuntimeError, TypeError, ValueError):
+            continue
+        if not isinstance(manifest, dict):
+            continue
+        entries = manifest.get("experiments")
+        if not isinstance(entries, list):
+            continue
+        groups: set[tuple[str, str, str]] = set()
+        templates: set[str] = set()
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            template_id = entry.get("template_id")
+            if template_id is None or str(template_id) in NON_REQUIRED_REAL_TEMPLATES:
+                continue
+            template_text = str(template_id)
+            templates.add(template_text)
+            groups.add(
+                (
+                    template_text,
+                    normalized_id(entry.get("instruction_id")),
+                    normalized_id(entry.get("lmul")),
+                )
+            )
+        if templates and groups:
+            return "suite_manifest", sorted(templates), groups
+    return None, [], set()
+
+
+def required_coverage_groups(
+    synthetic_items: list[ExperimentAnalysis],
+    real_gem5_items: list[ExperimentAnalysis],
+    root: Path,
+) -> tuple[str, list[str], set[tuple[str, str, str]]]:
+    required_templates, required_groups = requirement_groups_from_items(synthetic_items)
+    if required_templates and required_groups:
+        return "synthetic_trace_inventory_excluding_T00_BASELINE_MARKER", required_templates, required_groups
+
+    manifest_source, manifest_templates, manifest_groups = requirement_groups_from_suite_manifest(root)
+    if manifest_source and manifest_templates and manifest_groups:
+        return manifest_source, manifest_templates, manifest_groups
+
+    real_templates, real_groups = requirement_groups_from_items(real_gem5_items)
+    return "real_gem5_trace_inventory_excluding_T00_BASELINE_MARKER", real_templates, real_groups
+
+
 def discover_approval(root: Path) -> dict[str, Any]:
     approval_path = human_approval_file(root)
     candidates = [approval_path] if approval_path is not None else []
@@ -710,19 +793,12 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
     synthetic_items = classified["synthetic"]
     real_items = classified["real"]
     real_gem5_items = [item for item in real_items if is_real_gem5(item)]
-    required_templates = sorted(
-        {
-            item.template_id
-            for item in synthetic_items
-            if item.template_id and item.template_id not in NON_REQUIRED_REAL_TEMPLATES
-        }
-    )
-    required_groups = {
-        group_key_tuple(item)
-        for item in synthetic_items
-        if item.template_id in required_templates
-    }
     real_gem5_templates = sorted({item.template_id for item in real_gem5_items if item.template_id})
+    required_template_source, required_templates, required_groups = required_coverage_groups(
+        synthetic_items,
+        real_gem5_items,
+        root,
+    )
     real_gem5_groups = {
         group_key_tuple(item)
         for item in real_gem5_items
@@ -809,7 +885,7 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
             "real_gem5_by_template_instruction_lmul": counts_by_template_instruction_lmul(real_gem5_items),
         },
         "coverage": {
-            "required_template_source": "synthetic_trace_inventory_excluding_T00_BASELINE_MARKER",
+            "required_template_source": required_template_source,
             "required_templates": required_templates,
             "real_gem5_templates": real_gem5_templates,
             "covered_required_templates": sorted(set(required_templates) & set(real_gem5_templates)),

@@ -1790,6 +1790,21 @@ def should_write_real_platform_artifacts(output: str | None, common_root: Path) 
     return True
 
 
+def observation_is_real_platform(observation: RawObservation) -> bool:
+    mode = observation.mode.lower()
+    backend = observation.backend.lower()
+    return (
+        not observation.dry_run_trace
+        and ("real_platform" in mode or mode == "real" or mode.startswith("real_") or "gem5" in backend)
+        and "synthetic" not in mode
+        and "synthetic" not in backend
+    )
+
+
+def selected_observations_are_real_platform(observations: list[RawObservation]) -> bool:
+    return bool(observations) and all(observation_is_real_platform(observation) for observation in observations)
+
+
 def default_reference_config_args(config_args: list[str]) -> list[str]:
     if config_args:
         return config_args
@@ -1964,7 +1979,11 @@ def main() -> int:
     else:
         print(content, end="")
 
-    real_platform_selected = args.mode == "real_platform_profile" or args.backend == "gem5_minor"
+    real_platform_selected = (
+        args.mode == "real_platform_profile"
+        or args.backend == "gem5_minor"
+        or selected_observations_are_real_platform(observations)
+    )
     if real_platform_selected:
         common_root = common_output_root(args.profile, args.output)
         if should_write_real_platform_artifacts(args.output, common_root):

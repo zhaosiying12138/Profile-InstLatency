@@ -87,6 +87,7 @@ body:
   filler_count: 2
   filler_instruction_id: "vadd_vv"
   independent_filler_kind: "vector"
+  filler_cadence_cycles: 1
   producer_destination: "v4"
   producer_result_kind: "mask"
   consumer: "vcpop_m"
@@ -99,3 +100,4 @@ body:
     value: 2
     independent_filler_instruction: "vadd_vv"
     independent_filler_count: 2
+    independent_filler_cadence_cycles: 1
