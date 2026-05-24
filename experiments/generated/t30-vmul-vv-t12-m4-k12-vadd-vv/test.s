@@ -54,14 +54,14 @@ _start:
     vadd.vv v20, v0, v4  # independent filler 1
     vadd.vv v24, v0, v4  # independent filler 2
     vadd.vv v28, v0, v4  # independent filler 3
-    vadd.vv v8, v0, v4  # independent filler 4
-    vadd.vv v12, v0, v4  # independent filler 5
-    vadd.vv v16, v0, v4  # independent filler 6
-    vadd.vv v20, v0, v4  # independent filler 7
-    vadd.vv v24, v0, v4  # independent filler 8
-    vadd.vv v28, v0, v4  # independent filler 9
-    vadd.vv v8, v0, v4  # independent filler 10
-    vadd.vv v12, v0, v4  # independent filler 11
+    vadd.vv v16, v0, v4  # independent filler 4
+    vadd.vv v20, v0, v4  # independent filler 5
+    vadd.vv v24, v0, v4  # independent filler 6
+    vadd.vv v28, v0, v4  # independent filler 7
+    vadd.vv v16, v0, v4  # independent filler 8
+    vadd.vv v20, v0, v4  # independent filler 9
+    vadd.vv v24, v0, v4  # independent filler 10
+    vadd.vv v28, v0, v4  # independent filler 11
     vadd.vv v12, v8, v4
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t30_vmul_vv_t12_m4_k12_vadd_vv_end

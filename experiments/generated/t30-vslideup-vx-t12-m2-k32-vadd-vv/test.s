@@ -70,26 +70,26 @@ _start:
     vadd.vv v26, v0, v2  # independent filler 9
     vadd.vv v28, v0, v2  # independent filler 10
     vadd.vv v30, v0, v2  # independent filler 11
-    vadd.vv v4, v0, v2  # independent filler 12
-    vadd.vv v6, v0, v2  # independent filler 13
-    vadd.vv v8, v0, v2  # independent filler 14
-    vadd.vv v10, v0, v2  # independent filler 15
-    vadd.vv v12, v0, v2  # independent filler 16
-    vadd.vv v14, v0, v2  # independent filler 17
-    vadd.vv v16, v0, v2  # independent filler 18
-    vadd.vv v18, v0, v2  # independent filler 19
-    vadd.vv v20, v0, v2  # independent filler 20
-    vadd.vv v22, v0, v2  # independent filler 21
-    vadd.vv v24, v0, v2  # independent filler 22
-    vadd.vv v26, v0, v2  # independent filler 23
-    vadd.vv v28, v0, v2  # independent filler 24
-    vadd.vv v30, v0, v2  # independent filler 25
-    vadd.vv v4, v0, v2  # independent filler 26
-    vadd.vv v6, v0, v2  # independent filler 27
-    vadd.vv v8, v0, v2  # independent filler 28
-    vadd.vv v10, v0, v2  # independent filler 29
-    vadd.vv v12, v0, v2  # independent filler 30
-    vadd.vv v14, v0, v2  # independent filler 31
+    vadd.vv v8, v0, v2  # independent filler 12
+    vadd.vv v10, v0, v2  # independent filler 13
+    vadd.vv v12, v0, v2  # independent filler 14
+    vadd.vv v14, v0, v2  # independent filler 15
+    vadd.vv v16, v0, v2  # independent filler 16
+    vadd.vv v18, v0, v2  # independent filler 17
+    vadd.vv v20, v0, v2  # independent filler 18
+    vadd.vv v22, v0, v2  # independent filler 19
+    vadd.vv v24, v0, v2  # independent filler 20
+    vadd.vv v26, v0, v2  # independent filler 21
+    vadd.vv v28, v0, v2  # independent filler 22
+    vadd.vv v30, v0, v2  # independent filler 23
+    vadd.vv v8, v0, v2  # independent filler 24
+    vadd.vv v10, v0, v2  # independent filler 25
+    vadd.vv v12, v0, v2  # independent filler 26
+    vadd.vv v14, v0, v2  # independent filler 27
+    vadd.vv v16, v0, v2  # independent filler 28
+    vadd.vv v18, v0, v2  # independent filler 29
+    vadd.vv v20, v0, v2  # independent filler 30
+    vadd.vv v22, v0, v2  # independent filler 31
     vadd.vv v6, v4, v2
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t30_vslideup_vx_t12_m2_k32_vadd_vv_end

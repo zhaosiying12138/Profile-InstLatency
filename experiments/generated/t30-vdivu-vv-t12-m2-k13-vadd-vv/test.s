@@ -70,7 +70,7 @@ _start:
     vadd.vv v26, v0, v2  # independent filler 9
     vadd.vv v28, v0, v2  # independent filler 10
     vadd.vv v30, v0, v2  # independent filler 11
-    vadd.vv v4, v0, v2  # independent filler 12
+    vadd.vv v8, v0, v2  # independent filler 12
     vadd.vv v6, v4, v2
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t30_vdivu_vv_t12_m2_k13_vadd_vv_end

@@ -102,11 +102,11 @@ _start:
     vadd.vv v29, v0, v1  # independent filler 25
     vadd.vv v30, v0, v1  # independent filler 26
     vadd.vv v31, v0, v1  # independent filler 27
-    vadd.vv v2, v0, v1  # independent filler 28
-    vadd.vv v3, v0, v1  # independent filler 29
-    vadd.vv v4, v0, v1  # independent filler 30
-    vadd.vv v5, v0, v1  # independent filler 31
-    vadd.vv v6, v0, v1  # independent filler 32
+    vadd.vv v4, v0, v1  # independent filler 28
+    vadd.vv v5, v0, v1  # independent filler 29
+    vadd.vv v6, v0, v1  # independent filler 30
+    vadd.vv v7, v0, v1  # independent filler 31
+    vadd.vv v8, v0, v1  # independent filler 32
     vadd.vv v3, v2, v1
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t30_vadd_vv_t12_m1_k33_vadd_vv_end

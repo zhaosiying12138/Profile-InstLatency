@@ -70,10 +70,10 @@ _start:
     vadd.vv v26, v0, v2  # independent filler 9
     vadd.vv v28, v0, v2  # independent filler 10
     vadd.vv v30, v0, v2  # independent filler 11
-    vadd.vv v4, v0, v2  # independent filler 12
-    vadd.vv v6, v0, v2  # independent filler 13
-    vadd.vv v8, v0, v2  # independent filler 14
-    vadd.vv v10, v0, v2  # independent filler 15
+    vadd.vv v8, v0, v2  # independent filler 12
+    vadd.vv v10, v0, v2  # independent filler 13
+    vadd.vv v12, v0, v2  # independent filler 14
+    vadd.vv v14, v0, v2  # independent filler 15
     vcpop.m x11, v4
     # marker end: zero-cost timestamp point at the next instruction PC.
     .globl __rvv_profile_marker_t12_vmseq_vv_m2_k16_vcpop_m_end

@@ -531,9 +531,9 @@ def assemble_and_link(
 
 def marker_addresses(elf_path: Path, marker_specs: list[dict[str, Any]]) -> dict[str, int]:
     config = load_paths_config()
-    nm = resolve_config_path(config, "llvm_nm") if config.get("llvm_nm") else None
+    nm = resolve_config_path(config, "llvm_nm", search_path=True) if config.get("llvm_nm") else None
     if nm is None:
-        assembler = resolve_config_path(config, "assembler")
+        assembler = resolve_config_path(config, "assembler", search_path=True)
         nm = assembler.with_name("llvm-nm")
     if not nm.exists():
         raise ExperimentError(f"cannot find llvm-nm next to assembler: {nm}")

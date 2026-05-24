@@ -381,6 +381,26 @@ def output_vectors(lmul: str, count: int, *, allow_reuse: bool = False) -> tuple
     return regs, True
 
 
+def output_vectors_excluding(
+    lmul: str,
+    count: int,
+    excluded: set[str],
+    *,
+    allow_reuse: bool = False,
+) -> tuple[list[str], bool]:
+    regs = [vector_reg(group) for group in output_groups(lmul) if vector_reg(group) not in excluded]
+    if count <= len(regs):
+        return regs[:count], False
+    if not allow_reuse:
+        raise SystemExit(
+            f"LMUL {lmul} has {len(regs)} independent output groups after exclusions, "
+            f"but {count} were requested"
+        )
+    if not regs:
+        raise SystemExit(f"LMUL {lmul} has no reusable output groups after exclusions")
+    return [regs[index % len(regs)] for index in range(count)], True
+
+
 def scalar_outputs(count: int, start: int = 10) -> list[str]:
     regs = []
     for index in range(count):
@@ -977,10 +997,21 @@ def body_t12(
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     src_a, src_b = base_vector_sources(lmul)
     vector_filler_count = filler_count if filler == T12_DEFAULT_FILLER else 0
-    dests, _ = output_vectors(lmul, max(2, 2 + vector_filler_count), allow_reuse=True)
-    producer_dest = scalar_reg(10) if spec.result_kind == "scalar" else dests[0]
-    consumer_dest = scalar_reg(11) if spec.result_kind in {"scalar", "mask"} else dests[1]
-    filler_destinations = dests[2:]
+    if spec.result_kind == "scalar":
+        dests, _ = output_vectors(lmul, max(2, 2 + vector_filler_count), allow_reuse=True)
+        filler_destinations = dests[2:]
+        producer_dest = scalar_reg(10)
+        consumer_dest = scalar_reg(11)
+    else:
+        dests, _ = output_vectors(lmul, 2, allow_reuse=False)
+        producer_dest = dests[0]
+        consumer_dest = scalar_reg(11) if spec.result_kind == "mask" else dests[1]
+        filler_destinations, _ = output_vectors_excluding(
+            lmul,
+            vector_filler_count,
+            set(dests),
+            allow_reuse=True,
+        )
     lines = [
         "# Producer-consumer gap probe. Fillers are independent of the producer result.",
         "TIMESTAMP_MARK start",
