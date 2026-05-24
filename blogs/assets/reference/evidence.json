@@ -1,0 +1,123 @@
+{
+  "experiments": {
+    "composite": {
+      "marker_cycles": {
+        "m1_gap2_end": 171,
+        "m1_gap2_start": 167,
+        "m1_ind_end": 321,
+        "m1_ind_start": 318,
+        "m1_raw_end": 490,
+        "m1_raw_start": 482,
+        "m2_ind_end": 662,
+        "m2_ind_start": 657,
+        "m4_ind_end": 837,
+        "m4_ind_start": 830,
+        "overall_end": 838,
+        "overall_start": 167
+      },
+      "primary_delta": 671,
+      "test": "results/blog/vdivu_vv_composite/experiments/vdivu-vv-composite-real/test.s",
+      "trace": "results/blog/vdivu_vv_composite/experiments/vdivu-vv-composite-real/trace.json"
+    },
+    "t00": {
+      "marker_cycles": {
+        "t0": 93,
+        "t1": 93
+      },
+      "primary_delta": 0,
+      "test": "results/blog/common/experiments/t00-marker/test.s",
+      "trace": "results/blog/common/experiments/t00-marker/trace.json"
+    },
+    "t10_m1": {
+      "marker_cycles": {
+        "end": 269,
+        "start": 266
+      },
+      "primary_delta": 3,
+      "test": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/trace.json"
+    },
+    "t10_m2": {
+      "marker_cycles": {
+        "end": 219,
+        "start": 212
+      },
+      "primary_delta": 7,
+      "test": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m2-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m2-n4/trace.json"
+    },
+    "t10_m4": {
+      "marker_cycles": {
+        "end": 206,
+        "start": 191
+      },
+      "primary_delta": 15,
+      "test": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t10-vdivu-vv-m4-n4/trace.json"
+    },
+    "t11_m1": {
+      "marker_cycles": {
+        "end": 278,
+        "start": 266
+      },
+      "primary_delta": 12,
+      "test": "results/blog/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/trace.json"
+    },
+    "t12_k2": {
+      "marker_cycles": {
+        "end": 270,
+        "start": 266
+      },
+      "primary_delta": 4,
+      "test": "results/blog/vdivu_vv/experiments/t12-vdivu-vv-m1-k2-vadd-vv/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t12-vdivu-vv-m1-k2-vadd-vv/trace.json"
+    },
+    "t12_k4": {
+      "marker_cycles": {
+        "end": 271,
+        "start": 266
+      },
+      "primary_delta": 5,
+      "test": "results/blog/vdivu_vv/experiments/t12-vdivu-vv-m1-k4-vadd-vv/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t12-vdivu-vv-m1-k4-vadd-vv/trace.json"
+    },
+    "t20": {
+      "marker_cycles": {
+        "end": 273,
+        "start": 266
+      },
+      "primary_delta": 7,
+      "test": "results/blog/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/trace.json"
+    },
+    "t21": {
+      "marker_cycles": {
+        "end": 270,
+        "start": 266
+      },
+      "primary_delta": 4,
+      "test": "results/blog/vdivu_vv/experiments/t21-vdivu-vv-m1-n4/test.s",
+      "trace": "results/blog/vdivu_vv/experiments/t21-vdivu-vv-m1-n4/trace.json"
+    }
+  },
+  "real_profile": {
+    "Latency": {
+      "m1": 4,
+      "m2": 4,
+      "m4": 4
+    },
+    "NumMicroOps": 1,
+    "ProcResource": "YuShuXinVPipe0",
+    "ReleaseAtCycles": {
+      "m1": 1,
+      "m2": 2,
+      "m4": 4
+    },
+    "SingleIssue": false,
+    "formula": {
+      "Latency": "4 + 0 * LMUL",
+      "ReleaseAtCycles": "0 + 1 * LMUL"
+    }
+  }
+}

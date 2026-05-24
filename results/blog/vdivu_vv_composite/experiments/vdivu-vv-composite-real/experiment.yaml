@@ -1,0 +1,66 @@
+schema_version: 1
+experiment_id: vdivu-vv-composite-real
+template_id: BLOG_COMPOSITE_SCHEDULE
+result_group: vdivu_vv_composite
+instruction_id: vdivu_vv
+lmul: mixed
+sew: 32
+markers: [overall_start, m1_gap2_start, m1_gap2_end, m1_ind_start, m1_ind_end, m1_raw_start, m1_raw_end, m2_ind_start, m2_ind_end, m4_ind_start, m4_ind_end, overall_end]
+experiment:
+  id: vdivu-vv-composite-real
+  template_id: BLOG_COMPOSITE_SCHEDULE
+  purpose: "Blog-only mixed-LMUL schedule example for Latency, ReleaseAtCycles, AcquireAtCycles, and LMUL scaling."
+  files:
+    assembly: test.s
+    metadata: experiment.yaml
+parameters:
+  sew: 32
+  lmul: mixed
+  vl_register: x5
+  vl_value: 64
+generation:
+  generator: manual_blog_experiment
+  deterministic: true
+instruction:
+  id: vdivu_vv
+  asm: vdivu.vv
+  llvm_sched_write: WriteVIDivV
+  result_kind: vector
+  chainable: true
+body:
+  segments:
+    -
+      id: m1_gap2
+      lmul: m1
+      purpose: Two independent fillers leave a visible dependency bubble before the consumer.
+      expected_profile:
+        Latency: 4
+        ReleaseAtCycles: 1
+    -
+      id: m1_ind
+      lmul: m1
+      purpose: Independent stream for ReleaseAtCycles.
+      expected_profile:
+        Latency: 4
+        ReleaseAtCycles: 1
+    -
+      id: m1_raw
+      lmul: m1
+      purpose: Self RAW chain for Latency.
+      expected_profile:
+        Latency: 4
+        ReleaseAtCycles: 1
+    -
+      id: m2_ind
+      lmul: m2
+      purpose: LMUL m2 independent stream for ReleaseAtCycles scaling.
+      expected_profile:
+        Latency: 4
+        ReleaseAtCycles: 2
+    -
+      id: m4_ind
+      lmul: m4
+      purpose: LMUL m4 independent stream for ReleaseAtCycles scaling.
+      expected_profile:
+        Latency: 4
+        ReleaseAtCycles: 4

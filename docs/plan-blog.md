@@ -1,160 +1,179 @@
-# LLVM RVV Schedule Model Profiling Blog Implementation Plan
+# LLVM RVV Schedule Model Profiling Blog V2 Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:executing-plans` for task-by-task execution. The exact timing figures must be derived from checked-in experiment evidence before any GPT Image redraw is accepted.
 
-**Goal:** Build a Chinese, technical-whitepaper-style HTML blog explaining which LLVM scheduling-model parameters must be profiled, using `vdivu.vv` as the single detailed instruction example and GPT Image2 diagrams as visual companions.
+**Goal:** Upgrade `blogs/llvm-rvv-sched-model-profile.html` into a Chinese technical-whitepaper article whose figures, tables, and TableGen sketches are grounded in real `gem5_minor` experiments for `vdivu.vv`.
 
-**Architecture:** The blog is a self-contained static HTML article under `blogs/`, with generated raster diagrams under `blogs/assets/`. Deterministic facts come from checked-in YAML, trace JSON, assembly snippets, and TableGen draft output; generated images are illustrative only and never the sole source of numeric truth.
+**Architecture:** The article uses real gem5 artifacts as the primary evidence chain: `test.s` gives the instruction sequence, `trace.json` gives marker cycles, `gem5/exec.log` gives dynamic instruction cycles, and `profile.real_platform.yaml` plus `search_model_real_platform_summary.md` give inferred LLVM-facing values. Deterministic SVG/JSON evidence is generated first; GPT Image redraws then replace the old generic PNG assets while the HTML keeps deterministic tables and code snippets as the numeric authority.
 
-**Tech Stack:** Static HTML/CSS, checked-in profiling artifacts under `results/`, RVV assembly snippets, LLVM TableGen snippets, GPT Image2 generated PNG assets.
+**Tech Stack:** Static HTML/CSS, RVV assembly, gem5 MinorCPU Exec traces, repository profiling YAML/JSON/Markdown artifacts, deterministic SVG/PNG reference diagrams, GPT Image2 final redraws.
 
 ---
 
 ## User-Confirmed Scope
 
 - Language: Chinese.
-- Tone: blog article with technical-whitepaper discipline; concise, non-colloquial, and principle-first.
+- Tone: technical whitepaper, concise and source-grounded.
 - Main output: `blogs/llvm-rvv-sched-model-profile.html`.
 - Asset directory: `blogs/assets/`.
-- Representative instruction: `vdivu.vv` only.
-- Broader instruction set: mention that the suite covers 10 instructions, but do not deeply explain all 10.
-- Evidence format: combine `trace.json` marker deltas, `profile.yaml` inferred values, and `results/common/mismatch_report.md` PASS.
-- Assembly format: show complete key experiment fragments, not every generated file in full.
-- LLVM implementation depth: explain how to express the result in the TableGen draft, not how to land a full upstream LLVM patch.
-- Unknown fields: state that current experiments cannot identify them and therefore the blog does not generate LLVM claims for those fields.
-- Visual requirement: each parameter section gets a GPT Image2 visual; deterministic HTML tables and code blocks carry exact values.
+- Representative instruction: `vdivu.vv`.
+- Primary evidence mode: real platform profile, `backend: gem5_minor`.
+- Synthetic calibration: keep only as a short contrast explaining why old `profile.yaml` and `mismatch_report.md` are calibration artifacts, not the main real-platform TableGen values.
+- Required fields:
+  - `IssueWidth`
+  - `MicroOpBufferSize`
+  - `ProcResource` / `ProcResGroup`
+  - `Latency`
+  - `ReleaseAtCycles`
+  - `AcquireAtCycles`
+  - `NumMicroOps`
+  - `SingleIssue` / `BeginGroup` / `EndGroup`
+  - `ReadAdvance`
+  - `LMUL scaling`
+  - `timestamp_model`
+- Each field gets a real-experiment figure.
+- `Latency`, `ReleaseAtCycles`, `AcquireAtCycles`, and `LMUL scaling` also get one integrated comprehensive figure that shows mixed LMULs, dependent and independent instructions, filler instructions, issue cycles, observed gaps, and bubbles in one sequence.
+- Exact timing diagrams may be drawn as SVG/HTML first, but the final visible PNG assets must be redrawn with GPT Image2 and must match the deterministic SVG content.
+- Old generic PNGs must not remain as article figures.
+- LLVM implementation depth: TableGen draft/sketch level, not an upstream patch.
 
-## Source Evidence
+## Primary Real Evidence
 
-- Planning background: `docs/plan.md`.
-- LLVM concept notes: `docs/llvm-sched-model-notes.md`.
-- Common processor profile: `results/common/processor.yaml`.
-- LLVM field map: `results/common/llvm_field_map.yaml`.
-- TableGen draft: `results/common/llvm_model_draft.td`.
-- Synthetic calibration mismatch report: `results/common/mismatch_report.md`.
-- Representative instruction profile: `results/vdivu_vv/profile.yaml`.
-- Key experiments:
-  - `results/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/test.s`
-  - `results/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/trace.json`
-  - `results/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/test.s`
-  - `results/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/trace.json`
-  - `results/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/test.s`
-  - `results/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/trace.json`
-  - `results/vdivu_vv/experiments/t30-vdivu-vv-t12-m1-k0/test.s`
-  - `results/vdivu_vv/experiments/t30-vdivu-vv-t12-m1-k0/trace.json`
+- Global processor assumptions:
+  - `results/common/processor.yaml`
+  - `results/common/experiment_quality.md`
+- Real `vdivu.vv` inferred values:
+  - `results/vdivu_vv/profile.real_platform.yaml`
+  - `results/common/search_model_real_platform_summary.md`
+- Existing real experiments to cite and draw:
+  - T10 independent stream:
+    - `results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/test.s`
+    - `results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/trace.json`
+    - `results/r01/vdivu_vv/experiments/t10-vdivu-vv-m1-n4/gem5/exec.log`
+  - T11 self RAW chain:
+    - `results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/test.s`
+    - `results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/trace.json`
+    - `results/r01/vdivu_vv/experiments/t11-vdivu-vv-m1-n4/gem5/exec.log`
+  - T12 consumer RAW gap:
+    - `results/r01/vdivu_vv/experiments/t12-vdivu-vv-m1-k4-vadd-vv/test.s`
+    - `results/r01/vdivu_vv/experiments/t12-vdivu-vv-m1-k4-vadd-vv/trace.json`
+    - `results/r01/vdivu_vv/experiments/t12-vdivu-vv-m1-k4-vadd-vv/gem5/exec.log`
+  - T20 pairwise pipe classification:
+    - `results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/test.s`
+    - `results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/trace.json`
+    - `results/r01/vdivu_vv/experiments/t20-vdivu-vv-vredsum-vs-m1-n4/gem5/exec.log`
+  - T21 scalar pairing:
+    - `results/r01/vdivu_vv/experiments/t21-vdivu-vv-m1-n4/test.s`
+    - `results/r01/vdivu_vv/experiments/t21-vdivu-vv-m1-n4/trace.json`
+    - `results/r01/vdivu_vv/experiments/t21-vdivu-vv-m1-n4/gem5/exec.log`
+  - T00 timestamp marker:
+    - `results/r01/common/experiments/t00-marker/test.s`
+    - `results/r01/common/experiments/t00-marker/trace.json`
+    - `results/r01/common/experiments/t00-marker/gem5/exec.log`
 
-## Output Structure
+## New Comprehensive Experiment
 
-- `docs/plan-blog.md`: this execution plan.
-- `blogs/llvm-rvv-sched-model-profile.html`: final static blog.
-- `blogs/assets/issue-width.png`
-- `blogs/assets/micro-op-buffer-size.png`
-- `blogs/assets/proc-resource.png`
-- `blogs/assets/latency.png`
-- `blogs/assets/release-at-cycles.png`
-- `blogs/assets/acquire-at-cycles.png`
-- `blogs/assets/num-micro-ops.png`
-- `blogs/assets/single-issue-group.png`
-- `blogs/assets/read-advance.png`
-- `blogs/assets/lmul-scaling.png`
-- `blogs/assets/timestamp-model.png`
-- `results/common/experiment_quality.md`: keep as a short navigational main report under 2000 lines.
-- `results/common/experiment_quality_repeatability_part1.md` and `results/common/experiment_quality_repeatability_part2.md`: keep long repeatability rows split under 2000 lines each.
+Create one blog-specific experiment under `experiments/blog/vdivu-vv-composite-real/` and run it into `results/blog/vdivu_vv_composite/experiments/vdivu-vv-composite-real/`.
 
-## Article Sections
+The experiment must:
 
-1. Background: why cycle-accurate profiling is needed before writing an LLVM scheduling model.
-2. Field taxonomy: common processor fields versus instruction-specific fields.
-3. `IssueWidth`: meaning, evidence from the processor profile, and TableGen `let IssueWidth = 2`.
-4. `MicroOpBufferSize`: in-order meaning, evidence from the processor profile, and TableGen `let MicroOpBufferSize = 0`.
-5. `ProcResource` / `ProcResGroup`: two vector pipes and `YuShuXinVPipe1` for `vdivu.vv`.
-6. `Latency`: dependent-readiness meaning, T11/T12 assembly, marker delta, `Latency = 18/24/36`.
-7. `ReleaseAtCycles`: resource-occupancy meaning, T10 assembly, marker delta, `ReleaseAtCycles = 6/8/12`.
-8. `AcquireAtCycles`: delayed-resource acquisition meaning, current empty default, and why no LLVM claim is emitted.
-9. `NumMicroOps`: issue-width pressure meaning, current non-identifiable state, and why no LLVM claim is emitted.
-10. `SingleIssue` / `BeginGroup` / `EndGroup`: dispatch-group isolation meaning, current non-identifiable state, and why no LLVM claim is emitted.
-11. `ReadAdvance`: consumer-specific bypass meaning, current non-identifiable state, and why no LLVM claim is emitted.
-12. LMUL scaling: exact formulas `Latency = 12 + 6 * LMUL`, `ReleaseAtCycles = 4 + 2 * LMUL`, with LMUL interpreted as `m1=1`, `m2=2`, `m4=4`.
-13. Timestamp model: zero-cost marker contract as methodology, not a target LLVM scheduling field.
-14. TableGen expression: show the relevant `SchedMachineModel`, resources, and `YuShuXinWriteVIDivV_M1/M2/M4` draft definitions.
-15. Boundary statement: synthetic calibration PASS, real hardware claims are separate.
+- Use zero-cost `TIMESTAMP_MARK` labels.
+- Include `vdivu.vv` at `e32,m1`, `e32,m2`, and `e32,m4`.
+- Include an independent stream segment to show `ReleaseAtCycles`.
+- Include a RAW chain segment to show `Latency`.
+- Include a filler-gap segment (`vadd.vv` fillers before a dependent `vadd.vv`) to show how bubbles disappear when the gap covers readiness.
+- Include a segment that illustrates the absence of claimed `AcquireAtCycles` and `ReadAdvance`: the article must state that the current evidence observes issue/readiness but does not infer delayed acquire or consumer-specific bypass fields.
+- Save theory-vs-observed evidence in `results/blog/vdivu_vv_composite/experiments/vdivu-vv-composite-real/analysis.md`.
 
-## Image Prompts
+Expected real-platform values to use when deriving the theoretical schedule:
 
-Use GPT Image2 for each asset. The images must be clean technical timing diagrams with minimal English labels because exact Chinese text and numeric values are supplied by HTML beside each image.
+| LMUL | Latency | ReleaseAtCycles | ProcResource | NumMicroOps | SingleIssue |
+| --- | ---: | ---: | --- | ---: | --- |
+| `m1` | 4 | 1 | `YuShuXinVPipe0` | 1 | false |
+| `m2` | 4 | 2 | `YuShuXinVPipe0` | 1 | false |
+| `m4` | 4 | 4 | `YuShuXinVPipe0` | 1 | false |
 
-- `issue-width.png`: dual-issue timeline showing at most two micro-ops entering one cycle group, with a third waiting.
-- `micro-op-buffer-size.png`: in-order pipeline with no reorder buffer, arrows from decode to execute in program order.
-- `proc-resource.png`: two vector pipes, one instruction pinned to pipe1 and flexible instructions able to use a group.
-- `latency.png`: producer `vdivu.vv` result becoming visible to a dependent consumer after a long readiness interval.
-- `release-at-cycles.png`: independent `vdivu.vv` stream occupying a vector resource for several cycles before release.
-- `acquire-at-cycles.png`: contrast default acquire-at-issue versus delayed acquisition, with the default path emphasized.
-- `num-micro-ops.png`: one instruction expanding into one or multiple scheduler micro-ops, with current evidence marked unknown by visual styling.
-- `single-issue-group.png`: a dispatch group where an instruction may force begin/end group boundaries, with current evidence marked unknown.
-- `read-advance.png`: two consumers reading the same producer result with hypothetical bypass arrows, current profile marked no claim.
-- `lmul-scaling.png`: three lanes for LMUL m1/m2/m4 with increasing latency and resource occupancy bars.
-- `timestamp-model.png`: zero-cost label markers bracketing code while the pipeline timeline remains unchanged.
+Formula fits:
 
-## Tasks
+- `Latency = 4 + 0 * LMUL`
+- `ReleaseAtCycles = 0 + 1 * LMUL`
 
-### Task 1: Gather Fixed Evidence
+## Figure Set
 
-**Files:**
-- Read: `results/common/processor.yaml`
-- Read: `results/common/mismatch_report.md`
-- Read: `results/common/llvm_model_draft.td`
-- Read: `results/vdivu_vv/profile.yaml`
-- Read: key `test.s` and `trace.json` files listed above.
+Every final PNG below must be regenerated from a deterministic SVG reference and saved under `blogs/assets/`.
 
-- [ ] Extract exact `vdivu.vv` values: resource `YuShuXinVPipe1`, latency `18/24/36`, release `6/8/12`, formulas, and non-claimed fields.
-- [ ] Extract exact marker deltas for T10, T11, T20, and T30 examples.
-- [ ] Extract exact TableGen draft snippets for machine model, resources, and `YuShuXinWriteVIDivV_M1/M2/M4`.
+- `issue-width.png`: T21 scalar pairing, dual-issue grouping, `IssueWidth = 2`.
+- `micro-op-buffer-size.png`: in-order marker-window execution, `MicroOpBufferSize = 0`.
+- `proc-resource.png`: T20 pairwise classification plus the global pipe-label mirror caveat, `YuShuXinVPipe0` canonical resource.
+- `latency.png`: T11 RAW chain, `delta = 12` for four instructions, inferred `Latency = 4`.
+- `release-at-cycles.png`: T10 independent stream, `delta = 3` for four `m1` instructions, inferred `ReleaseAtCycles = 1`.
+- `acquire-at-cycles.png`: same stream/resource timeline with acquire-at-issue shown; current experiments do not infer a delayed `AcquireAtCycles` list.
+- `num-micro-ops.png`: T10/T21 evidence for one dynamic micro-op per `vdivu.vv`, `NumMicroOps = 1`.
+- `single-issue-group.png`: T21 vector+scalar pairing, `SingleIssue = false`; no `BeginGroup`/`EndGroup` claim.
+- `read-advance.png`: T12 producer/filler/consumer gap, no consumer-specific `ReadAdvance` claim.
+- `lmul-scaling.png`: m1/m2/m4 T10 evidence, release scales 1/2/4 while latency stays 4.
+- `timestamp-model.png`: T00 adjacent marker evidence, zero-cost label marker.
+- `composite-schedule.png`: new comprehensive mixed-LMUL example showing issue, execution/resource occupancy, dependency readiness, fillers, bubbles, and inferred fields together.
 
-### Task 2: Repair Stop-Hook Documentation Size
+## Article Structure
 
-**Files:**
-- Modify: `results/common/experiment_quality.md`
-- Modify: `results/common/experiment_quality_repeatability_part1.md`
-- Modify: `results/common/experiment_quality_repeatability_part2.md`
+1. Background: why LLVM schedule models need cycle-accurate profiling.
+2. Evidence chain: `test.s` + `trace.json` + `exec.log` + `profile.real_platform.yaml` + gate report.
+3. Field taxonomy: common processor fields versus instruction-local fields.
+4. One section per required field:
+   - field meaning in LLVM;
+   - complete key assembly fragment;
+   - marker and dynamic-cycle evidence;
+   - diagram interpretation;
+   - inferred value and TableGen sketch;
+   - boundaries when the field is not claimed.
+5. Comprehensive mixed-LMUL schedule section.
+6. Real-platform TableGen draft for `vdivu.vv`.
+7. Synthetic calibration contrast.
+8. Summary of claimed fields, non-claimed fields, and follow-up experiments.
 
-- [ ] Preserve the current report summary and PASS/human-approval status in `results/common/experiment_quality.md`.
-- [ ] Replace the giant repeatability table in the main report with links to the two split repeatability files.
-- [ ] Regenerate or refresh the split repeatability files so each remains under 2000 lines.
-- [ ] Verify `wc -l` for all three report files.
+## Execution Tasks
 
-### Task 3: Generate GPT Image2 Assets
+### Task 1: Refresh Plan And Evidence
 
-**Files:**
-- Create: `blogs/assets/*.png`
+- [ ] Update this plan to real-gem5 primary evidence.
+- [ ] Extract `vdivu.vv` real values from `profile.real_platform.yaml`.
+- [ ] Extract marker deltas and dynamic instruction cycles from the listed real experiments.
+- [ ] Confirm `experiment_quality.md` reports `Gate status: PASS`.
 
-- [ ] Generate the 11 visual assets listed in the Image Prompts section using GPT Image2.
-- [ ] Move or copy each generated asset into `blogs/assets/` with the exact filenames listed above.
-- [ ] Inspect the final asset list and verify every HTML-referenced image exists.
+### Task 2: Add Comprehensive Experiment
 
-### Task 4: Write Static HTML Blog
+- [ ] Create `experiments/blog/vdivu-vv-composite-real/experiment.yaml`.
+- [ ] Create `experiments/blog/vdivu-vv-composite-real/test.s`.
+- [ ] Run `python3 scripts/run_experiment.py experiments/blog/vdivu-vv-composite-real --mode real_platform_profile --backend gem5_minor --results-root results/blog`.
+- [ ] Write `analysis.md` with observed marker cycles, selected `exec.log` rows, and theory-vs-observed interpretation.
 
-**Files:**
-- Create: `blogs/llvm-rvv-sched-model-profile.html`
+### Task 3: Generate Deterministic Figures
 
-- [ ] Build a readable article layout with a constrained main column, sticky section navigation, code blocks, evidence cards, and figure captions.
-- [ ] Write the Chinese technical content for every section listed above.
-- [ ] Include deterministic tables for exact values and claim status.
-- [ ] Include complete key assembly fragments for T10, T11, T20, and T30/T12.
-- [ ] Include trace JSON excerpts with start/end cycles and primary deltas.
-- [ ] Include the TableGen draft snippets for the machine model, resources, and `vdivu.vv` LMUL writes.
-- [ ] Explicitly state that generated images are visual aids and that numeric truth is in code/data blocks.
+- [ ] Create/update a small project-local generator for blog SVG references.
+- [ ] Generate all SVG references and reference PNGs under `blogs/assets/reference/`.
+- [ ] Ensure the deterministic figures use only values read from checked-in trace/profile evidence.
 
-### Task 5: Verify
+### Task 4: Redraw With GPT Image2
 
-**Files:**
-- Verify: `docs/plan-blog.md`
-- Verify: `blogs/llvm-rvv-sched-model-profile.html`
-- Verify: `blogs/assets/*.png`
-- Verify: `results/common/experiment_quality*.md`
+- [ ] For each reference PNG, call GPT Image2 to redraw the same content as a polished technical timing diagram.
+- [ ] Save final assets under the exact `blogs/assets/*.png` filenames.
+- [ ] Reject or regenerate any output that changes numeric values, instruction order, marker cycles, or highlighted conclusions.
 
-- [ ] Run `wc -l` on touched documentation and HTML files; no file may exceed 2000 lines.
-- [ ] Run a local link/image-reference check for the HTML file.
-- [ ] Search the blog for every required parameter name.
-- [ ] Verify `vdivu.vv` values in the blog match `profile.yaml` and `llvm_model_draft.td`.
-- [ ] Run `git status --short` and review the final diff without reverting unrelated pre-existing changes.
+### Task 5: Rewrite Blog HTML
 
+- [ ] Replace the old article body with real-gem5 evidence.
+- [ ] Include complete key assembly fragments for T10, T11, T12, T20, T21, T00, and the comprehensive experiment.
+- [ ] Include trace excerpts and exec-log tables.
+- [ ] Include TableGen sketches based on real-platform values.
+- [ ] Include the synthetic calibration contrast without making it the main result.
+
+### Task 6: Verify And Commit
+
+- [ ] Verify HTML image references and anchors.
+- [ ] Verify required field names appear.
+- [ ] Verify article values match `profile.real_platform.yaml` and `search_model_real_platform_summary.md`.
+- [ ] Run `pytest tests/test_file_line_limits.py -q`.
+- [ ] Run `python3 -m html.parser blogs/llvm-rvv-sched-model-profile.html`.
+- [ ] Confirm no touched documentation file exceeds 2000 lines.
+- [ ] Commit the blog v2 work on the isolated branch.

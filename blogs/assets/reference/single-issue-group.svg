@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="384" viewBox="0 0 1320 384">
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="34" y="48" font-size="28" font-family="Inter,Arial" font-weight="700" fill="#172033">T21 pairing: SingleIssue = false</text>
+<line x1="170.0" y1="78" x2="170.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="170.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">0</text>
+<line x1="445.0" y1="78" x2="445.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="445.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">1</text>
+<line x1="720.0" y1="78" x2="720.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="720.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">2</text>
+<line x1="995.0" y1="78" x2="995.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="995.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">3</text>
+<line x1="1270.0" y1="78" x2="1270.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1270.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">4</text>
+<text x="34" y="135" font-size="18" font-family="Inter,Arial" fill="#27364a">vector lane</text>
+<line x1="170" y1="142" x2="1270" y2="142" stroke="#cbd5e1" stroke-width="1"/>
+<text x="34" y="209" font-size="18" font-family="Inter,Arial" fill="#27364a">scalar lane</text>
+<line x1="170" y1="216" x2="1270" y2="216" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="170.0" y="110" width="271.0" height="42" rx="6" fill="#2b6cb0"/>
+<text x="305.5" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vdivu.vv</text>
+<text x="170.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vdivu.vv v2, v0, v1</text>
+<rect x="170.0" y="184" width="271.0" height="42" rx="6" fill="#805ad5"/>
+<text x="305.5" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">add</text>
+<text x="170.0" y="242" font-size="12" fill="#334155" font-family="Inter,Arial">add s4, s5, s6</text>
+<rect x="445.0" y="110" width="271.0" height="42" rx="6" fill="#2b6cb0"/>
+<text x="580.5" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vdivu.vv</text>
+<text x="445.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vdivu.vv v3, v0, v1</text>
+<rect x="445.0" y="184" width="271.0" height="42" rx="6" fill="#805ad5"/>
+<text x="580.5" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">add</text>
+<text x="445.0" y="242" font-size="12" fill="#334155" font-family="Inter,Arial">add s7, s8, s9</text>
+<rect x="720.0" y="110" width="271.0" height="42" rx="6" fill="#2b6cb0"/>
+<text x="855.5" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vdivu.vv</text>
+<text x="720.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vdivu.vv v4, v0, v1</text>
+<rect x="720.0" y="184" width="271.0" height="42" rx="6" fill="#805ad5"/>
+<text x="855.5" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">add</text>
+<text x="720.0" y="242" font-size="12" fill="#334155" font-family="Inter,Arial">add s10, s11, t3</text>
+<rect x="995.0" y="110" width="271.0" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1130.5" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">vdivu.vv</text>
+<text x="995.0" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">vdivu.vv v5, v0, v1</text>
+<rect x="995.0" y="184" width="271.0" height="42" rx="6" fill="#805ad5"/>
+<text x="1130.5" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">add</text>
+<text x="995.0" y="242" font-size="12" fill="#334155" font-family="Inter,Arial">add t4, t5, t6</text>
+<text x="34" y="308" font-size="16" font-family="Inter,Arial" fill="#334155">vdivu.vv does not force an isolated issue group in this evidence.</text>
+<text x="34" y="332" font-size="16" font-family="Inter,Arial" fill="#334155">No BeginGroup/EndGroup claim is emitted.</text>
+</svg>

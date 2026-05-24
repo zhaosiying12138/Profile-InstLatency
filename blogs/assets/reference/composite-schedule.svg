@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2800" height="384" viewBox="0 0 2800 384">
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="34" y="48" font-size="28" font-family="Inter,Arial" font-weight="700" fill="#172033">Composite real experiment: latency, release, LMUL, bubbles</text>
+<line x1="170.0" y1="78" x2="170.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="170.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">0</text>
+<line x1="228.6" y1="78" x2="228.6" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="228.6" y="96" font-size="13" text-anchor="middle" fill="#4a5568">1</text>
+<line x1="287.3" y1="78" x2="287.3" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="287.3" y="96" font-size="13" text-anchor="middle" fill="#4a5568">2</text>
+<line x1="345.9" y1="78" x2="345.9" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="345.9" y="96" font-size="13" text-anchor="middle" fill="#4a5568">3</text>
+<line x1="404.5" y1="78" x2="404.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="404.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">4</text>
+<line x1="463.2" y1="78" x2="463.2" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="463.2" y="96" font-size="13" text-anchor="middle" fill="#4a5568">5</text>
+<line x1="521.8" y1="78" x2="521.8" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="521.8" y="96" font-size="13" text-anchor="middle" fill="#4a5568">6</text>
+<line x1="580.5" y1="78" x2="580.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="580.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">7</text>
+<line x1="639.1" y1="78" x2="639.1" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="639.1" y="96" font-size="13" text-anchor="middle" fill="#4a5568">8</text>
+<line x1="697.7" y1="78" x2="697.7" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="697.7" y="96" font-size="13" text-anchor="middle" fill="#4a5568">9</text>
+<line x1="756.4" y1="78" x2="756.4" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="756.4" y="96" font-size="13" text-anchor="middle" fill="#4a5568">10</text>
+<line x1="815.0" y1="78" x2="815.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="815.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">11</text>
+<line x1="873.6" y1="78" x2="873.6" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="873.6" y="96" font-size="13" text-anchor="middle" fill="#4a5568">12</text>
+<line x1="932.3" y1="78" x2="932.3" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="932.3" y="96" font-size="13" text-anchor="middle" fill="#4a5568">13</text>
+<line x1="990.9" y1="78" x2="990.9" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="990.9" y="96" font-size="13" text-anchor="middle" fill="#4a5568">14</text>
+<line x1="1049.5" y1="78" x2="1049.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1049.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">15</text>
+<line x1="1108.2" y1="78" x2="1108.2" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1108.2" y="96" font-size="13" text-anchor="middle" fill="#4a5568">16</text>
+<line x1="1166.8" y1="78" x2="1166.8" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1166.8" y="96" font-size="13" text-anchor="middle" fill="#4a5568">17</text>
+<line x1="1225.5" y1="78" x2="1225.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1225.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">18</text>
+<line x1="1284.1" y1="78" x2="1284.1" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1284.1" y="96" font-size="13" text-anchor="middle" fill="#4a5568">19</text>
+<line x1="1342.7" y1="78" x2="1342.7" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1342.7" y="96" font-size="13" text-anchor="middle" fill="#4a5568">20</text>
+<line x1="1401.4" y1="78" x2="1401.4" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1401.4" y="96" font-size="13" text-anchor="middle" fill="#4a5568">21</text>
+<line x1="1460.0" y1="78" x2="1460.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1460.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">22</text>
+<line x1="1518.6" y1="78" x2="1518.6" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1518.6" y="96" font-size="13" text-anchor="middle" fill="#4a5568">23</text>
+<line x1="1577.3" y1="78" x2="1577.3" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1577.3" y="96" font-size="13" text-anchor="middle" fill="#4a5568">24</text>
+<line x1="1635.9" y1="78" x2="1635.9" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1635.9" y="96" font-size="13" text-anchor="middle" fill="#4a5568">25</text>
+<line x1="1694.5" y1="78" x2="1694.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1694.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">26</text>
+<line x1="1753.2" y1="78" x2="1753.2" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1753.2" y="96" font-size="13" text-anchor="middle" fill="#4a5568">27</text>
+<line x1="1811.8" y1="78" x2="1811.8" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1811.8" y="96" font-size="13" text-anchor="middle" fill="#4a5568">28</text>
+<line x1="1870.5" y1="78" x2="1870.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1870.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">29</text>
+<line x1="1929.1" y1="78" x2="1929.1" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1929.1" y="96" font-size="13" text-anchor="middle" fill="#4a5568">30</text>
+<line x1="1987.7" y1="78" x2="1987.7" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="1987.7" y="96" font-size="13" text-anchor="middle" fill="#4a5568">31</text>
+<line x1="2046.4" y1="78" x2="2046.4" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2046.4" y="96" font-size="13" text-anchor="middle" fill="#4a5568">32</text>
+<line x1="2105.0" y1="78" x2="2105.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2105.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">33</text>
+<line x1="2163.6" y1="78" x2="2163.6" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2163.6" y="96" font-size="13" text-anchor="middle" fill="#4a5568">34</text>
+<line x1="2222.3" y1="78" x2="2222.3" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2222.3" y="96" font-size="13" text-anchor="middle" fill="#4a5568">35</text>
+<line x1="2280.9" y1="78" x2="2280.9" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2280.9" y="96" font-size="13" text-anchor="middle" fill="#4a5568">36</text>
+<line x1="2339.5" y1="78" x2="2339.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2339.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">37</text>
+<line x1="2398.2" y1="78" x2="2398.2" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2398.2" y="96" font-size="13" text-anchor="middle" fill="#4a5568">38</text>
+<line x1="2456.8" y1="78" x2="2456.8" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2456.8" y="96" font-size="13" text-anchor="middle" fill="#4a5568">39</text>
+<line x1="2515.5" y1="78" x2="2515.5" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2515.5" y="96" font-size="13" text-anchor="middle" fill="#4a5568">40</text>
+<line x1="2574.1" y1="78" x2="2574.1" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2574.1" y="96" font-size="13" text-anchor="middle" fill="#4a5568">41</text>
+<line x1="2632.7" y1="78" x2="2632.7" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2632.7" y="96" font-size="13" text-anchor="middle" fill="#4a5568">42</text>
+<line x1="2691.4" y1="78" x2="2691.4" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2691.4" y="96" font-size="13" text-anchor="middle" fill="#4a5568">43</text>
+<line x1="2750.0" y1="78" x2="2750.0" y2="304" stroke="#e2e8f0" stroke-width="1"/>
+<text x="2750.0" y="96" font-size="13" text-anchor="middle" fill="#4a5568">44</text>
+<text x="34" y="135" font-size="18" font-family="Inter,Arial" fill="#27364a">program order</text>
+<line x1="170" y1="142" x2="2750" y2="142" stroke="#cbd5e1" stroke-width="1"/>
+<text x="34" y="209" font-size="18" font-family="Inter,Arial" fill="#27364a">constraints</text>
+<line x1="170" y1="216" x2="2750" y2="216" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="170.0" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="197.3" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">div@167</text>
+<rect x="228.6" y="110" width="54.6" height="42" rx="6" fill="#2f855a"/>
+<text x="256.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">fill@168</text>
+<rect x="287.3" y="110" width="54.6" height="42" rx="6" fill="#2f855a"/>
+<text x="314.6" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">fill@169</text>
+<rect x="345.9" y="110" width="54.6" height="42" rx="6" fill="#e53e3e"/>
+<text x="373.2" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">bubble@170</text>
+<rect x="404.5" y="110" width="54.6" height="42" rx="6" fill="#2f855a"/>
+<text x="431.9" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">use@171</text>
+<rect x="463.2" y="110" width="113.3" height="42" rx="6" fill="#718096"/>
+<text x="519.8" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">drain</text>
+<text x="463.2" y="168" font-size="12" fill="#334155" font-family="Inter,Arial">40 scalar nops omitted</text>
+<rect x="639.1" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="666.4" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">D0@318</text>
+<rect x="697.7" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="725.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">D1@319</text>
+<rect x="756.4" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="783.7" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">D2@320</text>
+<rect x="815.0" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="842.3" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">D3@321</text>
+<rect x="873.6" y="110" width="113.3" height="42" rx="6" fill="#718096"/>
+<text x="930.3" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">drain</text>
+<rect x="1049.5" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1076.9" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">RAW@482</text>
+<rect x="1284.1" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1311.4" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">RAW@486</text>
+<rect x="1518.6" y="110" width="54.6" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1546.0" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">RAW@490</text>
+<rect x="1577.3" y="110" width="113.3" height="42" rx="6" fill="#718096"/>
+<text x="1633.9" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">drain</text>
+<rect x="1753.2" y="110" width="113.3" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1809.8" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">m2@657-658</text>
+<rect x="1870.5" y="110" width="113.3" height="42" rx="6" fill="#2b6cb0"/>
+<text x="1927.1" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">m2@659-660</text>
+<rect x="1987.7" y="110" width="113.3" height="42" rx="6" fill="#2b6cb0"/>
+<text x="2044.4" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">m2@661-662</text>
+<rect x="2105.0" y="110" width="113.3" height="42" rx="6" fill="#718096"/>
+<text x="2161.6" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">drain</text>
+<rect x="2280.9" y="110" width="230.5" height="42" rx="6" fill="#2b6cb0"/>
+<text x="2396.2" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">m4@830-833</text>
+<rect x="2515.5" y="110" width="230.5" height="42" rx="6" fill="#2b6cb0"/>
+<text x="2630.7" y="135" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">m4@834-837</text>
+<rect x="170.0" y="184" width="230.5" height="42" rx="6" fill="#d69e2e"/>
+<text x="285.3" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">ready +4</text>
+<text x="170.0" y="242" font-size="12" fill="#334155" font-family="Inter,Arial">Latency window</text>
+<rect x="639.1" y="184" width="54.6" height="42" rx="6" fill="#d69e2e"/>
+<text x="666.4" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">release m1</text>
+<rect x="1753.2" y="184" width="113.3" height="42" rx="6" fill="#d69e2e"/>
+<text x="1809.8" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">release m2</text>
+<rect x="2280.9" y="184" width="230.5" height="42" rx="6" fill="#d69e2e"/>
+<text x="2396.2" y="209" font-size="15" text-anchor="middle" fill="white" font-family="Inter,Arial">release m4</text>
+<text x="34" y="308" font-size="16" font-family="Inter,Arial" fill="#334155">One gem5 program contains gap2, m1 stream, RAW chain, m2 stream, and m4 stream.</text>
+<text x="34" y="332" font-size="16" font-family="Inter,Arial" fill="#334155">Axis is drain-compressed; real gem5 cycles are printed on each segment.</text>
+</svg>
