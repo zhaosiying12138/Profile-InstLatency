@@ -99,13 +99,13 @@ Round 4 summary hashes, preserved as the review baseline:
 | `results/common/search_model_real_platform.json` | `ed813bcec76b943e36134efcbedbe87866a1f5f73aba40206be211ebec24f935` |
 | `results/common/experiment_quality.md` | `8206055ea8ab05c8864203890332cb9d742d3508430c986dca7b78e5df19b9b8` |
 
-Current Round 11 approval-bound hashes after current-head capture:
+Current Round 14 approval-bound hashes after formula-fit coverage repair:
 
 | Artifact | SHA-256 |
 | --- | --- |
 | `results/common/real_platform_inventory.json` | `197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd` |
 | `results/common/real_platform_field_status.json` | `079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432` |
-| `results/common/search_model_real_platform.json` | `2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6` |
+| `results/common/search_model_real_platform.json` | `3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd` |
 | `results/common/experiment_quality.md` | `d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a` |
 
 Current source-backed counts:
@@ -657,12 +657,12 @@ Post-Round-10 commits changed the real-platform evidence boundary again:
   output command now matches the checked-in search artifact byte-for-byte and
   does not mutate tracked `results/common` files.
 
-Current artifacts report 150 field rows: 141 inferred and 9
+At that boundary, artifacts reported 150 field rows: 141 inferred and 9
 `non_identifiable`, with 0 conflict and 0 insufficient-evidence rows. The
-pending request is now Round 11 / `Round11VcpopM4IssueFieldDiagnostics`; it is
+pending request was Round 11 / `Round11VcpopM4IssueFieldDiagnostics`; it was
 not approved, not a gate input, not an approval artifact, and not gate-consumed.
 
-Current hashes:
+Round 11 hashes:
 
 | Artifact | SHA-256 |
 | --- | --- |
@@ -718,6 +718,27 @@ over `.humanize/rlcr/**`. The repaired model is:
 The decision artifact is
 `results/common/agentic_flow/artifacts/decisions/round-13-control-plane-ownership.md`.
 Timing/search artifacts and the pending risk request are unchanged.
+
+### Round 14 Formula-Fit Coverage Repair
+
+Round 10 re-review found that formula-fit summaries reported complete
+`exact_fit` formulas from exact `m1`/`m2` rows even when a required `m4` row for
+the same instruction field was `non_identifiable`. The repaired rule requires
+all required LMUL rows (`m1`, `m2`, and `m4`) to be exact before the primary
+formula status can be `exact_fit`.
+
+Current blocked examples now report `partial_fit_blocked`:
+
+- `vcpop_m` `ReleaseAtCycles`, blocked by `m4`.
+- `vrgather_vv` `Latency`, blocked by `m4`.
+- `vslideup_vx` `Latency`, blocked by `m4`.
+
+Any exact formula over only the exact subset is retained only as
+`provisional_fit`. The search artifact hash is now
+`3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd`; field
+status remains 141 inferred and 9 non-identifiable. The pending request is
+refreshed to Round 14 / `Round14FormulaFitCoverageRepair` and remains not
+approved, not a gate input, not an approval artifact, and not gate-consumed.
 
 ## Humanize2 Hub Path
 

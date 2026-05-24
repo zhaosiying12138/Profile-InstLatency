@@ -192,8 +192,8 @@ Status: raw_observation_parameter_search
 | --- | --- | --- | --- | ---: |
 | `vadd_vv` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
 | `vadd_vv` | `ReleaseAtCycles` | exact_fit | `0 + 1 * LMUL` | 0 |
-| `vcpop_m` | `Latency` | insufficient_evidence | `n/a` | n/a |
-| `vcpop_m` | `ReleaseAtCycles` | exact_fit | `1 + 0 * LMUL` | 0 |
+| `vcpop_m` | `Latency` | partial_fit_blocked | `n/a` | n/a |
+| `vcpop_m` | `ReleaseAtCycles` | partial_fit_blocked | `n/a` | n/a |
 | `vdivu_vv` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
 | `vdivu_vv` | `ReleaseAtCycles` | exact_fit | `0 + 1 * LMUL` | 0 |
 | `viota_m` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
@@ -204,9 +204,9 @@ Status: raw_observation_parameter_search
 | `vmul_vv` | `ReleaseAtCycles` | exact_fit | `0 + 1 * LMUL` | 0 |
 | `vredsum_vs` | `Latency` | exact_fit | `3 + 1 * LMUL` | 0 |
 | `vredsum_vs` | `ReleaseAtCycles` | exact_fit | `0 + 1 * LMUL` | 0 |
-| `vrgather_vv` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
+| `vrgather_vv` | `Latency` | partial_fit_blocked | `n/a` | n/a |
 | `vrgather_vv` | `ReleaseAtCycles` | approximate_fit | `0 + 5 * LMUL` | 7 |
-| `vslideup_vx` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
+| `vslideup_vx` | `Latency` | partial_fit_blocked | `n/a` | n/a |
 | `vslideup_vx` | `ReleaseAtCycles` | approximate_fit | `1 + 4 * LMUL` | 3 |
 | `vsll_vv` | `Latency` | exact_fit | `4 + 0 * LMUL` | 0 |
 | `vsll_vv` | `ReleaseAtCycles` | exact_fit | `0 + 1 * LMUL` | 0 |

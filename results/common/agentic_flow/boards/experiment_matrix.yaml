@@ -41,6 +41,9 @@ current_head_evidence:
   control_plane_ownership_repair:
     artifact: results/common/agentic_flow/artifacts/decisions/round-13-control-plane-ownership.md
     effect: replay ownership is corrected so worker write scopes exclude `.humanize/rlcr/**`; real-platform timing artifacts are unchanged
+  formula_fit_coverage_repair:
+    artifact: results/common/agentic_flow/artifacts/decisions/round-14-formula-fit-coverage.md
+    effect: formula summaries now report partial_fit_blocked when any required LMUL row is not exact
 current_counts:
   real_platform_traces: 7660
   stable_repeat_groups: 3815
@@ -64,7 +67,7 @@ field_status_summary:
 current_hashes:
   real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
   real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
-  search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+  search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
   experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
 gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
 human_handoff: present_request_before_creating_human_approval_json

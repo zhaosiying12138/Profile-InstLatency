@@ -2,8 +2,8 @@ schema_version: 1
 workflow:
   id: rvv-profile-workflow
   source_plan: docs/plan.md
-  round: 13
-  status: awaiting_human_risk_decision_after_control_plane_ownership_repair
+  round: 14
+  status: awaiting_human_risk_decision_after_formula_fit_coverage_repair
 manifest:
   capabilities:
     agent_tools: [codex]
@@ -347,6 +347,10 @@ artifacts:
     primitive: h2-artifact
     schema: rvv.decision.v1
     path: artifacts/decisions/round-13-control-plane-ownership.md
+  - id: round-14-formula-fit-coverage-decision
+    primitive: h2-artifact
+    schema: rvv.decision.v1
+    path: artifacts/decisions/round-14-formula-fit-coverage.md
   - id: rlcr-round-10-summary
     primitive: h2-artifact
     schema: rvv.rlcrReference.v1
@@ -769,6 +773,55 @@ flow_nodes:
       worker_prompts_and_contracts_exclude_humanize_write_scope: true
       humanize_read_only_lineage_allowed: true
     status: worker_scope_repaired_pending_ac16_human_decision
+  - id: round14-formula-fit-coverage-repair
+    primitive: h2-control
+    owner: CoordinatorAndCodexReviewer
+    decision: artifacts/decisions/round-14-formula-fit-coverage.md
+    formula_fit_guard:
+      required_lmuls: [m1, m2, m4]
+      complete_formula_requires_all_required_lmuls_exact: true
+      blocked_status: partial_fit_blocked
+      provisional_fit_key: provisional_fit
+      blocked_examples:
+        - instruction: vcpop_m
+          field: ReleaseAtCycles
+          blocked_lmul: m4
+        - instruction: vrgather_vv
+          field: Latency
+          blocked_lmul: m4
+        - instruction: vslideup_vx
+          field: Latency
+          blocked_lmul: m4
+    field_status_summary:
+      total: 150
+      inferred: 141
+      non_identifiable: 9
+      conflict: 0
+      insufficient_evidence: 0
+      blocking_total: 9
+    request_boundary:
+      status: pending_not_approved
+      request_status: not_approved
+      decision_status: not_approved
+      gate_status: not_submitted
+      approved: false
+      is_gate_input: false
+      is_approval_artifact: false
+      gate_consumed: false
+      approval_artifact_created: false
+      unresolved_non_identifiable_risks: 9
+      request_worker: Round14FormulaFitCoverageRepair
+      gate_command: python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results
+      expected_fail_closed_reasons:
+        - missing Gate status PASS
+        - missing machine-readable human approval
+        - 9 unresolved non_identifiable risks
+      current_hashes:
+        real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
+        real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
+        search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
+        experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
+    status: formula_fit_guard_repaired_pending_ac16_human_decision
   - id: llvm-worktree-helper
     primitive: h2-check
     uses: prepare_llvm_yushuxin_worktree
@@ -779,8 +832,8 @@ approval_boundary:
   approval_search_command: find results/common -maxdepth 1 -iname '*approval*' -print
   risk_acceptance_request:
     path: ../real_platform_risk_acceptance_request.json
-    round: 11
-    request_worker: Round11VcpopM4IssueFieldDiagnostics
+    round: 14
+    request_worker: Round14FormulaFitCoverageRepair
     status: pending_not_approved
     gate_consumed: false
     present_to_human_before_human_approval_json: true

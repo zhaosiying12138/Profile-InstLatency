@@ -45,6 +45,10 @@ current_head_capture:
     owner: CoordinatorAndCodexReviewer
     status: repaired
     effect: worker-owned write sets no longer grant `.humanize/rlcr/**` write scope
+  round14_formula_fit_coverage:
+    owner: CoordinatorAndCodexReviewer
+    status: repaired
+    effect: partial LMUL formula fits now report partial_fit_blocked instead of exact_fit
   request_artifact: ../real_platform_risk_acceptance_request.json
   request_status: pending_not_approved
   decision_status: not_approved

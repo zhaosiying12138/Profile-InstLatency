@@ -1315,13 +1315,66 @@ def fit_formula(points: dict[str, int], max_value: int) -> FormulaCandidate | No
     return best
 
 
-def formula_fit_for(field_results: dict[str, dict[str, Any]], max_value: int) -> dict[str, Any]:
+def formula_fit_for(
+    field_results: dict[str, dict[str, Any]],
+    max_value: int,
+    *,
+    required_lmuls: tuple[str, ...] = LMUL_ORDER,
+) -> dict[str, Any]:
     points = {
         lmul: int(result["value"])
         for lmul, result in field_results.items()
         if result.get("status") == "exact_fit" and int_or_none(result.get("value")) is not None
     }
     candidate = fit_formula(points, max_value)
+    blocked_lmuls = []
+    for lmul in required_lmuls:
+        result = field_results.get(lmul)
+        if result is None:
+            blocked_lmuls.append(
+                {
+                    "lmul": lmul,
+                    "status": "missing",
+                    "source_status": "missing",
+                    "value": None,
+                    "reason": "Required LMUL row is absent from the formula-fit input.",
+                }
+            )
+            continue
+        if result.get("status") != "exact_fit" or int_or_none(result.get("value")) is None:
+            blocked_lmuls.append(
+                {
+                    "lmul": lmul,
+                    "status": result_status_for_field(result),
+                    "source_status": result.get("status", "missing"),
+                    "value": result.get("value"),
+                    "reason": result.get("reason")
+                    or "Required LMUL row is not an exact fit, so the cross-LMUL formula is not complete.",
+                }
+            )
+    if blocked_lmuls:
+        result = {
+            "status": "partial_fit_blocked",
+            "form": "base_plus_lmul_times_k",
+            "base": None,
+            "k": None,
+            "residual": None,
+            "points": points,
+            "required_lmuls": list(required_lmuls),
+            "blocked_lmuls": blocked_lmuls,
+            "reason": "Required LMUL rows are not all exact, so this formula is diagnostic-only.",
+        }
+        if candidate is not None:
+            residual = int(candidate.residual) if float(candidate.residual).is_integer() else candidate.residual
+            result["provisional_fit"] = {
+                "status": "exact_fit" if candidate.residual == 0 else "approximate_fit",
+                "form": "base_plus_lmul_times_k",
+                "base": candidate.base,
+                "k": candidate.k,
+                "residual": residual,
+                "points": points,
+            }
+        return result
     if candidate is None:
         return {
             "status": "insufficient_evidence",
@@ -1330,6 +1383,8 @@ def formula_fit_for(field_results: dict[str, dict[str, Any]], max_value: int) ->
             "k": None,
             "residual": None,
             "points": points,
+            "required_lmuls": list(required_lmuls),
+            "blocked_lmuls": [],
             "reason": "At least two exact LMUL points are required for a formula fit.",
         }
     residual = int(candidate.residual) if float(candidate.residual).is_integer() else candidate.residual
@@ -1340,6 +1395,8 @@ def formula_fit_for(field_results: dict[str, dict[str, Any]], max_value: int) ->
         "k": candidate.k,
         "residual": residual,
         "points": points,
+        "required_lmuls": list(required_lmuls),
+        "blocked_lmuls": [],
     }
 
 

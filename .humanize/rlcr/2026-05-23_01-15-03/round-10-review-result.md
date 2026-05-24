@@ -4,7 +4,7 @@ Recommendation: REQUEST CHANGES
 
 Architectural Status: BLOCK
 
-Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The strict Round 10 summary is accurate for commits through `7a7da5d2`: Round 10 added focused T20/T12 evidence, refreshed real-platform artifacts, reduced unresolved rows from 39 to 38, and kept the request pending rather than approved. Current `HEAD` is now past that boundary and includes `77d181af`, `6ff16b7c`, `88c9e6e5`, `8ec7a8a8`, `fbc490b4`, and `91201d20`; current artifacts report 141 inferred rows and 9 `non_identifiable` rows.
+Scope note: I read `docs/plan.md`, `.humanize/rlcr/2026-05-23_01-15-03/round-10-prompt.md`, and `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md` before reviewing. The strict Round 10 summary is accurate for commits through `7a7da5d2`: Round 10 added focused T20/T12 evidence, refreshed real-platform artifacts, reduced unresolved rows from 39 to 38, and kept the request pending rather than approved. Current `HEAD` is now past that boundary at `418a24ab`, after follow-up commits including `77d181af`, `6ff16b7c`, `88c9e6e5`, `8ec7a8a8`, `fbc490b4`, and `91201d20`; current artifacts report 141 inferred rows and 9 `non_identifiable` rows.
 
 ## Part 1: Implementation Review
 
@@ -88,6 +88,46 @@ Ownership is now explicit:
 
 References to `.humanize/rlcr/**` remain allowed as read-only lineage evidence.
 
+### HIGH 1. Formula-fit summaries overclaim exact formulas from partial LMUL evidence
+
+`scripts/search_model_impl.py:1318-1343` builds formula fits from any field rows whose status is `exact_fit`. It does not check whether another required LMUL row for that same instruction/field is blocked. As a result, the current search artifact reports complete-looking exact formulas from partial LMUL coverage:
+
+- `results/common/search_model_real_platform_summary.md:63-67` marks `vcpop_m` m4 `ReleaseAtCycles` non-identifiable, but `results/common/search_model_real_platform_summary.md:195-196` reports `vcpop_m` `ReleaseAtCycles` as `exact_fit` using only m1/m2 points.
+- `results/common/search_model_real_platform_summary.md:153` marks `vrgather_vv` m4 `Latency` non-identifiable, but `results/common/search_model_real_platform_summary.md:207` reports `vrgather_vv` `Latency` as `exact_fit`.
+- `results/common/search_model_real_platform_summary.md:168` marks `vslideup_vx` m4 `Latency` non-identifiable, but `results/common/search_model_real_platform_summary.md:209` reports `vslideup_vx` `Latency` as `exact_fit`.
+
+Reviewer probe:
+
+```text
+vcpop_m ReleaseAtCycles fit_status= exact_fit fit_points= {'m1': 1, 'm2': 1} blocked_lmuls= ['m4']
+vrgather_vv Latency fit_status= exact_fit fit_points= {'m1': 4, 'm2': 4} blocked_lmuls= ['m4']
+vslideup_vx Latency fit_status= exact_fit fit_points= {'m1': 4, 'm2': 4} blocked_lmuls= ['m4']
+```
+
+Risk: AC-9 requires rule inference plus parameter-search consistency checks. A formula table that says `exact_fit` while a required LMUL point is explicitly `non_identifiable` is not an honest LLVM-facing confidence report. It also creates a future AC-16 hazard: a human approval or LLVM export could consume a formula that looks complete while its m4 basis is still approval-bound.
+
+Required implementation plan:
+
+1. Change `formula_fit_for()` to receive the required LMUL set for the first matrix (`m1`, `m2`, `m4`) plus the source field statuses.
+2. If any required LMUL row for that field is not `exact_fit`, emit a non-complete status such as `partial_fit_blocked` or `insufficient_evidence`, include `blocked_lmuls` with the source statuses, and do not present the formula as a complete exact fit. It is acceptable to keep `points` and a provisional formula under a clearly named diagnostic key, but not as the primary claimed fit.
+3. Add focused regression tests covering `vcpop_m` `ReleaseAtCycles` with exact m1/m2 plus blocked m4, and `vrgather_vv`/`vslideup_vx` `Latency` with exact m1/m2 plus blocked m4.
+4. Regenerate `results/common/search_model_real_platform.json`, `results/common/search_model_real_platform_summary.md`, profile sidecars if affected, `real_platform_field_status.json`, `real_platform_inventory.json`, `experiment_quality.md`, and `real_platform_risk_acceptance_request.json`; refresh Humanize2 capture for the formula-fit repair.
+5. Verify search byte-reproducibility, synthetic gate pass, real gate fail-closed for only legitimate remaining blockers, and `pytest`.
+
+### Accepted: formula-fit coverage guard is fixed
+
+The formula-fit issue above is now resolved in the current worktree. `formula_fit_for()` requires all required LMUL rows (`m1`, `m2`, and `m4`) to be exact before the primary formula status can be `exact_fit`. Missing or non-exact required rows now produce `partial_fit_blocked` and include `blocked_lmuls`; any exact subset fit is available only as `provisional_fit`.
+
+Current checked-in search output now reports:
+
+```text
+vcpop_m ReleaseAtCycles -> partial_fit_blocked, blocked_lmuls=[m4]
+vrgather_vv Latency -> partial_fit_blocked, blocked_lmuls=[m4]
+vslideup_vx Latency -> partial_fit_blocked, blocked_lmuls=[m4]
+```
+
+The field-status counts are unchanged at 141 inferred and 9 `non_identifiable`; this repair changes formula confidence reporting and the search artifact hash, not the underlying real-platform evidence.
+
 ### BLOCKER 1. AC-16 remains incomplete
 
 The original plan requires the real Paladin/platform flow to stop only on coverage, stability, confidence, documented assumptions, and explicit human approval before LLVM implementation. Current artifacts still fail closed:
@@ -144,7 +184,7 @@ AC status at current HEAD/worktree:
 | AC-16 | NOT MET |
 | AC-17 | MET |
 
-Forgotten items found: none after the current-head capture refresh. No items are listed under Explicitly Deferred. There are no justified deferrals that make the original plan complete.
+Forgotten items found: none after the current-head capture refresh and formula-fit guard repair. No items are listed under Explicitly Deferred.
 
 Goal Alignment Summary:
 
@@ -158,29 +198,32 @@ Claude's Round 10 tracker request is approved as a progress update, not a comple
 
 Changes applied to `.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md`:
 
-- Updated Plan Version to 22 for current-head capture verification, the matched-control T12 exactness fix, and the replay write-scope repair.
+- Updated Plan Version to 24 for current-head formula-fit coverage repair.
 - Kept the Round 10 progress entries for `f3bb4552`, `cd71b7ed`, `c1032a2c`, `73b99c2e`, and `7a7da5d2`.
 - Kept the current-head search reproducibility fix entry for `8ec7a8a8`.
 - Added a current-head capture verification entry for `77d181af`, `6ff16b7c`, `88c9e6e5`, and `8ec7a8a8`.
 - Marked T6 and T12 completed for current-head Humanize2 capture/replay after parse checks and ownership grep checks passed.
-- Marked T10 completed again after `91201d20` fixed matched-control exactness and tests/search byte-repro passed.
+- Marked T10 completed again because formula-fit summaries now fail closed as `partial_fit_blocked` whenever any required LMUL row is not exact.
 - Kept T9 and T11 as `needs_changes` because AC-16 still lacks either explicit current-hash-bound human approval or stronger evidence resolving the 9 risks.
 - Removed the now-resolved open issue for missing current-head Humanize2 capture.
+- Removed the now-resolved AC-9 open issue for partial-LMUL formula fits reported as exact despite required blocked LMUL rows.
 - Kept the open AC-16 issue for 9 non-identifiable real-platform LLVM-facing rows.
 - Removed the resolved AC-9 issue for matched-control T12 exact-latency overclaim.
-- Recorded the Round 13 control-plane ownership decision.
+- Recorded the Round 13 control-plane ownership decision and the Round 14 formula-fit coverage decision.
 - Did not modify the immutable goal or acceptance criteria section.
 
 ## Reviewer Verification Commands
 
-- `python3 -m pytest -q`: passed, 56 tests.
+- Formula-fit regression tests for blocked m4 rows and complete m1/m2/m4 fits: passed.
+- `python3 -m pytest -q`: passed.
 - `python3 -m py_compile scripts/run_suite.py scripts/gen_asm.py scripts/search_model.py scripts/search_model_impl.py scripts/search_model_support.py scripts/check_calibration_gate.py scripts/analyze.py scripts/run_experiment.py`: passed.
 - `python3 scripts/check_calibration_gate.py --mode synthetic_calibration --profile-root results`: passed.
 - `python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results`: failed closed as expected on missing PASS, missing approval, and 9 unresolved risks.
-- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-r10-review-current-search.json --format json`: passed.
-- `cmp /tmp/profile-inst-latency-r10-review-current-search.json results/common/search_model_real_platform.json`: passed.
+- `python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-formula-fit-search.json --format json`: passed.
+- `cmp /tmp/profile-inst-latency-formula-fit-search.json results/common/search_model_real_platform.json`: passed.
+- Formula-fit probe reports `partial_fit_blocked` with blocked `m4` for `vcpop_m` `ReleaseAtCycles`, `vrgather_vv` `Latency`, and `vslideup_vx` `Latency`.
 - Adversarial matched-control probe now reports `exact_fit 3` for cadence-2 stalls `[3, 1, 0, 0]`.
-- YAML/JSON/JSONL parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, and `events.jsonl`: passed.
+- YAML/JSON/JSONL/HTML parse for `results/common/agentic_flow/h2_primitives.yaml`, boards, tool-call JSON, request JSON, events, and cartridge: passed.
 - Ownership grep check confirmed no worker prompt/contract or worker `owned_write_set` grants `.humanize/rlcr/**` write scope.
 - Request risk IDs match inventory unresolved risk IDs exactly.
 - `find results/common -maxdepth 1 -iname '*approval*' -print`: no output.

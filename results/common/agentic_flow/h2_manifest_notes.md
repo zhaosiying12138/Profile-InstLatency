@@ -1,7 +1,7 @@
 # Humanize2 Manifest Notes
 
-Status: Round 13 control-plane ownership repair after commit
-`91201d20`.
+Status: Round 14 formula-fit coverage repair after commit
+`418a24ab`.
 
 This tree mirrors the Humanize2 concepts in `docs/plan.md` without depending on
 an available Humanize2 hub. It records enough structure for an empty-context
@@ -28,10 +28,10 @@ Current gate state:
 - Field-status blocking summary: `blocking_total: 9` and
   `blocking_status_counts.non_identifiable: 9`.
 - Risk request: `results/common/real_platform_risk_acceptance_request.json`
-  exists as a Round 11 pending, not-approved request for human decision. It is
+  exists as a Round 14 pending, not-approved request for human decision. It is
   not consumed by the gate and is not an approval artifact.
-- Current Round 11 hashes are `197787ab...` for inventory, `079cb94d...` for
-  field status, `2f3b78eb...` for real search, and `d3c2e41...` for
+- Current Round 14 hashes are `197787ab...` for inventory, `079cb94d...` for
+  field status, `3d72fd2e...` for real search, and `d3c2e41...` for
   experiment quality. Future approval must bind at least the current inventory
   and field-status hashes and must accept the current unresolved risk scope.
   Older Round 4 through Round 7 hashes remain only in explicitly historical
@@ -96,6 +96,11 @@ Round 6 ownership:
   `goal-tracker.md` and `round-10-review-result.md` are Codex-reviewer-owned
   control-plane files. `.humanize/rlcr/**` may still appear as read-only
   lineage evidence.
+- Round 14 repairs formula-fit coverage reporting: cross-LMUL formulas now
+  require exact `m1`, `m2`, and `m4` rows. If a required row is missing or
+  non-exact, the primary status is `partial_fit_blocked` and any exact subset
+  fit appears only as `provisional_fit`. This changes only the search summary
+  hash; field-status counts remain 141 inferred and 9 non-identifiable.
 - Empty-context replay must present the pending request to the human before any
   future `human_approval.json` is created. The human choices are: accept all
   current risks with a future gate-consumed artifact, reject and require

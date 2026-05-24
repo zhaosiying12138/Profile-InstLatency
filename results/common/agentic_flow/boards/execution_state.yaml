@@ -1,5 +1,5 @@
 schema_version: 1
-round: 13
+round: 14
 active_mode: real_platform_profile
 supported_modes:
   - synthetic_calibration
@@ -12,10 +12,10 @@ rlcr_state_policy:
   worker_may_edit_plan: false
 lesson_ids: NONE
 current_boundary:
-  round: 13
-  status: awaiting_human_risk_decision_after_control_plane_ownership_repair
-  task: repair_humanize_control_plane_worker_write_scope
-  request_worker: Round11VcpopM4IssueFieldDiagnostics
+  round: 14
+  status: awaiting_human_risk_decision_after_formula_fit_coverage_repair
+  task: repair_formula_fit_coverage_guard
+  request_worker: Round14FormulaFitCoverageRepair
   current_head_capture_worker: Round11CurrentHeadCapture
   t12_exactness_fix_worker: Round12T12ExactnessFix
   control_plane_owner: CoordinatorAndCodexReviewer
@@ -25,6 +25,7 @@ current_boundary:
     vcpop_m4_r11_diagnostics: 88c9e6e5
     search_reproduction_fix: 8ec7a8a8
     t12_matched_control_exactness_fix: 91201d20
+    formula_fit_coverage_repair: pending_commit
   forbidden_paths:
     - results/common/*approval*
     - .humanize/rlcr/2026-05-23_01-15-03/state.md
@@ -35,6 +36,7 @@ phase_status:
   humanize2_capture: round12_t12_exactness_fix_captured_without_ac16_completion_claim
   control_plane_ownership: worker_write_scopes_exclude_humanize_rlcr
   t12_matched_control_exactness: fixed_by_positive_stall_equations
+  formula_fit_coverage: partial_lmul_fits_report_partial_fit_blocked
 real_platform_evidence:
   real_platform_traces: 7660
   required_real_gem5_groups: 178
@@ -50,7 +52,7 @@ real_platform_evidence:
   artifact_hashes:
     real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
     real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
-    search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+    search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
     experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
   field_status_summary:
     blocking_total: 9
@@ -77,8 +79,8 @@ approval_boundary:
   risk_acceptance_request:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
-    round: 11
-    request_worker: Round11VcpopM4IssueFieldDiagnostics
+    round: 14
+    request_worker: Round14FormulaFitCoverageRepair
     gate_consumed: false
     is_approval_artifact: false
     present_to_human_before_human_approval_json: true

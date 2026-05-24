@@ -1,4 +1,4 @@
-<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.13.0" schema="humanize2.workflow.html.v1">
+<h2-workflow id="rvv-profile-workflow" name="RVV Profile Workflow" version="0.14.0" schema="humanize2.workflow.html.v1">
   <h2-manifest>
     <h2-capability name="agent" tools="codex"></h2-capability>
     <h2-capability name="artifact" schemas="rvv.prompt.v1,rvv.toolCall.v1,rvv.workerContract.v1,rvv.workerOutput.v1,rvv.verification.v1,rvv.rlcrReference.v1,rvv.riskAcceptanceRequest.v1"></h2-capability>
@@ -182,6 +182,14 @@
       <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md"></h2-control-plane-owner>
       <h2-control-plane-owner name="CodexReviewer" href="../../../.humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md"></h2-control-plane-owner>
       <h2-verification worker-owned-write-set-excludes-humanize="true" worker-prompts-and-contracts-exclude-humanize-write-scope="true" humanize-read-only-lineage-allowed="true"></h2-verification>
+    </h2-control>
+    <h2-control id="round14-formula-fit-coverage-repair" owner="CoordinatorAndCodexReviewer" decision="../artifacts/decisions/round-14-formula-fit-coverage.md">
+      <h2-current-status>formula-fit-coverage-repaired-pending-ac16-human-decision</h2-current-status>
+      <h2-formula-fit required-lmuls="m1,m2,m4" blocked-status="partial_fit_blocked" provisional-key="provisional_fit"></h2-formula-fit>
+      <h2-blocked-formula instruction="vcpop_m" field="ReleaseAtCycles" blocked-lmul="m4"></h2-blocked-formula>
+      <h2-blocked-formula instruction="vrgather_vv" field="Latency" blocked-lmul="m4"></h2-blocked-formula>
+      <h2-blocked-formula instruction="vslideup_vx" field="Latency" blocked-lmul="m4"></h2-blocked-formula>
+      <h2-request-boundary status="pending-not-approved" request-status="not-approved" decision-status="not-approved" gate-status="not-submitted" gate-consumed="false" approved="false" is-gate-input="false" is-approval-artifact="false" request-artifact="../real_platform_risk_acceptance_request.json" inventory-sha256="197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd" field-status-sha256="079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432" search-sha256="3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd" quality-sha256="d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a" unresolved-non-identifiable-risks="9"></h2-request-boundary>
     </h2-control>
     <h2-check id="real-platform-confidence-gate" uses="check_calibration_gate" mode="real_platform_profile">
       <h2-command>python3 scripts/check_calibration_gate.py --mode real_platform_profile --profile-root results</h2-command>

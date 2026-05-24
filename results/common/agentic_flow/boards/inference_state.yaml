@@ -1,5 +1,5 @@
 schema_version: 1
-status: control_plane_ownership_repaired_real_platform_gate_not_ready
+status: formula_fit_coverage_repaired_real_platform_gate_not_ready
 analysis_inputs:
   trace_glob: results/**/experiments/**/trace.json
   marker_pairs: [t0_t1, before_after, start_end, begin_end]
@@ -34,7 +34,7 @@ current_counts:
 artifact_hashes:
   real_platform_inventory_json: 197787ab2389df7a059aa9221a70dc5c03c4a18f7dade0c605aca939faa671fd
   real_platform_field_status_json: 079cb94d27e98bdcf9df0ae0595a6e12b101e4c8c5a3d46f7d627dd4c81c1432
-  search_model_real_platform_json: 2f3b78ebfd2e499bcd2420a9052e361fa63320ba801c7a155638b83d1975d6b6
+  search_model_real_platform_json: 3d72fd2e87b517e3e7ba3699eb214b8f35874055f3ed51c519aa4671d5f002bd
   experiment_quality_md: d3c2e41f9bcd1a3b92ed2e148be5929d82a8ae111486c7471755030f7af1a31a
 field_status_summary:
   blocking_total: 9
@@ -63,6 +63,16 @@ round13_control_plane_ownership:
   codex_reviewer_owned_control_files:
     - .humanize/rlcr/2026-05-23_01-15-03/goal-tracker.md
     - .humanize/rlcr/2026-05-23_01-15-03/round-10-review-result.md
+round14_formula_fit_coverage:
+  owner: CoordinatorAndCodexReviewer
+  decision: results/common/agentic_flow/artifacts/decisions/round-14-formula-fit-coverage.md
+  required_lmuls: [m1, m2, m4]
+  complete_formula_requires_all_required_lmuls_exact: true
+  blocked_status: partial_fit_blocked
+  blocked_examples:
+    - vcpop_m ReleaseAtCycles m4
+    - vrgather_vv Latency m4
+    - vslideup_vx Latency m4
 replay_commands:
   real_search: python3 scripts/search_model.py --profile results --mode real_platform_profile --backend gem5_minor --output /tmp/profile-inst-latency-current-review-search-fixed.json --format json
   compare_search: cmp /tmp/profile-inst-latency-current-review-search-fixed.json results/common/search_model_real_platform.json
@@ -84,8 +94,8 @@ approval:
   request_artifact:
     path: results/common/real_platform_risk_acceptance_request.json
     status: pending_not_approved
-    round: 11
-    request_worker: Round11VcpopM4IssueFieldDiagnostics
+    round: 14
+    request_worker: Round14FormulaFitCoverageRepair
     gate_consumed: false
     expected_fail_closed_reasons:
       - missing Gate status PASS

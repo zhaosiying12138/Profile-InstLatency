@@ -522,6 +522,58 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertEqual(constraint["status"], "skipped")
         self.assertIn("positive_stall_latency_disagreement", constraint["reason"])
 
+    def test_formula_fit_blocks_when_required_lmul_is_non_identifiable(self):
+        fit = search_model.formula_fit_for(
+            {
+                "m1": {"status": "exact_fit", "value": 1},
+                "m2": {"status": "exact_fit", "value": 1},
+                "m4": {
+                    "status": "non_identifiable",
+                    "value": None,
+                    "reason": "m4 issue cadence is non-affine",
+                },
+            },
+            8,
+        )
+
+        self.assertEqual(fit["status"], "partial_fit_blocked")
+        self.assertIsNone(fit["base"])
+        self.assertIsNone(fit["k"])
+        self.assertEqual(fit["points"], {"m1": 1, "m2": 1})
+        self.assertEqual(fit["blocked_lmuls"][0]["lmul"], "m4")
+        self.assertEqual(fit["blocked_lmuls"][0]["status"], "non_identifiable")
+        self.assertEqual(fit["provisional_fit"]["status"], "exact_fit")
+        self.assertEqual(fit["provisional_fit"]["base"], 1)
+        self.assertEqual(fit["provisional_fit"]["k"], 0)
+
+    def test_formula_fit_blocks_when_required_lmul_is_missing(self):
+        fit = search_model.formula_fit_for(
+            {
+                "m1": {"status": "exact_fit", "value": 4},
+                "m2": {"status": "exact_fit", "value": 4},
+            },
+            8,
+        )
+
+        self.assertEqual(fit["status"], "partial_fit_blocked")
+        self.assertEqual(fit["blocked_lmuls"][0]["lmul"], "m4")
+        self.assertEqual(fit["blocked_lmuls"][0]["status"], "missing")
+
+    def test_formula_fit_exact_requires_all_required_lmuls(self):
+        fit = search_model.formula_fit_for(
+            {
+                "m1": {"status": "exact_fit", "value": 3},
+                "m2": {"status": "exact_fit", "value": 5},
+                "m4": {"status": "exact_fit", "value": 9},
+            },
+            16,
+        )
+
+        self.assertEqual(fit["status"], "exact_fit")
+        self.assertEqual(fit["base"], 1)
+        self.assertEqual(fit["k"], 2)
+        self.assertEqual(fit["blocked_lmuls"], [])
+
     def test_t12_matched_control_repeat_disagreement_fails_closed(self):
         observations = t12_matched_control_observations(
             [(0, 7), (1, 7), (2, 7), (3, 7)],
