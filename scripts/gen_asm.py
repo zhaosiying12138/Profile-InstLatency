@@ -697,6 +697,9 @@ def command_argv(args: argparse.Namespace, experiment_id: str | None = None) -> 
         argv += ["--iterations", str(args.iterations)]
     if getattr(args, "filler_count", None) is not None:
         argv += ["--filler-count", str(args.filler_count)]
+    template_path = repo_path(args.asm_template)
+    if template_path.resolve() != repo_path(DEFAULT_TEMPLATE_PATH).resolve():
+        argv += ["--asm-template", relpath(template_path)]
     argv += ["--output-root", relpath(repo_path(args.output_root))]
     if experiment_id:
         argv += ["--experiment-id", experiment_id]
