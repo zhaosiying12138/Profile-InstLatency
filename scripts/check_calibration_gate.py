@@ -95,6 +95,10 @@ class ExpectedExperiment:
     def coverage_key(self) -> tuple[str, str, str]:
         return (self.template_id, self.instruction_id, self.lmul)
 
+    @property
+    def repeat_key(self) -> tuple[str, str, str, str]:
+        return (self.template_id, self.instruction_id, self.lmul, self.experiment_id)
+
 
 @dataclass(frozen=True)
 class TraceObservation:
@@ -717,6 +721,22 @@ def real_observation_counts(observations: list[TraceObservation]) -> dict[tuple[
     return {key: len(identities) for key, identities in by_group.items()}
 
 
+def real_repeat_observation_counts(observations: list[TraceObservation]) -> dict[tuple[str, str, str, str], int]:
+    by_experiment: dict[tuple[str, str, str, str], set[str]] = {}
+    for observation in observations:
+        if not is_real_gem5_observation(observation):
+            continue
+        keys = {
+            (observation.template_id, observation.instruction_id, observation.lmul, observation.experiment_id),
+            (observation.template_id, "unknown", observation.lmul, observation.experiment_id),
+            (observation.template_id, observation.instruction_id, "unknown", observation.experiment_id),
+            (observation.template_id, "unknown", "unknown", observation.experiment_id),
+        }
+        for key in keys:
+            by_experiment.setdefault(key, set()).add(observation.identity)
+    return {key: len(identities) for key, identities in by_experiment.items()}
+
+
 def expected_label(expected: ExpectedExperiment) -> str:
     return f"{expected.template_id}/{expected.instruction_id}/{expected.lmul}"
 
@@ -1278,6 +1298,7 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
     failures.extend(inventory_failures)
     observations = trace_observations + inventory_observations(inventory, profile_root)
     real_counts = real_observation_counts(observations)
+    repeat_counts = real_repeat_observation_counts(observations)
     real_trace_count = sum(1 for observation in trace_observations if is_real_gem5_observation(observation))
     approval_valid = False
     approval: dict[str, Any] | None = None
@@ -1295,7 +1316,7 @@ def real_platform_failures(text: str, profile_root: Path) -> list[str]:
         missing_repeats = [
             item
             for item in expected
-            if real_counts.get(item.coverage_key, 0) < 2
+            if repeat_counts.get(item.repeat_key, 0) < 2
             and not (approval_valid and has_repeat_waiver(item, inventory, approval))
         ]
         failures.extend(summarize_expected_missing("repeatability/stability", expected, missing_repeats))

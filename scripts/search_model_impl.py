@@ -82,7 +82,7 @@ def t12_filler_cadence(
         "independent_filler_cadence_cycles",
         "filler_release_at_cycles",
     )
-    if metadata_cadence is not None and metadata_cadence > 0:
+    if filler == "scalar_add" and metadata_cadence is not None and metadata_cadence > 0:
         return metadata_cadence, f"metadata_filler_cadence:{filler}"
     key = (filler, item.lmul)
     fixed = fixed_candidates.get(key)
@@ -93,8 +93,6 @@ def t12_filler_cadence(
         return option_release, f"candidate_options:{filler}"
     if filler == "scalar_add":
         return 1, "known_scalar_add_cadence"
-    if filler == "vadd_vv" and item.lmul in {"m1", "m2", "m4"}:
-        return LMUL_VALUE[item.lmul], "known_vadd_vv_lmul_cadence"
     return None, f"missing_filler_cadence:{filler}"
 
 

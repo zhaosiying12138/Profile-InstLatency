@@ -21,7 +21,7 @@ gen_asm = load_script_module("gen_asm_round26_under_test", "scripts/gen_asm.py")
 
 
 class ReviewPhaseRound26Test(unittest.TestCase):
-    def test_t12_default_vector_filler_preserves_cadence_metadata(self):
+    def test_t12_default_vector_filler_omits_fixed_cadence_metadata(self):
         args = gen_asm.build_parser().parse_args(
             [
                 "one",
@@ -41,10 +41,10 @@ class ReviewPhaseRound26Test(unittest.TestCase):
         _markers, _lines, meta = gen_asm.body_for_args(args)
 
         self.assertEqual(meta["filler_instruction_id"], "vadd_vv")
-        self.assertEqual(meta["filler_cadence_cycles"], 1)
-        self.assertEqual(meta["gap_sweep"]["independent_filler_cadence_cycles"], 1)
+        self.assertNotIn("filler_cadence_cycles", meta)
+        self.assertNotIn("independent_filler_cadence_cycles", meta["gap_sweep"])
 
-    def test_t30_t12_shape_preserves_default_vector_filler_cadence_metadata(self):
+    def test_t30_t12_shape_omits_default_vector_filler_cadence_metadata(self):
         args = gen_asm.build_parser().parse_args(
             [
                 "one",
@@ -66,8 +66,8 @@ class ReviewPhaseRound26Test(unittest.TestCase):
         _markers, _lines, meta = gen_asm.body_for_args(args)
 
         self.assertEqual(meta["filler_instruction_id"], "vadd_vv")
-        self.assertEqual(meta["filler_cadence_cycles"], 1)
-        self.assertEqual(meta["gap_sweep"]["independent_filler_cadence_cycles"], 1)
+        self.assertNotIn("filler_cadence_cycles", meta)
+        self.assertNotIn("independent_filler_cadence_cycles", meta["gap_sweep"])
 
 
 if __name__ == "__main__":

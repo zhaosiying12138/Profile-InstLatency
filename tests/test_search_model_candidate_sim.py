@@ -379,13 +379,18 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         )
 
     def test_t12_clean_threshold_infers_exact_latency(self):
-        field = solve_latency_field(t12_observations([(0, 4), (1, 4), (2, 4), (3, 4), (4, 5), (5, 6)]))
+        field = solve_latency_field(
+            t12_observations(
+                [(0, 4), (1, 4), (2, 4), (3, 4), (4, 5), (5, 6)],
+                filler_instruction_id="scalar_add",
+            )
+        )
 
         self.assertEqual(field["status"], "exact_fit")
         self.assertEqual(field["value"], 4)
 
     def test_t12_two_point_short_sweep_does_not_claim_exact_latency(self):
-        field = solve_latency_field(t12_observations([(0, 4), (1, 4)]))
+        field = solve_latency_field(t12_observations([(0, 4), (1, 4)], filler_instruction_id="scalar_add"))
 
         self.assertEqual(field["status"], "non_identifiable")
         self.assertIsNone(field["value"])
@@ -394,7 +399,13 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         self.assertIn("insufficient_post_transition_coverage", field["t12_latency_constraints"][0]["reason"])
 
     def test_t12_linear_positive_residual_does_not_render_latency_cap(self):
-        field = solve_latency_field(t12_observations([(0, 7), (1, 11), (2, 15)], lmul="m4"))
+        field = solve_latency_field(
+            t12_observations(
+                [(0, 7), (1, 8), (2, 9)],
+                filler_instruction_id="scalar_add",
+                body_extra={"filler_cadence_cycles": 1},
+            )
+        )
 
         self.assertEqual(field["status"], "non_identifiable")
         self.assertIsNone(field["value"])
@@ -446,7 +457,7 @@ class SearchModelCandidateSimulatorTest(unittest.TestCase):
         deltas.extend((gap, gap + 1) for gap in range(4, 13))
         deltas.append((13, 44))
 
-        field = solve_latency_field(t12_observations(deltas))
+        field = solve_latency_field(t12_observations(deltas, filler_instruction_id="scalar_add"))
 
         self.assertEqual(field["status"], "exact_fit")
         self.assertEqual(field["value"], 4)
