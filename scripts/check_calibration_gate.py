@@ -23,6 +23,7 @@ from typing import Any
 SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
+REPO_ROOT = SCRIPTS_DIR.parent
 
 from approval_status import human_approval_file, top_level_approval_decision
 
@@ -437,11 +438,70 @@ def selected_result_groups(profile_root: Path) -> set[str]:
     return groups
 
 
-def load_expected_experiments(profile_root: Path) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
-    selected_groups = selected_result_groups(profile_root)
+def suite_manifest_candidates(profile_root: Path) -> list[Path]:
+    candidates = [
+        profile_root / "suite_manifest.yaml",
+        profile_root / "experiments" / "generated" / "suite_manifest.yaml",
+        profile_root.parent / "suite_manifest.yaml",
+        profile_root.parent / "experiments" / "generated" / "suite_manifest.yaml",
+        REPO_ROOT / "experiments" / "generated" / "suite_manifest.yaml",
+    ]
+    return list(dict.fromkeys(candidates))
+
+
+def expected_experiment_from_manifest_entry(
+    entry: dict[str, Any], path: Path, selected_groups: set[str]
+) -> ExpectedExperiment | None:
+    experiment_id = entry.get("experiment_id") or entry.get("id")
+    template_id = entry.get("template_id")
+    result_group = entry.get("result_group")
+    if not experiment_id or not template_id or not result_group:
+        return None
+    if selected_groups and str(result_group) not in selected_groups:
+        return None
+    return ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path)
+
+
+def split_required_expected(
+    expected_items: list[ExpectedExperiment],
+) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
     required: list[ExpectedExperiment] = []
     deferred: list[ExpectedExperiment] = []
-    for path in sorted(Path("experiments/generated").glob("*/experiment.yaml"), key=lambda item: item.as_posix()):
+    for expected in expected_items:
+        if expected.template_id in REQUIRED_REAL_TEMPLATES:
+            required.append(expected)
+        elif expected.template_id in DEFERRED_REAL_TEMPLATES:
+            deferred.append(expected)
+    return required, deferred
+
+
+def load_expected_experiments_from_manifest(
+    profile_root: Path, selected_groups: set[str]
+) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]] | None:
+    for path in suite_manifest_candidates(profile_root):
+        if not path.exists():
+            continue
+        data = parse_yamlish(path)
+        entries = data.get("experiments")
+        if not isinstance(entries, list):
+            continue
+        expected_items = [
+            expected
+            for entry in entries
+            if isinstance(entry, dict)
+            for expected in [expected_experiment_from_manifest_entry(entry, path, selected_groups)]
+            if expected is not None
+        ]
+        if expected_items:
+            return split_required_expected(expected_items)
+    return None
+
+
+def load_expected_experiments_from_generated_tree(
+    selected_groups: set[str],
+) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
+    expected_items: list[ExpectedExperiment] = []
+    for path in sorted((REPO_ROOT / "experiments" / "generated").glob("*/experiment.yaml"), key=lambda item: item.as_posix()):
         data = parse_yamlish(path)
         experiment_id = data.get("experiment_id")
         template_id = data.get("template_id")
@@ -450,12 +510,16 @@ def load_expected_experiments(profile_root: Path) -> tuple[list[ExpectedExperime
             continue
         if selected_groups and str(result_group) not in selected_groups:
             continue
-        expected = ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path)
-        if expected.template_id in REQUIRED_REAL_TEMPLATES:
-            required.append(expected)
-        elif expected.template_id in DEFERRED_REAL_TEMPLATES:
-            deferred.append(expected)
-    return required, deferred
+        expected_items.append(ExpectedExperiment(str(experiment_id), str(template_id), str(result_group), path))
+    return split_required_expected(expected_items)
+
+
+def load_expected_experiments(profile_root: Path) -> tuple[list[ExpectedExperiment], list[ExpectedExperiment]]:
+    selected_groups = selected_result_groups(profile_root)
+    manifest_expected = load_expected_experiments_from_manifest(profile_root, selected_groups)
+    if manifest_expected is not None:
+        return manifest_expected
+    return load_expected_experiments_from_generated_tree(selected_groups)
 
 
 def infer_result_group(path: Path, profile_root: Path) -> str:

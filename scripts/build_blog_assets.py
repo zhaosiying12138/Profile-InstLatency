@@ -274,8 +274,7 @@ def build() -> None:
         evidence["degraded_reason"] = "gem5 exec.log inputs are absent; preserving committed figures"
         evidence["missing_exec_logs"] = missing_logs
         evidence_path = REF_ROOT / "evidence.json"
-        if not evidence_path.exists():
-            evidence_path.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        evidence_path.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return
 
     # Issue width and SingleIssue share T21 evidence.
