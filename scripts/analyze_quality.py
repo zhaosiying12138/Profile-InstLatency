@@ -229,14 +229,21 @@ def extract_field_status_records(data: Any) -> list[dict[str, Any]]:
     return records
 
 
-def missing_required_field_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    pairs = sorted(
-        {
-            (record["instruction_id"], record["lmul"])
-            for record in records
-            if record.get("instruction_id") not in (None, "unknown") and record.get("lmul") not in (None, "unknown")
-        }
-    )
+def missing_required_field_records(
+    records: list[dict[str, Any]],
+    required_pairs: Iterable[tuple[str, str]] | None = None,
+) -> list[dict[str, Any]]:
+    record_pairs = {
+        (record["instruction_id"], record["lmul"])
+        for record in records
+        if record.get("instruction_id") not in (None, "unknown") and record.get("lmul") not in (None, "unknown")
+    }
+    required_pair_set = {
+        (normalized_id(instruction_id), normalized_id(lmul))
+        for instruction_id, lmul in (required_pairs or ())
+        if normalized_id(instruction_id) != "unknown" and normalized_id(lmul) != "unknown"
+    }
+    pairs = sorted(record_pairs | required_pair_set)
     present = {
         (record.get("instruction_id"), record.get("lmul"), record.get("field"))
         for record in records
@@ -261,7 +268,10 @@ def missing_required_field_records(records: list[dict[str, Any]]) -> list[dict[s
     return missing
 
 
-def load_real_platform_field_status(root: Path) -> dict[str, Any]:
+def load_real_platform_field_status(
+    root: Path,
+    required_pairs: Iterable[tuple[str, str]] | None = None,
+) -> dict[str, Any]:
     path = common_result_root(root) / FIELD_STATUS_FILENAME
     summary: dict[str, Any] = {
         "path": path.as_posix(),
@@ -310,7 +320,7 @@ def load_real_platform_field_status(root: Path) -> dict[str, Any]:
         return summary
 
     records = extract_field_status_records(data)
-    missing = missing_required_field_records(records)
+    missing = missing_required_field_records(records, required_pairs)
     unresolved = [record for record in records if is_blocking_field_status(record["status"])] + missing
     status_counts = Counter(record["status"] for record in records)
     summary.update(
@@ -807,11 +817,15 @@ def build_quality_inventory(analyses: list[ExperimentAnalysis], root: Path) -> d
         for item in real_gem5_items
         if item.template_id in required_templates
     }
+    covered_required_field_pairs = {
+        (instruction_id, lmul)
+        for _template_id, instruction_id, lmul in (real_gem5_groups & required_groups)
+    }
     missing_templates = sorted(set(required_templates) - set(real_gem5_templates))
     missing_groups = sorted(required_groups - real_gem5_groups)
 
     repeatability = summarize_repeat_groups(real_gem5_items)
-    field_status = load_real_platform_field_status(root)
+    field_status = load_real_platform_field_status(root, covered_required_field_pairs)
     marker_contract = build_marker_contract(real_gem5_items)
     stable_repeat_groups = {
         (entry["template_id"], entry["instruction_id"], entry["lmul"])

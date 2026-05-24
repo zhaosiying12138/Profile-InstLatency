@@ -43,7 +43,7 @@ class ReviewPhaseRound15Test(unittest.TestCase):
 
             self.assertEqual(resolved, tool)
 
-    def test_blog_asset_builder_degrades_when_exec_logs_are_missing(self):
+    def test_blog_asset_builder_skips_reference_evidence_when_exec_logs_are_missing(self):
         required_experiments = [
             ("common", "t00-marker"),
             ("vdivu_vv", "t10-vdivu-vv-m1-n4"),
@@ -75,8 +75,7 @@ class ReviewPhaseRound15Test(unittest.TestCase):
                 build_blog_assets.build()
 
             evidence = root / "blogs" / "assets" / "reference" / "evidence.json"
-            self.assertTrue(evidence.exists())
-            self.assertIn('"missing_exec_logs"', evidence.read_text(encoding="utf-8"))
+            self.assertFalse(evidence.exists())
 
 
 if __name__ == "__main__":

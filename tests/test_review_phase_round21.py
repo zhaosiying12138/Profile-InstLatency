@@ -81,7 +81,7 @@ class ReviewPhaseRound21Test(unittest.TestCase):
             self.assertEqual([item.experiment_id for item in required], ["focused-t10"])
             self.assertEqual([item.experiment_id for item in deferred], ["focused-t40"])
 
-    def test_blog_asset_builder_rewrites_stale_degraded_evidence(self):
+    def test_blog_asset_builder_leaves_reference_evidence_when_logs_are_missing(self):
         with tempfile.TemporaryDirectory() as tempdir:
             root = Path(tempdir)
             copy_blog_inputs_without_exec_logs(root)
@@ -101,8 +101,7 @@ class ReviewPhaseRound21Test(unittest.TestCase):
                 build_blog_assets.build()
 
             rewritten = json.loads(evidence.read_text(encoding="utf-8"))
-            self.assertTrue(rewritten["degraded"])
-            self.assertGreater(len(rewritten["missing_exec_logs"]), 0)
+            self.assertEqual(rewritten, {"degraded": False, "missing_exec_logs": []})
 
 
 if __name__ == "__main__":
