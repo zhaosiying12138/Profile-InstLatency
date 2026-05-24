@@ -580,6 +580,15 @@ def emit_consumer(result_kind: str, result: str, dest: str, fallback_src: str) -
     return f"vadd.vv {dest}, {result}, {fallback_src}"
 
 
+def t12_consumer_destination(spec: InstructionSpec, consumer: str, vector_dest: str) -> str:
+    if consumer in {"scalar_add", "vcpop_m"} or spec.result_kind in {"scalar", "mask"}:
+        return scalar_reg(11)
+    consumer_spec = require_instruction(consumer)
+    if consumer_spec.result_kind == "scalar":
+        return scalar_reg(11)
+    return vector_dest
+
+
 def indent_lines(lines: Iterable[str], prefix: str = "    ") -> str:
     return "\n".join(prefix + line if line else "" for line in lines)
 
@@ -1005,7 +1014,7 @@ def body_t12(
     else:
         dests, _ = output_vectors(lmul, 2, allow_reuse=False)
         producer_dest = dests[0]
-        consumer_dest = scalar_reg(11) if spec.result_kind == "mask" else dests[1]
+        consumer_dest = t12_consumer_destination(spec, consumer, dests[1])
         filler_destinations, _ = output_vectors_excluding(
             lmul,
             vector_filler_count,
