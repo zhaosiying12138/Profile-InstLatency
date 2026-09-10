@@ -1,0 +1,27 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e10-loadhit-m1-k4",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E10_LOAD",
+ "meta": {
+  "experiment_id": "e10-loadhit-m1-k4",
+  "k": 4,
+  "lmul": "m1",
+  "template": "E10_LOAD"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": null,
+   "pc": "0x80000050"
+  },
+  {
+   "marker": "end",
+   "cycle": null,
+   "pc": "0x80000068"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}
