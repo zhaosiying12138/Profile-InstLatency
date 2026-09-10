@@ -1,14 +1,32 @@
 #!/usr/bin/env python3
-"""Build blog.html: single file, all images inlined (base64 PNG + inline SVG)."""
+"""Build blog.html: single file, all images inlined (base64 PNG + inline SVG).
+
+Source snippets are NOT rendered as HTML <pre> blocks: they are rendered as
+purple-terminal PNG images (scripts/code2img.py) so the whole page shares the
+look of the real-machine terminal screenshots. Set CODE_AS_IMAGES=0 in the
+environment to fall back to classic text code blocks.
+"""
 import base64, os, re, sys
 
 BLOG = '/home/zhaosiying/codebase/yushuxin-v2-design/blog-output'
 OUT = os.path.join(BLOG, 'blog.html')
+CODE_AS_IMAGES = os.environ.get('CODE_AS_IMAGES', '1') != '0'
 
 md = open(os.path.join(BLOG, 'blog.md')).read()
 
 def b64(path):
     return base64.b64encode(open(path, 'rb').read()).decode()
+
+FENCE_RE = re.compile(r'^```(\w*)\n(.*?)^```', re.M | re.S)
+code_bodies = []
+
+def stash_code(m):
+    """Replace a fenced block with a placeholder paragraph."""
+    code_bodies.append(m.group(0))
+    return f'\n\n@@CODEIMG_{len(code_bodies)-1}@@\n\n'
+
+if CODE_AS_IMAGES:
+    md = FENCE_RE.sub(stash_code, md)
 
 def repl_png(m):
     alt, rel = m.group(1), m.group(2)
@@ -32,6 +50,21 @@ md = re.sub(r'!\[([^\]]*)\]\(([^)]+\.svg)\)', repl_svg, md)
 
 import markdown
 html_body = markdown.markdown(md, extensions=['tables', 'fenced_code', 'toc'])
+
+if CODE_AS_IMAGES:
+    def repl_codeimg(m):
+        i = int(m.group(1))
+        p = os.path.join(BLOG, 'codeimg', f'code_{i:02d}.png')
+        if not os.path.exists(p):
+            return f'<p><em>[代码图缺失: code_{i:02d}.png — 运行 scripts/code2img.py]</em></p>'
+        return (f'<img alt="source snippet {i}" '
+                f'src="data:image/png;base64,{b64(p)}" '
+                f'style="max-width:100%;border:1px solid #555;border-radius:8px;'
+                f'margin:.4rem 0"/>')
+    html_body, nsub = re.subn(r'<p>\s*@@CODEIMG_(\d+)@@\s*</p>', repl_codeimg, html_body)
+    assert nsub == len(code_bodies), f'codeimg placeholders: {nsub} != {len(code_bodies)}'
+    # also catch any placeholder the markdown pass left outside <p> (empty blocks etc.)
+    html_body = re.sub(r'@@CODEIMG_(\d+)@@', repl_codeimg, html_body)
 
 html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
