@@ -19,6 +19,8 @@
 
 **Layout**: `config/` ground truth (single source) · `scripts/` generator/runner/gate/analyzers/screenshot pipeline · `gem5-configs/yushuxin/` FU pool + SE config · `llvm/` schedule model + wiring diff · `tests/` llvm-mca inputs · `results/` measured profile, evidence-matrix inputs, exec.log excerpts · `docs/DESIGN.md` full methodology.
 
+**End-to-end case study** (blog ch.6): the same hand-written RVV intrinsic program (4-deep `vdivu` chain + 7 independent fillers) compiled with `llc -mcpu=YuShuXinV2` vs `-mcpu=generic-rv64`: the profiled model interleaves the fillers into the 12-cycle divide bubbles (visible order change), runs **125 vs 132 cycles on gem5 (+5.3%)**, and llvm-mca — using the very same model — predicts a delta of exactly **7 cycles, matching the gem5 measurement**; `--timeline` shows the dual-pipe overlap. One command: `bash scripts/build_demo.sh`.
+
 **Reproduce**: see Appendix B of the blog / `scripts/make_all_shots.sh` for real-machine screenshots (requires an unlocked desktop).
 
 ---
@@ -37,5 +39,7 @@
 - 跨管无旁路罚 = 负 ReadAdvance（按生产者限定）；不可识别字段诚实留空（AcquireAtCycles、执行/写回分解——见 docs/DESIGN.md 第六章）。
 
 **目录**：`config/` 真值表 · `scripts/` 全链路脚本（含真机截图流水线）· `gem5-configs/yushuxin/` · `llvm/` 模型+接线 diff · `tests/` mca 输入 · `results/` 测量档案与证据 · `docs/DESIGN.md` 完整方法论。
+
+**端到端综合测试**（博客第六章）：同一份手写 RVV intrinsic 程序（4 深 vdivu 链 + 7 条独立填充），`llc -mcpu=YuShuXinV2` vs `generic-rv64` 双编译：模型版把填充运算排进 12 拍除法气泡（顺序重排可见），gem5 实测 **125 vs 132 周期（+5.3%）**，llvm-mca 用同一模型预测差值 **恰为 7 拍、与实测精确对齐**，`--timeline` 可视化双管 overlap。一条命令：`bash scripts/build_demo.sh`。
 
 **复现**：博客附录 B；真机截图需解锁桌面后 `bash scripts/make_all_shots.sh`。

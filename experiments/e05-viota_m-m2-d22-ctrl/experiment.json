@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 22,
+ "experiment_id": "e05-viota_m-m2-d22-ctrl",
+ "instruction": "viota_m",
+ "lmul": "m2",
+ "template": "E5_WAW"
+}

@@ -1,0 +1,29 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e05-vdivu_vv-m4-d9-waw",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E5_WAW",
+ "meta": {
+  "control": false,
+  "d": 9,
+  "experiment_id": "e05-vdivu_vv-m4-d9-waw",
+  "instruction": "vdivu_vv",
+  "lmul": "m4",
+  "template": "E5_WAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 258,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 347,
+   "pc": "0x800000fc"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

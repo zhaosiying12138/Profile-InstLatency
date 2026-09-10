@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 22,
+ "experiment_id": "e05-vslideup_vx-m2-d22-ctrl",
+ "instruction": "vslideup_vx",
+ "lmul": "m2",
+ "template": "E5_WAW"
+}

@@ -254,12 +254,10 @@ def build_suite():
                 exps.append(e04(instr, default_c, lmul, k, control=True))
         for c in INSTRUCTIONS:
             exps.append(e04(instr, c, lmul, 0))
-        # E5 WAW sweep + control
+        # E5 WAW sweep + control twin at every d (differential requirement)
         for d in range(0, 29):
             exps.append(e05(instr, lmul, d))
-        exps.append(e05(instr, lmul, 0, control=True))
-        exps.append(e05(instr, lmul, 6, control=True))
-        exps.append(e05(instr, lmul, 15, control=True))
+            exps.append(e05(instr, lmul, d, control=True))
     # E6 WAR: reader=vadd (VP0) and vdivu (VP1, read_lat=2), writers across classes
     for reader in ("vadd_vv", "vdivu_vv"):
         for writer in INSTRUCTIONS:

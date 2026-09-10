@@ -71,4 +71,37 @@ $MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -instruction-tables tests/all_instr.s
 echo "== llvm-mca --all-stats (RAW chain) =="
 $MCA -mtriple=riscv64 -mcpu=YuShuXinV2 --all-stats tests/chain.s 2>/dev/null | sed -n '1,16p'
 EOF
+cat > $D/ab_asm.sh <<'EOF2'
+cd ~/codebase/Profile-InstLatency
+echo "== A/B compile: same IR, two scheduling models =="
+LLC=/home/zhaosiying/codebase/llvm-project/build/bin/llc
+$LLC -mtriple=riscv64 -mcpu=YuShuXinV2 -O2 tests/demo.ll -o results/demo/demo_yx.s
+$LLC -mtriple=riscv64 -mcpu=generic-rv64 -mattr=+v,+zvl256b -O2 tests/demo.ll -o results/demo/demo_generic.s
+echo "--- YuShuXinV2 (interleaved: fillers ride the divide bubbles) ---"
+grep -E "^\s*v" results/demo/demo_yx.s | head -13
+echo "--- generic-rv64 (source order preserved) ---"
+grep -E "^\s*v" results/demo/demo_generic.s | head -13
+EOF2
+cat > $D/ab_gem5.sh <<'EOF2'
+cd ~/codebase/Profile-InstLatency
+echo "== A/B on the real (simulated) machine: gem5 cycles =="
+bash scripts/build_demo.sh 2>&1 | grep -E "GEM5_CYCLES"
+python3 -c "a,b=125,132; print(f'improvement: {b-a} cycles = {100*(b-a)/b:.1f}%')"
+EOF2
+cat > $D/ab_mca.sh <<'EOF2'
+cd ~/codebase/Profile-InstLatency
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+echo "== llvm-mca predictions (same model, both binaries) =="
+for v in yx generic; do
+  echo "--- $v ---"
+  $MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -iterations=1 results/demo/region_$v.s 2>/dev/null | grep -E "Total Cycles|IPC|Block RThroughput" | head -3
+done
+echo "== alignment: mca delta == gem5 delta == 7 cycles =="
+EOF2
+cat > $D/overlap.sh <<'EOF2'
+cd ~/codebase/Profile-InstLatency
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+echo "== pipeline overlap in the model-compiled sequence (timeline) =="
+$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -iterations=1 --timeline results/demo/region_yx.s 2>/dev/null | sed -n '/Timeline View/,/Average Wait/p' | head -30
+EOF2
 echo "cmd scripts written to $D"

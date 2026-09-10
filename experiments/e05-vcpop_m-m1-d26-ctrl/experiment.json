@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 26,
+ "experiment_id": "e05-vcpop_m-m1-d26-ctrl",
+ "instruction": "vcpop_m",
+ "lmul": "m1",
+ "template": "E5_WAW"
+}

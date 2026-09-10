@@ -1,0 +1,29 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e05-vmseq_vv-m2-d6-ctrl",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E5_WAW",
+ "meta": {
+  "control": true,
+  "d": 6,
+  "experiment_id": "e05-vmseq_vv-m2-d6-ctrl",
+  "instruction": "vmseq_vv",
+  "lmul": "m2",
+  "template": "E5_WAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 240,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 256,
+   "pc": "0x800000f0"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

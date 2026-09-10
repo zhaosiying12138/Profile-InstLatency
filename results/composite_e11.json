@@ -1,0 +1,36 @@
+{
+ "rows": [
+  [
+   "stream_vadd_m1",
+   5,
+   5,
+   "OK"
+  ],
+  [
+   "chain_vdivu_m1",
+   24,
+   24,
+   "OK"
+  ],
+  [
+   "stream_vredsum_m2",
+   10,
+   10,
+   "OK"
+  ],
+  [
+   "xraw_vslideup_to_vadd_m1",
+   6,
+   6,
+   "OK"
+  ],
+  [
+   "mix_vadd_vredsum_m1",
+   5,
+   5,
+   "OK"
+  ]
+ ],
+ "ok": 5,
+ "bad": 0
+}

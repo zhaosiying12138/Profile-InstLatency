@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 8,
+ "experiment_id": "e05-vredsum_vs-m4-d8-ctrl",
+ "instruction": "vredsum_vs",
+ "lmul": "m4",
+ "template": "E5_WAW"
+}

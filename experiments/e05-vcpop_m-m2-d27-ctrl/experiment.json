@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 27,
+ "experiment_id": "e05-vcpop_m-m2-d27-ctrl",
+ "instruction": "vcpop_m",
+ "lmul": "m2",
+ "template": "E5_WAW"
+}

@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 19,
+ "experiment_id": "e05-vadd_vv-m4-d19-ctrl",
+ "instruction": "vadd_vv",
+ "lmul": "m4",
+ "template": "E5_WAW"
+}

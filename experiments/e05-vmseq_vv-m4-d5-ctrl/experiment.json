@@ -1,0 +1,8 @@
+{
+ "control": true,
+ "d": 5,
+ "experiment_id": "e05-vmseq_vv-m4-d5-ctrl",
+ "instruction": "vmseq_vv",
+ "lmul": "m4",
+ "template": "E5_WAW"
+}

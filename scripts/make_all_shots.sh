@@ -33,3 +33,7 @@ shot e3 e3
 shot e4 e4
 shot gate gate
 shot mca mca
+shot ab_asm ab_asm 200
+shot ab_gem5 ab_gem5 200
+shot ab_mca ab_mca 120
+shot overlap overlap 120

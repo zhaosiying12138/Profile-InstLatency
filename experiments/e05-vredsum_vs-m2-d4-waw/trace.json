@@ -1,0 +1,29 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e05-vredsum_vs-m2-d4-waw",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E5_WAW",
+ "meta": {
+  "control": false,
+  "d": 4,
+  "experiment_id": "e05-vredsum_vs-m2-d4-waw",
+  "instruction": "vredsum_vs",
+  "lmul": "m2",
+  "template": "E5_WAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 242,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 254,
+   "pc": "0x800000e8"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}
