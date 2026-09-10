@@ -185,9 +185,12 @@ foreach mx = SchedMxList in {
   let Latency = 3, ReleaseAtCycles = [1] in
     defm : LMULWriteResMX<"WriteVMPopV", [YXV2VPipe0], mx, !eq(mx, "M8")>;
 }
-// viota.m   : VP0. L = 3 + 2*LMUL, R = 1*LMUL.
+// viota.m   : VP0. L = 4 + 1*LMUL (5/6/8, MEASURED). Stream cadence is
+// FRACTIONAL from mu-op co-issue: R = 1 / 5/4 / 5/2 at M1/M2/M4 (E2 deltas
+// N+N/4 and 2.5*N). ReleaseAtCycles are integer-only, so we land the
+// conservative integer lambda (1/2/4); the bounded integer report was 1/2/3.
 foreach mx = SchedMxList in {
-  let Latency = YXV2Lat<4, 1, mx>.val,          // MEASURED L=5/6/8, R=1/2/3
+  let Latency = YXV2Lat<4, 1, mx>.val,          // MEASURED L=5/6/8
       ReleaseAtCycles = [YXV2Lat<0, 1, mx>.val] in
     defm : LMULWriteResMX<"WriteVIotaV", [YXV2VPipe0], mx, !eq(mx, "M8")>;
 }
