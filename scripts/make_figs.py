@@ -114,22 +114,26 @@ fig.savefig(os.path.join(OUT, 'design_vs_measured.png'))
 plt.close(fig)
 
 # ------------------------------------------------------------------ fig 3
-# latency_m1: three independent paths converge on the same L@lambda=1.
+# latency_m1: chain (E3) covers the four self-chainable instructions, the
+# E4 matrix covers the four non-chainable ones; the mu-op design formula is
+# the extrapolation they are checked against (7/8 converge; vmseq diverges).
 CHAIN_L1 = {'vadd_vv': 3, 'vmul_vv': 4, 'vdivu_vv': 12, 'vredsum_vs': 6}
-# E4 canonical measured L@lambda=1 (vmask_mv-aware analysis; evidence files
+# E4-sourced L@lambda=1 for the NON-chainable classes only (evidence files
 # e04-vmseq_vv-x-*, e04-vslideup_vx-*, e04-vcpop_m-x-*, e04-viota_m-*).
-MATRIX_L1 = {'vadd_vv': 3, 'vmul_vv': 4, 'vdivu_vv': 12, 'vmseq_vv': 5,
-             'vredsum_vs': 6, 'vslideup_vx': 4, 'vcpop_m': 3, 'viota_m': 5}
+# vdivu's E4 cells are writeback-alignment anomalous (blog footnote) and are
+# NOT plotted as matrix points -- its L is chain-sourced.
+MATRIX_L1 = {'vmseq_vv': 5, 'vslideup_vx': 4, 'vcpop_m': 3, 'viota_m': 5}
 fig, ax = plt.subplots(figsize=(7.2, 4.4), dpi=200)
 xs = range(len(INSTRS))
-muop = [m.R(i, 'm1') * 0 + m.L(i, 'm1') for i in INSTRS]   # design formula
+muop = [m.L(i, 'm1') for i in INSTRS]            # design formula
 ax.scatter(xs, muop, marker='o', facecolors='white', edgecolors='#4a148c',
            s=46, label='μop 外推：L_micro+(λ−1)μ（设计）', zorder=3)
 cx = [i for i, k in enumerate(INSTRS) if k in CHAIN_L1]
 ax.scatter(cx, [CHAIN_L1[k] for k in INSTRS if k in CHAIN_L1], marker='s',
-           color='#08519c', s=40, label='链（E3 实测）', zorder=4)
-ax.scatter(xs, [MATRIX_L1[k] for k in INSTRS], marker='D', color='#d7301f',
-           s=34, label='矩阵（E4 实测，含 vmask_mv）', zorder=4)
+           color='#08519c', s=40, label='链（E3 实测，可自链 4 条）', zorder=4)
+mx = [i for i, k in enumerate(INSTRS) if k in MATRIX_L1]
+ax.scatter(mx, [MATRIX_L1[k] for k in INSTRS if k in MATRIX_L1], marker='D',
+           color='#d7301f', s=34, label='矩阵（E4 实测，不可自链 4 条）', zorder=4)
 i_vm = INSTRS.index('vmseq_vv')
 ax.annotate('vmseq：设计 2 → 实测 5\n（vmask_mv 伴随涌现）',
             (i_vm, 5), xytext=(i_vm + 0.9, 9.2), fontsize=8.5, color='#d7301f',
@@ -137,7 +141,7 @@ ax.annotate('vmseq：设计 2 → 实测 5\n（vmask_mv 伴随涌现）',
 ax.set_xticks(list(xs))
 ax.set_xticklabels([LABEL[k] for k in INSTRS])
 ax.set_ylabel('L@λ=1（周期）')
-ax.set_title('L(m1) 三条独立测量路径合围：链 / 矩阵 / μop 外推')
+ax.set_title('L(m1) 两路合围（E3 链 + E4 矩阵）对照 μop 设计外推：7/8 会合，vmseq 分叉')
 ax.set_ylim(0, 14)
 ax.grid(True, axis='y', alpha=.28, lw=.6)
 ax.legend(fontsize=8.5, loc='upper left')
