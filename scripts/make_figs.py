@@ -60,18 +60,24 @@ fig, ax = plt.subplots(figsize=(7.2, 4.4), dpi=200)
 for instr, lm, c in SERIES:
     pts = stream_deltas(instr, lm)
     xs = sorted(pts)
-    R = m.R(instr, lm)
-    mu = m.mu(instr) if not m.is_nonpipelined(instr) else m.opLat(instr)
-    # measured R from slope for annotation honesty (matches design here)
-    fit = [R * n - mu for n in xs]
+    # fit from the MEASURED points themselves (two-point integer slope),
+    # never from the design table -- vmul m4 measures 2, not the design 4.
+    (x0, y0), (x1, y1) = (xs[0], pts[xs[0]]), (xs[-1], pts[xs[-1]])
+    R_fit = (y1 - y0) / (x1 - x0)
+    c_fit = y0 - R_fit * x0
+    fit = [R_fit * n + c_fit for n in xs]
     ax.scatter(xs, [pts[x] for x in xs], color=c, s=26, zorder=3)
     ax.plot(xs, fit, color=c, lw=1.4,
-            label=f'{LABEL[instr]} {lm}: slope R={R}')
+            label=f'{LABEL[instr]} {lm}: Δ={R_fit:g}·N{c_fit:+g}（实测 R={R_fit:g}）')
+i_vm = [s[0] for s in SERIES].index('vmul_vv')
+ax.annotate('vmul m4：设计 R=4 → 实测 2\n（ANY 双槽涌现，截距 0）',
+            (6, 12), xytext=(6.6, 45), fontsize=8.5, color='#41ab5d',
+            arrowprops=dict(arrowstyle='->', color='#41ab5d', lw=1))
 ax.set_yscale('log')
 ax.set_xticks((2, 3, 4, 6, 8, 12))
 ax.set_xlabel('独立流长度 N（E2 目的寄存器轮转）')
 ax.set_ylabel('marker Δ（周期，log 轴）')
-ax.set_title('E2 独立流 N 扫描：Δ = R·N − μ，斜率即吞吐 R')
+ax.set_title('E2 独立流 N 扫描：斜率即吞吐 R（拟合线取自实测点，非设计表）')
 ax.grid(True, which='both', alpha=.28, lw=.6)
 ax.legend(fontsize=8.5, loc='upper left')
 fig.tight_layout()
@@ -185,7 +191,7 @@ for yi in range(len(CONS)):
                     color='white' if v > np.nanmax(mat) * 0.55 else '#222')
 ax.set_xlabel('生产者（producer）')
 ax.set_ylabel('消费者（consumer）')
-ax.set_title('E4 归一化 RAW 矩阵（列基线 = vcpop 行）：同管簇低 / 跨管簇高')
+ax.set_title('E4 归一化 RAW 矩阵（列基线 = vcpop 行）：同管普遍更低 / 跨管普遍更高（双簇趋势）')
 fig.colorbar(im, ax=ax, label='有效 RAW（周期）', shrink=.85)
 fig.tight_layout()
 fig.savefig(os.path.join(OUT, 'matrix_heat.png'))
