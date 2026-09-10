@@ -1,0 +1,8 @@
+body = (["    la x8, __yx_load_data", f"    li x5, {VL[lmul]}",
+         f"    vsetvli x0, x5, e32, {lmul}, ta, ma"] +
+        [f"    vle32.v v{g[0]}, (x8)   # warm",
+         f"    vle32.v v{g[1]}, (x8)   # warm"] +
+        timed_prologue(exp) + marker(exp, "start") +
+        [f"    vle32.v v{g[2]}, (x8)   # measured load",
+         filler_adds(k)...,
+         f"    vadd.vv v{g[3]}, v{g[2]}, v{g[0]}   # consumer"] + ...)

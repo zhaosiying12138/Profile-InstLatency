@@ -1,0 +1,8 @@
+for f in traces:
+    d = ents[-1]["cycle"] - ents[0]["cycle"]
+    if tpl == "E0_BASELINE":
+        check(tid, d == 0, ...)                                  # I0 标记免费
+    elif tpl == "E3_CHAIN" and lmul == "m1":
+        exp = (n - 1) * m.l_eff(instr)                           # I1 链 = 旁路延迟
+        check(tid, d == exp, ...)
+# I2 非流水：stream(n4) - stream(n2) == 2*L      # I3 μ=2 微操作节拍逐时间戳核验

@@ -1,0 +1,6 @@
+def e03(instr, lmul, n):
+    dest = g[2]
+    body = marker("start") + [
+        f"    {emit(instr, lmul, dest, g[0], g[1])}   # seed",
+        *[f"    {emit(instr, lmul, dest, dest, g[1])}   # chain {i}" for i in range(n-1)],
+    ] + marker("end")

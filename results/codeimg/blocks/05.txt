@@ -1,0 +1,30 @@
+def L(self, instr, lmul):            # 宏延迟
+    lam = LMUL_FACTOR[lmul]
+    if self.nosplit(instr):  return self.instrs[instr]["l_micro"]      # vcpop 不拆分
+    if self.is_nonpipelined(instr): return lam * self.opLat(instr)     # R ≡ L
+    return self.instrs[instr]["l_micro"] + (lam - 1) * self.mu(instr)  # L_micro + (λ-1)μ
+
+def R(self, instr, lmul):            # 宏占用
+    lam = LMUL_FACTOR[lmul]
+    if self.nosplit(instr):  return 1
+    if self.is_nonpipelined(instr): return self.L(instr, lmul)
+    return lam * self.mu(instr)
+
+def l_eff(self, instr):              # m1 RAW 链间隔（旁路后）
+    return max(self.opLat(instr) - self.src_lat(instr), self.mu(instr))
+
+def waw(self, instr, lmul):          # WAW 间距（记分牌/提交级承诺）
+    lam = LMUL_FACTOR[lmul]
+    return (0 if self.nosplit(instr) else (lam - 1) * self.mu(instr)) \
+        + self.opLat(instr) + self.instrs[instr].get("extra_commit_lat", 0)
+
+def stream_delta(self, instr, lmul, n):  # 流：Δ = N·R − μ（末微操作与 end 锚同拍双发）
+    return n * self.R(instr, lmul) - self.mu(instr)
+
+def raw_penalty(self, producer, consumer):
+    if consumer == "scalar_add":
+        return self.src_lat(producer)                              # G4
+    pp, cp = self.pipe(producer), self.pipe(consumer)
+    if pp != "ANY" and cp != "ANY" and pp != cp:
+        return self.src_lat(producer)                              # G3
+    return 0

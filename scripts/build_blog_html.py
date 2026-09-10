@@ -1,70 +1,45 @@
 #!/usr/bin/env python3
-"""Build blog.html: single file, all images inlined (base64 PNG + inline SVG).
+"""Build blog.html: single file, all images inlined (base64).
 
-Source snippets are NOT rendered as HTML <pre> blocks: they are rendered as
-purple-terminal PNG images (scripts/code2img.py) so the whole page shares the
-look of the real-machine terminal screenshots. Set CODE_AS_IMAGES=0 in the
-environment to fall back to classic text code blocks.
+blog.md is the PUBLISHING source: every snippet/figure/screenshot is an image
+reference (jsDelivr CDN URLs, Zhihu-importable). Block texts are archived in
+codeimg/blocks/ so scripts/code2img.py can re-render code images if a snippet
+changes. This builder maps each CDN URL back to the local repo file, embeds it
+as base64, and never touches the network.
 """
-import base64, os, re, sys
+import base64, os, re
 
 BLOG = '/home/zhaosiying/codebase/yushuxin-v2-design/blog-output'
+REPO = '/home/zhaosiying/codebase/Profile-InstLatency'
 OUT = os.path.join(BLOG, 'blog.html')
-CODE_AS_IMAGES = os.environ.get('CODE_AS_IMAGES', '1') != '0'
+CDN = 'https://cdn.jsdelivr.net/gh/zhaosiying12138/Profile-InstLatency@main'
 
 md = open(os.path.join(BLOG, 'blog.md')).read()
 
 def b64(path):
     return base64.b64encode(open(path, 'rb').read()).decode()
 
-FENCE_RE = re.compile(r'^```(\w*)\n(.*?)^```', re.M | re.S)
-code_bodies = []
+def to_local(url):
+    """CDN URL (or repo-relative path) -> local file path, else None."""
+    if url.startswith(CDN + '/'):
+        return os.path.join(REPO, url[len(CDN) + 1:])
+    p = os.path.join(BLOG, url)
+    return p if os.path.exists(p) else None
 
-def stash_code(m):
-    """Replace a fenced block with a placeholder paragraph."""
-    code_bodies.append(m.group(0))
-    return f'\n\n@@CODEIMG_{len(code_bodies)-1}@@\n\n'
+def repl_img(m):
+    alt, url = m.group(1), m.group(2)
+    p = to_local(url)
+    if p is None or not os.path.exists(p):
+        return f'<p><em>[图片缺失: {url}]</em></p>'
+    style = ('max-width:100%;border:1px solid #555;border-radius:6px'
+             if url.endswith('.png') else 'max-width:100%')
+    return (f'<img alt="{alt}" src="data:image/png;base64,{b64(p)}" '
+            f'style="{style}"/>')
 
-if CODE_AS_IMAGES:
-    md = FENCE_RE.sub(stash_code, md)
-
-def repl_png(m):
-    alt, rel = m.group(1), m.group(2)
-    p = os.path.join(BLOG, rel)
-    if not os.path.exists(p):
-        return f'<p><em>[截图待生成: {rel} — 解锁桌面后运行 scripts/make_all_shots.sh]</em></p>'
-    return f'<img alt="{alt}" src="data:image/png;base64,{b64(p)}" style="max-width:100%;border:1px solid #555;border-radius:6px"/>'
-
-def repl_svg(m):
-    alt, rel = m.group(1), m.group(2)
-    p = os.path.join(BLOG, rel)
-    if not os.path.exists(p):
-        return f'<p><em>[图缺失: {rel}]</em></p>'
-    svg = open(p).read()
-    svg = re.sub(r'<\?xml[^>]*\?>', '', svg)
-    svg = re.sub(r'<!DOCTYPE[^>]*>', '', svg)
-    return f'<div style="max-width:100%">{svg}</div>'
-
-md = re.sub(r'!\[([^\]]*)\]\(([^)]+\.png)\)', repl_png, md)
-md = re.sub(r'!\[([^\]]*)\]\(([^)]+\.svg)\)', repl_svg, md)
+md = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', repl_img, md)
 
 import markdown
 html_body = markdown.markdown(md, extensions=['tables', 'fenced_code', 'toc'])
-
-if CODE_AS_IMAGES:
-    def repl_codeimg(m):
-        i = int(m.group(1))
-        p = os.path.join(BLOG, 'codeimg', f'code_{i:02d}.png')
-        if not os.path.exists(p):
-            return f'<p><em>[代码图缺失: code_{i:02d}.png — 运行 scripts/code2img.py]</em></p>'
-        return (f'<img alt="source snippet {i}" '
-                f'src="data:image/png;base64,{b64(p)}" '
-                f'style="max-width:100%;border:1px solid #555;border-radius:8px;'
-                f'margin:.4rem 0"/>')
-    html_body, nsub = re.subn(r'<p>\s*@@CODEIMG_(\d+)@@\s*</p>', repl_codeimg, html_body)
-    assert nsub == len(code_bodies), f'codeimg placeholders: {nsub} != {len(code_bodies)}'
-    # also catch any placeholder the markdown pass left outside <p> (empty blocks etc.)
-    html_body = re.sub(r'@@CODEIMG_(\d+)@@', repl_codeimg, html_body)
 
 html = f"""<!DOCTYPE html>
 <html lang="zh-CN">

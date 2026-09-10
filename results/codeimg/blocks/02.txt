@@ -1,0 +1,27 @@
+fu_pools:
+  - name: YX_VP0_ALU        # VP0 的 ALU 子单元
+    pipe: VP0
+    mu: 1                    # issueLat：微操作节拍间隔 = 宏观 R 的斜率
+    opLat: 6                 # FU 级写回时间 = FU 内最难指令的 L_micro + src_lat
+    classes: [vadd_vv, vmseq_vv, viota_m, vcpop_m, vmul_vv]
+  - name: YX_VP1_DIV
+    pipe: VP1
+    mu: 12                   # 非流水：issueLat == opLat
+    opLat: 12
+    nonpipelined: true
+    classes: [vdivu_vv]
+
+instructions:
+  vadd_vv:
+    fu: YX_VP0_ALU
+    l_micro: 3      # 单寄存器组执行延迟 → 宏 L = 3/4/6（2 + 1*λ）
+    src_lat: 3      # 源读出时刻：同时决定同管旁路深度 / WAR 释放 / 跨管罚
+  vdivu_vv:
+    fu: YX_VP1_DIV
+    nonpipelined: true
+    l_micro: 12     # 宏 L = R = 12/24/48（12*λ）
+    src_lat: 2
+  vmul_vv:
+    fu: [YX_VP0_ALU, YX_VP1_ALU]   # 双挂 => ANY 管线（对应 ProcResGroup）
+    l_micro: 4
+    src_lat: 2

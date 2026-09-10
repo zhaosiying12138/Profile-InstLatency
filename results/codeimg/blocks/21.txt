@@ -1,0 +1,7 @@
+def e06(reader, writer, lmul, d, control=False):
+    wdest = src if not control else g[5]         # 唯一差异：写者是否覆盖读者源
+    body = marker("start") + [
+        f"    {emit(reader, lmul, g[2], src, g[1])}   # reader of v{src}",
+        *filler_adds(d),
+        f"    {emit(writer, lmul, wdest, ...)}        # writer -> v{wdest}",
+    ] + marker("end")

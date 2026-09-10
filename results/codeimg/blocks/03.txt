@@ -1,0 +1,30 @@
+def _timing(desc, op_classes, src_lat, extra_commit=0, mask=0, match=0):
+    return MinorFUTiming(
+        description=desc,
+        opClasses=minorMakeOpClassSet(op_classes),
+        srcRegsRelativeLats=[src_lat],   # = opLat - L_micro：同管旁路深度
+        extraCommitLat=extra_commit,
+        mask=mask, match=match)          # ExtMachInst 位掩码匹配（见下）
+
+MASK_FUNCT6    = 0xFC000000              # 指令 [31:26] = funct6
+VIOTA_MATCH    = 0x14 << 26
+VSLIDEUP_MATCH = 0x0E << 26
+
+# VP0 ALU：μ=1，一个 FU 里用 timing 行区分五类指令的 L
+YX_VP0_ALU = MinorFU(
+    opClasses=minorMakeOpClassSet(["SimdAdd", "SimdCmp", "SimdAlu",
+                                   "SimdMult", "SimdMisc"]),
+    opLat=6, issueLat=1,
+    timings=[
+        _timing("vadd",     ["SimdAdd"],  3),                    # L = 6-3 = 3
+        _timing("vmseq",    ["SimdCmp"],  4),                    # L = 2
+        _timing("viota",    ["SimdAlu"],  1, 0, MASK_FUNCT6, VIOTA_MATCH),   # L = 5
+        _timing("vmul-vp0", ["SimdMult"], 2),                    # L = 4
+        _timing("vcpop",    ["SimdMisc"], 3),                    # L = 3
+    ])
+
+# 非流水除法器：issueLat == opLat，独占到完成
+YX_VP1_DIV = MinorFU(
+    opClasses=minorMakeOpClassSet(["SimdDiv"]),
+    opLat=12, issueLat=12,
+    timings=[_timing("vdivu", ["SimdDiv"], 2)])

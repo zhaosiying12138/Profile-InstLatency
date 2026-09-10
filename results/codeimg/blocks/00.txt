@@ -1,0 +1,12 @@
+# gem5 v24.1.0.3, src/cpu/minor/BaseMinorCPU.py（原文摘录）
+class MinorDefaultFloatSimdFU(MinorFU):
+    opClasses = minorMakeOpClassSet(
+        [
+            "FloatAdd", "FloatCmp", ..., "SimdAdd", "SimdAlu", "SimdCmp",
+            "SimdMisc", "SimdMult", "SimdShift", "SimdDiv", "SimdSqrt",
+            "SimdReduceAdd", ..., "SimdConfig",
+        ]                                    # 全部向量 OpClass 挤进同一个 FU
+    )
+    timings = [MinorFUTiming(description="FloatSimd",
+                             srcRegsRelativeLats=[2])]   # 源读出时刻 = 2
+    opLat = 6                                # FU 级结果延迟 = 6

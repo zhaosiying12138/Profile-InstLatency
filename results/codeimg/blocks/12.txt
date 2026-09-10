@@ -1,0 +1,7 @@
+def e02(instr, lmul, n):
+    g = groups(lmul)
+    outs = [x for x in g if x not in (g[0], g[1])]      # 目的池与源池分离
+    body = (setup_block(lmul) + timed_prologue(exp) + marker(exp, "start") +
+            [f"    {emit(instr, lmul, outs[i % len(outs)], g[0], g[1])}   # stream {i}"
+             for i in range(n)] +                        # N 条独立宏
+            marker(exp, "end") + EXIT)

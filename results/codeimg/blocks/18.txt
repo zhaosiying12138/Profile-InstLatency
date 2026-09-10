@@ -1,0 +1,4 @@
+// G4 vector->scalar: DESIGN promised +src_lat, but E4 k0 measured NO extra
+// stall (scalar consumer got vcpop's result at L=3, delta=4). Landed as 0
+// per the measured-over-design rule; entry kept for model completeness.
+def : ReadAdvance<ReadIALU, 0, [WriteVMPopV_M1, WriteVMPopV_M2, WriteVMPopV_M4]>;

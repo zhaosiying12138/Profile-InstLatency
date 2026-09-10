@@ -1,0 +1,3 @@
+def : ReadAdvance<ReadVIALUV_M1, -2, [WriteVIDivV_M1_E32, WriteVIRedV_From_M1_E32]>;
+def : ReadAdvance<ReadVIDivV_M1_E32, -2, [WriteVIALUV_M1, WriteVICmpV_M1,
+                                          WriteVMPopV_M1, WriteVIotaV_M1, WriteVSlideUpX_M1]>;

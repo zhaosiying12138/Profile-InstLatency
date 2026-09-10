@@ -1,0 +1,4 @@
+llc -mtriple=riscv64 -mcpu=YuShuXinV2  -O2 tests/demo.ll -o results/demo/demo_yx.s
+llc -mtriple=riscv64 -mcpu=generic-rv64 -mattr=+v,+zvl256b -O2 tests/demo.ll \
+    -o results/demo/demo_generic.s
+python3 scripts/wrap_demo.py demo_yx.s run_yx.s        # 注入 marker + setup

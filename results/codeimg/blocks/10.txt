@@ -1,0 +1,13 @@
+def lsq_slope(pts):                       # analyze_v2.py
+    (x0, y0), (x1, y1) = pts[0], pts[-1]
+    num, den = y1 - y0, x1 - x0
+    if num % den != 0:  return None       # 必须整除：R 是整数周期
+    slope = num // den
+    if any(y != slope * x + c for x, y in pts): return None   # 全点共线才收
+    return slope
+
+# profile_final.py：整除共线失败 → 有界回退，永不假装精确
+lo, hi = bounded_slope(sorted(pts.items()))
+status = "bounded"      # 饱和节律（如 viota 分数流）给出上下界
+...
+status = "exact_fit"    # 全点共线

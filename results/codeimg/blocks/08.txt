@@ -1,0 +1,3 @@
+def marker(exp, label):
+    sym = f"__yx_marker_{re.sub(r'[^A-Za-z0-9_]', '_', exp)}_{label}"
+    return [f"    # TIMESTAMP_MARK {label}", f"    .globl {sym}", f"{sym}:"]

@@ -1,0 +1,3 @@
+for i in range(pairs):
+    seq.append(f"    {emit(a, lmul, da, g[0], g[1])}   # A{i}")
+    seq.append(f"    {emit(b, lmul, db, g[0], g[1])}   # B{i}")

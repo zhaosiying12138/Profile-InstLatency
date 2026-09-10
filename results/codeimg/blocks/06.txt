@@ -1,0 +1,16 @@
+def build_elf(test_s, outdir):
+    run([f"{LLVM_BIN}/llvm-mc", "-triple=riscv64", "-mattr=+v,+zvl256b",
+         "-filetype=obj", "-o", obj, asm])                        # 汇编
+    run([f"{LLVM_BIN}/ld.lld", "-m", "elf64lriscv", "--no-relax",
+         "-Ttext=0x80000000", "-o", elf, obj])                    # 链接（禁 relax）
+
+def resolve_markers(elf):
+    m = re.match(r"^([0-9a-fA-F]+)\s+\S\s+(__yx_marker_\S+)$", line)   # nm 符号→PC
+    marks[m.group(2)] = int(m.group(1), 16)
+
+def parse_exec_cycles(log, marker_pcs):
+    m = re.match(r"^\s*(\d+):", line)                     # Exec 日志行首 = tick
+    for pc_field in re.findall(r"0x([0-9a-fA-F]{8,16})", line[:120]):
+        if pc in want and pc not in found:
+            found[pc] = int(m.group(1))                    # 每 PC 只取首次出现
+    return {pc: tick // TICKS_PER_CYCLE for pc, tick in found.items()}  # 1GHz: /1000

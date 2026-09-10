@@ -1,0 +1,7 @@
+def e05(instr, lmul, d, control=False):
+    second = same if not control else other      # 唯一差异：第二写的目的
+    body = marker("start") + [
+        f"    {emit(instr, lmul, same, g[0], g[1])}    # write1 -> v{same}",
+        *filler_adds(d),
+        f"    {emit(instr, lmul, second, ...)}          # write2 -> v{second}",
+    ] + marker("end")

@@ -1,0 +1,32 @@
+# 0) 环境：Ubuntu(WSL2) + 24核 + Python3.11 环境 gem5 + llvm-mc/ld.lld/llvm-nm/llvm-mca
+conda create -y -n gem5 python=3.11 && conda run -n gem5 pip install scons==4.8.1
+
+# 1) gem5 v24.1.0.3（partial clone 抗断流）
+git clone --depth 1 --branch v24.1.0.3 --filter=blob:none \
+  https://gh-proxy.com/https://github.com/gem5/gem5.git gem5
+cd gem5 && conda run -n gem5 scons build/RISCV/gem5.opt -j24
+# 注入机器：把 gem5-configs/yushuxin/{fu_pool.py,se_yushuxin.py} 拷入
+#   gem5/configs/yushuxin/
+
+# 2) 实验与门禁（仓库根目录）
+python3 scripts/gen_asm_v2.py --out experiments      # 2700+ 个实验
+python3 scripts/run_batch.py                          # 核心集（~100s）
+python3 scripts/verify_timing_exactness.py            # TICK GATE 必须全绿
+python3 scripts/profile_final.py                      # 测量 profile + 校准报告
+python3 scripts/e11_composite.py                      # 复合可加性 5/5
+
+# 3) LLVM 侧（trunk 复用 build）
+cp llvm/RISCVSchedYuShuXinV2.td <llvm>/llvm/lib/Target/RISCV/
+git apply llvm/wiring.diff                            # RISCV.td/RISCVProcessors.td 接线
+cd <llvm>/build && ninja llvm-mca llc
+./bin/llvm-mca -mtriple=riscv64 -mcpu=YuShuXinV2 -instruction-tables tests/all_instr.s
+./bin/llvm-mca -mtriple=riscv64 -mcpu=YuShuXinV2 --all-stats --timeline tests/chain.s
+
+# 4) 端到端综合测试（第六章）
+bash scripts/build_demo.sh          # 双编译 + gem5 A/B + mca 预测
+cat results/demo/region_yx.s        # 模型编译版指令序列
+
+# 5) 博客资产
+python3 scripts/code2img.py          # 源码片段渲染为紫底图片（codeimg/）
+python3 scripts/build_blog_html.py   # 单文件 blog.html（图片全内嵌）
+bash scripts/make_all_shots.sh       # 真机截图（需解锁桌面）

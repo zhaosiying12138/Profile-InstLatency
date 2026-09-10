@@ -1,0 +1,5 @@
+// vmul.vv : either pipe. MEASURED: L = 4/5/7, R = 1/1/2 (ANY dual-slot emergent).
+def : WriteRes<WriteVIMulV_M4, [YXV2AnyVPipe]> { let Latency = 7; let ReleaseAtCycles = [2]; }
+
+// vslideup.vx: R 非仿生（4/7/18）→ 放弃线性形式，per-LMUL 显式落值
+def : WriteRes<WriteVSlideUpX_M4, [YXV2VPipe0]> { let Latency = 10; let ReleaseAtCycles = [18]; }

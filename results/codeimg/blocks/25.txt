@@ -1,0 +1,9 @@
+define void @demo(<vscale x 1 x i32> %a, <vscale x 1 x i32> %b, ptr %out, ...) {
+  %d0 = call ...@llvm.riscv.vdivu.nxv1i32.nxv1i32(... %b, %a, i64 8)
+  %d1 = call ...@llvm.riscv.vdivu.nxv1i32.nxv1i32(... %d0, %b, i64 8)   ; 链
+  %d2 = call ...@llvm.riscv.vdivu.nxv1i32.nxv1i32(... %d1, %b, i64 8)
+  %m0 = call ...@llvm.riscv.vmul.nxv1i32.nxv1i32(... %a, %b, i64 8)     ; 独立
+  ...（m1/m2/s0/s1/s2 共 7 条填充）...
+  %d3 = call ...@llvm.riscv.vdivu.nxv1i32.nxv1i32(... %d2, %b, i64 8)   ; 链尾
+  store ...  ; 全部结果落盘防 DCE
+}

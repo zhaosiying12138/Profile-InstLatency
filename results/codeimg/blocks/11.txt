@@ -1,0 +1,9 @@
+def e08(instr, lmul, mode="sv", pairs=4):
+    for i in range(pairs):
+        if mode == "sv":          # 标量+向量交替：同拍双发探针
+            body += [f"    add x2{1 + (i % 8)}, x6, x7",
+                     f"    {emit(instr, lmul, g[2 + (i % 2)], g[0], g[1])}"]
+        elif mode == "triple":    # 标量+向量+标量：三发射证伪探针
+            body += [f"    add x2{1 + (i % 8)}, x6, x7",
+                     f"    {emit(instr, lmul, g[2], g[0], g[1])}",
+                     f"    add x2{2 + (i % 7)}, x6, x7"]

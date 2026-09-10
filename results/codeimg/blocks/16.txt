@@ -1,0 +1,7 @@
+def e04(instr_p, consumer, lmul, k, control=False):
+    prod_group = _producer_dest(instr_p, lmul)
+    body = marker("start") + [
+        f"    {emit(instr_p, lmul, prod_group, g[0], g[1])}   # producer",
+        *[f"    add x2{1 + (i % 8)}, x6, x7   # filler {i}" for i in range(k)],
+        *_consumer(..., control=control),      # src = prod_group if not control
+    ] + marker("end")

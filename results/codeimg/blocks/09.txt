@@ -1,0 +1,10 @@
+def timed_prologue(exp):        # ① 定时区 64B 对齐 + 出口影子预热（消灭取指 miss 噪声）
+    return ["    .balign 64", "    j 1f",
+            "    li a7, 93", "    li a0, 0", "    ecall", "1:"]
+
+def filler_adds(k):             # ② 标量填充：节奏已知 = 1 拍/条（先验 P8），与向量管线无争用
+    return [f"    add x2{1 + (i % 8)}, x6, x7" for i in range(k)]
+
+def _consumer(instr_p, lmul, prod_group, ctrl_group, consumer, control=False):
+    src = ctrl_group if control else prod_group    # ③ 对照孪生：唯一差异=依赖是否接上
+    ...
