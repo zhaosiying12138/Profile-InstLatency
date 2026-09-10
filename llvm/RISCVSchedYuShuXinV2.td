@@ -11,7 +11,8 @@
 // REVERSE-ENGINEERED from gem5 MinorCPU cycle-level traces (marker-delta
 // differential experiments E0-E11), not copied from any real core.
 //
-//   IssueWidth = 2, MicroOpBufferSize = 0 (in-order, no ROB, no renaming)
+//   IssueWidth = 2, MicroOpBufferSize = 1 (in-order, 1-entry lookahead,
+//   no ROB, no renaming)
 //   Two 1-wide vector pipes; the divider is NOT pipelined (R == L)
 //   Latency/ReleaseAtCycles are linear in LMUL: base + k*LMUL
 //   (profiled at SEW=e32, LMUL m1/m2/m4; fractional LMULs round up to 1 and
