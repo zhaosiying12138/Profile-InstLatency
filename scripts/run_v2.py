@@ -164,10 +164,12 @@ def main():
     m = TimingModel(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                  "..", "config", "yushuxin_timing_v2.yaml"))
     t = backend_gem5(args.exp_dir, m) if args.backend == "gem5" else backend_analytic(args.exp_dir, m)
-    s = {e["marker"]: e["cycle"] for e in t["entries"]}
-    keys = sorted(s)
-    if len(keys) >= 2:
-        print(f"{t['experiment_id']}: delta = {s[keys[-1]] - s[keys[0]]}")
+    cyc = [e["cycle"] for e in t["entries"]]
+    if len(cyc) >= 2 and all(c is not None for c in cyc):
+        print(f"{t['experiment_id']}: delta = {cyc[-1] - cyc[0]}")
+    else:
+        print(f"{t['experiment_id']}: FAILED (markers missing)")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
