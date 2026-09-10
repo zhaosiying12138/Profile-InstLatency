@@ -28,7 +28,8 @@ class YXV2Lat<int b, int k, string mx> { int val = !add(b, !mul(k, YXV2Lmul<mx>.
 
 def YuShuXinV2Model : SchedMachineModel {
   let IssueWidth = 2;
-  let MicroOpBufferSize = 0;
+  let MicroOpBufferSize = 1;   // in-order with 1-entry lookahead: the scheduler may
+                              // consider the next ready op past a stalled head
   let LoadLatency = 4;            // vle32.v L1-hit latency (E10)
   let HighLatency = 10;
   let MispredictPenalty = 10;
@@ -168,6 +169,16 @@ foreach mx = SchedMxList in {
 def : WriteRes<WriteVSlideUpX_M1, [YXV2VPipe0]> { let Latency = 4; let ReleaseAtCycles = [4]; }
 def : WriteRes<WriteVSlideUpX_M2, [YXV2VPipe0]> { let Latency = 6; let ReleaseAtCycles = [7]; }
 def : WriteRes<WriteVSlideUpX_M4, [YXV2VPipe0]> { let Latency = 10; let ReleaseAtCycles = [18]; }
+// vslideup.vi (immediate form): same perm-pipe numbers as the .vx form.
+def : WriteRes<WriteVSlideI_M1, [YXV2VPipe0]> { let Latency = 4; let ReleaseAtCycles = [4]; }
+def : WriteRes<WriteVSlideI_M2, [YXV2VPipe0]> { let Latency = 6; let ReleaseAtCycles = [7]; }
+def : WriteRes<WriteVSlideI_M4, [YXV2VPipe0]> { let Latency = 10; let ReleaseAtCycles = [18]; }
+def : WriteRes<WriteVSlideI_M8, [YXV2VPipe0]> { let Latency = 18; let ReleaseAtCycles = [34]; }
+def : WriteRes<WriteVSlideI_MF2, [YXV2VPipe0]> { let Latency = 3; let ReleaseAtCycles = [2]; }
+def : WriteRes<WriteVSlideI_MF4, [YXV2VPipe0]> { let Latency = 2; let ReleaseAtCycles = [1]; }
+def : WriteRes<WriteVSlideI_MF8, [YXV2VPipe0]> { let Latency = 2; let ReleaseAtCycles = [1]; }
+def : WriteRes<WriteVSlideI_WorstCase, [YXV2VPipe0]> { let Latency = 18; let ReleaseAtCycles = [34]; }
+
 // vcpop.m   : VP0, mask op is LMUL-independent: L = 3, R = 1.
 foreach mx = SchedMxList in {
   let Latency = 3, ReleaseAtCycles = [1] in
@@ -407,7 +418,6 @@ def : WriteRes<WriteVMovXS, []>;
 def : WriteRes<WriteVMovSF, []>;
 def : WriteRes<WriteVMovFS, []>;
 defm "" : LMULWriteRes<"WriteVSlideDownX", []>;
-defm "" : LMULWriteRes<"WriteVSlideI", []>;
 defm "" : LMULWriteRes<"WriteVISlide1X", []>;
 defm "" : LMULWriteRes<"WriteVFSlide1F", []>;
 defm "" : LMULSEWWriteRes<"WriteVRGatherVV", []>;

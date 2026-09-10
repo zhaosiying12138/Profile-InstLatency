@@ -78,6 +78,17 @@ YXIntFU = MinorFU(
     issueLat=1,
     timings=[MinorFUTiming(description="Int", srcRegsRelativeLats=[2])],
 )
+# VLSU: unit-stride vector loads/stores + scalar mem. L1-hit latency 4,
+# one beat (one register group) per cycle.
+YXMemFU = MinorFU(
+    opClasses=minorMakeOpClassSet(["SimdUnitStrideLoad", "SimdUnitStrideStore",
+                                   "SimdUnitStrideMaskLoad", "SimdUnitStrideMaskStore",
+                                   "MemRead", "MemWrite"]),
+    opLat=4,
+    issueLat=1,
+    timings=[MinorFUTiming(description="VLSU", srcRegsRelativeLats=[1])],
+)
+
 # Pool order fixes cross-pipe indices in se_yushuxin.py:
 # 0=VP0_ALU 1=VP0_PERM 2=VP1_ALU 3=VP1_PERM 4=VP1_DIV 5=Int 6=Mem
-YXPoolUnits = [YX_VP0_ALU, YX_VP0_PERM, YX_VP1_ALU, YX_VP1_PERM, YX_VP1_DIV, YXIntFU]
+YXPoolUnits = [YX_VP0_ALU, YX_VP0_PERM, YX_VP1_ALU, YX_VP1_PERM, YX_VP1_DIV, YXIntFU, YXMemFU]
