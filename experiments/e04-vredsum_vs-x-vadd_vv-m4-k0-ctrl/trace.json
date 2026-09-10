@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e04-vredsum_vs-x-vadd_vv-m4-k0-ctrl",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E4_XRAW",
+ "meta": {
+  "consumer": "vadd_vv",
+  "control": true,
+  "experiment_id": "e04-vredsum_vs-x-vadd_vv-m4-k0-ctrl",
+  "k": 0,
+  "lmul": "m4",
+  "producer": "vredsum_vs",
+  "template": "E4_XRAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 254,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 263,
+   "pc": "0x800000d8"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

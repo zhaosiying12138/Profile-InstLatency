@@ -1,0 +1,9 @@
+{
+ "control": true,
+ "d": 3,
+ "experiment_id": "e06-vadd_vv-vdivu_vv-m1-d3-ctrl",
+ "lmul": "m1",
+ "reader": "vadd_vv",
+ "template": "E6_WAR",
+ "writer": "vdivu_vv"
+}

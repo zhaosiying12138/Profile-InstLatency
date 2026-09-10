@@ -1,0 +1,9 @@
+{
+ "consumer": "vredsum_vs",
+ "control": false,
+ "experiment_id": "e04-vredsum_vs-x-vredsum_vs-m4-k0-dep",
+ "k": 0,
+ "lmul": "m4",
+ "producer": "vredsum_vs",
+ "template": "E4_XRAW"
+}

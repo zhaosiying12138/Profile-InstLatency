@@ -1,0 +1,8 @@
+{
+ "experiment_id": "e08-vmseq_vv-m2-sv-p4",
+ "instruction": "vmseq_vv",
+ "lmul": "m2",
+ "mode": "sv",
+ "pairs": 4,
+ "template": "E8_ISSUE"
+}

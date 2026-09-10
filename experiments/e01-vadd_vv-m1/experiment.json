@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vadd_vv-m1",
+ "instruction": "vadd_vv",
+ "lmul": "m1",
+ "template": "E1_KILLCHECK"
+}

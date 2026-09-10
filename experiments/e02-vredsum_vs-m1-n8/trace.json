@@ -1,0 +1,28 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e02-vredsum_vs-m1-n8",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E2_STREAM",
+ "meta": {
+  "experiment_id": "e02-vredsum_vs-m1-n8",
+  "instruction": "vredsum_vs",
+  "lmul": "m1",
+  "n": 8,
+  "template": "E2_STREAM"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 285,
+   "pc": "0x80000110"
+  },
+  {
+   "marker": "end",
+   "cycle": 299,
+   "pc": "0x80000130"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

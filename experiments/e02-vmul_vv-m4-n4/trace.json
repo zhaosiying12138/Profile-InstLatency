@@ -1,0 +1,28 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e02-vmul_vv-m4-n4",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E2_STREAM",
+ "meta": {
+  "experiment_id": "e02-vmul_vv-m4-n4",
+  "instruction": "vmul_vv",
+  "lmul": "m4",
+  "n": 4,
+  "template": "E2_STREAM"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 252,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 260,
+   "pc": "0x800000e0"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

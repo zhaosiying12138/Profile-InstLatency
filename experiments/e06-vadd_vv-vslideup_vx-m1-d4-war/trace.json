@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e06-vadd_vv-vslideup_vx-m1-d4-war",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E6_WAR",
+ "meta": {
+  "control": false,
+  "d": 4,
+  "experiment_id": "e06-vadd_vv-vslideup_vx-m1-d4-war",
+  "lmul": "m1",
+  "reader": "vadd_vv",
+  "template": "E6_WAR",
+  "writer": "vslideup_vx"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 283,
+   "pc": "0x80000110"
+  },
+  {
+   "marker": "end",
+   "cycle": 293,
+   "pc": "0x80000128"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

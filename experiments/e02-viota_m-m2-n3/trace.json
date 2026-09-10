@@ -1,0 +1,28 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e02-viota_m-m2-n3",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E2_STREAM",
+ "meta": {
+  "experiment_id": "e02-viota_m-m2-n3",
+  "instruction": "viota_m",
+  "lmul": "m2",
+  "n": 3,
+  "template": "E2_STREAM"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 240,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 243,
+   "pc": "0x800000dc"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

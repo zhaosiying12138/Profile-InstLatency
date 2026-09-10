@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vcpop_m-m1-n6",
+ "instruction": "vcpop_m",
+ "lmul": "m1",
+ "n": 6,
+ "template": "E2_STREAM"
+}

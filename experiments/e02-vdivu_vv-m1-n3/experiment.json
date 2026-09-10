@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vdivu_vv-m1-n3",
+ "instruction": "vdivu_vv",
+ "lmul": "m1",
+ "n": 3,
+ "template": "E2_STREAM"
+}

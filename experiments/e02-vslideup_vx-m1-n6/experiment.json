@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vslideup_vx-m1-n6",
+ "instruction": "vslideup_vx",
+ "lmul": "m1",
+ "n": 6,
+ "template": "E2_STREAM"
+}

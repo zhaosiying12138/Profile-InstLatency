@@ -1,0 +1,8 @@
+{
+ "experiment_id": "e08-viota_m-m4-sv-p4",
+ "instruction": "viota_m",
+ "lmul": "m4",
+ "mode": "sv",
+ "pairs": 4,
+ "template": "E8_ISSUE"
+}

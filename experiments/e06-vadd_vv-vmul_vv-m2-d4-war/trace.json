@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e06-vadd_vv-vmul_vv-m2-d4-war",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E6_WAR",
+ "meta": {
+  "control": false,
+  "d": 4,
+  "experiment_id": "e06-vadd_vv-vmul_vv-m2-d4-war",
+  "lmul": "m2",
+  "reader": "vadd_vv",
+  "template": "E6_WAR",
+  "writer": "vmul_vv"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 240,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 249,
+   "pc": "0x800000e8"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

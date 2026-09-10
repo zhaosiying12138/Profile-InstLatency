@@ -1,0 +1,29 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e05-vmul_vv-m1-d26-waw",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E5_WAW",
+ "meta": {
+  "control": false,
+  "d": 26,
+  "experiment_id": "e05-vmul_vv-m1-d26-waw",
+  "instruction": "vmul_vv",
+  "lmul": "m1",
+  "template": "E5_WAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 283,
+   "pc": "0x80000110"
+  },
+  {
+   "marker": "end",
+   "cycle": 329,
+   "pc": "0x80000180"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

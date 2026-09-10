@@ -1,0 +1,8 @@
+{
+ "experiment_id": "e08-vadd_vv-m4-sv-p4",
+ "instruction": "vadd_vv",
+ "lmul": "m4",
+ "mode": "sv",
+ "pairs": 4,
+ "template": "E8_ISSUE"
+}

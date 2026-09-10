@@ -1,0 +1,9 @@
+{
+ "consumer": "vadd_vv",
+ "control": true,
+ "experiment_id": "e04-vredsum_vs-x-vadd_vv-m1-k15-ctrl",
+ "k": 15,
+ "lmul": "m1",
+ "producer": "vredsum_vs",
+ "template": "E4_XRAW"
+}

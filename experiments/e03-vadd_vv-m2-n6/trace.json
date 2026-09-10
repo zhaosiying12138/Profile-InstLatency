@@ -1,0 +1,28 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e03-vadd_vv-m2-n6",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E3_CHAIN",
+ "meta": {
+  "experiment_id": "e03-vadd_vv-m2-n6",
+  "instruction": "vadd_vv",
+  "lmul": "m2",
+  "n": 6,
+  "template": "E3_CHAIN"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 240,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 256,
+   "pc": "0x800000e8"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

@@ -1,0 +1,8 @@
+{
+ "control": false,
+ "d": 12,
+ "experiment_id": "e05-vmul_vv-m1-d12-waw",
+ "instruction": "vmul_vv",
+ "lmul": "m1",
+ "template": "E5_WAW"
+}

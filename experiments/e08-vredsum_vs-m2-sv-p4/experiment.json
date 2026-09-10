@@ -1,0 +1,8 @@
+{
+ "experiment_id": "e08-vredsum_vs-m2-sv-p4",
+ "instruction": "vredsum_vs",
+ "lmul": "m2",
+ "mode": "sv",
+ "pairs": 4,
+ "template": "E8_ISSUE"
+}

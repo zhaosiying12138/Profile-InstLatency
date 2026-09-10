@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vmseq_vv-m4",
+ "instruction": "vmseq_vv",
+ "lmul": "m4",
+ "template": "E1_KILLCHECK"
+}

@@ -1,0 +1,9 @@
+{
+ "consumer": "vadd_vv",
+ "control": true,
+ "experiment_id": "e04-viota_m-x-vadd_vv-m4-k12-ctrl",
+ "k": 12,
+ "lmul": "m4",
+ "producer": "viota_m",
+ "template": "E4_XRAW"
+}

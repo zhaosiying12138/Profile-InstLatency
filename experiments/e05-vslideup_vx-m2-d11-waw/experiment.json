@@ -1,0 +1,8 @@
+{
+ "control": false,
+ "d": 11,
+ "experiment_id": "e05-vslideup_vx-m2-d11-waw",
+ "instruction": "vslideup_vx",
+ "lmul": "m2",
+ "template": "E5_WAW"
+}

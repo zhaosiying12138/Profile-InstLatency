@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e06-vdivu_vv-viota_m-m4-d4-war",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E6_WAR",
+ "meta": {
+  "control": false,
+  "d": 4,
+  "experiment_id": "e06-vdivu_vv-viota_m-m4-d4-war",
+  "lmul": "m4",
+  "reader": "vdivu_vv",
+  "template": "E6_WAR",
+  "writer": "viota_m"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 258,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 303,
+   "pc": "0x800000e8"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

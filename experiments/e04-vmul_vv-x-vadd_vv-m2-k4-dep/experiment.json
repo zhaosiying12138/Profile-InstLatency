@@ -1,0 +1,9 @@
+{
+ "consumer": "vadd_vv",
+ "control": false,
+ "experiment_id": "e04-vmul_vv-x-vadd_vv-m2-k4-dep",
+ "k": 4,
+ "lmul": "m2",
+ "producer": "vmul_vv",
+ "template": "E4_XRAW"
+}

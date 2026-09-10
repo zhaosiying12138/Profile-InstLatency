@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e03-vdivu_vv-m1-n2",
+ "instruction": "vdivu_vv",
+ "lmul": "m1",
+ "n": 2,
+ "template": "E3_CHAIN"
+}

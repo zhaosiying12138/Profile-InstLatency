@@ -1,0 +1,25 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e00-marker-baseline",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E0_BASELINE",
+ "meta": {
+  "experiment_id": "e00-marker-baseline",
+  "template": "E0_BASELINE"
+ },
+ "entries": [
+  {
+   "marker": "a",
+   "cycle": 104,
+   "pc": "0x80000068"
+  },
+  {
+   "marker": "b",
+   "cycle": 104,
+   "pc": "0x80000068"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

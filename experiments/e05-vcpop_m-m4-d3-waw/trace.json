@@ -1,0 +1,29 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e05-vcpop_m-m4-d3-waw",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E5_WAW",
+ "meta": {
+  "control": false,
+  "d": 3,
+  "experiment_id": "e05-vcpop_m-m4-d3-waw",
+  "instruction": "vcpop_m",
+  "lmul": "m4",
+  "template": "E5_WAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 252,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 255,
+   "pc": "0x800000e4"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vcpop_m-m4",
+ "instruction": "vcpop_m",
+ "lmul": "m4",
+ "template": "E1_KILLCHECK"
+}

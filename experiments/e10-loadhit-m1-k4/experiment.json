@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e10-loadhit-m1-k4",
+ "k": 4,
+ "lmul": "m1",
+ "template": "E10_LOAD"
+}

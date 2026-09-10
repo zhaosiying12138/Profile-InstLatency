@@ -1,0 +1,9 @@
+{
+ "consumer": "scalar_add",
+ "control": false,
+ "experiment_id": "e04-vcpop_m-x-scalar_add-m1-k14-dep",
+ "k": 14,
+ "lmul": "m1",
+ "producer": "vcpop_m",
+ "template": "E4_XRAW"
+}

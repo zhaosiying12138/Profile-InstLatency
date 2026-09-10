@@ -1,0 +1,9 @@
+{
+ "consumer": "vcpop_m",
+ "control": false,
+ "experiment_id": "e04-viota_m-x-vcpop_m-m1-k0-dep",
+ "k": 0,
+ "lmul": "m1",
+ "producer": "viota_m",
+ "template": "E4_XRAW"
+}

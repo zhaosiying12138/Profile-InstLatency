@@ -1,0 +1,31 @@
+diff --git a/llvm/lib/Target/RISCV/RISCV.td b/llvm/lib/Target/RISCV/RISCV.td
+index 74b5f3957064..2ac6075954dd 100644
+--- a/llvm/lib/Target/RISCV/RISCV.td
++++ b/llvm/lib/Target/RISCV/RISCV.td
+@@ -57,6 +57,7 @@ include "RISCVSchedMIPSP8700.td"
+ include "RISCVSchedRocket.td"
+ include "RISCVSchedSiFive7.td"
+ include "RISCVSchedSiFiveP400.td"
++include "RISCVSchedYuShuXinV2.td"
+ include "RISCVSchedSiFiveP500.td"
+ include "RISCVSchedSiFiveP600.td"
+ include "RISCVSchedSiFiveP800.td"
+diff --git a/llvm/lib/Target/RISCV/RISCVProcessors.td b/llvm/lib/Target/RISCV/RISCVProcessors.td
+index 6adbbe0af378..900983ab4e77 100644
+--- a/llvm/lib/Target/RISCV/RISCVProcessors.td
++++ b/llvm/lib/Target/RISCV/RISCVProcessors.td
+@@ -1138,3 +1138,14 @@ def XUANTIE_C920V2 : RISCVProcessorModel<"xt-c920v2",
+                                          [TuneVXRMPipelineFlush,
+                                           TunePostRAScheduler]>;
+ // clang-format on
++
++// YuShuXinV2: fictitious in-order dual-issue RV64 core; every scheduling value
++// comes from the Profile-InstLatency v2 gem5 MinorCPU differential profiling
++// study (marker-delta experiments E0-E11). See RISCVSchedYuShuXinV2.td.
++def YUSHUXIN_V2 : RISCVProcessorModel<"YuShuXinV2", YuShuXinV2Model,
++                                      [Feature64Bit,
++                                       FeatureStdExtZicsr,
++                                       FeatureStdExtZifencei,
++                                       FeatureStdExtV,
++                                       FeatureStdExtZvl256b]>;
++

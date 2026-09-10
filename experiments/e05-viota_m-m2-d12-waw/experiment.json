@@ -1,0 +1,8 @@
+{
+ "control": false,
+ "d": 12,
+ "experiment_id": "e05-viota_m-m2-d12-waw",
+ "instruction": "viota_m",
+ "lmul": "m2",
+ "template": "E5_WAW"
+}

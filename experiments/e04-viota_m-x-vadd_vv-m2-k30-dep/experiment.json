@@ -1,0 +1,9 @@
+{
+ "consumer": "vadd_vv",
+ "control": false,
+ "experiment_id": "e04-viota_m-x-vadd_vv-m2-k30-dep",
+ "k": 30,
+ "lmul": "m2",
+ "producer": "viota_m",
+ "template": "E4_XRAW"
+}

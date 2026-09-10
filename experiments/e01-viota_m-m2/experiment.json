@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-viota_m-m2",
+ "instruction": "viota_m",
+ "lmul": "m2",
+ "template": "E1_KILLCHECK"
+}

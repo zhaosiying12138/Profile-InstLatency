@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e04-vmul_vv-x-vadd_vv-m4-k30-ctrl",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E4_XRAW",
+ "meta": {
+  "consumer": "vadd_vv",
+  "control": true,
+  "experiment_id": "e04-vmul_vv-x-vadd_vv-m4-k30-ctrl",
+  "k": 30,
+  "lmul": "m4",
+  "producer": "vmul_vv",
+  "template": "E4_XRAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 252,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 307,
+   "pc": "0x80000150"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

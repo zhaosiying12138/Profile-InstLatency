@@ -1,0 +1,8 @@
+{
+ "a": "vadd_vv",
+ "b": "vslideup_vx",
+ "experiment_id": "e07-vadd_vv-vslideup_vx-m4-p4",
+ "lmul": "m4",
+ "pairs": 4,
+ "template": "E7_MIX"
+}

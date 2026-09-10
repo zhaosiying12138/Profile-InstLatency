@@ -1,0 +1,9 @@
+{
+ "consumer": "vmseq_vv",
+ "control": false,
+ "experiment_id": "e04-vdivu_vv-x-vmseq_vv-m2-k0-dep",
+ "k": 0,
+ "lmul": "m2",
+ "producer": "vdivu_vv",
+ "template": "E4_XRAW"
+}

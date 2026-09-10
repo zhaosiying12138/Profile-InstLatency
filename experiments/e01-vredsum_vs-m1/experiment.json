@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vredsum_vs-m1",
+ "instruction": "vredsum_vs",
+ "lmul": "m1",
+ "template": "E1_KILLCHECK"
+}

@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vmseq_vv-m2-n6",
+ "instruction": "vmseq_vv",
+ "lmul": "m2",
+ "n": 6,
+ "template": "E2_STREAM"
+}

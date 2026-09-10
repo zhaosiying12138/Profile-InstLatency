@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e03-vadd_vv-m4-n3",
+ "instruction": "vadd_vv",
+ "lmul": "m4",
+ "n": 3,
+ "template": "E3_CHAIN"
+}

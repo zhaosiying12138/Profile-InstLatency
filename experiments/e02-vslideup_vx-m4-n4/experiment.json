@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vslideup_vx-m4-n4",
+ "instruction": "vslideup_vx",
+ "lmul": "m4",
+ "n": 4,
+ "template": "E2_STREAM"
+}

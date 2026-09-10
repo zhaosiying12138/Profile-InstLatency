@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vslideup_vx-m1",
+ "instruction": "vslideup_vx",
+ "lmul": "m1",
+ "template": "E1_KILLCHECK"
+}

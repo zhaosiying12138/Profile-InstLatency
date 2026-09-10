@@ -1,0 +1,8 @@
+{
+ "a": "vmul_vv",
+ "b": "vmul_vv",
+ "experiment_id": "e07-vmul_vv-vmul_vv-m4-p4",
+ "lmul": "m4",
+ "pairs": 4,
+ "template": "E7_MIX"
+}

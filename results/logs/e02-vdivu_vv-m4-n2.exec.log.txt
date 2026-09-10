@@ -1,0 +1,6 @@
+  50000: system.cpu: T0 : 0x80000000 @_start    : addi t0, zero, 32          : IntAlu :  D=0x0000000000000020
+  51000: system.cpu: T0 : 0x80000004 @_start+4    : vsetvli zero, t0, e32, m4, ta, ma : SimdConfig :  D=0x0000000000000020
+  99000: system.cpu: T0 : 0x80000008 @_start+8    : vmv_v_i v0, v0, 1         
+  99000: system.cpu: T0 : 0x80000008 @_start+8. 0 : vmv_v_i_micro v0, v0, 1    : SimdMisc :  D=[01000000_01000000_01000000_01000000_01000000_01000000_01000000_01000000]
+ 100000: system.cpu: T0 : 0x80000008 @_start+8. 1 : vmv_v_i_micro v1, v1, 1    : SimdMisc :  D=[01000000_01000000_01000000_01000000_01000000_01000000_01000000_01000000]
+ 101000: system.cpu: T0 : 0x80000008 @_start+8. 2 : vmv_v_i_micro v2, v2, 1    : SimdMisc :  D=[01000000_01000000_01000000_01000000_01000000_01000000_01000000_01000000]

@@ -1,0 +1,9 @@
+{
+ "control": false,
+ "d": 3,
+ "experiment_id": "e06-vadd_vv-vmseq_vv-m2-d3-war",
+ "lmul": "m2",
+ "reader": "vadd_vv",
+ "template": "E6_WAR",
+ "writer": "vmseq_vv"
+}

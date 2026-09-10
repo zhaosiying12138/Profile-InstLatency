@@ -1,0 +1,9 @@
+{
+ "control": false,
+ "d": 5,
+ "experiment_id": "e06-vdivu_vv-vredsum_vs-m1-d5-war",
+ "lmul": "m1",
+ "reader": "vdivu_vv",
+ "template": "E6_WAR",
+ "writer": "vredsum_vs"
+}

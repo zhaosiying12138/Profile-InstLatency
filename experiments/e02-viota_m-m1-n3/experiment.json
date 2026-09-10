@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-viota_m-m1-n3",
+ "instruction": "viota_m",
+ "lmul": "m1",
+ "n": 3,
+ "template": "E2_STREAM"
+}

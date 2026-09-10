@@ -1,0 +1,30 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e04-vcpop_m-x-vmul_vv-m1-k0-dep",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E4_XRAW",
+ "meta": {
+  "consumer": "vmul_vv",
+  "control": false,
+  "experiment_id": "e04-vcpop_m-x-vmul_vv-m1-k0-dep",
+  "k": 0,
+  "lmul": "m1",
+  "producer": "vcpop_m",
+  "template": "E4_XRAW"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 283,
+   "pc": "0x80000110"
+  },
+  {
+   "marker": "end",
+   "cycle": 284,
+   "pc": "0x80000118"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

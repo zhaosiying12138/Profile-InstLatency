@@ -1,0 +1,6 @@
+{
+ "experiment_id": "e01-vdivu_vv-m4",
+ "instruction": "vdivu_vv",
+ "lmul": "m4",
+ "template": "E1_KILLCHECK"
+}

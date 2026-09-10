@@ -1,0 +1,9 @@
+{
+ "consumer": "vadd_vv",
+ "control": true,
+ "experiment_id": "e04-vslideup_vx-x-vadd_vv-m2-k0-ctrl",
+ "k": 0,
+ "lmul": "m2",
+ "producer": "vslideup_vx",
+ "template": "E4_XRAW"
+}

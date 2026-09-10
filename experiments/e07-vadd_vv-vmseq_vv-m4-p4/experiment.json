@@ -1,0 +1,8 @@
+{
+ "a": "vadd_vv",
+ "b": "vmseq_vv",
+ "experiment_id": "e07-vadd_vv-vmseq_vv-m4-p4",
+ "lmul": "m4",
+ "pairs": 4,
+ "template": "E7_MIX"
+}

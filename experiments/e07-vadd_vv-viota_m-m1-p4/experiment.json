@@ -1,0 +1,8 @@
+{
+ "a": "vadd_vv",
+ "b": "viota_m",
+ "experiment_id": "e07-vadd_vv-viota_m-m1-p4",
+ "lmul": "m1",
+ "pairs": 4,
+ "template": "E7_MIX"
+}

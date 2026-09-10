@@ -1,0 +1,6 @@
+experiments/*/build/
+__pycache__/
+*.pyc
+*.o
+*.elf
+

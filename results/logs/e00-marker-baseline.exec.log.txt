@@ -1,0 +1,6 @@
+  50000: system.cpu: T0 : 0x80000000 @_start    : addi t1, zero, 6           : IntAlu :  D=0x0000000000000006
+  51000: system.cpu: T0 : 0x80000004 @_start+4    : addi t2, zero, 7           : IntAlu :  D=0x0000000000000007
+  52000: system.cpu: T0 : 0x80000008 @_start+8    : addi s0, zero, 8           : IntAlu :  D=0x0000000000000008
+  53000: system.cpu: T0 : 0x8000000c @_start+12    : addi s1, zero, 9           : IntAlu :  D=0x0000000000000009
+  54000: system.cpu: T0 : 0x80000010 @_start+16    : addi a0, zero, 10          : IntAlu :  D=0x000000000000000a
+  55000: system.cpu: T0 : 0x80000014 @_start+20    : addi a1, zero, 11          : IntAlu :  D=0x000000000000000b

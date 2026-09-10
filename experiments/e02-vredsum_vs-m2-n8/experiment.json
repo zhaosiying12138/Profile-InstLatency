@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e02-vredsum_vs-m2-n8",
+ "instruction": "vredsum_vs",
+ "lmul": "m2",
+ "n": 8,
+ "template": "E2_STREAM"
+}

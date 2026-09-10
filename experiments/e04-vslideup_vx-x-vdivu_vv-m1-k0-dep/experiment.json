@@ -1,0 +1,9 @@
+{
+ "consumer": "vdivu_vv",
+ "control": false,
+ "experiment_id": "e04-vslideup_vx-x-vdivu_vv-m1-k0-dep",
+ "k": 0,
+ "lmul": "m1",
+ "producer": "vslideup_vx",
+ "template": "E4_XRAW"
+}

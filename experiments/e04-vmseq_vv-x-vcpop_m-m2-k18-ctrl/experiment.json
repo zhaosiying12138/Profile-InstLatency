@@ -1,0 +1,9 @@
+{
+ "consumer": "vcpop_m",
+ "control": true,
+ "experiment_id": "e04-vmseq_vv-x-vcpop_m-m2-k18-ctrl",
+ "k": 18,
+ "lmul": "m2",
+ "producer": "vmseq_vv",
+ "template": "E4_XRAW"
+}

@@ -1,0 +1,28 @@
+{
+ "schema_version": 2,
+ "experiment_id": "e03-vredsum_vs-m2-n12",
+ "backend": "gem5_minor",
+ "mode": "real_platform_profile",
+ "template": "E3_CHAIN",
+ "meta": {
+  "experiment_id": "e03-vredsum_vs-m2-n12",
+  "instruction": "vredsum_vs",
+  "lmul": "m2",
+  "n": 12,
+  "template": "E3_CHAIN"
+ },
+ "entries": [
+  {
+   "marker": "start",
+   "cycle": 242,
+   "pc": "0x800000d0"
+  },
+  {
+   "marker": "end",
+   "cycle": 332,
+   "pc": "0x80000100"
+  }
+ ],
+ "gem5_rc": 0,
+ "marker_baseline_cycles": 0
+}

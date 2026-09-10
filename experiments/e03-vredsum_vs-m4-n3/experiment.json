@@ -1,0 +1,7 @@
+{
+ "experiment_id": "e03-vredsum_vs-m4-n3",
+ "instruction": "vredsum_vs",
+ "lmul": "m4",
+ "n": 3,
+ "template": "E3_CHAIN"
+}

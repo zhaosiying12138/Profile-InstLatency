@@ -1,0 +1,561 @@
+{
+ "profile": {
+  "vadd_vv": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vmul_vv": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vdivu_vv": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vmseq_vv": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vredsum_vs": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vslideup_vx": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "vcpop_m": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  },
+  "viota_m": {
+   "latency": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "release": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "waw": {
+    "m1": null,
+    "m2": null,
+    "m4": null
+   },
+   "status": {
+    "latency": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    },
+    "release": {
+     "fit": null,
+     "residual": null,
+     "status": "insufficient_points",
+     "per_lmul": {
+      "m1": null,
+      "m2": null,
+      "m4": null
+     }
+    }
+   }
+  }
+ },
+ "penalty_matrix": {},
+ "war_release": {},
+ "e7_slopes": {},
+ "ground_truth": [
+  {
+   "instr": "vadd_vv",
+   "lmul": "m1",
+   "L": 3,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 3
+  },
+  {
+   "instr": "vadd_vv",
+   "lmul": "m2",
+   "L": 4,
+   "R": 2,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 7,
+   "read_lat": 3
+  },
+  {
+   "instr": "vadd_vv",
+   "lmul": "m4",
+   "L": 6,
+   "R": 4,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 9,
+   "read_lat": 3
+  },
+  {
+   "instr": "vmul_vv",
+   "lmul": "m1",
+   "L": 4,
+   "R": 1,
+   "pipe": "ANY",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 2
+  },
+  {
+   "instr": "vmul_vv",
+   "lmul": "m2",
+   "L": 5,
+   "R": 2,
+   "pipe": "ANY",
+   "pipelined": true,
+   "waw": 7,
+   "read_lat": 2
+  },
+  {
+   "instr": "vmul_vv",
+   "lmul": "m4",
+   "L": 7,
+   "R": 4,
+   "pipe": "ANY",
+   "pipelined": true,
+   "waw": 9,
+   "read_lat": 2
+  },
+  {
+   "instr": "vdivu_vv",
+   "lmul": "m1",
+   "L": 12,
+   "R": 12,
+   "pipe": "VP1",
+   "pipelined": false,
+   "waw": 12,
+   "read_lat": 2
+  },
+  {
+   "instr": "vdivu_vv",
+   "lmul": "m2",
+   "L": 24,
+   "R": 24,
+   "pipe": "VP1",
+   "pipelined": false,
+   "waw": 24,
+   "read_lat": 2
+  },
+  {
+   "instr": "vdivu_vv",
+   "lmul": "m4",
+   "L": 48,
+   "R": 48,
+   "pipe": "VP1",
+   "pipelined": false,
+   "waw": 48,
+   "read_lat": 2
+  },
+  {
+   "instr": "vmseq_vv",
+   "lmul": "m1",
+   "L": 2,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 4
+  },
+  {
+   "instr": "vmseq_vv",
+   "lmul": "m2",
+   "L": 3,
+   "R": 2,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 7,
+   "read_lat": 4
+  },
+  {
+   "instr": "vmseq_vv",
+   "lmul": "m4",
+   "L": 5,
+   "R": 4,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 9,
+   "read_lat": 4
+  },
+  {
+   "instr": "vredsum_vs",
+   "lmul": "m1",
+   "L": 6,
+   "R": 2,
+   "pipe": "VP1",
+   "pipelined": true,
+   "waw": 8,
+   "read_lat": 2
+  },
+  {
+   "instr": "vredsum_vs",
+   "lmul": "m2",
+   "L": 8,
+   "R": 4,
+   "pipe": "VP1",
+   "pipelined": true,
+   "waw": 10,
+   "read_lat": 2
+  },
+  {
+   "instr": "vredsum_vs",
+   "lmul": "m4",
+   "L": 12,
+   "R": 8,
+   "pipe": "VP1",
+   "pipelined": true,
+   "waw": 14,
+   "read_lat": 2
+  },
+  {
+   "instr": "vslideup_vx",
+   "lmul": "m1",
+   "L": 4,
+   "R": 2,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 2
+  },
+  {
+   "instr": "vslideup_vx",
+   "lmul": "m2",
+   "L": 6,
+   "R": 4,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 8,
+   "read_lat": 2
+  },
+  {
+   "instr": "vslideup_vx",
+   "lmul": "m4",
+   "L": 10,
+   "R": 8,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 12,
+   "read_lat": 2
+  },
+  {
+   "instr": "vcpop_m",
+   "lmul": "m1",
+   "L": 3,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 3
+  },
+  {
+   "instr": "vcpop_m",
+   "lmul": "m2",
+   "L": 3,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 3
+  },
+  {
+   "instr": "vcpop_m",
+   "lmul": "m4",
+   "L": 3,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 3
+  },
+  {
+   "instr": "viota_m",
+   "lmul": "m1",
+   "L": 5,
+   "R": 1,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 6,
+   "read_lat": 1
+  },
+  {
+   "instr": "viota_m",
+   "lmul": "m2",
+   "L": 6,
+   "R": 2,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 7,
+   "read_lat": 1
+  },
+  {
+   "instr": "viota_m",
+   "lmul": "m4",
+   "L": 8,
+   "R": 4,
+   "pipe": "VP0",
+   "pipelined": true,
+   "waw": 9,
+   "read_lat": 1
+  }
+ ]
+}

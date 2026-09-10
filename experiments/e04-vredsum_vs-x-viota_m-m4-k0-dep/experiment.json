@@ -1,0 +1,9 @@
+{
+ "consumer": "viota_m",
+ "control": false,
+ "experiment_id": "e04-vredsum_vs-x-viota_m-m4-k0-dep",
+ "k": 0,
+ "lmul": "m4",
+ "producer": "vredsum_vs",
+ "template": "E4_XRAW"
+}

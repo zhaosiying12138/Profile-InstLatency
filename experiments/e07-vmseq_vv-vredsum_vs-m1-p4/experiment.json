@@ -1,0 +1,8 @@
+{
+ "a": "vmseq_vv",
+ "b": "vredsum_vs",
+ "experiment_id": "e07-vmseq_vv-vredsum_vs-m1-p4",
+ "lmul": "m1",
+ "pairs": 4,
+ "template": "E7_MIX"
+}
