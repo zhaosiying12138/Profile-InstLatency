@@ -9,6 +9,8 @@
 
 **Pipeline**: minimal priors → designer micro-op parameter space (`config/yushuxin_timing_v2.yaml`) → injection into gem5 v24.1.0.3 MinorCPU via a **pure-config FU pool** (no simulator source patches) → tick-exactness gate (`verify_timing_exactness.py`, design invariants asserted per cycle) → differential experiment suite **E0–E11** (streams / RAW chains / cross-class matrix / WAW / WAR / mixed streams / issue probes / loads / composite) → closed-form inversion (`profile_final.py`, three-state verdicts) → LLVM `RISCVSchedYuShuXinV2.td` → **llvm-mca closure** → end-to-end A/B case study.
 
+**Scope**: the study deliberately uses only **10 RVV instruction forms** as its working set — 8 compute classes (vadd/vmul/vdivu/vmseq/vredsum/vslideup/vcpop/viota), one vector load (vle32.v), one config (vsetvli, modeled only). This is **not a full-processor profile**; the set is chosen to be **representative** — it covers every timing shape (linear/non-affine per-LMUL latency, pipelined/non-pipelined, fixed/variable throughput, mask/scalar/vector outputs, single/cross/ANY pipe, load & config paths), and every evidence chain transfers verbatim to the full instruction matrix.
+
 **The decisive mechanism finding** (why injection is non-negotiable): gem5 v24.1.0.3's default MinorCPU FU pool routes **every** vector OpClass (SimdAdd/SimdMult/SimdDiv/SimdCmp/…) into one `MinorDefaultFloatSimdFU` with `opLat=6`, `srcRegsRelativeLats=[2]`, `issueLat=1`. The observable RAW latency is `opLat − srcRegsRelativeLats = 4` for *every* vector instruction — profiling a default MinorCPU measures the defaults, not a machine. MinorFU's knobs (`opLat`, `issueLat` (=opLat ⇒ non-pipelined), `srcRegsRelativeLats` (bypass depth / WAR release / cross-pipe penalty), `cantForwardFromFUIndices` (cross-pipe no-forward), `extraCommitLat` (WAW spacing)) map one-to-one onto everything we need, so a config-only injection suffices.
 
 **Machine under test** (fictitious in-order dual-issue RV64, VLEN=256, SEW=e32, LMUL m1/m2/m4): two 1-wide vector pipes, non-pipelined divider (R≡L), no vector renaming, latency = fixed + LMUL-proportional part. **54 unknowns** = 6 global knobs + 8 instruction classes × 6 per-class knobs.
@@ -77,6 +79,8 @@ Emergence mechanisms: vmul = ANY dual-slot (⌈λ/2⌉), vmseq = vmask_mv compan
 ## 基于 gem5 周期级差分实验反演 LLVM RISC-V 向量调度模型（v2 全量重做）
 
 **流程**：少量先验 → 设计者微操作参数空间（`config/yushuxin_timing_v2.yaml` 单一真值源）→ **纯配置**注入 gem5 v24.1.0.3 MinorCPU（零模拟器源码补丁）→ tick 精确一致性门禁 → **E0–E11 差分实验套件** → 闭式反演（三态判定）→ LLVM `RISCVSchedYuShuXinV2.td` → **llvm-mca 闭合验证** → 端到端 A/B 综合测试。
+
+**范围声明**：本文全部实验与模型只围绕 **10 条 RVV 指令**举例——8 个计算指令类 + vle32.v + vsetvli（仅建模）。**这不是一颗完整处理器的 profile**；这 10 条恰好覆盖全部时序形态（线性/非仿生延迟、全流水/非流水、固定/可变吞吐、掩码/标量/向量产出、单管/跨管/ANY、访存与配置），证据链对全指令矩阵原样适用。
 
 **决定性的机制发现**（为什么必须先注入）：gem5 v24.1.0.3 MinorCPU 的默认 FU 池把**全部**向量 OpClass（SimdAdd/SimdMult/SimdDiv/SimdCmp/…）路由到同一个 `MinorDefaultFloatSimdFU`，`opLat=6`、`srcRegsRelativeLats=[2]`、`issueLat=1`——可观测 RAW 延迟恒为 `6−2=4`，与指令种类/LMUL/流水性全无关。**不注入直接 profile，测到的只是默认参数的回声。** 而 MinorFU 的旋钮（`opLat`、`issueLat`（=opLat 即非流水）、`srcRegsRelativeLats`（旁路深度/WAR 释放/跨管罚）、`cantForwardFromFUIndices`（跨管禁前递）、`extraCommitLat`（WAW 间距））与我们需要的物理量一一对应——纯配置注入即可。
 
