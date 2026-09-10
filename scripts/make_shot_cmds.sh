@@ -151,3 +151,125 @@ run \$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -iterations=1 --timeline results/dem
 EOF
 
 echo "cmd scripts written to $D (every command echoed as \$ before running)"
+
+# ---- per-parameter raw gem5 log shots (user requirement: real-run log excerpts,
+# ---- maximized purple Ubuntu terminal, command echoed as "$ cmd") ---------------
+cat > $D/log_stream.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== R (E2 stream): vadd m1 = 1/cycle; vdivu m1 = 12/cycle (non-pipelined) =="
+run grep -m 4 "vadd_vv v" experiments/e02-vadd_vv-m1-n6/build/gem5/exec.log
+echo
+run grep -m 3 "vdivu_vv v" experiments/e02-vdivu_vv-m1-n4/build/gem5/exec.log
+EOF
+
+cat > $D/log_chain.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== L (E3 chain): vdivu m1 interval = 12; vredsum m2 mu-ops 2 apart, macro 8 =="
+run grep -m 4 "vdivu_vv v" experiments/e03-vdivu_vv-m1-n4/build/gem5/exec.log
+echo
+run grep -m 4 "vredsum_vs" experiments/e03-vredsum_vs-m2-n4/build/gem5/exec.log
+EOF
+
+cat > $D/log_matrix.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== G3 cross-pipe (E4 k0): dep = consumer waits; ctrl = same-tick (dep severed) =="
+echo "\$ grep -m 3 -E 'vdivu_vv v|vadd_vv v' experiments/e04-vdivu_vv-x-vadd_vv-m1-k0-dep/build/gem5/exec.log"
+grep -m 3 -E "vdivu_vv v|vadd_vv v" experiments/e04-vdivu_vv-x-vadd_vv-m1-k0-dep/build/gem5/exec.log
+echo
+echo "\$ grep -m 3 -E 'vdivu_vv v|vadd_vv v' experiments/e04-vdivu_vv-x-vadd_vv-m1-k0-ctrl/build/gem5/exec.log"
+grep -m 3 -E "vdivu_vv v|vadd_vv v" experiments/e04-vdivu_vv-x-vadd_vv-m1-k0-ctrl/build/gem5/exec.log
+EOF
+
+cat > $D/log_waw.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== WAW (E5, d=2): second write to same dest issues 1 cycle later - no stall =="
+run grep -m 2 "vadd_vv v" experiments/e05-vadd_vv-m1-d2-waw/build/gem5/exec.log
+EOF
+
+cat > $D/log_war.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== WAR (E6, d=2): writer overwriting the reader's source issues without stall =="
+run grep -m 2 "vadd_vv v" experiments/e06-vadd_vv-vadd_vv-m1-d2-war/build/gem5/exec.log
+EOF
+
+cat > $D/log_mix.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== pipes (E7): vadd(VP0) + vredsum(VP1) co-issued SAME tick, next pair +2 =="
+run grep -m 4 -E "vadd_vv v|vredsum_vs" experiments/e07-vadd_vv-vredsum_vs-m1-p4/build/gem5/exec.log
+EOF
+
+cat > $D/log_issue.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== IssueWidth (E8 sv): scalar+vector pair per tick; triple probe: 3rd pushed =="
+run grep -m 6 -E "add x2[1-8]|vadd_vv v" experiments/e08-vadd_vv-m1-sv-p4/build/gem5/exec.log
+echo
+run grep -m 7 -E "add x2[1-8]|vadd_vv v" experiments/e08-vadd_vv-m1-triple-p4/build/gem5/exec.log
+EOF
+
+cat > $D/log_load.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== LoadLatency (E10): measured vle32 then dependent vadd = +4 ticks =="
+run grep -m 2 -E "vle32_v v2|vadd_vv v3" experiments/e10-loadhit-m1-k0/build/gem5/exec.log
+EOF
+
+cat > $D/log_e11.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+cd ~/codebase/Profile-InstLatency
+echo "== E11 composite: every segment's start/end markers in ONE real run =="
+run grep -m 10 "__yx_marker_" experiments/e11_composite/build/gem5/exec.log
+EOF
+
+# ---- llvm-mca advanced-feature verification shots -------------------------------
+cat > $D/mca_any.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+cd ~/codebase/Profile-InstLatency
+echo "== ANY dual-slot: -resource-pressure spreads vmul over BOTH pipes =="
+run \$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -resource-pressure -iterations=1 tests/mca_any_vmul.s
+printf "(command re-echoed:)\\n\$ llvm-mca ... -resource-pressure tests/mca_any_vmul.s\\n"
+EOF
+
+cat > $D/mca_divtl.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+cd ~/codebase/Profile-InstLatency
+echo "== non-pipelined R==L: --timeline shows three 12-cycle blocks, fully serial =="
+run \$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -timeline -iterations=1 tests/mca_div_chain.s
+EOF
+
+cat > $D/mca_readadv.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+cd ~/codebase/Profile-InstLatency
+echo "== negative ReadAdvance: cross-pipe vadd waits 12-2; same-pipe pair at 3 =="
+run \$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -timeline -iterations=1 tests/mca_xpipe_readadv.s
+EOF
+
+cat > $D/mca_loadtl.sh <<EOF
+#!/usr/bin/env bash
+$RUN
+MCA=/home/zhaosiying/codebase/llvm-project/build/bin/llvm-mca
+cd ~/codebase/Profile-InstLatency
+echo "== LoadLatency=4: vle32 eeeeE block, dependent vadd starts +4 =="
+run \$MCA -mtriple=riscv64 -mcpu=YuShuXinV2 -timeline -iterations=1 tests/mca_load.s
+EOF

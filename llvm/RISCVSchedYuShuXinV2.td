@@ -122,8 +122,10 @@ def : ReadAdvance<ReadShiftImm, 0>;
 def : ReadAdvance<ReadShiftReg, 0>;
 def : ReadAdvance<ReadIDiv, 0>;
 def : ReadAdvance<ReadIMul, 0>;
-// ReadIALU pays +1 when reading a vcpop.m GPR result through the RF (G4, E4).
-def : ReadAdvance<ReadIALU, -1, [WriteVMPopV_M1, WriteVMPopV_M2, WriteVMPopV_M4]>;
+// G4 vector->scalar: DESIGN promised +src_lat, but E4 k0 measured NO extra
+// stall (scalar consumer got vcpop's result at L=3, delta=4). Landed as 0
+// per the measured-over-design rule; entry kept for model completeness.
+def : ReadAdvance<ReadIALU, 0, [WriteVMPopV_M1, WriteVMPopV_M2, WriteVMPopV_M4]>;
 
 // ------------------------------------------------------------ vector pipes
 // vadd.vv   : VP0  L = 2 + 1*LMUL (3/4/6/10 at M1/M2/M4/M8), R = 1*LMUL

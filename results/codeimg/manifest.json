@@ -85,80 +85,80 @@
  },
  {
   "png": "code_12.png",
-  "lang": "text",
-  "lines": 3,
-  "sha": "0d4ce4ac70",
-  "kb": 18
- },
- {
-  "png": "code_13.png",
   "lang": "python",
   "lines": 8,
   "sha": "7d9191894d",
   "kb": 49
  },
  {
-  "png": "code_14.png",
+  "png": "code_13.png",
   "lang": "tablegen",
-  "lines": 10,
-  "sha": "f2480e6645",
-  "kb": 77
+  "lines": 6,
+  "sha": "c6c32997fb",
+  "kb": 49
+ },
+ {
+  "png": "code_14.png",
+  "lang": "python",
+  "lines": 7,
+  "sha": "128fc1e3a3",
+  "kb": 33
  },
  {
   "png": "code_15.png",
-  "lang": "python",
-  "lines": 15,
-  "sha": "a0bbd58db3",
-  "kb": 82
- },
- {
-  "png": "code_16.png",
-  "lang": "text",
-  "lines": 4,
-  "sha": "f2d4eb20e8",
-  "kb": 27
- },
- {
-  "png": "code_17.png",
   "lang": "text",
   "lines": 5,
   "sha": "311c6232ee",
   "kb": 31
  },
  {
-  "png": "code_18.png",
+  "png": "code_16.png",
+  "lang": "python",
+  "lines": 8,
+  "sha": "bdacf11052",
+  "kb": 48
+ },
+ {
+  "png": "code_17.png",
   "lang": "tablegen",
   "lines": 4,
   "sha": "009ba44b23",
   "kb": 24
  },
  {
+  "png": "code_18.png",
+  "lang": "tablegen",
+  "lines": 5,
+  "sha": "e57866fdde",
+  "kb": 32
+ },
+ {
   "png": "code_19.png",
   "lang": "python",
-  "lines": 16,
-  "sha": "f0eaa441a6",
-  "kb": 95
+  "lines": 4,
+  "sha": "e1a8d17684",
+  "kb": 20
  },
  {
   "png": "code_20.png",
-  "lang": "text",
-  "lines": 3,
-  "sha": "3183913888",
-  "kb": 16
+  "lang": "python",
+  "lines": 8,
+  "sha": "4b3f80c5dc",
+  "kb": 44
  },
  {
   "png": "code_21.png",
   "lang": "python",
-  "lines": 6,
-  "sha": "8ffc0b129e",
-  "kb": 32
+  "lines": 8,
+  "sha": "f07cbbf169",
+  "kb": 48
  },
  {
   "png": "code_22.png",
   "lang": "python",
-  "lines": 18,
-  "sha": "e6d7a74aaa",
-  "kb": 102
+  "lines": 9,
+  "sha": "4671242def",
+  "kb": 53
  },
  {
   "png": "code_23.png",
@@ -169,20 +169,27 @@
  },
  {
   "png": "code_24.png",
+  "lang": "python",
+  "lines": 9,
+  "sha": "81b73ff833",
+  "kb": 52
+ },
+ {
+  "png": "code_25.png",
   "lang": "llvm",
   "lines": 10,
   "sha": "0e88956210",
   "kb": 73
  },
  {
-  "png": "code_25.png",
+  "png": "code_26.png",
   "lang": "bash",
   "lines": 5,
   "sha": "3bc3548ec3",
   "kb": 32
  },
  {
-  "png": "code_26.png",
+  "png": "code_27.png",
   "lang": "bash",
   "lines": 33,
   "sha": "a2f4523462",

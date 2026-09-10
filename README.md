@@ -67,6 +67,8 @@ Emergence mechanisms: vmul = ANY dual-slot (⌈λ/2⌉), vmseq = vmask_mv compan
 | `tests/demo.ll` + `scripts/build_demo.sh` + `wrap_demo.py` | end-to-end A/B case study |
 | `llvm/RISCVSchedYuShuXinV2.td` + `llvm/wiring.diff` | the resulting LLVM scheduling model + registration |
 
+**Chapter 5 layout**: every profile-able parameter is its own subsection with a fixed 7-element chain (physical meaning & real-machine impact → gem5 knob → generator source → **maximized purple-terminal screenshot of the real gem5 exec.log** → interpretation → LLVM .td landing → llvm-mca verification with `-instruction-tables` / `-resource-pressure` / `--timeline` commands shown). 24 real-machine shots total.
+
 **Reproduce**: Appendix B of the blog; blog assets: `python3 scripts/code2img.py && python3 scripts/build_blog_html.py`; screenshots: `bash scripts/make_all_shots.sh` (unlocked desktop required).
 
 ---
@@ -133,5 +135,7 @@ Emergence mechanisms: vmul = ANY dual-slot (⌈λ/2⌉), vmseq = vmask_mv compan
 | `scripts/e11_composite.py` | 复合可加性实验 |
 | `tests/demo.ll` + `scripts/build_demo.sh` + `wrap_demo.py` | 端到端 A/B 综合测试 |
 | `llvm/RISCVSchedYuShuXinV2.td` + `llvm/wiring.diff` | LLVM 调度模型与注册接线 |
+
+**第五章结构**：每个可 profile 参数独立小节，固定七要素链（物理含义与真机影响 → gem5 旋钮 → 生成器源码 → **最大化紫色终端实拍 gem5 exec.log 截图** → 解读 → LLVM .td 落点 → llvm-mca 验证，含 `-instruction-tables`/`-resource-pressure`/`--timeline` 命令展示）。共 24 张真机截图。
 
 **复现**：博客附录 B；博客资产：`python3 scripts/code2img.py && python3 scripts/build_blog_html.py`；真机截图需解锁桌面后 `bash scripts/make_all_shots.sh`。
